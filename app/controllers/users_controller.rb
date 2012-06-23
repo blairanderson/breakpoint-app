@@ -36,5 +36,7 @@ class UsersController < ApplicationController
     @user.destroy
 
     redirect_to users_path, :notice => 'User deleted'
+  rescue ActiveRecord::DeleteRestrictionError
+    redirect_to users_path, :alert => 'Cannot delete user because of they belong to a season'
   end
 end
