@@ -12,4 +12,8 @@ class Season < ActiveRecord::Base
   def self.newest
     order('date desc')
   end
+
+  def upcoming_practices
+    practices.where('date > ?', Time.now).order('date asc')
+  end
 end

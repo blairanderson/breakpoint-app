@@ -3,7 +3,7 @@
   <%= link_to 'Add a practice', new_season_practice_path(@season), :class => 'pull-right btn' %>
 </h2>
 
-<% if @season.practices.empty? %>
+<% if @season.upcoming_practices.empty? %>
   <div class="alert alert-block alert-info">
     <h4>No practices for this season yet.</h4>
     <%= link_to 'Add a practice', new_season_practice_path(@season) %> to get playing.
@@ -18,7 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @season.practices.each do |practice| %>
+      <% @season.upcoming_practices.each do |practice| %>
         <tr>
           <td><%= l practice.date, :format => :long %></td>
           <td><%= practice.comment %></td>
