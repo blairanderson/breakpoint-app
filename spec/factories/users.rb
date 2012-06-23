@@ -4,9 +4,10 @@ FactoryGirl.define do
     last_name    'Doe'
     email        'john.doe@example.com'
     phone_number '555-555-5555'
-  end
 
-  factory :season do
-    name '2012 Summer'
+    factory :user2 do
+      first_name 'Dave'
+      last_name  'Kroondyk'
+    end
   end
 end

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'users' do
   before :each do
-    user = create(:user)
+    @user = create(:user)
     visit users_path
   end
 

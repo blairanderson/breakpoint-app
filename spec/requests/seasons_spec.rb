@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'seasons' do
   before :each do
-    season = create(:season)
+    @season = create(:season)
     visit seasons_path
   end
 

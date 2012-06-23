@@ -2,7 +2,13 @@ Tennisone::Application.routes.draw do
   root :to => 'users#index'
 
   resources :users
-  resources :seasons
+  resources :seasons do
+    resources :players do
+      collection do
+        put 'update'
+      end
+    end
+  end
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

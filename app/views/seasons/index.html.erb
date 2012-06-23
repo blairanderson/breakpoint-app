@@ -3,7 +3,6 @@
   <%= link_to 'New season', new_season_path, :class => 'btn' %>
 <% end %>
 
-
 <table class="table table-bordered table-striped">
   <thead>
     <tr>
@@ -14,7 +13,7 @@
   <tbody>
     <% @seasons.each do |season| %>
     <tr>
-      <td><%= link_to season.name, season_path(season) %></td>
+      <td><%= link_to season.name, season %></td>
       <td>
         <%= link_to 'Edit', edit_season_path(season), :class => 'btn' %>
         <%= link_to 'Delete',
