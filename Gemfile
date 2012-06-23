@@ -1,13 +1,17 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.6'
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 gem 'sqlite3'
 
-gem 'quiet_assets', :group => :development
+group :development do
+  gem 'quiet_assets'
+end
+
+group :development, :test do
+  gem 'rspec-rails', '~> 2.0'
+  gem 'capybara'
+  gem 'factory_girl_rails'
+end
 
 # Gems used only for assets and not required
 # in production environments by default.

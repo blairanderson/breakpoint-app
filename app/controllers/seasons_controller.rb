@@ -36,5 +36,9 @@ class SeasonsController < ApplicationController
   end
 
   def destroy
+    @season = Season.find params[:id]
+    @season.destroy
+
+    redirect_to seasons_path, :notice => 'Season deleted'
   end
 end
