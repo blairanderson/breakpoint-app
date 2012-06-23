@@ -1,0 +1,9 @@
+<%= simple_form_for(@season, :html => { :class => 'form-horizontal' } ) do |f| %>
+  <%= f.error_messages %>
+
+  <%= f.input :name %>
+
+  <div class="form-actions">
+    <%= f.submit :class => 'btn btn-primary' %>
+  </div>
+<% end %>

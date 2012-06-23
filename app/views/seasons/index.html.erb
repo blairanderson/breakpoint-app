@@ -1,0 +1,29 @@
+<% title 'Seasons' do %>
+  Seasons
+  <%= link_to 'New season', new_season_path, :class => 'btn' %>
+<% end %>
+
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th style="width: 108px;">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @seasons.each do |season| %>
+    <tr>
+      <td><%= season.name %></td>
+      <td>
+        <%= link_to 'Edit', edit_season_path(season), :class => 'btn' %>
+        <%= link_to 'Delete',
+          season,
+          :data => { :confirm => 'Are you sure?' },
+          :method => :delete,
+          :class => 'btn btn-danger' %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,32 @@
+<% title 'Team' do %>
+  Team
+  <%= link_to 'New user', new_user_path, :class => 'btn' %>
+<% end %>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th style="width: 108px;">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= mail_to user.email %></td>
+      <td><%= user.phone_number %></td>
+      <td>
+        <%= link_to 'Edit', edit_user_path(user), :class => 'btn' %>
+        <%= link_to 'Delete',
+          user,
+          :data => { :confirm => 'Are you sure?' },
+          :method => :delete,
+          :class => 'btn btn-danger' %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

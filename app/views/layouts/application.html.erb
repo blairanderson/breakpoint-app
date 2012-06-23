@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= content_for?(:page_title) ? yield(:page_title) : 'Tennis' %></title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <%= link_to 'Tennis', root_path, :class => 'brand' %>
+        <ul class="nav">
+          <li><%= link_to 'Seasons', seasons_path %></li>
+          <li><%= link_to 'Team',    users_path %></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <% flash.each do |name, msg| %>
+      <div class="flash">
+        <div class="alert alert-<%= flash_name_for_bootstrap(name)[:class] %>">
+          <i class='icon-<%= flash_name_for_bootstrap(name)[:icon] %>'></i>
+          <%= msg %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if show_title? %>
+      <div class="page-header">
+        <h1><%= yield :page_header %></h1>
+      </div>
+    <% end %>
+
+    <%= yield %>
+  </div>
+
+</body>
+</html>
