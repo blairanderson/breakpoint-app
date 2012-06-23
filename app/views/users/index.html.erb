@@ -9,7 +9,7 @@
       <th>Name</th>
       <th>Email</th>
       <th>Phone Number</th>
-      <th style="width: 108px;">&nbsp;</th>
+      <th style="width: 82px;">&nbsp;</th>
     </tr>
   </thead>
   <tbody>
@@ -19,12 +19,12 @@
       <td><%= mail_to user.email %></td>
       <td><%= user.phone_number %></td>
       <td>
-        <%= link_to 'Edit', edit_user_path(user), :class => 'btn' %>
+        <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-mini' %>
         <%= link_to 'Delete',
           user,
           :data => { :confirm => 'Are you sure?' },
           :method => :delete,
-          :class => 'btn btn-danger' %>
+          :class => 'btn btn-mini btn-danger' %>
       </td>
     </tr>
     <% end %>

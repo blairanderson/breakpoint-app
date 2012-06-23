@@ -1,0 +1,13 @@
+<%= simple_form_for([@season, @practice], :html => { :class => 'form-horizontal' } ) do |f| %>
+  <%= f.error_messages %>
+
+  <%= f.input :chronic_date,
+    :as => :string,
+    :label => 'When?',
+    :hint => 'e.g. January 5 at 7pm &ndash; or &ndash; tomorrow at 8pm' %>
+  <%= f.input :comment, :input_html => { :rows => '3' } %>
+
+  <div class="form-actions">
+    <%= f.submit :class => 'btn btn-primary' %>
+  </div>
+<% end %>

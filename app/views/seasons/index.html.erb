@@ -7,7 +7,7 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th style="width: 108px;">&nbsp;</th>
+      <th style="width: 82px;">&nbsp;</th>
     </tr>
   </thead>
   <tbody>
@@ -15,12 +15,12 @@
     <tr>
       <td><%= link_to season.name, season %></td>
       <td>
-        <%= link_to 'Edit', edit_season_path(season), :class => 'btn' %>
+        <%= link_to 'Edit', edit_season_path(season), :class => 'btn btn-mini' %>
         <%= link_to 'Delete',
           season,
           :data => { :confirm => 'Are you sure?' },
           :method => :delete,
-          :class => 'btn btn-danger' %>
+          :class => 'btn btn-mini btn-danger' %>
       </td>
     </tr>
     <% end %>

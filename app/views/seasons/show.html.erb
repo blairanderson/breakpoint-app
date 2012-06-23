@@ -1,27 +1,18 @@
 <% title @season.name %>
 
-<h2>
-  Team
-  <%= link_to 'Add players', season_players_path(@season), :class => 'pull-right btn' %>
-</h2>
-
-<% if @season.players.empty? %>
-  <div class="alert alert-block alert-info">
-    <h4>No players for this season yet.</h4>
-    <%= link_to 'Add players', season_players_path(@season) %> to get the season started.
+<div class="row">
+  <div class="span6">
+    <div class="row">
+      <div class="span6">
+        <%= render :partial => 'practices' %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span6">
+      </div>
+    </div>
   </div>
-<% else %>
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>Name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @season.users.each do |player| %>
-        <tr>
-          <td><%= player.name %></td>
-        </tr>
-      <% end %>
-  </table>
-<% end %>
+  <div class="span6">
+    <%= render :partial => 'players' %>
+  </div>
+</div>

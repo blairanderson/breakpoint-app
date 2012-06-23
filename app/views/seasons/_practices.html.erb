@@ -1,0 +1,36 @@
+<h2>
+  Practices
+  <%= link_to 'Add a practice', new_season_practice_path(@season), :class => 'pull-right btn' %>
+</h2>
+
+<% if @season.practices.empty? %>
+  <div class="alert alert-block alert-info">
+    <h4>No practices for this season yet.</h4>
+    <%= link_to 'Add a practice', new_season_practice_path(@season) %> to get playing.
+  </div>
+<% else %>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Comment</th>
+        <th style="width: 82px;">&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @season.practices.each do |practice| %>
+        <tr>
+          <td><%= l practice.date, :format => :long %></td>
+          <td><%= practice.comment %></td>
+          <td>
+            <%= link_to 'Edit', edit_season_practice_path(@season, practice), :class => 'btn btn-mini' %>
+            <%= link_to 'Delete',
+              season_practice_path(@season, practice),
+              :data => { :confirm => 'Are you sure?' },
+              :method => :delete,
+              :class => 'btn btn-mini btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+  </table>
+<% end %> 

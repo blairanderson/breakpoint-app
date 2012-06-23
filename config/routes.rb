@@ -3,6 +3,7 @@ Tennisone::Application.routes.draw do
 
   resources :users
   resources :seasons do
+    resources :practices
     resources :players do
       collection do
         put 'update'
