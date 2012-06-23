@@ -3,26 +3,35 @@
   <%= link_to 'New season', new_season_path, :class => 'btn' %>
 <% end %>
 
-<table class="table table-bordered table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th style="width: 82px;">&nbsp;</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @seasons.each do |season| %>
-    <tr>
-      <td><%= link_to season.name, season %></td>
-      <td>
-        <%= link_to 'Edit', edit_season_path(season), :class => 'btn btn-mini' %>
-        <%= link_to 'Delete',
-          season,
-          :data => { :confirm => 'Are you sure?' },
-          :method => :delete,
-          :class => 'btn btn-mini btn-danger' %>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+<% if @seasons.empty? %>
+  <div class="alert alert-block alert-info">
+    <h4>No seasons created yet.</h4>
+    Make a <%= link_to 'new season', new_season_path %> to get started.
+  </div>
+<% else %>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th style="width: 82px;">&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @seasons.each do |season| %>
+      <tr>
+        <td><%= link_to season.name, season %></td>
+        <td><%= l season.date %>
+        <td>
+          <%= link_to 'Edit', edit_season_path(season), :class => 'btn btn-mini' %>
+          <%= link_to 'Delete',
+            season,
+            :data => { :confirm => 'Are you sure?' },
+            :method => :delete,
+            :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

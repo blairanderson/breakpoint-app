@@ -24,7 +24,7 @@ describe 'practices' do
     click_button 'Create Practice'
 
     page.should have_selector '.alert.alert-block.alert-error'
-    page.should have_content "Date can't be blank"
+    page.should have_content "Date string can't be blank"
   end
 
   it 'edits a practice' do

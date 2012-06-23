@@ -2,6 +2,11 @@
   <%= f.error_messages %>
 
   <%= f.input :name %>
+  <%= f.input :date_string,
+    :as => :string,
+    :label => 'Starting when?',
+    :required => true,
+    :hint => "e.g. May #{Time.now.year}" %>
 
   <div class="form-actions">
     <%= f.submit :class => 'btn btn-primary' %>

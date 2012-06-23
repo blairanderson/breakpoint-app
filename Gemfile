@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.6'
-gem 'sqlite3'
+gem 'pg'
 
 group :development do
   gem 'quiet_assets'
@@ -29,6 +29,7 @@ gem 'jquery-rails'
 gem 'bootstrap-sass', '~> 2.0.3'
 gem 'simple_form'
 gem 'chronic'
+gem 'devise'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

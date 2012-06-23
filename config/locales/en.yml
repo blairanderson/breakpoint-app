@@ -4,6 +4,6 @@
 en:
   time:
     formats:
-      default: "%Y/%m/%d"
+      default: "%m/%d/%Y"
       short: "%b %d"
       long: "%B %d, %Y %l:%M %P"

@@ -13,7 +13,8 @@ describe 'seasons' do
 
   it 'creates a season' do
     click_link 'New season'
-    fill_in 'Name', :with => '2013 Summer'
+    fill_in 'Name',           :with => '2013 Summer'
+    fill_in 'Starting when?', :with => 'June 2013'
     click_button 'Create Season'
 
     page.should have_selector '.alert.alert-success', :text => 'Season created'
