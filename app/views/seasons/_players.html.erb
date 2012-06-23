@@ -9,17 +9,5 @@
     <%= link_to 'Add players', season_players_path(@season) %> to get the season started.
   </div>
 <% else %>
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>Name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @season.users.each do |player| %>
-        <tr>
-          <td><%= player.name %></td>
-        </tr>
-      <% end %>
-  </table>
+  <%= render :partial => 'users/users', :object => @season.users %>
 <% end %>
