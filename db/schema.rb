@@ -11,7 +11,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120624011153) do
+ActiveRecord::Schema.define(:version => 20120624145100) do
+
+  create_table "match_availabilities", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "match_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "match_availabilities", ["match_id"], :name => "index_match_availabilities_on_match_id"
+  add_index "match_availabilities", ["user_id"], :name => "index_match_availabilities_on_user_id"
+
+  create_table "matches", :force => true do |t|
+    t.datetime "date",                       :null => false
+    t.string   "location",   :default => "", :null => false
+    t.string   "opponent",   :default => "", :null => false
+    t.integer  "season_id"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
+
+  add_index "matches", ["season_id"], :name => "index_matches_on_season_id"
 
   create_table "players", :force => true do |t|
     t.integer  "season_id",  :default => 0, :null => false

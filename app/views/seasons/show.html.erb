@@ -1,18 +1,5 @@
 <% title @season.name %>
 
-<div class="row">
-  <div class="span6">
-    <div class="row">
-      <div class="span6">
-        <%= render :partial => 'practices' %>
-      </div>
-    </div>
-    <div class="row">
-      <div class="span6">
-      </div>
-    </div>
-  </div>
-  <div class="span6">
-    <%= render :partial => 'players' %>
-  </div>
-</div>
+<%= render :partial => 'practices' %>
+<%= render :partial => 'matches' %>
+<%= render :partial => 'players' %>

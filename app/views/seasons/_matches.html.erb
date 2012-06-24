@@ -1,0 +1,69 @@
+<h2>
+  Matches
+  <% if can? :manage, @season %>
+    <%= link_to 'Add a match', new_season_match_path(@season), :class => 'pull-right btn' %>
+  <% end %>
+</h2>
+
+<% if @season.upcoming_matches.empty? %>
+  <div class="alert alert-block alert-info">
+    <h4>No matches for this season yet.</h4>
+    <%= link_to 'Add a match', new_season_match_path(@season) %> to get playing.
+  </div>
+<% else %>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <% if can? :manage, @season.upcoming_matches.first.match_availabilities.build %>
+          <th style="width: 163px;">Can play?</th>
+        <% end %>
+        <th>Date</th>
+        <th>Opponent</th>
+        <% if can? :manage, @season.upcoming_matches %>
+          <th style="width: 82px;">&nbsp;</th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <% @season.upcoming_matches.each do |match| %>
+        <tr>
+          <% if can? :manage, match.match_availabilities.build %>
+            <td>
+              <div class="pull-left">
+                <% if current_user.matches.include? match %>
+                  <% match_availability = current_user.match_availabilities.select { |match_availability| match_availability.user == current_user }.first %>
+                  <%= link_to "I can't play",
+                    match_match_availability_path(match, match_availability),
+                    :method => :delete,
+                    :class => 'btn btn-mini btn-warning' %>
+                <% else %>
+                  <%= form_tag match_match_availabilities_path(match), :style => 'margin-bottom: 0px;' do %>
+                    <%= submit_tag "I can play", :class => 'btn btn-mini' %>
+                  <% end %>
+                <% end %>
+              </div>
+              <div class="pull-right">
+                <%= render :partial => 'match_availabilities', :locals => { :match => match } %>
+              </div>
+            </td>
+          <% end %>
+          <td>
+            <%= match.location.humanize %> on
+            <%= l match.date, :format => :long %>
+          </td>
+          <td><%= match.opponent %></td>
+          <% if can? :manage, match %>
+            <td>
+              <%= link_to 'Edit', edit_season_match_path(@season, match), :class => 'btn btn-mini' %>
+              <%= link_to 'Delete',
+                season_match_path(@season, match),
+                :data => { :confirm => 'Are you sure?' },
+                :method => :delete,
+                :class => 'btn btn-mini btn-danger' %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

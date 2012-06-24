@@ -6,6 +6,7 @@ Tennisone::Application.routes.draw do
   resources :users
   resources :seasons do
     resources :practices
+    resources :matches
     resources :players do
       collection do
         put 'update'
@@ -15,6 +16,10 @@ Tennisone::Application.routes.draw do
 
   resources :practices do
     resources :practice_sessions
+  end
+
+  resources :matches do
+    resources :match_availabilities
   end
 
   # The priority is based upon order of creation:

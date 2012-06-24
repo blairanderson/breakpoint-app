@@ -10,11 +10,13 @@ class User < ActiveRecord::Base
     :trackable,
     :validatable
 
-  has_many :players, :dependent => :restrict
-  has_many :seasons, :through => :players
-  has_many :practice_sessions, :dependent => :restrict
-  has_many :practices, :through => :practice_sessions
-  
+  has_many :players,              :dependent => :restrict
+  has_many :seasons,              :through   => :players
+  has_many :practice_sessions,    :dependent => :restrict
+  has_many :practices,            :through   => :practice_sessions
+  has_many :match_availabilities, :dependent => :restrict
+  has_many :matches,              :through   => :match_availabilities
+
   attr_accessible :email,
     :password,
     :password_confirmation,
