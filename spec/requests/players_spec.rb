@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'players' do
   before :each do
+    login_admin
     @player = create(:player)
     @user2 = create(:user2)
     visit season_path(@player.season)

@@ -1,17 +1,14 @@
 class PracticesController < ApplicationController
-  before_filter :load_season
+  load_and_authorize_resource :season
+  load_and_authorize_resource :practice, :through => :season
 
   def new
-    @practice = @season.practices.build
   end
 
   def edit
-    @practice = Practice.find params[:id]
   end
 
   def create
-    @practice = @season.practices.build params[:practice]
-
     if @practice.save
       redirect_to @season, :notice => 'Practice created'
     else
@@ -20,8 +17,6 @@ class PracticesController < ApplicationController
   end
 
   def update
-    @practice = Practice.find params[:id]
-
     if @practice.update_attributes(params[:practice])
       redirect_to @season, :notice => 'Practice updated'
     else
@@ -30,15 +25,8 @@ class PracticesController < ApplicationController
   end
 
   def destroy
-    @practice = Practice.find params[:id]
     @practice.destroy
 
     redirect_to @season, :notice => 'Practice deleted'
-  end
-
-  private
-
-  def load_season
-    @season = Season.find params[:season_id]
   end
 end

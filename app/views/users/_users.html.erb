@@ -4,7 +4,9 @@
       <th>Name</th>
       <th>Email</th>
       <th>Phone Number</th>
-      <th style="width: 82px;">&nbsp;</th>
+      <% if can? :manage, users %>
+        <th style="width: 82px;">&nbsp;</th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
@@ -13,14 +15,17 @@
       <td><%= user.name %></td>
       <td><%= mail_to user.email %></td>
       <td><%= user.phone_number %></td>
-      <td>
-        <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-mini' %>
-        <%= link_to 'Delete',
-          user,
-          :data => { :confirm => 'Are you sure?' },
-          :method => :delete,
-          :class => 'btn btn-mini btn-danger' %>
-      </td>
+      <% if can? :manage, user %>
+        <td>
+          <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-mini' %>
+          <%= link_to 'Delete',
+            user,
+            :data => { :confirm => 'Are you sure?' },
+            :method => :delete,
+            :id => "user-#{user.id}",
+            :class => 'btn btn-mini btn-danger' %>
+        </td>
+      <% end %>
     </tr>
     <% end %>
   </tbody>

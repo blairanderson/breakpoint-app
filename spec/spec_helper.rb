@@ -29,3 +29,28 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 end
+
+def login_admin
+  admin = create(:admin)
+  visit new_user_session_path
+  fill_in 'Email',    :with => 'admin@example.com'
+  fill_in 'Password', :with => 'testing'
+  click_button 'Sign in'
+end
+
+def login_captain
+  captain = create(:captain)
+  visit new_user_session_path
+  fill_in 'Email',    :with => 'captain@example.com'
+  fill_in 'Password', :with => 'testing'
+  click_button 'Sign in'
+end
+
+def login_team_member
+  team_member = create(:team_member)
+  visit new_user_session_path
+  fill_in 'Email',    :with => 'team_member@example.com'
+  fill_in 'Password', :with => 'testing'
+  click_button 'Sign in'
+end
+

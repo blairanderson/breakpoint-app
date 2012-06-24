@@ -30,6 +30,7 @@ gem 'bootstrap-sass', '~> 2.0.3'
 gem 'simple_form'
 gem 'chronic'
 gem 'devise'
+gem 'cancan'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

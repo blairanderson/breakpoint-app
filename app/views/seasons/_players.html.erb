@@ -1,6 +1,8 @@
 <h2>
   Team
-  <%= link_to 'Add players', season_players_path(@season), :class => 'pull-right btn' %>
+  <% if can? :manage, @season %>
+    <%= link_to 'Add players', season_players_path(@season), :class => 'pull-right btn' %>
+  <% end %>
 </h2>
 
 <% if @season.players.empty? %>

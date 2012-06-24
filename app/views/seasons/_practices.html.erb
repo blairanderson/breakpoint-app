@@ -1,6 +1,8 @@
 <h2>
   Practices
-  <%= link_to 'Add a practice', new_season_practice_path(@season), :class => 'pull-right btn' %>
+  <% if can? :manage, @season %>
+    <%= link_to 'Add a practice', new_season_practice_path(@season), :class => 'pull-right btn' %>
+  <% end %>
 </h2>
 
 <% if @season.upcoming_practices.empty? %>
@@ -14,7 +16,9 @@
       <tr>
         <th>Date</th>
         <th>Comment</th>
-        <th style="width: 82px;">&nbsp;</th>
+        <% if can? :manage, @season.upcoming_practices %>
+          <th style="width: 82px;">&nbsp;</th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
@@ -22,14 +26,16 @@
         <tr>
           <td><%= l practice.date, :format => :long %></td>
           <td><%= practice.comment %></td>
-          <td>
-            <%= link_to 'Edit', edit_season_practice_path(@season, practice), :class => 'btn btn-mini' %>
-            <%= link_to 'Delete',
-              season_practice_path(@season, practice),
-              :data => { :confirm => 'Are you sure?' },
-              :method => :delete,
-              :class => 'btn btn-mini btn-danger' %>
-          </td>
+          <% if can? :manage, practice %>
+            <td>
+              <%= link_to 'Edit', edit_season_practice_path(@season, practice), :class => 'btn btn-mini' %>
+              <%= link_to 'Delete',
+                season_practice_path(@season, practice),
+                :data => { :confirm => 'Are you sure?' },
+                :method => :delete,
+                :class => 'btn btn-mini btn-danger' %>
+            </td>
+          <% end %>
         </tr>
       <% end %>
   </table>

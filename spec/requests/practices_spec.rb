@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe 'practices' do
   before :each do
+    login_admin
     @practice = create(:practice)
     visit season_path(@practice.season)
   end
