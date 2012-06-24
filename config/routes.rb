@@ -12,6 +12,11 @@ Tennisone::Application.routes.draw do
       end
     end
   end
+
+  resources :practices do
+    resources :practice_sessions
+  end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

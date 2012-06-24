@@ -14,6 +14,9 @@
   <table class="table table-bordered table-striped">
     <thead>
       <tr>
+        <% if can? :manage, @season.upcoming_practices.first.practice_sessions.build %>
+          <th style="width: 76px;">Going?</th>
+        <% end %>
         <th>Date</th>
         <th>Comment</th>
         <% if can? :manage, @season.upcoming_practices %>
@@ -24,7 +27,41 @@
     <tbody>
       <% @season.upcoming_practices.each do |practice| %>
         <tr>
-          <td><%= l practice.date, :format => :long %></td>
+          <% if can? :manage, practice.practice_sessions.build %>
+            <td>
+              <% if current_user.practices.include? practice %>
+                <% practice_session = current_user.practice_sessions.select { |practice_session| practice_session.user == current_user }.first %>
+                <%= link_to "I'm not going",
+                  practice_practice_session_path(practice, practice_session),
+                  :method => :delete,
+                  :class => 'btn btn-mini btn-warning' %>
+              <% else %>
+                <%= form_tag practice_practice_sessions_path(practice), :style => 'margin-bottom: 0px;' do %>
+                  <%= submit_tag "I'm going", :class => 'btn btn-mini' %>
+                <% end %>
+              <% end %>
+            </td>
+          <% end %>
+          <td>
+            <%= l practice.date, :format => :long %>
+            <a href="#practice-<%= practice.id %>" data-toggle="modal">Who's going?</a>
+            <div class="modal hide" id="practice-<%= practice.id %>">
+              <% if practice.users.empty? %>
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                  <h3>There are no confirmed players yet.</h3>
+                </div>
+              <% else %>
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">×</button>
+                  <h3>Confirmed players</h3>
+                </div>
+                <div class="modal-body">
+                  <%= render :partial => 'users/users', :object => practice.users %>
+                </div>
+              <% end %>
+            </div>
+          </td>
           <td><%= practice.comment %></td>
           <% if can? :manage, practice %>
             <td>
@@ -38,5 +75,6 @@
           <% end %>
         </tr>
       <% end %>
+    </tbody>
   </table>
-<% end %> 
+<% end %>

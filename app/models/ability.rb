@@ -9,6 +9,9 @@ class Ability
     elsif user.captain?
       can :manage, :all
     else
+      can :manage, PracticeSession do |practice_session|
+        practice_session.practice.season.users.include? user
+      end
       can :read, :all
     end
   end

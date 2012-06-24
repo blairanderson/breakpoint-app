@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120623222748) do
+ActiveRecord::Schema.define(:version => 20120624011153) do
 
   create_table "players", :force => true do |t|
     t.integer  "season_id",  :default => 0, :null => false
@@ -22,6 +22,16 @@ ActiveRecord::Schema.define(:version => 20120623222748) do
 
   add_index "players", ["season_id"], :name => "index_players_on_season_id"
   add_index "players", ["user_id"], :name => "index_players_on_user_id"
+
+  create_table "practice_sessions", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "practice_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "practice_sessions", ["practice_id"], :name => "index_practice_sessions_on_practice_id"
+  add_index "practice_sessions", ["user_id"], :name => "index_practice_sessions_on_user_id"
 
   create_table "practices", :force => true do |t|
     t.datetime "date",                      :null => false

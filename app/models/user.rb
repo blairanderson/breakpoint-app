@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
 
   has_many :players, :dependent => :restrict
   has_many :seasons, :through => :players
+  has_many :practice_sessions, :dependent => :restrict
+  has_many :practices, :through => :practice_sessions
   
   attr_accessible :email,
     :password,
