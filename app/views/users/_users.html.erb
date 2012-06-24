@@ -17,12 +17,11 @@
       <td><%= user.phone_number %></td>
       <% if can? :manage, user %>
         <td>
-          <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-mini' %>
+          <%= link_to 'Edit', edit_user_path(user), :class => 'btn btn-mini', :data => { :id => user.id } %>
           <%= link_to 'Delete',
             user,
-            :data => { :confirm => 'Are you sure?' },
+            :data => { :confirm => 'Are you sure?', :delete_id => user.id },
             :method => :delete,
-            :id => "user-#{user.id}",
             :class => 'btn btn-mini btn-danger' %>
         </td>
       <% end %>
