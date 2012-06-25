@@ -42,3 +42,17 @@ end
 
 # TODO
 # Split Format (enable second time option - for double?)
+
+# == Schema Information
+#
+# Table name: matches
+#
+#  created_at :datetime         not null
+#  date       :datetime         not null
+#  id         :integer          not null, primary key
+#  location   :string(255)      default(""), not null
+#  opponent   :string(255)      default(""), not null
+#  season_id  :integer
+#  updated_at :datetime         not null
+#
+

@@ -19,3 +19,17 @@ describe Season do
     season.upcoming_matches.count.should eq(1)
   end
 end
+
+# == Schema Information
+#
+# Table name: seasons
+#
+#  created_at      :datetime         not null
+#  date            :datetime         not null
+#  doubles_matches :integer          not null
+#  id              :integer          not null, primary key
+#  name            :string(255)      default(""), not null
+#  singles_matches :integer          not null
+#  updated_at      :datetime         not null
+#
+

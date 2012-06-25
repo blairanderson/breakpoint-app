@@ -17,3 +17,17 @@ describe Match do
     match.match_lineups[2].match_type.should eq('#1 Doubles')
   end
 end
+
+# == Schema Information
+#
+# Table name: matches
+#
+#  created_at :datetime         not null
+#  date       :datetime         not null
+#  id         :integer          not null, primary key
+#  location   :string(255)      default(""), not null
+#  opponent   :string(255)      default(""), not null
+#  season_id  :integer
+#  updated_at :datetime         not null
+#
+

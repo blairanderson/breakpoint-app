@@ -31,6 +31,7 @@ gem 'simple_form'
 gem 'chronic'
 gem 'devise'
 gem 'cancan'
+gem 'annotate', '>=2.5.0.pre1'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

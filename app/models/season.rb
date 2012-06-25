@@ -62,3 +62,17 @@ end
 # Singles Matches 0-9
 # Doubels Matches 0-9
 # Alternates 0-9 (???)
+
+# == Schema Information
+#
+# Table name: seasons
+#
+#  created_at      :datetime         not null
+#  date            :datetime         not null
+#  doubles_matches :integer          not null
+#  id              :integer          not null, primary key
+#  name            :string(255)      default(""), not null
+#  singles_matches :integer          not null
+#  updated_at      :datetime         not null
+#
+

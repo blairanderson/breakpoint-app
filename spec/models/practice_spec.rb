@@ -7,3 +7,16 @@ describe Practice do
     practice.date.should eq(tomorrow_at_7pm)
   end
 end
+
+# == Schema Information
+#
+# Table name: practices
+#
+#  comment    :text
+#  created_at :datetime         not null
+#  date       :datetime         not null
+#  id         :integer          not null, primary key
+#  season_id  :integer          default(0), not null
+#  updated_at :datetime         not null
+#
+
