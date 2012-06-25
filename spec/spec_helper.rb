@@ -39,7 +39,7 @@ def login_admin
 end
 
 def login_captain
-  captain = create(:captain)
+  @captain = create(:captain)
   visit new_user_session_path
   fill_in 'Email',    :with => 'captain@example.com'
   fill_in 'Password', :with => 'testing'
@@ -47,7 +47,7 @@ def login_captain
 end
 
 def login_team_member
-  team_member = create(:team_member)
+  @team_member = create(:team_member)
   visit new_user_session_path
   fill_in 'Email',    :with => 'team_member@example.com'
   fill_in 'Password', :with => 'testing'
