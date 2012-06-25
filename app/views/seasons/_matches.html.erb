@@ -20,6 +20,7 @@
         <th>Date</th>
         <th>Opponent</th>
         <% if can? :manage, @season.upcoming_matches %>
+          <th>Setup Lineup</th>
           <th style="width: 82px;">&nbsp;</th>
         <% end %>
       </tr>
@@ -53,6 +54,7 @@
           </td>
           <td><%= match.opponent %></td>
           <% if can? :manage, match %>
+            <td><%= link_to 'Set the lineup', edit_match_match_lineups_path(match) %></td>
             <td>
               <%= link_to 'Edit', edit_season_match_path(@season, match), :class => 'btn btn-mini' %>
               <%= link_to 'Delete',

@@ -16,6 +16,8 @@ describe 'seasons' do
     click_link 'New season'
     fill_in 'Name',           :with => '2013 Summer'
     fill_in 'Starting when?', :with => 'June 2013'
+    select '2',               :from => 'Singles matches'
+    select '3',               :from => 'Doubles matches'
     click_button 'Create Season'
 
     page.should have_selector '.alert.alert-success', :text => 'Season created'

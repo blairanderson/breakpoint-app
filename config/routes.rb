@@ -20,6 +20,11 @@ Tennisone::Application.routes.draw do
 
   resources :matches do
     resources :match_availabilities
+    resources :match_lineups do
+      collection do
+        get 'edit'
+      end
+    end
   end
 
   # The priority is based upon order of creation:

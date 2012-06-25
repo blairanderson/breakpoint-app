@@ -31,7 +31,7 @@ RSpec.configure do |config|
 end
 
 def login_admin
-  admin = create(:admin)
+  @admin = create(:admin)
   visit new_user_session_path
   fill_in 'Email',    :with => 'admin@example.com'
   fill_in 'Password', :with => 'testing'

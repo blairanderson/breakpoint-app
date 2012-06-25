@@ -5,7 +5,7 @@
     :as => :string,
     :label => 'When?',
     :hint => 'e.g. January 5 at 7pm &ndash; or &ndash; tomorrow at 8pm' %>
-  <%= f.input :location, :collection => Match::LOCATIONS, :value_method => :to_s, :label_method => :humanize %>
+  <%= f.input :location, :collection => Match::LOCATIONS, :label_method => :humanize, :value_method => :to_s %>
   <%= f.input :opponent %>
 
   <div class="form-actions">

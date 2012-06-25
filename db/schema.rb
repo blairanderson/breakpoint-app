@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120624145100) do
+ActiveRecord::Schema.define(:version => 20120624215858) do
 
   create_table "match_availabilities", :force => true do |t|
     t.integer  "user_id"
@@ -22,6 +22,18 @@ ActiveRecord::Schema.define(:version => 20120624145100) do
 
   add_index "match_availabilities", ["match_id"], :name => "index_match_availabilities_on_match_id"
   add_index "match_availabilities", ["user_id"], :name => "index_match_availabilities_on_user_id"
+
+  create_table "match_lineups", :force => true do |t|
+    t.string   "match_type", :default => "", :null => false
+    t.integer  "ordinal",                    :null => false
+    t.integer  "user_id"
+    t.integer  "match_id"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+  end
+
+  add_index "match_lineups", ["match_id"], :name => "index_match_lineups_on_match_id"
+  add_index "match_lineups", ["user_id"], :name => "index_match_lineups_on_user_id"
 
   create_table "matches", :force => true do |t|
     t.datetime "date",                       :null => false
@@ -65,16 +77,19 @@ ActiveRecord::Schema.define(:version => 20120624145100) do
   add_index "practices", ["season_id"], :name => "index_practices_on_season_id"
 
   create_table "seasons", :force => true do |t|
-    t.string   "name",       :default => "", :null => false
-    t.datetime "date",                       :null => false
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.string   "name",            :default => "", :null => false
+    t.datetime "date",                            :null => false
+    t.integer  "singles_matches",                 :null => false
+    t.integer  "doubles_matches",                 :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
   create_table "users", :force => true do |t|
     t.string   "first_name",             :default => "",            :null => false
     t.string   "last_name",              :default => "",            :null => false
     t.string   "phone_number"
+    t.string   "role",                   :default => "team_member", :null => false
     t.string   "email",                  :default => "",            :null => false
     t.string   "encrypted_password",     :default => "",            :null => false
     t.string   "reset_password_token"
@@ -87,7 +102,6 @@ ActiveRecord::Schema.define(:version => 20120624145100) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                                        :null => false
     t.datetime "updated_at",                                        :null => false
-    t.string   "role",                   :default => "team_member", :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

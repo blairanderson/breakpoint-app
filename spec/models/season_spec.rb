@@ -9,4 +9,13 @@ describe Season do
     season.practices.count.should eq(2)
     season.upcoming_practices.count.should eq(1)
   end
+
+  it 'returns upcoming matches' do
+    season = create(:season)
+    match = create(:match, :season => season)
+    match2 = create(:match_in_past, :season => season)
+
+    season.matches.count.should eq(2)
+    season.upcoming_matches.count.should eq(1)
+  end
 end

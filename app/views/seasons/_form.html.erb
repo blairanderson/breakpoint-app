@@ -7,6 +7,8 @@
     :label => 'Starting when?',
     :required => true,
     :hint => "e.g. May #{Time.now.year}" %>
+  <%= f.input :singles_matches, :collection => 0..9, :input_html => { :class => 'span1' } %>
+  <%= f.input :doubles_matches, :collection => 0..9, :input_html => { :class => 'span1' } %>
 
   <div class="form-actions">
     <%= f.submit :class => 'btn btn-primary' %>

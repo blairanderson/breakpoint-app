@@ -16,6 +16,7 @@
       <tr>
         <th>Name</th>
         <th>Date</th>
+        <th>Matches</th>
         <% if can? :manage, @seasons %>
           <th style="width: 82px;">&nbsp;</th>
         <% end %>
@@ -25,7 +26,11 @@
       <% @seasons.each do |season| %>
       <tr>
         <td><%= link_to season.name, season %></td>
-        <td><%= l season.date %>
+        <td><%= l season.date %></td>
+        <td>
+          <%= season.singles_matches %> singles,
+          <%= season.doubles_matches %> doubles
+        </td>
         <% if can? :manage, season %>
           <td>
             <%= link_to 'Edit', edit_season_path(season), :class => 'btn btn-mini' %>

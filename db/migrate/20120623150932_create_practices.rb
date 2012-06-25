@@ -3,7 +3,7 @@ class CreatePractices < ActiveRecord::Migration
     create_table :practices do |t|
       t.datetime   :date,   :null => false
       t.text       :comment
-      t.references :season, :null => false, :default => ""
+      t.references :season, :null => false, :default => ''
 
       t.timestamps
     end
