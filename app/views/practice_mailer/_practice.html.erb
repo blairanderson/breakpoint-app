@@ -1,0 +1,10 @@
+<p>
+  <% if @practice.comment.present? %>
+    Comment from the captain: <%= @practice.comment %>
+  <% else %>
+    Coordinate with the captain for further details.
+  <% end %>
+</p>
+<p>
+  Now, <%= link_to 'set your availability', season_path(@practice.season) %>.
+</p>

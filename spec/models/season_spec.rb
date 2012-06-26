@@ -18,6 +18,14 @@ describe Season do
     season.matches.count.should eq(2)
     season.upcoming_matches.count.should eq(1)
   end
+
+  it 'returns team emails' do
+    user = create(:user)
+    user2 = create(:user2)
+    season = create(:season, :users => [user, user2])
+
+    season.team_emails.should eq ['john.doe@example.com', 'dave.kroondyk@example.com']
+  end
 end
 
 # == Schema Information

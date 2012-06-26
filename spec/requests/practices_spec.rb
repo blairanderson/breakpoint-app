@@ -16,6 +16,7 @@ describe 'practices' do
     fill_in 'When?', :with => 'June 24, 2014 at 7pm'
     click_button 'Create Practice'
 
+    ActionMailer::Base.deliveries.should_not be_empty
     page.should have_selector '.alert.alert-success', :text => 'Practice created'
     page.should have_content 'June 24, 2014 7:00 pm'
   end
@@ -33,6 +34,7 @@ describe 'practices' do
     fill_in 'When?', :with => 'June 25, 2014 at 6pm'
     click_button 'Update Practice'
 
+    ActionMailer::Base.deliveries.should_not be_empty
     page.should have_selector '.alert.alert-success', :text => 'Practice updated'
     page.should have_content 'June 25, 2014 6:00 pm'
   end

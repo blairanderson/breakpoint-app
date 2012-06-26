@@ -8,6 +8,10 @@ class Practice < ActiveRecord::Base
   attr_accessible :comment
 
   validates_presence_of :season
+
+  def team_emails
+    season.team_emails
+  end
 end
 
 # == Schema Information

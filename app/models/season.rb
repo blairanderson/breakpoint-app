@@ -21,6 +21,10 @@ class Season < ActiveRecord::Base
   def upcoming_matches
     matches.where('date > ?', Time.now).order('date asc')
   end
+
+  def team_emails
+    users.select(&:email).collect(&:email)
+  end
 end
 
 # TODO

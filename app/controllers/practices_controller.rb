@@ -10,6 +10,7 @@ class PracticesController < ApplicationController
 
   def create
     if @practice.save
+      PracticeMailer.practice_scheduled(@practice).deliver
       redirect_to @season, :notice => 'Practice created'
     else
       render :new
@@ -18,6 +19,7 @@ class PracticesController < ApplicationController
 
   def update
     if @practice.update_attributes(params[:practice])
+      PracticeMailer.practice_updated(@practice).deliver
       redirect_to @season, :notice => 'Practice updated'
     else
       render :edit

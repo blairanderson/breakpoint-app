@@ -25,6 +25,10 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+group :production do
+  gem 'simple_postmark'
+end
+
 gem 'jquery-rails'
 gem 'bootstrap-sass', '~> 2.0.3'
 gem 'simple_form'
