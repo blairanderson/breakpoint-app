@@ -24,7 +24,7 @@ class SeasonsController < ApplicationController
 
   def update
     if @season.update_attributes(params[:season])
-      redirect_to seasons_path, :notice => 'Season updated'
+      redirect_to seasons_url, :notice => 'Season updated'
     else
       render :edit
     end
@@ -33,7 +33,7 @@ class SeasonsController < ApplicationController
   def destroy
     @season.destroy
 
-    redirect_to seasons_path, :notice => 'Season deleted'
+    redirect_to seasons_url, :notice => 'Season deleted'
   end
 
   private

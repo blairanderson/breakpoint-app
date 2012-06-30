@@ -12,7 +12,7 @@ class UsersController < ApplicationController
 
   def create
     if @user.save
-      redirect_to users_path, :notice => 'User created'
+      redirect_to users_url, :notice => 'User created'
     else
       render :new
     end
@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 
   def update
     if @user.update_attributes(params[:user])
-      redirect_to users_path, :notice => 'User updated'
+      redirect_to users_url, :notice => 'User updated'
     else
       render :edit
     end
@@ -29,8 +29,8 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
 
-    redirect_to users_path, :notice => 'User deleted'
+    redirect_to users_url, :notice => 'User deleted'
   rescue ActiveRecord::DeleteRestrictionError
-    redirect_to users_path, :alert => 'Cannot delete user because of they belong to a season'
+    redirect_to users_url, :alert => 'Cannot delete user because of they belong to a season'
   end
 end
