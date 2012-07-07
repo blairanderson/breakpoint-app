@@ -8,18 +8,18 @@
 <% if @season.upcoming_practices.empty? %>
   <div class="alert alert-block alert-info">
     <h4>No practices for this season yet.</h4>
-    <%= link_to 'Add a practice', new_season_practice_path(@season) %> to get playing.
+    <% if can? :manage, @season %>
+      <%= link_to 'Add a practice', new_season_practice_path(@season) %> to get playing.
+    <% end %>
   </div>
 <% else %>
   <table class="table table-bordered table-striped">
     <thead>
       <tr>
-        <% if can? :manage, @season.upcoming_practices.first.practice_sessions.build %>
-          <th style="width: 163px;">Going?</th>
-        <% end %>
+        <th style="width: 163px;">Going?</th>
         <th>Date</th>
         <th>Comment</th>
-        <% if can? :manage, @season.upcoming_practices %>
+        <% if can? :manage, @season %>
           <th style="width: 82px;">&nbsp;</th>
         <% end %>
       </tr>
@@ -27,26 +27,23 @@
     <tbody>
       <% @season.upcoming_practices.each do |practice| %>
         <tr>
-          <% if can? :manage, practice.practice_sessions.build %>
-            <td>
-              <div class="pull-left">
-                <% if current_user.practices.include? practice %>
-                  <% practice_session = current_user.practice_sessions.select { |practice_session| practice_session.user == current_user }.first %>
-                  <%= link_to "I'm not going",
-                    practice_practice_session_path(practice, practice_session),
-                    :method => :delete,
-                    :class => 'btn btn-mini btn-warning' %>
-                <% else %>
-                  <%= form_tag practice_practice_sessions_path(practice), :style => 'margin-bottom: 0px;' do %>
-                    <%= submit_tag "I'm going", :class => 'btn btn-mini' %>
-                  <% end %>
+          <td>
+            <div class="pull-left">
+              <% if practice_session = practice.practice_session_for_user(current_user.id) %>
+                <%= link_to "I'm not going",
+                  practice_practice_session_path(practice, practice_session),
+                  :method => :delete,
+                  :class => 'btn btn-mini btn-warning' %>
+              <% else %>
+                <%= form_tag practice_practice_sessions_path(practice), :style => 'margin-bottom: 0px;' do %>
+                  <%= submit_tag "I'm going", :class => 'btn btn-mini' %>
                 <% end %>
-              </div>
-              <div class="pull-right">
-                <%= render :partial => 'practice_confirmations', :locals => { :practice => practice } %>
-              </div>
-            </td>
-          <% end %>
+              <% end %>
+            </div>
+            <div class="pull-right">
+              <%= render :partial => 'practice_confirmations', :locals => { :practice => practice } %>
+            </div>
+          </td>
           <td><%= l practice.date, :format => :long %></td>
           <td><%= practice.comment %></td>
           <% if can? :manage, practice %>

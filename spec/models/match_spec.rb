@@ -16,6 +16,24 @@ describe Match do
     match.match_lineups[1].match_type.should eq('#1 Doubles')
     match.match_lineups[2].match_type.should eq('#1 Doubles')
   end
+
+  it 'returns team emails' do
+    user = create(:user)
+    user2 = create(:user2)
+    season = create(:season, :users => [user, user2])
+    match = create(:match, :season => season)
+
+    match.team_emails.should eq ['john.doe@example.com', 'dave.kroondyk@example.com']
+  end
+
+  it 'returns the match availability for a specified user id' do
+    user = create(:user)
+    season = create(:season, :users => [user])
+    match = create(:match, :season => season)
+    match_availability = create(:match_availability, :match => match, :user => user)
+
+    match.match_availability_for_user(user.id).should eq match_availability
+  end
 end
 
 # == Schema Information

@@ -15,6 +15,15 @@ describe Practice do
 
     practice.team_emails.should eq ['john.doe@example.com', 'dave.kroondyk@example.com']
   end
+
+  it 'returns the practice session for a specified user id' do
+    user = create(:user)
+    season = create(:season, :users => [user])
+    practice = create(:practice, :season => season)
+    practice_session = create(:practice_session, :practice => practice, :user => user)
+
+    practice.practice_session_for_user(user.id).should eq practice_session
+  end
 end
 
 # == Schema Information

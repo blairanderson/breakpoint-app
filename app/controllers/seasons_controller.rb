@@ -1,8 +1,8 @@
 class SeasonsController < ApplicationController
-  before_filter :load_seasons, :only => 'index'
   load_and_authorize_resource
 
   def index
+    @seasons = @seasons.newest
   end
 
   def show
@@ -34,11 +34,5 @@ class SeasonsController < ApplicationController
     @season.destroy
 
     redirect_to seasons_url, :notice => 'Season deleted'
-  end
-
-  private
-
-  def load_seasons
-    @seasons = Season.newest
   end
 end

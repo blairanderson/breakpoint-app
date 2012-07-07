@@ -4,6 +4,7 @@ describe 'practices' do
   before :each do
     login_admin
     @practice = create(:practice)
+    @old_practice = create(:practice_in_past)
     visit season_path(@practice.season)
   end
 

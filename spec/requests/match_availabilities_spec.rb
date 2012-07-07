@@ -4,6 +4,7 @@ describe 'match_availabilities' do
   before :each do
     login_admin
     @match = create(:match)
+    @old_match = create(:match_in_past)
     visit season_path(@match.season)
   end
 

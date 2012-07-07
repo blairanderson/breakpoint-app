@@ -23,6 +23,14 @@ class Match < ActiveRecord::Base
     location == 'away'
   end
 
+  def team_emails
+    season.team_emails
+  end
+
+  def match_availability_for_user(user_id)
+    match_availabilities.where(user_id: user_id).first
+  end
+
   private
   def setup_match_lineups
     ordinal = 0

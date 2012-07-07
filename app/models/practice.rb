@@ -12,6 +12,10 @@ class Practice < ActiveRecord::Base
   def team_emails
     season.team_emails
   end
+
+  def practice_session_for_user(user_id)
+    practice_sessions.where(user_id: user_id).first
+  end
 end
 
 # == Schema Information

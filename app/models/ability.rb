@@ -9,12 +9,8 @@ class Ability
     elsif user.captain?
       can :manage, :all
     else
-      can :manage, PracticeSession do |practice_session|
-        practice_session.practice.season.users.include? user
-      end
-      can :manage, MatchAvailability do |match_availability|
-        match_availability.match.season.users.include? user
-      end
+      can :manage, PracticeSession, :user_id => user.id
+      can :manage, MatchAvailability, :user_id => user.id
       can :read, :all
     end
   end
