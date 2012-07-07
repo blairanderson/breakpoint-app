@@ -1,7 +1,7 @@
 Tennisone::Application.routes.draw do
+  root :to => 'seasons#index'
+  
   devise_for :users
-
-  root :to => 'users#index'
 
   resources :users
   resources :seasons do
