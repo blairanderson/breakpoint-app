@@ -1,5 +1,4 @@
 class PracticeMailer < ActionMailer::Base
-  #default from: "from@example.com"
   layout 'mailer'
 
   def practice_scheduled practice

@@ -25,7 +25,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-group :production do
+group :development, :production do
   gem 'simple_postmark'
 end
 
@@ -36,6 +36,7 @@ gem 'chronic'
 gem 'devise'
 gem 'cancan'
 gem 'annotate', '>=2.5.0.pre1'
+gem 'mail_safe'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -1,5 +1,4 @@
 class MatchMailer < ActionMailer::Base
-  #default from: "from@example.com"
   layout 'mailer'
 
   def match_scheduled match
