@@ -11,7 +11,10 @@ class Ability
     else
       can :manage, PracticeSession, :user_id => user.id
       can :manage, MatchAvailability, :user_id => user.id
-      can :read, :all
+      # TODO only if in season
+      can :manage, Practice
+      can :manage, Match
+      can :manage, Season
     end
   end
 end

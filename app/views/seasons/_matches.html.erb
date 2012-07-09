@@ -1,16 +1,12 @@
 <h2>
   Matches
-  <% if can? :manage, @season %>
-    <%= link_to 'Add a match', new_season_match_path(@season), :class => 'pull-right btn' %>
-  <% end %>
+  <%= link_to 'Add a match', new_season_match_path(@season), :class => 'pull-right btn' %>
 </h2>
 
 <% if @season.upcoming_matches.empty? %>
   <div class="alert alert-block alert-info">
     <h4>No matches for this season yet.</h4>
-    <% if can? :manage, @season %>
-      <%= link_to 'Add a match', new_season_match_path(@season) %> to get playing.
-    <% end %>
+    <%= link_to 'Add a match', new_season_match_path(@season) %> to get playing.
   </div>
 <% else %>
   <table class="table table-bordered table-striped">
@@ -19,10 +15,8 @@
         <th style="width: 163px;">Can play?</th>
         <th>Date</th>
         <th>Opponent</th>
-        <% if can? :manage, @season %>
-          <th>Setup Lineup</th>
-          <th style="width: 82px;">&nbsp;</th>
-        <% end %>
+        <th>Setup Lineup</th>
+        <th style="width: 82px;">&nbsp;</th>
       </tr>
     </thead>
     <tbody>
@@ -50,17 +44,15 @@
             <%= l match.date, :format => :long %>
           </td>
           <td><%= match.opponent %></td>
-          <% if can? :manage, match %>
-            <td><%= link_to 'Set the lineup', edit_match_match_lineups_path(match) %></td>
-            <td>
-              <%= link_to 'Edit', edit_season_match_path(@season, match), :class => 'btn btn-mini' %>
-              <%= link_to 'Delete',
-                season_match_path(@season, match),
-                :data => { :confirm => 'Are you sure?' },
-                :method => :delete,
-                :class => 'btn btn-mini btn-danger' %>
-            </td>
-          <% end %>
+          <td><%= link_to 'Set the lineup', edit_match_match_lineups_path(match) %></td>
+          <td>
+            <%= link_to 'Edit', edit_season_match_path(@season, match), :class => 'btn btn-mini' %>
+            <%= link_to 'Delete',
+              season_match_path(@season, match),
+              :data => { :confirm => 'Are you sure?' },
+              :method => :delete,
+              :class => 'btn btn-mini btn-danger' %>
+          </td>
         </tr>
       <% end %>
     </tbody>

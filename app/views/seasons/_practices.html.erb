@@ -1,16 +1,12 @@
 <h2>
   Practices
-  <% if can? :manage, @season %>
-    <%= link_to 'Add a practice', new_season_practice_path(@season), :class => 'pull-right btn' %>
-  <% end %>
+  <%= link_to 'Add a practice', new_season_practice_path(@season), :class => 'pull-right btn' %>
 </h2>
 
 <% if @season.upcoming_practices.empty? %>
   <div class="alert alert-block alert-info">
     <h4>No practices for this season yet.</h4>
-    <% if can? :manage, @season %>
-      <%= link_to 'Add a practice', new_season_practice_path(@season) %> to get playing.
-    <% end %>
+    <%= link_to 'Add a practice', new_season_practice_path(@season) %> to get playing.
   </div>
 <% else %>
   <table class="table table-bordered table-striped">
@@ -19,9 +15,7 @@
         <th style="width: 163px;">Going?</th>
         <th>Date</th>
         <th>Comment</th>
-        <% if can? :manage, @season %>
-          <th style="width: 82px;">&nbsp;</th>
-        <% end %>
+        <th style="width: 82px;">&nbsp;</th>
       </tr>
     </thead>
     <tbody>
@@ -46,16 +40,14 @@
           </td>
           <td><%= l practice.date, :format => :long %></td>
           <td><%= practice.comment %></td>
-          <% if can? :manage, practice %>
-            <td>
-              <%= link_to 'Edit', edit_season_practice_path(@season, practice), :class => 'btn btn-mini' %>
-              <%= link_to 'Delete',
-                season_practice_path(@season, practice),
-                :data => { :confirm => 'Are you sure?' },
-                :method => :delete,
-                :class => 'btn btn-mini btn-danger' %>
-            </td>
-          <% end %>
+          <td>
+            <%= link_to 'Edit', edit_season_practice_path(@season, practice), :class => 'btn btn-mini' %>
+            <%= link_to 'Delete',
+              season_practice_path(@season, practice),
+              :data => { :confirm => 'Are you sure?' },
+              :method => :delete,
+              :class => 'btn btn-mini btn-danger' %>
+          </td>
         </tr>
       <% end %>
     </tbody>

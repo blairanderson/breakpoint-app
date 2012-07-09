@@ -40,6 +40,5 @@ describe 'devise' do
     click_button 'Update'
 
     page.should have_selector '.alert.alert-success', :text => 'You updated your account successfully.'
-    page.should have_content '111-111-1111'
   end
 end

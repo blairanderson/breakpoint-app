@@ -1,8 +1,6 @@
 <% title 'Seasons' do %>
   Seasons
-  <% if can? :manage, Season %>
-    <%= link_to 'New season', new_season_path, :class => 'btn' %>
-  <% end %>
+  <%= link_to 'New season', new_season_path, :class => 'btn' %>
 <% end %>
 
 <% if @seasons.empty? %>
@@ -17,9 +15,7 @@
         <th>Name</th>
         <th>Date</th>
         <th>Matches</th>
-        <% if can? :manage, @seasons %>
-          <th style="width: 82px;">&nbsp;</th>
-        <% end %>
+        <th style="width: 82px;">&nbsp;</th>
       </tr>
     </thead>
     <tbody>
@@ -31,16 +27,14 @@
           <%= season.singles_matches %> singles,
           <%= season.doubles_matches %> doubles
         </td>
-        <% if can? :manage, season %>
-          <td>
-            <%= link_to 'Edit', edit_season_path(season), :class => 'btn btn-mini' %>
-            <%= link_to 'Delete',
-              season,
-              :data => { :confirm => 'Are you sure?' },
-              :method => :delete,
-              :class => 'btn btn-mini btn-danger' %>
-          </td>
-        <% end %>
+        <td>
+          <%= link_to 'Edit', edit_season_path(season), :class => 'btn btn-mini' %>
+          <%= link_to 'Delete',
+            season,
+            :data => { :confirm => 'Are you sure?' },
+            :method => :delete,
+            :class => 'btn btn-mini btn-danger' %>
+        </td>
       </tr>
       <% end %>
     </tbody>
