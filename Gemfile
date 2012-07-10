@@ -5,6 +5,7 @@ gem 'pg'
 
 group :development do
   gem 'quiet_assets'
+  #gem 'mailcatcher'
 end
 
 group :development, :test do
@@ -27,7 +28,7 @@ end
 
 group :development, :production do
   gem 'simple_postmark'
-  gem 'mail_safe'
+  gem 'mail_safe', git: 'git@github.com:davekaro/mail_safe.git'
 end
 
 gem 'jquery-rails'
