@@ -28,7 +28,7 @@ end
 
 group :development, :production do
   gem 'simple_postmark'
-  gem 'mail_safe', git: 'git@github.com:davekaro/mail_safe.git'
+  gem 'mail_safe', git: 'git://github.com/davekaro/mail_safe.git'
 end
 
 gem 'jquery-rails'
