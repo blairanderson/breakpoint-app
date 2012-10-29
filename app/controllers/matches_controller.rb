@@ -10,7 +10,6 @@ class MatchesController < ApplicationController
 
   def create
     if @match.save
-      MatchMailer.match_scheduled(@match).deliver
       redirect_to @season, :notice => 'Match created'
     else
       render :new
@@ -19,7 +18,6 @@ class MatchesController < ApplicationController
 
   def update
     if @match.update_attributes(params[:match])
-      MatchMailer.match_updated(@match).deliver
       redirect_to @season, :notice => 'Match updated'
     else
       render :edit

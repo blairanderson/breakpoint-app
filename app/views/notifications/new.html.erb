@@ -1,0 +1,13 @@
+<% title "Send notification" %>
+
+<%= simple_form_for([@notification.notifier, @notification], :html => { :class => 'form-horizontal' } ) do |f| %>
+  <%= f.error_messages %>
+
+  <%= f.input :body, :as => :text %>
+  <%= f.input :updated, :as => :boolean %>
+
+  <div class="form-actions">
+    <%= f.submit 'Send', :class => 'btn btn-primary' %>
+  </div>
+<% end %>
+

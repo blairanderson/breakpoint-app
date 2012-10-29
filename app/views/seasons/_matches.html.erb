@@ -15,6 +15,7 @@
         <th style="width: 163px;">Can play?</th>
         <th>Date</th>
         <th>Opponent</th>
+        <th>Notify Team</th>
         <th>Setup Lineup</th>
         <th style="width: 82px;">&nbsp;</th>
       </tr>
@@ -44,6 +45,7 @@
             <%= l match.date, :format => :long %>
           </td>
           <td><%= match.opponent %></td>
+          <td><%= link_to 'Notify', new_match_notification_path(match) %></td>
           <td><%= link_to 'Set the lineup', edit_match_match_lineups_path(match) %></td>
           <td>
             <%= link_to 'Edit', edit_season_match_path(@season, match), :class => 'btn btn-mini' %>
