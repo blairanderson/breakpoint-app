@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= content_for?(:page_title) ? yield(:page_title) : 'Tennis' %></title>
+  <title><%= content_for?(:page_title) ? yield(:page_title) : 'Breakpoint App' %></title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
@@ -10,7 +10,7 @@
   <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
-        <%= link_to 'Tennis', root_path, :class => 'brand' %>
+        <%= link_to 'Breakpoint App', root_path, :class => 'brand' %>
         <ul class="nav">
           <li><%= link_to 'Seasons', seasons_path %></li>
           <li><%= link_to 'Users',   users_path %></li>
