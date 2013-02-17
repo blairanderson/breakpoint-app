@@ -1,16 +1,16 @@
 class NotificationsController < ApplicationController
-  load_and_authorize_resource :practice
-  load_and_authorize_resource :match
-  load_and_authorize_resource :match_lineup
-
   def new
+    @practice = Practice.find(params[:practice_id]) if params[:practice_id].present?
+    @match = Match.find(params[:match_id]) if params[:match_id].present?
     @notification = Notification.new
-    @notification.set_notifier(@practice, @match, @match_lineup)
+    @notification.set_notifier(@practice, @match)
   end
 
   def create
+    @practice = Practice.find(params[:practice_id]) if params[:practice_id].present?
+    @match = Match.find(params[:match_id]) if params[:match_id].present?
     @notification = Notification.new(params[:notification])
-    @notification.set_notifier(@practice, @match, @match_lineup)
+    @notification.set_notifier(@practice, @match)
 
     if @notification.deliver
       redirect_to @notification.notifier.season, :notice => 'Notification sent'

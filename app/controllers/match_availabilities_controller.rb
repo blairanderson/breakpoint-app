@@ -1,8 +1,7 @@
 class MatchAvailabilitiesController < ApplicationController
-  load_and_authorize_resource :match
-  load_and_authorize_resource :match_availability, :through => :match
-
   def create
+    @match = Match.find(params[:match_id])
+    @match_availability = @match.match_availabilities.build(params[:match_availability])
     @match_availability.user = current_user
     @match_availability.save
 
@@ -10,8 +9,13 @@ class MatchAvailabilitiesController < ApplicationController
   end
 
   def destroy
+    @match = Match.find(params[:match_id])
+    @match_availability = MatchAvailability.find(params[:id])
+    authorize @match_availability
+
     @match_availability.destroy
 
     redirect_to @match.season
   end
 end
+

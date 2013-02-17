@@ -21,10 +21,8 @@ BreakpointApp::Application.routes.draw do
 
   resources :matches do
     resources :match_availabilities
-    resources :match_lineups do
-      collection do
-        get 'edit'
-      end
+    member do
+      get 'edit_lineup' => 'match_lineups#edit'
     end
     resources :notifications
   end

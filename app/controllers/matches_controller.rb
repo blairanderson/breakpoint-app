@@ -1,32 +1,39 @@
 class MatchesController < ApplicationController
-  load_and_authorize_resource :season
-  load_and_authorize_resource :match, :through => :season
-
   def new
+    @season = Season.find(params[:season_id])
+    @match = @season.matches.build
   end
 
   def edit
+    @match = Match.find(params[:id])
   end
 
   def create
+    @season = Season.find(params[:season_id])
+    @match = @season.matches.build(params[:match])
+
     if @match.save
-      redirect_to @season, :notice => 'Match created'
+      redirect_to season_url(@season), :notice => 'Match created'
     else
       render :new
     end
   end
 
   def update
+    @match = Match.find(params[:id])
+
     if @match.update_attributes(params[:match])
-      redirect_to @season, :notice => 'Match updated'
+      redirect_to season_url(@match.season), :notice => 'Match updated'
     else
       render :edit
     end
   end
 
   def destroy
+    @match = Match.find(params[:id])
     @match.destroy
 
-    redirect_to @season, :notice => 'Match deleted'
+    redirect_to season_url(@match.season), :notice => 'Match deleted'
   end
 end
+

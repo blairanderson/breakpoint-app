@@ -1,20 +1,23 @@
 class SeasonsController < ApplicationController
-  load_and_authorize_resource
-
   def index
-    @seasons = @seasons.newest
+    @seasons = Season.newest
   end
 
   def show
+    @season = Season.find(params[:id])
   end
 
   def new
+    @season = Season.new
   end
 
   def edit
+    @season = Season.find(params[:id])
   end
 
   def create
+    @season = Season.new(params[:season])
+
     if @season.save
       redirect_to @season, :notice => 'Season created'
     else
@@ -23,6 +26,8 @@ class SeasonsController < ApplicationController
   end
 
   def update
+    @season = Season.find(params[:id])
+
     if @season.update_attributes(params[:season])
       redirect_to seasons_url, :notice => 'Season updated'
     else
@@ -31,8 +36,10 @@ class SeasonsController < ApplicationController
   end
 
   def destroy
+    @season = Season.find(params[:id])
     @season.destroy
 
     redirect_to seasons_url, :notice => 'Season deleted'
   end
 end
+

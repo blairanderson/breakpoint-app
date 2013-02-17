@@ -46,7 +46,7 @@
           </td>
           <td><%= match.opponent %></td>
           <td><%= link_to 'Notify', new_match_notification_path(match) %></td>
-          <td><%= link_to 'Set the lineup', edit_match_match_lineups_path(match) %></td>
+          <td><%= link_to 'Set the lineup', edit_lineup_match_path(match) %></td>
           <td>
             <%= link_to 'Edit', edit_season_match_path(@season, match), :class => 'btn btn-mini' %>
             <%= link_to 'Delete',
