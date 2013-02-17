@@ -8,12 +8,12 @@ describe 'devise' do
 
   it 'signs a user up' do
     click_link 'Sign up'
-    fill_in 'First name',            :with => 'Dave'
-    fill_in 'Last name',             :with => 'Kroondyk'
-    fill_in 'Email',                 :with => 'davekaro@gmail.com'
-    fill_in 'Phone number',          :with => '555-555-5555'
-    fill_in 'Password',              :with => 'testing'
-    fill_in 'Password confirmation', :with => 'testing'
+    fill_in 'First name',                 :with => 'Dave'
+    fill_in 'Last name',                  :with => 'Kroondyk'
+    fill_in 'Email',                      :with => 'davekaro@gmail.com'
+    fill_in 'Phone number',               :with => '555-555-5555'
+    fill_in 'user_password',              :with => 'testing'
+    fill_in 'user_password_confirmation', :with => 'testing'
     click_button 'Sign up'
 
     page.should have_selector '.alert.alert-success', :text => 'Welcome!'

@@ -18,7 +18,7 @@ describe 'match_lineups' do
     @match.match_lineups.where(:user_id => @admin.id).count.should eq(1)
 
     click_link 'Set the lineup'
-    select '', :form => '#1 Singles'
+    select '', :from => '#1 Singles'
     click_button 'Save match lineup'
 
     page.should have_selector '.alert.alert-success', :text => 'Match updated'

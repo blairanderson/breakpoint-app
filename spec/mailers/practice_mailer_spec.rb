@@ -11,7 +11,7 @@ describe PracticeMailer do
   it 'sends practice scheduled email' do
     email = PracticeMailer.practice_scheduled(@practice).deliver
     
-    ActionMailer::Base.deliveries.should_not be_empty
+    last_email.should_not be_nil
     email.to.should eq ['john.doe@example.com', 'dave.kroondyk@example.com']
     email.subject.should eq 'New practice scheduled'
     email.encoded.should match /<h1>New practice scheduled for/
@@ -20,7 +20,7 @@ describe PracticeMailer do
   it 'sends practice updated email' do
     email = PracticeMailer.practice_updated(@practice).deliver
 
-    ActionMailer::Base.deliveries.should_not be_empty
+    last_email.should_not be_nil
     email.to.should eq ['john.doe@example.com', 'dave.kroondyk@example.com']
     email.subject.should eq 'Practice updated'
     email.encoded.should match /<h1>Practice scheduled for/
