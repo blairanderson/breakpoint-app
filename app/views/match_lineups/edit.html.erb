@@ -16,8 +16,6 @@
         :value_method => :id %>
     <% end %>
 
-    <%# need the season_id so cancan will properly load_and_authorize it from the MatchController %>
-    <%= hidden_field_tag 'season_id', @match.season_id %>
     <div class="form-actions">
       <%= f.submit 'Save match lineup', :class => 'btn btn-primary' %>
     </div>

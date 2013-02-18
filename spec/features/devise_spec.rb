@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'devise' do
   before :each do
     @user = create(:user)
-    visit users_path
+    visit root_path
   end
 
   it 'signs a user up' do
@@ -42,3 +42,4 @@ describe 'devise' do
     page.should have_selector '.alert.alert-success', :text => 'You updated your account successfully.'
   end
 end
+

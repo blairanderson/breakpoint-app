@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'players' do
   before :each do
-    login_admin
+    login_captain
     @player = create(:player)
     @user2 = create(:user2)
     visit season_path(@player.season)
@@ -22,3 +22,4 @@ describe 'players' do
     page.should have_content 'Dave Kroondyk'
   end
 end
+

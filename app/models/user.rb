@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  ROLES = %w[admin captain team_member]
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -23,25 +22,12 @@ class User < ActiveRecord::Base
     :remember_me,
     :first_name,
     :last_name,
-    :phone_number,
-    :role
+    :phone_number
   
-  validates_presence_of :first_name, :last_name, :role
+  validates_presence_of :first_name, :last_name
 
   def name
     "#{first_name} #{last_name}"
-  end
-
-  def admin?
-    role == "admin"
-  end
-
-  def captain?
-    role == "captain"
-  end
-
-  def team_member?
-    role == "team_member"
   end
 end
 
@@ -63,7 +49,6 @@ end
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string(255)
-#  role                   :string(255)      default("team_member"), not null
 #  sign_in_count          :integer          default(0)
 #  updated_at             :datetime         not null
 #

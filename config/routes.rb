@@ -3,7 +3,6 @@ BreakpointApp::Application.routes.draw do
 
   devise_for :users
 
-  resources :users
   resources :seasons do
     resources :practices
     resources :matches

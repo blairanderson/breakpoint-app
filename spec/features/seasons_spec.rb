@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'seasons' do
   before :each do
-    login_admin
+    login_captain
     @season = create(:season)
     visit seasons_path
   end
@@ -48,3 +48,4 @@ describe 'seasons' do
     page.should_not have_content '2012 Summer'
   end
 end
+

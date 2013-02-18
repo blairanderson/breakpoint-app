@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'practice_sessions' do
   before :each do
-    login_admin
+    login_captain
     @practice = create(:practice)
     @old_practice = create(:practice_in_past)
     visit season_path(@practice.season)
@@ -23,3 +23,4 @@ describe 'practice_sessions' do
     page.should have_content 'There are no confirmed players yet'
   end
 end
+

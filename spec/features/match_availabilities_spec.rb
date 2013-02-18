@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'match_availabilities' do
   before :each do
-    login_admin
+    login_captain
     @match = create(:match)
     @old_match = create(:match_in_past)
     visit season_path(@match.season)
@@ -23,3 +23,4 @@ describe 'match_availabilities' do
     page.should have_content 'There are no available players yet'
   end
 end
+

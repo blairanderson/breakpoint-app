@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'match_lineups' do
   before :each do
-    login_admin
+    login_captain
     @match = create(:match)
     @old_match = create(:match_in_past)
     visit season_path(@match.season)
@@ -11,17 +11,18 @@ describe 'match_lineups' do
   it 'sets the match lineup' do
     click_button 'I can play'
     click_link   'Set the lineup'
-    select 'admin admin', :from => '#1 Singles'
+    select 'captain captain', :from => '#1 Singles'
     click_button 'Save match lineup'
 
     page.should have_selector '.alert.alert-success', :text => 'Match updated'
-    @match.match_lineups.where(:user_id => @admin.id).count.should eq(1)
+    @match.match_lineups.where(:user_id => @captain.id).count.should eq(1)
 
     click_link 'Set the lineup'
     select '', :from => '#1 Singles'
     click_button 'Save match lineup'
 
     page.should have_selector '.alert.alert-success', :text => 'Match updated'
-    @match.match_lineups.where(:user_id => @admin.id).count.should eq(0)
+    @match.match_lineups.where(:user_id => @captain.id).count.should eq(0)
   end
 end
+

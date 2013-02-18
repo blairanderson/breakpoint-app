@@ -13,25 +13,17 @@ FactoryGirl.define do
       email      'dave.kroondyk@example.com'
     end
 
-    factory :admin do
-      first_name 'admin'
-      last_name  'admin'
-      email      'admin@example.com'
-      role       'admin'
-    end
-
     factory :captain do
       first_name 'captain'
       last_name  'captain'
       email      'captain@example.com'
-      role       'captain'
     end
 
     factory :team_member do
       first_name 'team_member'
       last_name  'team_member'
       email      'team_member@example.com'
-      role       'team_member'
     end
   end
 end
+
