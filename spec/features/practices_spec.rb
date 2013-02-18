@@ -15,7 +15,7 @@ describe 'practices' do
   it 'creates a practice' do
     click_link 'Add a practice'
     fill_in 'When?', :with => 'June 24, 2014 at 7pm'
-    click_button 'Create Practice'
+    click_button 'Save practice'
 
     last_email.should be_nil
     page.should have_selector '.alert.alert-success', :text => 'Practice created'
@@ -24,7 +24,7 @@ describe 'practices' do
 
   it 'shows errors for invalid practices' do
     click_link 'Add a practice'
-    click_button 'Create Practice'
+    click_button 'Save practice'
 
     page.should have_selector '.alert.alert-block.alert-error'
     page.should have_content "Date string can't be blank"
@@ -33,7 +33,7 @@ describe 'practices' do
   it 'edits a practice' do
     click_link 'Edit'
     fill_in 'When?', :with => 'June 25, 2014 at 6pm'
-    click_button 'Update Practice'
+    click_button 'Save practice'
 
     last_email.should be_nil
     page.should have_selector '.alert.alert-success', :text => 'Practice updated'
@@ -48,10 +48,10 @@ describe 'practices' do
   end
 
   it 'notifies team members' do
-    click_link 'Notify Team'
+    click_link 'Notify team'
     page.should have_selector '.alert.alert-success', :text => 'Notification email sent to team'
     last_email.subject.should == 'New practice scheduled'
-    page.should have_selector '.disabled', :text => 'Notify Team'
+    page.should have_selector '.disabled', :text => 'Notify team'
 
     # stays disabled if nothing in the practice changed
     click_link 'Edit'
@@ -61,17 +61,17 @@ describe 'practices' do
     # If I manually fill in the comment field with the same value from factory_girl,
     # it works fine.
     fill_in 'Comment', :with => 'at Waltham'
-    click_button 'Update Practice'
-    page.should have_selector '.disabled', :text => 'Notify Team'
+    click_button 'Save practice'
+    page.should have_selector '.disabled', :text => 'Notify team'
 
     # sends updated email after practice is updated
     click_link 'Edit'
     fill_in 'When?', :with => 'June 25, 2014 at 6pm'
-    click_button 'Update Practice'
-    page.should_not have_selector '.disabled', :text => 'Notify Team'
-    click_link 'Notify Team'
+    click_button 'Save practice'
+    page.should_not have_selector '.disabled', :text => 'Notify team'
+    click_link 'Notify team'
     last_email.subject.should == 'Practice updated'
-    page.should have_selector '.disabled', :text => 'Notify Team'
+    page.should have_selector '.disabled', :text => 'Notify team'
   end
 end
 

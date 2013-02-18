@@ -18,7 +18,7 @@ describe 'seasons' do
     fill_in 'Starting when?', :with => 'June 2013'
     select '2',               :from => 'Singles matches'
     select '3',               :from => 'Doubles matches'
-    click_button 'Create Season'
+    click_button 'Save season'
 
     page.should have_selector '.alert.alert-success', :text => 'Season created'
     page.should have_content '2013 Summer'
@@ -26,7 +26,7 @@ describe 'seasons' do
 
   it 'shows errors for invalid seasons' do
     click_link 'New season'
-    click_button 'Create Season'
+    click_button 'Save season'
 
     page.should have_selector '.alert.alert-block.alert-error'
     page.should have_content "Name can't be blank"
@@ -35,7 +35,7 @@ describe 'seasons' do
   it 'edits a season' do
     click_link 'Edit'
     fill_in 'Name', :with => '2010 Summer'
-    click_button 'Update Season'
+    click_button 'Save season'
 
     page.should have_selector '.alert.alert-success', :text => 'Season updated'
     page.should have_content '2010 Summer'

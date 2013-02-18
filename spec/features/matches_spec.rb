@@ -17,7 +17,7 @@ describe 'matches' do
     fill_in 'When?',    :with => 'June 27, 2014 at 7pm'
     select  'Home',     :from => 'Location'
     fill_in 'Opponent', :with => 'Paxton'
-    click_button 'Create Match'
+    click_button 'Save match'
 
     page.should have_selector '.alert.alert-success', :text => 'Match created'
     page.should have_content 'June 27, 2014 7:00 pm'
@@ -25,7 +25,7 @@ describe 'matches' do
 
   it 'shows errors for invalid matchs' do
     click_link 'Add a match'
-    click_button 'Create Match'
+    click_button 'Save match'
 
     page.should have_selector '.alert.alert-block.alert-error'
     page.should have_content "Date string can't be blank"
@@ -34,7 +34,7 @@ describe 'matches' do
   it 'edits a match' do
     click_link 'Edit'
     fill_in 'When?', :with => 'June 28, 2014 at 6pm'
-    click_button 'Update Match'
+    click_button 'Save match'
 
     page.should have_selector '.alert.alert-success', :text => 'Match updated'
     page.should have_content 'June 28, 2014 6:00 pm'
@@ -48,24 +48,24 @@ describe 'matches' do
   end
 
   it 'notifies team members' do
-    click_link 'Notify Team'
+    click_link 'Notify team'
     page.should have_selector '.alert.alert-success', :text => 'Notification email sent to team'
     last_email.subject.should == 'New match scheduled'
-    page.should have_selector '.disabled', :text => 'Notify Team'
+    page.should have_selector '.disabled', :text => 'Notify team'
 
     # stays disabled if nothing in the match changed
     click_link 'Edit'
-    click_button 'Update Match'
-    page.should have_selector '.disabled', :text => 'Notify Team'
+    click_button 'Save match'
+    page.should have_selector '.disabled', :text => 'Notify team'
 
     # sends updated email after match is updated
     click_link 'Edit'
     fill_in 'When?', :with => 'June 25, 2014 at 6pm'
-    click_button 'Update Match'
-    page.should_not have_selector '.disabled', :text => 'Notify Team'
-    click_link 'Notify Team'
+    click_button 'Save match'
+    page.should_not have_selector '.disabled', :text => 'Notify team'
+    click_link 'Notify team'
     last_email.subject.should == 'Match updated'
-    page.should have_selector '.disabled', :text => 'Notify Team'
+    page.should have_selector '.disabled', :text => 'Notify team'
   end
 end
 

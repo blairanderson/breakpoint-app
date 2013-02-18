@@ -40,9 +40,9 @@
           <td><%= practice.comment %></td>
           <td>
             <% if practice.notified_team? %>
-              <%= link_to 'Notify Team', notify_practice_path(practice), :method => :post, :class => 'btn btn-small disabled' %>
+              <%= link_to 'Notify team', notify_practice_path(practice), :method => :post, :class => 'btn btn-small disabled' %>
             <% else %>
-              <%= link_to 'Notify Team', notify_practice_path(practice), :method => :post, :class => 'btn btn-small' %>
+              <%= link_to 'Notify team', notify_practice_path(practice), :method => :post, :class => 'btn btn-small' %>
             <% end %>
             <%= link_to 'Edit', edit_practice_path(practice), :class => 'btn btn-small' %>
             <%= link_to 'Delete',

@@ -10,7 +10,7 @@
 
   <%= hidden_field_tag :season_id, @match.season_id if @match.new_record? %>
   <div class="form-actions">
-    <%= f.submit :class => 'btn btn-primary' %>
+    <%= f.submit 'Save match', :class => 'btn btn-primary' %>
   </div>
 <% end %>
 
