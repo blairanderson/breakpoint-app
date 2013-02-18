@@ -18,12 +18,6 @@ FactoryGirl.define do
       last_name  'captain'
       email      'captain@example.com'
     end
-
-    factory :team_member do
-      first_name 'team_member'
-      last_name  'team_member'
-      email      'team_member@example.com'
-    end
   end
 end
 

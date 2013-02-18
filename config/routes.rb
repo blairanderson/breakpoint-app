@@ -6,7 +6,7 @@ BreakpointApp::Application.routes.draw do
   resources :seasons do
     resources :practices
     resources :matches
-    resources :players do
+    resources :team_members do
       collection do
         put 'update'
       end

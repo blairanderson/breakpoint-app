@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :player do
+  factory :team_member do
     season
     user
   end

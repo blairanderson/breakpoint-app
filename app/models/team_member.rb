@@ -1,4 +1,4 @@
-class Player < ActiveRecord::Base
+class TeamMember < ActiveRecord::Base
   belongs_to :season
   belongs_to :user
 end

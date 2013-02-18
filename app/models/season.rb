@@ -1,10 +1,10 @@
 class Season < ActiveRecord::Base
   include ChronicParser
 
-  has_many :practices, :dependent => :destroy
-  has_many :matches,   :dependent => :destroy
-  has_many :players,   :dependent => :destroy
-  has_many :users,     :through   => :players
+  has_many :practices,    :dependent => :destroy
+  has_many :matches,      :dependent => :destroy
+  has_many :team_members, :dependent => :destroy
+  has_many :users,        :through   => :team_members
   
   attr_accessible :name, :singles_matches, :doubles_matches
 
