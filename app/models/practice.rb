@@ -23,11 +23,12 @@ end
 #
 # Table name: practices
 #
-#  comment    :text
-#  created_at :datetime         not null
-#  date       :datetime         not null
-#  id         :integer          not null, primary key
-#  season_id  :integer          default(0), not null
-#  updated_at :datetime         not null
+#  id             :integer          not null, primary key
+#  date           :datetime         not null
+#  comment        :text
+#  season_id      :integer          default(0), not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  notified_state :string(255)
 #
 

@@ -40,12 +40,13 @@ end
 #
 # Table name: matches
 #
-#  created_at :datetime         not null
-#  date       :datetime         not null
-#  id         :integer          not null, primary key
-#  location   :string(255)      default(""), not null
-#  opponent   :string(255)      default(""), not null
-#  season_id  :integer
-#  updated_at :datetime         not null
+#  id             :integer          not null, primary key
+#  date           :datetime         not null
+#  location       :string(255)      default(""), not null
+#  opponent       :string(255)      default(""), not null
+#  season_id      :integer
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  notified_state :string(255)
 #
 
