@@ -3,7 +3,7 @@ class Practice < ActiveRecord::Base
   include NotifyStateMachine
 
   has_many   :practice_sessions, :dependent => :destroy
-  has_many   :users,             :through   => :practice_sessions
+  has_many   :players,           :through   => :practice_sessions, :source => :user
   belongs_to :season
 
   attr_accessible :comment, :notified_state

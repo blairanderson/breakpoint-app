@@ -5,7 +5,7 @@ class Match < ActiveRecord::Base
 
   has_many   :match_availabilities, :dependent => :destroy
   has_many   :match_lineups,        :dependent => :destroy, :order => :ordinal
-  has_many   :users,                :through   => :match_availabilities
+  has_many   :players,              :through   => :match_availabilities, :source => :user
   belongs_to :season
 
   attr_accessible :location, :opponent, :match_lineups_attributes, :notified_state

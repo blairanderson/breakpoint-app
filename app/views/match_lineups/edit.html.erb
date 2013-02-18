@@ -1,6 +1,6 @@
 <% title 'Set match lineup' %>
 
-<% if @match.users.empty? %>
+<% if @match.players.empty? %>
   <div class="alert alert-info">
     There are no available players yet.
   </div>
@@ -10,7 +10,7 @@
 
     <%= f.simple_fields_for :match_lineups do |match_lineup_form| %>
       <%= match_lineup_form.input :user_id,
-        :collection   => @match.users,
+        :collection   => @match.players,
         :label        => match_lineup_form.object.match_type,
         :label_method => :name,
         :value_method => :id %>
