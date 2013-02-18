@@ -1,4 +1,10 @@
 class MatchesController < ApplicationController
+  layout 'season'
+
+  def index
+    @season = Season.find(params[:season_id])
+  end
+
   def new
     @season = Season.find(params[:season_id])
     @match = @season.matches.build
@@ -6,6 +12,7 @@ class MatchesController < ApplicationController
 
   def edit
     @match = Match.find(params[:id])
+    @season = @match.season
   end
 
   def notify
@@ -17,9 +24,9 @@ class MatchesController < ApplicationController
         MatchMailer.match_updated(@match).deliver
       end
       @match.notified!
-      redirect_to season_url(@match.season), :notice => 'Notification email sent to team'
+      redirect_to season_matches_url(@match.season), :notice => 'Notification email sent to team'
     else
-      redirect_to season_url(@match.season), :notice => 'Team has already been notified'
+      redirect_to season_matches_url(@match.season), :notice => 'Team has already been notified'
     end
   end
 
@@ -28,7 +35,7 @@ class MatchesController < ApplicationController
     @match = @season.matches.build(params[:match])
 
     if @match.save
-      redirect_to season_url(@season), :notice => 'Match created'
+      redirect_to season_matches_url(@season), :notice => 'Match created'
     else
       render :new
     end
@@ -39,8 +46,9 @@ class MatchesController < ApplicationController
 
     if @match.update_attributes(params[:match])
       @match.reset_notified! if @match.previous_changes.present?
-      redirect_to season_url(@match.season), :notice => 'Match updated'
+      redirect_to season_matches_url(@match.season), :notice => 'Match updated'
     else
+      @season = @match.season
       render :edit
     end
   end
@@ -49,7 +57,7 @@ class MatchesController < ApplicationController
     @match = Match.find(params[:id])
     @match.destroy
 
-    redirect_to season_url(@match.season), :notice => 'Match deleted'
+    redirect_to season_matches_url(@match.season), :notice => 'Match deleted'
   end
 end
 

@@ -4,10 +4,11 @@ BreakpointApp::Application.routes.draw do
   devise_for :users
 
   resources :seasons do
-    resources :practices
-    resources :matches
-    resources :team_members do
+    resources :practices, :only => [:index, :new]
+    resources :matches, :only => [:index, :new]
+    resources :team_members, :only => :index do
       collection do
+        get 'edit'
         put 'update'
       end
     end

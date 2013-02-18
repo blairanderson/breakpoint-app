@@ -1,25 +1,12 @@
-<% title "Team members for #{@season.name}" %>
+<% subtitle 'Team' %>
+<p><%= link_to 'Add team members', edit_season_team_members_path(@season), :class => 'btn' %></p>
 
-<%= form_tag season_team_members_path, :method => :put, :class => 'form-horizontal' do %>
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>Name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @users.each do |user| %>
-      <tr>
-        <td>
-          <label class="checkbox">
-            <%= check_box_tag 'team_member_ids[]', user.id, @team_members.include?(user), :id => "team_member_id_#{user.id}" %>
-            <%= user.name %>
-          </label>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
-  <%= submit_tag 'Save Team Members', :class => 'btn btn-primary' %>
+<% if @season.team_members.empty? %>
+  <div class="alert alert-block alert-info">
+    <h4>No team members for this season yet.</h4>
+    <%= link_to 'Add team members', season_team_members_path(@season) %> to get the season started.
+  </div>
+<% else %>
+  <%= render :partial => 'team_members/team_members', :object => @season.users %>
 <% end %>
 

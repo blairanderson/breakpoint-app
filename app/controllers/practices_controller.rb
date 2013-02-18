@@ -1,4 +1,10 @@
 class PracticesController < ApplicationController
+  layout 'season'
+
+  def index
+    @season = Season.find(params[:season_id])
+  end
+
   def new
     @season = Season.find(params[:season_id])
     @practice = @season.practices.build
@@ -6,6 +12,7 @@ class PracticesController < ApplicationController
 
   def edit
     @practice = Practice.find(params[:id])
+    @season = @practice.season
   end
 
   def notify
@@ -17,9 +24,9 @@ class PracticesController < ApplicationController
         PracticeMailer.practice_updated(@practice).deliver
       end
       @practice.notified!
-      redirect_to season_url(@practice.season), :notice => 'Notification email sent to team'
+      redirect_to season_practices_url(@practice.season), :notice => 'Notification email sent to team'
     else
-      redirect_to season_url(@practice.season), :notice => 'Team has already been notified'
+      redirect_to season_practices_url(@practice.season), :notice => 'Team has already been notified'
     end
   end
 
@@ -29,7 +36,7 @@ class PracticesController < ApplicationController
     @practice = @season.practices.build(params[:practice])
 
     if @practice.save
-      redirect_to season_url(@season), :notice => 'Practice created'
+      redirect_to season_practices_url(@season), :notice => 'Practice created'
     else
       render :new
     end
@@ -40,8 +47,9 @@ class PracticesController < ApplicationController
 
     if @practice.update_attributes(params[:practice])
       @practice.reset_notified! if @practice.previous_changes.present?
-      redirect_to season_url(@practice.season), :notice => 'Practice updated'
+      redirect_to season_practices_url(@practice.season), :notice => 'Practice updated'
     else
+      @season = @practice.season
       render :edit
     end
   end
@@ -50,7 +58,7 @@ class PracticesController < ApplicationController
     @practice = Practice.find(params[:id])
     @practice.destroy
 
-    redirect_to season_url(@practice.season), :notice => 'Practice deleted'
+    redirect_to season_practices_url(@practice.season), :notice => 'Practice deleted'
   end
 end
 

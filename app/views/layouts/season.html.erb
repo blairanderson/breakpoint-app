@@ -1,0 +1,23 @@
+<% content_for :season_nav do %>
+  <% title @season.name %>
+  <div class="row">
+    <div class="span2">
+      <ul class="nav nav-tabs nav-stacked">
+        <%= active_tab 'practices' do %>
+          <%= link_to 'Practices', season_practices_path(@season) %>
+        <% end %>
+        <%= active_tab 'match' do %>
+          <%= link_to 'Matches', season_matches_path(@season) %>
+        <% end %>
+        <%= active_tab 'team_members' do %>
+          <%= link_to 'Team', season_team_members_path(@season) %>
+        <% end %>
+      </ul>
+    </div>
+    <div class="span10">
+      <%= yield %>
+    </div>
+  </div>
+<% end %>
+<%= render :template => 'layouts/application' %>
+

@@ -21,7 +21,7 @@
     <tbody>
       <% @seasons.each do |season| %>
       <tr>
-        <td><%= link_to season.name, season %></td>
+        <td><%= link_to season.name, season_practices_path(season) %></td>
         <td><%= l season.date %></td>
         <td>
           <%= season.singles_matches %> singles,

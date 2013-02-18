@@ -57,6 +57,10 @@ module LayoutHelper
     @show_title = show_title
   end
 
+  def subtitle(title)
+    content_for(:subtitle) { h(title.to_s) }
+  end
+
   def show_title?
     @show_title
   end

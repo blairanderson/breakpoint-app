@@ -39,11 +39,16 @@
 
     <% if show_title? %>
       <div class="page-header">
-        <h1><%= yield :page_header %></h1>
+        <h1>
+          <%= yield :page_header %>
+          <% if content_for?(:subtitle) %>
+            <small>&raquo; <%= yield(:subtitle) %></small>
+          <% end %>
+        </h1>
       </div>
     <% end %>
 
-    <%= yield %>
+    <%= content_for?(:season_nav) ? yield(:season_nav) : yield %>
   </div>
 
 </body>

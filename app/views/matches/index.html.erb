@@ -1,9 +1,7 @@
-<h2>
-  Matches
-  <%= link_to 'Add a match', new_season_match_path(@season), :class => 'pull-right btn' %>
-</h2>
+<% subtitle 'Matches' %>
+<p><%= link_to 'Add a match', new_season_match_path(@season), :class => 'btn' %></p>
 
-<% if @season.upcoming_matches.empty? %>
+<% if @season.matches.empty? %>
   <div class="alert alert-block alert-info">
     <h4>No matches for this season yet.</h4>
     <%= link_to 'Add a match', new_season_match_path(@season) %> to get playing.
@@ -20,7 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @season.upcoming_matches.each do |match| %>
+      <% @season.matches.each do |match| %>
         <tr>
           <td>
             <div class="pull-left">
@@ -51,9 +49,9 @@
             <% else %>
               <%= link_to 'Notify Team', notify_match_path(match), :method => :post, :class => 'btn btn-small' %>
             <% end %>
-            <%= link_to 'Edit', edit_season_match_path(@season, match), :class => 'btn btn-small' %>
+            <%= link_to 'Edit', edit_match_path(match), :class => 'btn btn-small' %>
             <%= link_to 'Delete',
-              season_match_path(@season, match),
+              match_path(match),
               :data => { :confirm => 'Are you sure?' },
               :method => :delete,
               :class => 'btn btn-small btn-danger' %>

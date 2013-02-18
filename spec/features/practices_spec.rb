@@ -5,7 +5,7 @@ describe 'practices' do
     login_captain
     @practice = create(:practice)
     @old_practice = create(:practice_in_past)
-    visit season_path(@practice.season)
+    visit season_practices_path(@practice.season)
   end
 
   it 'displays the practices' do

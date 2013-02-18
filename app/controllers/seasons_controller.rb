@@ -5,6 +5,7 @@ class SeasonsController < ApplicationController
 
   def show
     @season = Season.find(params[:id])
+    render :layout => 'season'
   end
 
   def new

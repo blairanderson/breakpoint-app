@@ -1,4 +1,4 @@
-<%= simple_form_for([@season, @match], :html => { :class => 'form-horizontal' } ) do |f| %>
+<%= simple_form_for(@match, :html => { :class => 'form-horizontal' } ) do |f| %>
   <%= f.error_messages %>
 
   <%= f.input :date_string,
@@ -8,7 +8,9 @@
   <%= f.input :location, :collection => Match::LOCATIONS, :label_method => :humanize, :value_method => :to_s %>
   <%= f.input :opponent %>
 
+  <%= hidden_field_tag :season_id, @match.season_id if @match.new_record? %>
   <div class="form-actions">
     <%= f.submit :class => 'btn btn-primary' %>
   </div>
 <% end %>
+

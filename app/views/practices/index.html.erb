@@ -1,9 +1,7 @@
-<h2>
-  Practices
-  <%= link_to 'Add a practice', new_season_practice_path(@season), :class => 'pull-right btn' %>
-</h2>
+<% subtitle 'Practices' %>
+<p><%= link_to 'Add a practice', new_season_practice_path(@season), :class => 'btn' %></p>
 
-<% if @season.upcoming_practices.empty? %>
+<% if @season.practices.empty? %>
   <div class="alert alert-block alert-info">
     <h4>No practices for this season yet.</h4>
     <%= link_to 'Add a practice', new_season_practice_path(@season) %> to get playing.
@@ -19,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @season.upcoming_practices.each do |practice| %>
+      <% @season.practices.each do |practice| %>
         <tr>
           <td>
             <div class="pull-left">
@@ -46,9 +44,9 @@
             <% else %>
               <%= link_to 'Notify Team', notify_practice_path(practice), :method => :post, :class => 'btn btn-small' %>
             <% end %>
-            <%= link_to 'Edit', edit_season_practice_path(@season, practice), :class => 'btn btn-small' %>
+            <%= link_to 'Edit', edit_practice_path(practice), :class => 'btn btn-small' %>
             <%= link_to 'Delete',
-              season_practice_path(@season, practice),
+              practice_path(practice),
               :data => { :confirm => 'Are you sure?' },
               :method => :delete,
               :class => 'btn btn-small btn-danger' %>

@@ -5,7 +5,7 @@ describe 'team members' do
     login_captain
     @team_member = create(:team_member)
     @user2 = create(:user2)
-    visit season_path(@team_member.season)
+    visit season_team_members_path(@team_member.season)
   end
 
   it 'shows team members in a season' do
@@ -15,7 +15,7 @@ describe 'team members' do
   it 'updates team members in a season' do
     click_link 'Add team members'
     check "team_member_id_#{@user2.id}"
-    click_button 'Save Team Members'
+    click_button 'Save team members'
 
     page.should have_selector '.alert.alert-success', :text => 'Team members updated'
     page.should have_content 'John Doe'

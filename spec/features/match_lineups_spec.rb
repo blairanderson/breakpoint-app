@@ -5,7 +5,7 @@ describe 'match_lineups' do
     login_captain
     @match = create(:match)
     @old_match = create(:match_in_past)
-    visit season_path(@match.season)
+    visit season_matches_path(@match.season)
   end
 
   it 'sets the match lineup' do
