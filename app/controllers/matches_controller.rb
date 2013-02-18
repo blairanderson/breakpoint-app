@@ -17,9 +17,9 @@ class MatchesController < ApplicationController
         MatchMailer.match_updated(@match).deliver
       end
       @match.notified!
-      redirect_to season_url(@match.season), :notice => 'Notification email sent to team.'
+      redirect_to season_url(@match.season), :notice => 'Notification email sent to team'
     else
-      redirect_to season_url(@match.season), :notice => 'Team has already been notified.'
+      redirect_to season_url(@match.season), :notice => 'Team has already been notified'
     end
   end
 

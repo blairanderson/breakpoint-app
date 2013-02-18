@@ -46,4 +46,32 @@ describe 'practices' do
     page.should have_selector '.alert.alert-success', :text => 'Practice deleted'
     page.should_not have_content 'June 24, 2014 7:00 pm'
   end
+
+  it 'notifies team members' do
+    click_link 'Notify Team'
+    page.should have_selector '.alert.alert-success', :text => 'Notification email sent to team'
+    last_email.subject.should == 'New practice scheduled'
+    page.should have_selector '.disabled', :text => 'Notify Team'
+
+    # stays disabled if nothing in the practice changed
+    click_link 'Edit'
+    # there is some weird thing going on here with capybara and the \n in text areas
+    # https://github.com/jnicklas/capybara/issues/677 says it was fixed, but I'm getting
+    # a \n stored at the beginning of the comment field, which the "browser" should ignore.
+    # If I manually fill in the comment field with the same value from factory_girl,
+    # it works fine.
+    fill_in 'Comment', :with => 'at Waltham'
+    click_button 'Update Practice'
+    page.should have_selector '.disabled', :text => 'Notify Team'
+
+    # sends updated email after practice is updated
+    click_link 'Edit'
+    fill_in 'When?', :with => 'June 25, 2014 at 6pm'
+    click_button 'Update Practice'
+    page.should_not have_selector '.disabled', :text => 'Notify Team'
+    click_link 'Notify Team'
+    last_email.subject.should == 'Practice updated'
+    page.should have_selector '.disabled', :text => 'Notify Team'
+  end
 end
+

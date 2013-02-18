@@ -5,11 +5,11 @@ gem 'pg',                   '0.14.1'
 
 group :development do
   gem 'quiet_assets',       '~> 1.0.1'
-  gem 'debugger',           '~> 1.3.1'
   gem 'letter_opener',      '~> 1.1.0'
 end
 
 group :development, :test do
+  gem 'debugger',           '~> 1.3.1'
   gem 'rspec-rails',        '~> 2.12.2'
   gem 'capybara',           '~> 2.0.2'
   gem 'factory_girl_rails', '~> 4.2.1'

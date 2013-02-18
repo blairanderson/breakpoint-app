@@ -1,5 +1,5 @@
 module NotifyStateMachine
-  NOTIFIED_STATES = %w[created updated notified]
+  NOTIFIED_STATES = %w[created updated notified_team]
   delegate :created?, :updated?, :notified_team?, :to => :notified_team_state
 
   def notified_team_state

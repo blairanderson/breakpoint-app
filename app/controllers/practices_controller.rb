@@ -17,9 +17,9 @@ class PracticesController < ApplicationController
         PracticeMailer.practice_updated(@practice).deliver
       end
       @practice.notified!
-      redirect_to season_url(@practice.season), :notice => 'Notification email sent to team.'
+      redirect_to season_url(@practice.season), :notice => 'Notification email sent to team'
     else
-      redirect_to season_url(@practice.season), :notice => 'Team has already been notified.'
+      redirect_to season_url(@practice.season), :notice => 'Team has already been notified'
     end
   end
 

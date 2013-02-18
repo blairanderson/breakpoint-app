@@ -46,4 +46,26 @@ describe 'matchs' do
     page.should have_selector '.alert.alert-success', :text => 'Match deleted'
     page.should_not have_content 'June 27, 2014 7:00 pm'
   end
+
+  it 'notifies team members' do
+    click_link 'Notify Team'
+    page.should have_selector '.alert.alert-success', :text => 'Notification email sent to team'
+    last_email.subject.should == 'New match scheduled'
+    page.should have_selector '.disabled', :text => 'Notify Team'
+
+    # stays disabled if nothing in the match changed
+    click_link 'Edit'
+    click_button 'Update Match'
+    page.should have_selector '.disabled', :text => 'Notify Team'
+
+    # sends updated email after match is updated
+    click_link 'Edit'
+    fill_in 'When?', :with => 'June 25, 2014 at 6pm'
+    click_button 'Update Match'
+    page.should_not have_selector '.disabled', :text => 'Notify Team'
+    click_link 'Notify Team'
+    last_email.subject.should == 'Match updated'
+    page.should have_selector '.disabled', :text => 'Notify Team'
+  end
 end
+
