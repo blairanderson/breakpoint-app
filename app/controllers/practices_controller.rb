@@ -8,6 +8,21 @@ class PracticesController < ApplicationController
     @practice = Practice.find(params[:id])
   end
 
+  def notify
+    @practice = Practice.find(params[:id])
+    if !@practice.notified_team?
+      if @practice.created?
+        PracticeMailer.practice_scheduled(@practice).deliver
+      else
+        PracticeMailer.practice_updated(@practice).deliver
+      end
+      @practice.notified!
+      redirect_to season_url(@practice.season), :notice => 'Notification email sent to team.'
+    else
+      redirect_to season_url(@practice.season), :notice => 'Team has already been notified.'
+    end
+  end
+
   def create
     @season = Season.find(params[:season_id])
     # TODO authorize season
@@ -24,6 +39,7 @@ class PracticesController < ApplicationController
     @practice = Practice.find(params[:id])
 
     if @practice.update_attributes(params[:practice])
+      @practice.reset_notified! if @practice.previous_changes.present?
       redirect_to season_url(@practice.season), :notice => 'Practice updated'
     else
       render :edit

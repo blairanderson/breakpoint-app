@@ -36,8 +36,8 @@ BreakpointApp::Application.configure do
   config.assets.debug = true
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
-  config.action_mailer.delivery_method = :simple_postmark
-  config.action_mailer.simple_postmark_settings = { api_key: '941e8b1a-01e6-4feb-a986-8d0dd456050c' }
+  config.action_mailer.delivery_method = :letter_opener
 end
 
 ActionMailer::Base.default from: 'dave@kroondyk.com'
+

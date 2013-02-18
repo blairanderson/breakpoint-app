@@ -8,6 +8,21 @@ class MatchesController < ApplicationController
     @match = Match.find(params[:id])
   end
 
+  def notify
+    @match = Match.find(params[:id])
+    if !@match.notified_team?
+      if @match.created?
+        MatchMailer.match_scheduled(@match).deliver
+      else
+        MatchMailer.match_updated(@match).deliver
+      end
+      @match.notified!
+      redirect_to season_url(@match.season), :notice => 'Notification email sent to team.'
+    else
+      redirect_to season_url(@match.season), :notice => 'Team has already been notified.'
+    end
+  end
+
   def create
     @season = Season.find(params[:season_id])
     @match = @season.matches.build(params[:match])
@@ -23,6 +38,7 @@ class MatchesController < ApplicationController
     @match = Match.find(params[:id])
 
     if @match.update_attributes(params[:match])
+      @match.reset_notified! if @match.previous_changes.present?
       redirect_to season_url(@match.season), :notice => 'Match updated'
     else
       render :edit

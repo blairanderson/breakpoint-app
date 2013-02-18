@@ -14,3 +14,7 @@
 //= require jquery_ujs
 //= require bootstrap
 
+$(function() {
+  $("a.disabled").on("click", false);
+});
+

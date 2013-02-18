@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120624215858) do
+ActiveRecord::Schema.define(:version => 20130218043014) do
 
   create_table "match_availabilities", :force => true do |t|
     t.integer  "user_id"
@@ -36,12 +36,13 @@ ActiveRecord::Schema.define(:version => 20120624215858) do
   add_index "match_lineups", ["user_id"], :name => "index_match_lineups_on_user_id"
 
   create_table "matches", :force => true do |t|
-    t.datetime "date",                       :null => false
-    t.string   "location",   :default => "", :null => false
-    t.string   "opponent",   :default => "", :null => false
+    t.datetime "date",                           :null => false
+    t.string   "location",       :default => "", :null => false
+    t.string   "opponent",       :default => "", :null => false
     t.integer  "season_id"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.string   "notified_state"
   end
 
   add_index "matches", ["season_id"], :name => "index_matches_on_season_id"
@@ -67,11 +68,12 @@ ActiveRecord::Schema.define(:version => 20120624215858) do
   add_index "practice_sessions", ["user_id"], :name => "index_practice_sessions_on_user_id"
 
   create_table "practices", :force => true do |t|
-    t.datetime "date",                      :null => false
+    t.datetime "date",                          :null => false
     t.text     "comment"
-    t.integer  "season_id",  :default => 0, :null => false
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.integer  "season_id",      :default => 0, :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.string   "notified_state"
   end
 
   add_index "practices", ["season_id"], :name => "index_practices_on_season_id"

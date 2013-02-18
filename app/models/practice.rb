@@ -1,11 +1,12 @@
 class Practice < ActiveRecord::Base
   include ChronicParser
+  include NotifyStateMachine
 
   has_many   :practice_sessions, :dependent => :destroy
   has_many   :users,             :through   => :practice_sessions
   belongs_to :season
 
-  attr_accessible :comment
+  attr_accessible :comment, :notified_state
 
   validates_presence_of :season
 

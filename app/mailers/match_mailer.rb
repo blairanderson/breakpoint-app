@@ -11,3 +11,4 @@ class MatchMailer < ActionMailer::Base
     mail :to => match.team_emails, :subject => 'Match updated'
   end
 end
+

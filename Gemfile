@@ -6,8 +6,7 @@ gem 'pg',                   '0.14.1'
 group :development do
   gem 'quiet_assets',       '~> 1.0.1'
   gem 'debugger',           '~> 1.3.1'
-  gem 'mail_safe', git: 'git://github.com/davekaro/mail_safe.git'
-  #gem 'mailcatcher'
+  gem 'letter_opener',      '~> 1.1.0'
 end
 
 group :development, :test do
@@ -16,8 +15,6 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.2.1'
 end
 
-# Gems used only for assets and not required
-# in production environments by default.
 group :assets do
   gem 'sass-rails',         '~> 3.2.6'
   gem 'coffee-rails',       '~> 3.2.2'
@@ -25,7 +22,7 @@ group :assets do
   gem 'uglifier',           '~> 1.3.0'
 end
 
-group :development, :production do
+group :production do
   gem 'simple_postmark',    '~> 0.5.1'
 end
 

@@ -11,3 +11,4 @@ class PracticeMailer < ActionMailer::Base
     mail :to => practice.team_emails, :subject => 'Practice updated'
   end
 end
+

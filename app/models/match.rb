@@ -1,13 +1,14 @@
 class Match < ActiveRecord::Base
   LOCATIONS = %w[home away]
   include ChronicParser
+  include NotifyStateMachine
 
   has_many   :match_availabilities, :dependent => :destroy
   has_many   :match_lineups,        :dependent => :destroy, :order => :ordinal
   has_many   :users,                :through   => :match_availabilities
   belongs_to :season
 
-  attr_accessible :location, :opponent, :match_lineups_attributes
+  attr_accessible :location, :opponent, :match_lineups_attributes, :notified_state
 
   validates_presence_of :season, :location, :opponent
 

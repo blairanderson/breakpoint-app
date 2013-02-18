@@ -12,12 +12,11 @@
   <table class="table table-bordered table-striped">
     <thead>
       <tr>
-        <th style="width: 163px;">Can play?</th>
+        <th style="width: 182px;">Can play?</th>
         <th>Date</th>
         <th>Opponent</th>
-        <th>Notify Team</th>
         <th>Setup Lineup</th>
-        <th style="width: 82px;">&nbsp;</th>
+        <th style="width: 193px;">&nbsp;</th>
       </tr>
     </thead>
     <tbody>
@@ -29,10 +28,10 @@
                 <%= link_to "I can't play",
                   match_match_availability_path(match, match_availability),
                   :method => :delete,
-                  :class => 'btn btn-mini btn-warning' %>
+                  :class => 'btn btn-small btn-warning' %>
               <% else %>
                 <%= form_tag match_match_availabilities_path(match), :style => 'margin-bottom: 0px;' do %>
-                  <%= submit_tag "I can play", :class => 'btn btn-mini' %>
+                  <%= submit_tag "I can play", :class => 'btn btn-small' %>
                 <% end %>
               <% end %>
             </div>
@@ -45,15 +44,19 @@
             <%= l match.date, :format => :long %>
           </td>
           <td><%= match.opponent %></td>
-          <td><%= link_to 'Notify', new_match_notification_path(match) %></td>
           <td><%= link_to 'Set the lineup', edit_lineup_match_path(match) %></td>
           <td>
-            <%= link_to 'Edit', edit_season_match_path(@season, match), :class => 'btn btn-mini' %>
+            <% if match.notified_team? %>
+              <%= link_to 'Notify Team', notify_match_path(match), :method => :post, :class => 'btn btn-small disabled' %>
+            <% else %>
+              <%= link_to 'Notify Team', notify_match_path(match), :method => :post, :class => 'btn btn-small' %>
+            <% end %>
+            <%= link_to 'Edit', edit_season_match_path(@season, match), :class => 'btn btn-small' %>
             <%= link_to 'Delete',
               season_match_path(@season, match),
               :data => { :confirm => 'Are you sure?' },
               :method => :delete,
-              :class => 'btn btn-mini btn-danger' %>
+              :class => 'btn btn-small btn-danger' %>
           </td>
         </tr>
       <% end %>

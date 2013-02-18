@@ -16,15 +16,17 @@ BreakpointApp::Application.routes.draw do
 
   resources :practices do
     resources :practice_sessions
-    resources :notifications
+    member do
+      post 'notify'
+    end
   end
 
   resources :matches do
     resources :match_availabilities
     member do
+      post 'notify'
       get 'edit_lineup' => 'match_lineups#edit'
     end
-    resources :notifications
   end
 end
 
