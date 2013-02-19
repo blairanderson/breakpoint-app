@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130218165838) do
+ActiveRecord::Schema.define(:version => 20130218221325) do
+
+  create_table "invites", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "season_id"
+    t.integer  "invited_by_id"
+    t.datetime "accepted_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "invites", ["season_id"], :name => "index_invites_on_season_id"
+  add_index "invites", ["user_id"], :name => "index_invites_on_user_id"
 
   create_table "match_availabilities", :force => true do |t|
     t.integer  "user_id"
@@ -88,11 +100,11 @@ ActiveRecord::Schema.define(:version => 20130218165838) do
   add_index "team_members", ["user_id"], :name => "index_players_on_user_id"
 
   create_table "users", :force => true do |t|
-    t.string   "first_name",             :default => "", :null => false
-    t.string   "last_name",              :default => "", :null => false
+    t.string   "first_name",             :default => ""
+    t.string   "last_name",              :default => ""
     t.string   "phone_number"
     t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "encrypted_password",     :default => ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

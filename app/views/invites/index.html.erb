@@ -1,0 +1,91 @@
+<% subtitle 'Invite team members' %>
+
+<div class="alert alert-block alert-info">
+  <h4>Invite members to your team!</h4>
+  Search for members by name or email address, or enter an email address to invite someone new.
+</div>
+
+<%= form_tag season_invites_path(@season), :method => :get do %>
+  <div class="input-append">
+    <input class="span3" name="search" type="text" value="<%= params[:search] %>">
+    <input class="btn" name="commit" type="submit" value="Search" />
+  </div>
+<% end %>
+
+<% if @users.present? %>
+  <h3>Found users</h3>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th style="width: 51px;">&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td>
+            <%= form_for [@season, Invite.new], :html => { :style => 'margin: 0px;' } do |f| %>
+              <%= hidden_field_tag :email, user.email %>
+              <%= f.submit 'Invite', :class => 'btn btn-small btn-success' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% elsif @email.present? %>
+  <div class="alert alert-block alert-warning">
+    <h4><%= @email %> has no account yet</h4>
+    Click "Invite" below and we'll send them an invite email.
+  </div>
+  <%= form_for [@season, Invite.new], :html => { :style => 'margin: 0px;' } do |f| %>
+    <%= hidden_field_tag :email, @email %>
+    <%= f.submit "Invite #{@email}", :class => 'btn btn-success' %>
+  <% end %>
+<% elsif params[:search].present? %>
+  <div class="alert alert-block alert-warning">
+    <h4>No results found for <%= params[:search] %></h4>
+    Try entering an email address to invite someone new.
+  </div>
+<% end %>
+
+<% if @invites.present? %>
+  <h3>Invited users</h3>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Invited on</th>
+        <th>Invited by</th>
+        <th>Accepted on</th>
+        <th style="width: 55px;">&nbsp;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @invites.each do |invite| %>
+      <tr>
+        <td><%= invite.user.name if invite.accepted_at.present? %></td>
+        <td><%= invite.user.email %></td>
+        <td><%= l invite.created_at %></td>
+        <td><%= invite.invited_by.name %></td>
+        <td><%= l invite.accepted_at if invite.accepted_at.present? %></td>
+        <td>
+          <% unless invite.accepted_at.present? %>
+            <%= link_to 'Delete',
+              season_invite_path(@season, invite),
+              :data => { :confirm => 'Are you sure?' },
+              :method => :delete,
+              :class => 'btn btn-small btn-danger' %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+

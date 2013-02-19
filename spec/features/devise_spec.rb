@@ -25,7 +25,7 @@ describe 'devise' do
     click_button 'Sign up'
 
     page.should have_selector '.alert.alert-block.alert-error'
-    page.should have_content "First name can't be blank"
+    page.should have_content "Email can't be blank"
   end
 
   it 'changes a user profile' do

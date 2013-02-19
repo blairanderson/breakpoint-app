@@ -9,8 +9,8 @@ class User < ActiveRecord::Base
     :trackable,
     :validatable
 
-  has_many :players,              :dependent => :restrict
-  has_many :seasons,              :through   => :players
+  has_many :team_members,         :dependent => :restrict
+  has_many :seasons,              :through   => :team_members
   has_many :practice_sessions,    :dependent => :restrict
   has_many :practices,            :through   => :practice_sessions
   has_many :match_availabilities, :dependent => :restrict
@@ -24,10 +24,16 @@ class User < ActiveRecord::Base
     :last_name,
     :phone_number
   
-  validates_presence_of :first_name, :last_name
-
   def name
-    "#{first_name} #{last_name}"
+    if first_name.present? && last_name.present?
+      "#{first_name} #{last_name}"
+    elsif first_name.empty? && last_name.present?
+      "#{last_name}"
+    elsif first_name.present? && last_name.empty?
+      "#{first_name}"
+    else
+      email
+    end
   end
 end
 

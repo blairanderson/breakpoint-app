@@ -1,7 +1,5 @@
-<% title 'Seasons' do %>
-  Seasons
-  <%= link_to 'New season', new_season_path, :class => 'btn' %>
-<% end %>
+<% title 'Seasons' %>
+<p><%= link_to 'New season', new_season_path, :class => 'btn' %></p>
 
 <% if @seasons.empty? %>
   <div class="alert alert-block alert-info">
@@ -40,3 +38,4 @@
     </tbody>
   </table>
 <% end %>
+

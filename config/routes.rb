@@ -6,23 +6,19 @@ BreakpointApp::Application.routes.draw do
   resources :seasons do
     resources :practices, :only => [:index, :new]
     resources :matches, :only => [:index, :new]
-    resources :team_members, :only => :index do
-      collection do
-        get 'edit'
-        put 'update'
-      end
-    end
+    resources :team_members, :only => :index
+    resources :invites, :only => [:index, :create, :update, :destroy]
   end
 
-  resources :practices do
-    resources :practice_sessions
+  resources :practices, :except => [:index, :new] do
+    resources :practice_sessions, :only => [:create, :destroy]
     member do
       post 'notify'
     end
   end
 
-  resources :matches do
-    resources :match_availabilities
+  resources :matches, :except => [:index, :new] do
+    resources :match_availabilities, :only => [:create, :destroy]
     member do
       post 'notify'
       get 'edit_lineup' => 'match_lineups#edit'

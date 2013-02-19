@@ -11,15 +11,5 @@ describe 'team members' do
   it 'shows team members in a season' do
     page.should have_content 'John Doe'
   end
-
-  it 'updates team members in a season' do
-    click_link 'Add team members'
-    check "team_member_id_#{@user2.id}"
-    click_button 'Save team members'
-
-    page.should have_selector '.alert.alert-success', :text => 'Team members updated'
-    page.should have_content 'John Doe'
-    page.should have_content 'Dave Kroondyk'
-  end
 end
 

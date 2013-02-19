@@ -1,5 +1,4 @@
 <% subtitle 'Team' %>
-<p><%= link_to 'Add team members', edit_season_team_members_path(@season), :class => 'btn' %></p>
 
 <% if @season.team_members.empty? %>
   <div class="alert alert-block alert-info">

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'seasons' do
   before :each do
     login_captain
-    @season = create(:season)
+    @season = create(:season, :users => [@captain])
     visit seasons_path
   end
 
@@ -22,6 +22,7 @@ describe 'seasons' do
 
     page.should have_selector '.alert.alert-success', :text => 'Season created'
     page.should have_content '2013 Summer'
+    Season.find_by_name('2013 Summer').users.first.should == @captain
   end
 
   it 'shows errors for invalid seasons' do

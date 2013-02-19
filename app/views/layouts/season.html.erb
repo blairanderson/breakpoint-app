@@ -12,6 +12,9 @@
         <%= active_tab 'team_members' do %>
           <%= link_to 'Team', season_team_members_path(@season) %>
         <% end %>
+        <%= active_tab 'invites' do %>
+          <%= link_to 'Invite members', season_invites_path(@season) %>
+        <% end %>
       </ul>
     </div>
     <div class="span10">

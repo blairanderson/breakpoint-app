@@ -1,6 +1,6 @@
 class SeasonsController < ApplicationController
   def index
-    @seasons = Season.newest
+    @seasons = current_user.seasons.newest
   end
 
   def show
@@ -18,9 +18,10 @@ class SeasonsController < ApplicationController
 
   def create
     @season = Season.new(params[:season])
+    @season.users << current_user
 
     if @season.save
-      redirect_to @season, :notice => 'Season created'
+      redirect_to season_invites_url(@season), :notice => 'Season created'
     else
       render :new
     end

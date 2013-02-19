@@ -3,6 +3,7 @@ class Season < ActiveRecord::Base
 
   has_many :practices,    :dependent => :destroy
   has_many :matches,      :dependent => :destroy
+  has_many :invites,      :dependent => :destroy
   has_many :team_members, :dependent => :destroy
   has_many :users,        :through   => :team_members
   
