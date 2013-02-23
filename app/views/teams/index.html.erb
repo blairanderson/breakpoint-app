@@ -1,10 +1,10 @@
-<% title 'Seasons' %>
-<p><%= link_to 'New season', new_season_path, :class => 'btn' %></p>
+<% title 'Teams' %>
+<p><%= link_to 'New team', new_team_path, :class => 'btn' %></p>
 
-<% if @seasons.empty? %>
+<% if @teams.empty? %>
   <div class="alert alert-block alert-info">
-    <h4>No seasons created yet.</h4>
-    Make a <%= link_to 'new season', new_season_path %> to get started.
+    <h4>No teams created yet.</h4>
+    Make a <%= link_to 'new team', new_team_path %> to get started.
   </div>
 <% else %>
   <table class="table table-bordered table-striped">
@@ -17,18 +17,18 @@
       </tr>
     </thead>
     <tbody>
-      <% @seasons.each do |season| %>
+      <% @teams.each do |team| %>
       <tr>
-        <td><%= link_to season.name, season_practices_path(season) %></td>
-        <td><%= l season.date %></td>
+        <td><%= link_to team.name, team_practices_path(team) %></td>
+        <td><%= l team.date %></td>
         <td>
-          <%= season.singles_matches %> singles,
-          <%= season.doubles_matches %> doubles
+          <%= team.singles_matches %> singles,
+          <%= team.doubles_matches %> doubles
         </td>
         <td>
-          <%= link_to 'Edit', edit_season_path(season), :class => 'btn btn-small' %>
+          <%= link_to 'Edit', edit_team_path(team), :class => 'btn btn-small' %>
           <%= link_to 'Delete',
-            season,
+            team,
             :data => { :confirm => 'Are you sure?' },
             :method => :delete,
             :class => 'btn btn-small btn-danger' %>

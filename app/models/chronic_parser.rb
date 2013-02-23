@@ -25,3 +25,4 @@ module ChronicParser
     errors.add(:date_string, 'is invalid') if @date_invalid
   end
 end
+

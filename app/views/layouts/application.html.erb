@@ -12,7 +12,7 @@
       <div class="container">
         <%= link_to 'Breakpoint App', root_path, :class => 'brand' %>
         <ul class="nav">
-          <li><%= link_to 'Seasons', seasons_path %></li>
+          <li><%= link_to 'Teams', teams_path %></li>
         </ul>
         <ul class="nav pull-right">
           <% if current_user %>
@@ -48,7 +48,7 @@
       </div>
     <% end %>
 
-    <%= content_for?(:season_nav) ? yield(:season_nav) : yield %>
+    <%= content_for?(:team_nav) ? yield(:team_nav) : yield %>
   </div>
 
 </body>

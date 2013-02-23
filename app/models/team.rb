@@ -1,4 +1,4 @@
-class Season < ActiveRecord::Base
+class Team < ActiveRecord::Base
   include ChronicParser
 
   has_many :practices,    :dependent => :destroy
@@ -70,7 +70,7 @@ end
 
 # == Schema Information
 #
-# Table name: seasons
+# Table name: teams
 #
 #  created_at      :datetime         not null
 #  date            :datetime         not null

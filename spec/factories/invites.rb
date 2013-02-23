@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :invite do
     user nil
-    season nil
+    team nil
     invited_by 1
     accepted_at "2013-02-18 17:11:11"
   end

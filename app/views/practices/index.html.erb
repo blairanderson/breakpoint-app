@@ -1,10 +1,10 @@
 <% subtitle 'Practices' %>
-<p><%= link_to 'Add a practice', new_season_practice_path(@season), :class => 'btn' %></p>
+<p><%= link_to 'Add a practice', new_team_practice_path(@team), :class => 'btn' %></p>
 
-<% if @season.practices.empty? %>
+<% if @team.practices.empty? %>
   <div class="alert alert-block alert-info">
-    <h4>No practices for this season yet.</h4>
-    <%= link_to 'Add a practice', new_season_practice_path(@season) %> to get playing.
+    <h4>No practices for this team yet.</h4>
+    <%= link_to 'Add a practice', new_team_practice_path(@team) %> to get playing.
   </div>
 <% else %>
   <table class="table table-bordered table-striped">
@@ -17,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @season.practices.each do |practice| %>
+      <% @team.practices.each do |practice| %>
         <tr>
           <td>
             <div class="pull-left">

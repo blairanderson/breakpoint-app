@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
     :validatable
 
   has_many :team_members,         :dependent => :restrict
-  has_many :seasons,              :through   => :team_members
+  has_many :teams,                :through   => :team_members
   has_many :practice_sessions,    :dependent => :restrict
   has_many :practices,            :through   => :practice_sessions
   has_many :match_availabilities, :dependent => :restrict

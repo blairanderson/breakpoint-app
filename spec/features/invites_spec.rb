@@ -4,8 +4,8 @@ describe 'invites' do
   before :each do
     login_captain
     @user2 = create(:user2)
-    @season = create(:season, :users => [@captain])
-    visit season_invites_path(@season)
+    @team = create(:team, :users => [@captain])
+    visit team_invites_path(@team)
   end
 
   it 'invites users already in the system' do

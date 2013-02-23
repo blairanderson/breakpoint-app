@@ -1,11 +1,11 @@
 <% subtitle 'Team' %>
 
-<% if @season.team_members.empty? %>
+<% if @team.team_members.empty? %>
   <div class="alert alert-block alert-info">
-    <h4>No team members for this season yet.</h4>
-    <%= link_to 'Add team members', season_team_members_path(@season) %> to get the season started.
+    <h4>No team members for this team yet.</h4>
+    <%= link_to 'Add team members', team_team_members_path(@team) %> to get the team started.
   </div>
 <% else %>
-  <%= render :partial => 'team_members/team_members', :object => @season.users %>
+  <%= render :partial => 'team_members/team_members', :object => @team.users %>
 <% end %>
 

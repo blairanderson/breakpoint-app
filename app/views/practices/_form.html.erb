@@ -7,7 +7,7 @@
     :hint => 'e.g. January 5 at 7pm &ndash; or &ndash; tomorrow at 8pm' %>
   <%= f.input :comment, :input_html => { :rows => '3' } %>
 
-  <%= hidden_field_tag :season_id, @practice.season_id if @practice.new_record? %>
+  <%= hidden_field_tag :team_id, @practice.team_id if @practice.new_record? %>
   <div class="form-actions">
     <%= f.submit 'Save practice', :class => 'btn btn-primary' %>
   </div>

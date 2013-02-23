@@ -4,10 +4,10 @@ class CreateMatches < ActiveRecord::Migration
       t.datetime   :date,     :null => false
       t.string     :location, :null => false, :default => ''
       t.string     :opponent, :null => false, :default => ''
-      t.references :season
+      t.references :team
 
       t.timestamps
     end
-    add_index :matches, :season_id
+    add_index :matches, :team_id
   end
 end

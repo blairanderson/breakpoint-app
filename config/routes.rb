@@ -1,9 +1,9 @@
 BreakpointApp::Application.routes.draw do
-  root :to => 'seasons#index'
+  root :to => 'teams#index'
 
   devise_for :users
 
-  resources :seasons do
+  resources :teams do
     resources :practices, :only => [:index, :new]
     resources :matches, :only => [:index, :new]
     resources :team_members, :only => :index

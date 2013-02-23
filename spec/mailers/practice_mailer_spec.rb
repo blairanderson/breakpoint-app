@@ -4,8 +4,8 @@ describe PracticeMailer do
   before :each do
     user = create(:user)
     user2 = create(:user2)
-    season = create(:season, :users => [user, user2]) 
-    @practice = create(:practice, :season => season)
+    team = create(:team, :users => [user, user2]) 
+    @practice = create(:practice, :team => team)
   end
 
   it 'sends practice scheduled email' do

@@ -6,11 +6,11 @@ class Match < ActiveRecord::Base
   has_many   :match_availabilities, :dependent => :destroy
   has_many   :match_lineups,        :dependent => :destroy, :order => :ordinal
   has_many   :players,              :through   => :match_availabilities, :source => :user
-  belongs_to :season
+  belongs_to :team
 
   attr_accessible :location, :opponent, :match_lineups_attributes, :notified_state
 
-  validates_presence_of :season, :location, :opponent
+  validates_presence_of :team, :location, :opponent
 
   accepts_nested_attributes_for :match_lineups
 
@@ -25,7 +25,7 @@ class Match < ActiveRecord::Base
   end
 
   def team_emails
-    season.team_emails
+    team.team_emails
   end
 
   def match_availability_for_user(user_id)
@@ -35,12 +35,12 @@ class Match < ActiveRecord::Base
   private
   def setup_match_lineups
     ordinal = 0
-    1.upto(season.singles_matches) do |singles_match|
+    1.upto(team.singles_matches) do |singles_match|
       match_lineups.create :match_type => "##{singles_match} Singles", :ordinal => ordinal
       ordinal += 1
     end
 
-    1.upto(season.doubles_matches) do |doubles_match|
+    1.upto(team.doubles_matches) do |doubles_match|
       2.times do
         match_lineups.create :match_type => "##{doubles_match} Doubles", :ordinal => ordinal
       end
@@ -60,7 +60,7 @@ end
 #  date           :datetime         not null
 #  location       :string(255)      default(""), not null
 #  opponent       :string(255)      default(""), not null
-#  season_id      :integer
+#  team_id      :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  notified_state :string(255)

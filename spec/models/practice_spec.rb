@@ -10,16 +10,16 @@ describe Practice do
   it 'returns team emails' do
     user = create(:user)
     user2 = create(:user2)
-    season = create(:season, :users => [user, user2])
-    practice = create(:practice, :season => season)
+    team = create(:team, :users => [user, user2])
+    practice = create(:practice, :team => team)
 
     practice.team_emails.should eq ['john.doe@example.com', 'dave.kroondyk@example.com']
   end
 
   it 'returns the practice session for a specified user id' do
     user = create(:user)
-    season = create(:season, :users => [user])
-    practice = create(:practice, :season => season)
+    team = create(:team, :users => [user])
+    practice = create(:practice, :team => team)
     practice_session = create(:practice_session, :practice => practice, :user => user)
 
     practice.practice_session_for_user(user.id).should eq practice_session
@@ -33,7 +33,7 @@ end
 #  id             :integer          not null, primary key
 #  date           :datetime         not null
 #  comment        :text
-#  season_id      :integer          default(0), not null
+#  team_id      :integer          default(0), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  notified_state :string(255)

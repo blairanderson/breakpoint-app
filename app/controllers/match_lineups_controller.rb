@@ -1,9 +1,9 @@
 class MatchLineupsController < ApplicationController
-  layout 'season'
+  layout 'team'
 
   def edit
     @match = Match.find(params[:id])
-    @season = @match.season
+    @team = @match.team
   end
 end
 

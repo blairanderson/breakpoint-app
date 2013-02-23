@@ -1,4 +1,4 @@
-<%= simple_form_for(@season, :html => { :class => 'form-horizontal' } ) do |f| %>
+<%= simple_form_for(@team, :html => { :class => 'form-horizontal' } ) do |f| %>
   <%= f.error_messages %>
 
   <%= f.input :name %>
@@ -11,7 +11,7 @@
   <%= f.input :doubles_matches, :collection => 0..9, :input_html => { :class => 'span1' } %>
 
   <div class="form-actions">
-    <%= f.submit 'Save season', :class => 'btn btn-primary' %>
+    <%= f.submit 'Save team', :class => 'btn btn-primary' %>
   </div>
 <% end %>
 

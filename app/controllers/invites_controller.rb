@@ -1,9 +1,9 @@
 class InvitesController < ApplicationController
-  layout 'season'
-  before_filter :load_season
+  layout 'team'
+  before_filter :load_team
 
   def index
-    @invites = @season.invites.includes(:user).order('accepted_at asc')
+    @invites = @team.invites.includes(:user).order('accepted_at asc')
     if params[:search].present?
       @users = User.where('email LIKE :search or first_name LIKE :search or last_name LIKE :search', :search => "%#{params[:search]}%")
       if @users.blank? && params[:search].match(Devise.email_regexp).present?
@@ -13,7 +13,7 @@ class InvitesController < ApplicationController
   end
 
   def create
-    @invite = @season.invites.build(params[:invite])
+    @invite = @team.invites.build(params[:invite])
 
     Invite.transaction do
       user = User.where(:email => params[:email]).first
@@ -32,7 +32,7 @@ class InvitesController < ApplicationController
       @invite.save!
     end
     # TODO send invitation email
-    redirect_to season_invites_url(@season), :notice => 'Invite sent'
+    redirect_to team_invites_url(@team), :notice => 'Invite sent'
   end
 
   def update
@@ -41,23 +41,23 @@ class InvitesController < ApplicationController
     Invite.transaction do
       @invite.accepted_at = Time.now
       @invite.save!
-      @season.users << current_user
-      @season.save!
+      @team.users << current_user
+      @team.save!
     end
-    redirect_to season_team_members_url(@season), :notice => 'Invite accepted'
+    redirect_to team_team_members_url(@team), :notice => 'Invite accepted'
   end
 
   def destroy
     @invite = Invite.find(params[:id])
     @invite.destroy
 
-    redirect_to season_invites_url(@season), :notice => 'Invite deleted'
+    redirect_to team_invites_url(@team), :notice => 'Invite deleted'
   end
 
   private
 
-  def load_season
-    @season = Season.find(params[:season_id])
+  def load_team
+    @team = Team.find(params[:team_id])
   end
 end
 

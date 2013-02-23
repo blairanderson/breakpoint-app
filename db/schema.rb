@@ -15,14 +15,14 @@ ActiveRecord::Schema.define(:version => 20130218221325) do
 
   create_table "invites", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "season_id"
+    t.integer  "team_id"
     t.integer  "invited_by_id"
     t.datetime "accepted_at"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
 
-  add_index "invites", ["season_id"], :name => "index_invites_on_season_id"
+  add_index "invites", ["team_id"], :name => "index_invites_on_team_id"
   add_index "invites", ["user_id"], :name => "index_invites_on_user_id"
 
   create_table "match_availabilities", :force => true do |t|
@@ -51,13 +51,13 @@ ActiveRecord::Schema.define(:version => 20130218221325) do
     t.datetime "date",                           :null => false
     t.string   "location",       :default => "", :null => false
     t.string   "opponent",       :default => "", :null => false
-    t.integer  "season_id"
+    t.integer  "team_id"
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
     t.string   "notified_state"
   end
 
-  add_index "matches", ["season_id"], :name => "index_matches_on_season_id"
+  add_index "matches", ["team_id"], :name => "index_matches_on_team_id"
 
   create_table "practice_sessions", :force => true do |t|
     t.integer  "user_id"
@@ -72,15 +72,15 @@ ActiveRecord::Schema.define(:version => 20130218221325) do
   create_table "practices", :force => true do |t|
     t.datetime "date",                          :null => false
     t.text     "comment"
-    t.integer  "season_id",      :default => 0, :null => false
+    t.integer  "team_id",      :default => 0, :null => false
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.string   "notified_state"
   end
 
-  add_index "practices", ["season_id"], :name => "index_practices_on_season_id"
+  add_index "practices", ["team_id"], :name => "index_practices_on_team_id"
 
-  create_table "seasons", :force => true do |t|
+  create_table "teams", :force => true do |t|
     t.string   "name",            :default => "", :null => false
     t.datetime "date",                            :null => false
     t.integer  "singles_matches",                 :null => false
@@ -90,13 +90,13 @@ ActiveRecord::Schema.define(:version => 20130218221325) do
   end
 
   create_table "team_members", :force => true do |t|
-    t.integer  "season_id",  :default => 0, :null => false
+    t.integer  "team_id",  :default => 0, :null => false
     t.integer  "user_id",    :default => 0, :null => false
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
   end
 
-  add_index "team_members", ["season_id"], :name => "index_players_on_season_id"
+  add_index "team_members", ["team_id"], :name => "index_players_on_team_id"
   add_index "team_members", ["user_id"], :name => "index_players_on_user_id"
 
   create_table "users", :force => true do |t|

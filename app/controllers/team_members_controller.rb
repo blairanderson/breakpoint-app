@@ -1,8 +1,8 @@
 class TeamMembersController < ApplicationController
-  layout 'season'
+  layout 'team'
 
   def index
-    @season = Season.find(params[:season_id])
+    @team = Team.find(params[:team_id])
   end
 end
 

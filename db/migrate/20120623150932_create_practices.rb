@@ -3,10 +3,10 @@ class CreatePractices < ActiveRecord::Migration
     create_table :practices do |t|
       t.datetime   :date,   :null => false
       t.text       :comment
-      t.references :season, :null => false, :default => ''
+      t.references :team, :null => false, :default => ''
 
       t.timestamps
     end
-    add_index :practices, :season_id
+    add_index :practices, :team_id
   end
 end

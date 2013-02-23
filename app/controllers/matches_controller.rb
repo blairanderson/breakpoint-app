@@ -1,18 +1,18 @@
 class MatchesController < ApplicationController
-  layout 'season'
+  layout 'team'
 
   def index
-    @season = Season.find(params[:season_id])
+    @team = Team.find(params[:team_id])
   end
 
   def new
-    @season = Season.find(params[:season_id])
-    @match = @season.matches.build
+    @team = Team.find(params[:team_id])
+    @match = @team.matches.build
   end
 
   def edit
     @match = Match.find(params[:id])
-    @season = @match.season
+    @team = @match.team
   end
 
   def notify
@@ -24,18 +24,18 @@ class MatchesController < ApplicationController
         MatchMailer.match_updated(@match).deliver
       end
       @match.notified!
-      redirect_to season_matches_url(@match.season), :notice => 'Notification email sent to team'
+      redirect_to team_matches_url(@match.team), :notice => 'Notification email sent to team'
     else
-      redirect_to season_matches_url(@match.season), :notice => 'Team has already been notified'
+      redirect_to team_matches_url(@match.team), :notice => 'Team has already been notified'
     end
   end
 
   def create
-    @season = Season.find(params[:season_id])
-    @match = @season.matches.build(params[:match])
+    @team = Team.find(params[:team_id])
+    @match = @team.matches.build(params[:match])
 
     if @match.save
-      redirect_to season_matches_url(@season), :notice => 'Match created'
+      redirect_to team_matches_url(@team), :notice => 'Match created'
     else
       render :new
     end
@@ -46,9 +46,9 @@ class MatchesController < ApplicationController
 
     if @match.update_attributes(params[:match])
       @match.reset_notified! if @match.previous_changes.present?
-      redirect_to season_matches_url(@match.season), :notice => 'Match updated'
+      redirect_to team_matches_url(@match.team), :notice => 'Match updated'
     else
-      @season = @match.season
+      @team = @match.team
       render :edit
     end
   end
@@ -57,7 +57,7 @@ class MatchesController < ApplicationController
     @match = Match.find(params[:id])
     @match.destroy
 
-    redirect_to season_matches_url(@match.season), :notice => 'Match deleted'
+    redirect_to team_matches_url(@match.team), :notice => 'Match deleted'
   end
 end
 

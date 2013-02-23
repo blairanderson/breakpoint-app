@@ -1,10 +1,10 @@
 <% subtitle 'Matches' %>
-<p><%= link_to 'Add a match', new_season_match_path(@season), :class => 'btn' %></p>
+<p><%= link_to 'Add a match', new_team_match_path(@team), :class => 'btn' %></p>
 
-<% if @season.matches.empty? %>
+<% if @team.matches.empty? %>
   <div class="alert alert-block alert-info">
-    <h4>No matches for this season yet.</h4>
-    <%= link_to 'Add a match', new_season_match_path(@season) %> to get playing.
+    <h4>No matches for this team yet.</h4>
+    <%= link_to 'Add a match', new_team_match_path(@team) %> to get playing.
   </div>
 <% else %>
   <table class="table table-bordered table-striped">
@@ -18,7 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @season.matches.each do |match| %>
+      <% @team.matches.each do |match| %>
         <tr>
           <td>
             <div class="pull-left">

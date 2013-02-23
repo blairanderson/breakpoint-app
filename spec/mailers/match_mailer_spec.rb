@@ -4,8 +4,8 @@ describe MatchMailer do
   before :each do
     user = create(:user)
     user2 = create(:user2)
-    season = create(:season, :users => [user, user2]) 
-    @match = create(:match, :season => season)
+    team = create(:team, :users => [user, user2]) 
+    @match = create(:match, :team => team)
   end
 
   it 'sends match scheduled email' do

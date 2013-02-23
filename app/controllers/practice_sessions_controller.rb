@@ -6,7 +6,7 @@ class PracticeSessionsController < ApplicationController
     @practice_session.user = current_user
     @practice_session.save
 
-    redirect_to season_practices_url(@practice.season)
+    redirect_to team_practices_url(@practice.team)
   end
 
   def destroy
@@ -16,7 +16,7 @@ class PracticeSessionsController < ApplicationController
 
     @practice_session.destroy
 
-    redirect_to season_practices_url(@practice.season)
+    redirect_to team_practices_url(@practice.team)
   end
 end
 

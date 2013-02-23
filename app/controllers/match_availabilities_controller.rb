@@ -5,7 +5,7 @@ class MatchAvailabilitiesController < ApplicationController
     @match_availability.user = current_user
     @match_availability.save
 
-    redirect_to season_matches_url(@match.season)
+    redirect_to team_matches_url(@match.team)
   end
 
   def destroy
@@ -15,7 +15,7 @@ class MatchAvailabilitiesController < ApplicationController
 
     @match_availability.destroy
 
-    redirect_to season_matches_url(@match.season)
+    redirect_to team_matches_url(@match.team)
   end
 end
 

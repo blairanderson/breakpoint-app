@@ -1,18 +1,18 @@
 class PracticesController < ApplicationController
-  layout 'season'
+  layout 'team'
 
   def index
-    @season = Season.find(params[:season_id])
+    @team = Team.find(params[:team_id])
   end
 
   def new
-    @season = Season.find(params[:season_id])
-    @practice = @season.practices.build
+    @team = Team.find(params[:team_id])
+    @practice = @team.practices.build
   end
 
   def edit
     @practice = Practice.find(params[:id])
-    @season = @practice.season
+    @team = @practice.team
   end
 
   def notify
@@ -24,19 +24,19 @@ class PracticesController < ApplicationController
         PracticeMailer.practice_updated(@practice).deliver
       end
       @practice.notified!
-      redirect_to season_practices_url(@practice.season), :notice => 'Notification email sent to team'
+      redirect_to team_practices_url(@practice.team), :notice => 'Notification email sent to team'
     else
-      redirect_to season_practices_url(@practice.season), :notice => 'Team has already been notified'
+      redirect_to team_practices_url(@practice.team), :notice => 'Team has already been notified'
     end
   end
 
   def create
-    @season = Season.find(params[:season_id])
-    # TODO authorize season
-    @practice = @season.practices.build(params[:practice])
+    @team = Team.find(params[:team_id])
+    # TODO authorize team
+    @practice = @team.practices.build(params[:practice])
 
     if @practice.save
-      redirect_to season_practices_url(@season), :notice => 'Practice created'
+      redirect_to team_practices_url(@team), :notice => 'Practice created'
     else
       render :new
     end
@@ -47,9 +47,9 @@ class PracticesController < ApplicationController
 
     if @practice.update_attributes(params[:practice])
       @practice.reset_notified! if @practice.previous_changes.present?
-      redirect_to season_practices_url(@practice.season), :notice => 'Practice updated'
+      redirect_to team_practices_url(@practice.team), :notice => 'Practice updated'
     else
-      @season = @practice.season
+      @team = @practice.team
       render :edit
     end
   end
@@ -58,7 +58,7 @@ class PracticesController < ApplicationController
     @practice = Practice.find(params[:id])
     @practice.destroy
 
-    redirect_to season_practices_url(@practice.season), :notice => 'Practice deleted'
+    redirect_to team_practices_url(@practice.team), :notice => 'Practice deleted'
   end
 end
 

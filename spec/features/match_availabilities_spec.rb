@@ -5,7 +5,7 @@ describe 'match_availabilities' do
     login_captain
     @match = create(:match)
     @old_match = create(:match_in_past)
-    visit season_matches_path(@match.season)
+    visit team_matches_path(@match.team)
   end
 
   it 'creates a match_availability' do
