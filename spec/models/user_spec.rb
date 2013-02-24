@@ -16,14 +16,15 @@ describe User do
     user.name.should eq 'Row'
   end
 
-  it 'returns email when first and last are empty' do
+  it 'validation fails if first and last name are empty' do
     user = build(:user, :first_name => '', :last_name => '', :email => 'dkrow@example.com')
-    user.name.should eq 'dkrow@example.com'
+    user.valid?.should eq false
+    user.errors.full_messages.should eq ['Please fill in first name or last name, preferably both.']
   end
 
   it 'nils work too' do
-    user = build(:user, :first_name => '', :last_name => nil, :email => 'dkrow@example.com')
-    user.name.should eq 'dkrow@example.com'
+    user = build(:user, :first_name => 'dkrow', :last_name => nil, :email => 'dkrow@example.com')
+    user.name.should eq 'dkrow'
   end
 end
 

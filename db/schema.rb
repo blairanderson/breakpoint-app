@@ -72,13 +72,23 @@ ActiveRecord::Schema.define(:version => 20130218221325) do
   create_table "practices", :force => true do |t|
     t.datetime "date",                          :null => false
     t.text     "comment"
-    t.integer  "team_id",      :default => 0, :null => false
+    t.integer  "team_id",        :default => 0, :null => false
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.string   "notified_state"
   end
 
   add_index "practices", ["team_id"], :name => "index_practices_on_team_id"
+
+  create_table "team_members", :force => true do |t|
+    t.integer  "team_id",    :default => 0, :null => false
+    t.integer  "user_id",    :default => 0, :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "team_members", ["team_id"], :name => "index_players_on_team_id"
+  add_index "team_members", ["user_id"], :name => "index_players_on_user_id"
 
   create_table "teams", :force => true do |t|
     t.string   "name",            :default => "", :null => false
@@ -88,16 +98,6 @@ ActiveRecord::Schema.define(:version => 20130218221325) do
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
   end
-
-  create_table "team_members", :force => true do |t|
-    t.integer  "team_id",  :default => 0, :null => false
-    t.integer  "user_id",    :default => 0, :null => false
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
-  end
-
-  add_index "team_members", ["team_id"], :name => "index_players_on_team_id"
-  add_index "team_members", ["user_id"], :name => "index_players_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "first_name",             :default => ""

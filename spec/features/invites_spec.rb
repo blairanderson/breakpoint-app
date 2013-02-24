@@ -30,7 +30,22 @@ describe 'invites' do
     last_email.subject.should == "#{@captain.name} invited you to the team, #{@team.name}"
     page.should have_selector '.alert.alert-success', :text => 'Invite sent'
     page.should have_content 'Invited users'
-    page.should have_content 'new_user@example.com'
+    page.should have_content 'New User'
+  end
+
+  it 'invites users not in the system and override the name' do
+    fill_in 'search', :with => 'new_user123@example.com'
+    click_button 'Search'
+
+    page.should have_content 'has no account yet'
+    fill_in 'name', :with => 'Custom Name'
+    click_button 'Invite'
+
+    last_email.subject.should == "#{@captain.name} invited you to the team, #{@team.name}"
+    page.should have_selector '.alert.alert-success', :text => 'Invite sent'
+    page.should have_content 'Invited users'
+    page.should have_content 'Custom Name'
+    page.should_not have_content 'New User'
   end
 
   it 'accepts an invite' do

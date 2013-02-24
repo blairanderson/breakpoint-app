@@ -17,13 +17,16 @@ class InvitesController < ApplicationController
 
     is_new_user = false
     Invite.transaction do
-      user = User.where(:email => params[:email]).first
+      user = User.where(:email => @invite.email).first
       if user.present?
         @invite.user = user
       else
-        new_user = User.new(:email => params[:email])
-        new_user.password = SecureRandom.uuid
-        new_user.reset_password_token = User.reset_password_token
+        new_user = User.new
+        new_user.first_name             = @invite.first_name
+        new_user.last_name              = @invite.last_name
+        new_user.email                  = @invite.email
+        new_user.password               = SecureRandom.uuid
+        new_user.reset_password_token   = User.reset_password_token
         new_user.reset_password_sent_at = Time.now
         new_user.save!
         @invite.user = new_user
