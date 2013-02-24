@@ -3,15 +3,15 @@ class Invite < ActiveRecord::Base
   belongs_to :invited_by, :class_name => 'User', :foreign_key => 'invited_by_id'
   belongs_to :team
 
-  attr_accessible :email, :name
+  attr_accessible :email, :name, :user_id
 
   validates_presence_of :user, :team, :invited_by
 
   attr_writer :email, :name
 
   def email
-    return @email if new_record?
-    user.email
+    return user.email if user.present?
+    @email
   end
 
   def name_from_email

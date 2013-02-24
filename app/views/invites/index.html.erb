@@ -18,7 +18,6 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>Email</th>
         <th style="width: 51px;">&nbsp;</th>
       </tr>
     </thead>
@@ -26,10 +25,9 @@
       <% @users.each do |user| %>
         <tr>
           <td><%= user.name %></td>
-          <td><%= user.email %></td>
           <td>
-            <%= form_for [@team, @team.invites.build(:email => user.email)], :html => { :style => 'margin: 0px;' } do |f| %>
-              <%= f.hidden_field :email %>
+            <%= form_for [@team, @team.invites.build(:user_id => user.id)], :html => { :style => 'margin: 0px;' } do |f| %>
+              <%= f.hidden_field :user_id %>
               <%= f.submit 'Invite', :class => 'btn btn-small btn-success' %>
             <% end %>
           </td>
@@ -65,7 +63,6 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>Email</th>
         <th>Invited on</th>
         <th>Invited by</th>
         <th>Accepted on</th>
@@ -76,7 +73,6 @@
       <% @invites.each do |invite| %>
       <tr>
         <td><%= invite.user.name %></td>
-        <td><%= invite.user.email %></td>
         <td><%= l invite.created_at %></td>
         <td><%= invite.invited_by.name %></td>
         <td><%= l invite.accepted_at if invite.accepted_at.present? %></td>

@@ -17,7 +17,7 @@ describe 'invites' do
 
     last_email.subject.should == "#{@captain.name} invited you to the team, #{@team.name}"
     page.should have_content 'Invited users'
-    page.should have_content 'dave.kroondyk@example.com'
+    page.should have_content 'Dave Kroondyk'
   end
 
   it 'invites users not in the system' do
