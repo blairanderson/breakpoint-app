@@ -36,17 +36,22 @@ end
 
 def login_captain
   @captain = create(:captain)
-  visit new_user_session_path
-  fill_in 'Email',    :with => 'captain@example.com'
-  fill_in 'Password', :with => 'testing'
-  click_button 'Sign in'
+  login(@captain)
 end
 
 def login_team_member
   @team_member = create(:team_member)
+  login(@team_member)
+end
+
+def login(user)
   visit new_user_session_path
-  fill_in 'Email',    :with => 'team_member@example.com'
+  fill_in 'Email',    :with => user.email
   fill_in 'Password', :with => 'testing'
   click_button 'Sign in'
+end
+
+def logout
+  page.driver.delete destroy_user_session_path
 end
 

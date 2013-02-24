@@ -15,6 +15,7 @@ class InvitesController < ApplicationController
   def create
     @invite = @team.invites.build(params[:invite])
 
+    is_new_user = false
     Invite.transaction do
       user = User.where(:email => params[:email]).first
       if user.present?
@@ -26,12 +27,19 @@ class InvitesController < ApplicationController
         new_user.reset_password_sent_at = Time.now
         new_user.save!
         @invite.user = new_user
+        is_new_user = true
       end
 
       @invite.invited_by = current_user
       @invite.save!
     end
-    # TODO send invitation email
+
+    if is_new_user
+      InviteMailer.new_user_invitation(@invite).deliver
+    else
+      InviteMailer.invitation(@invite).deliver
+    end
+
     redirect_to team_invites_url(@team), :notice => 'Invite sent'
   end
 

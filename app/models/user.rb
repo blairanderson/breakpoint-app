@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
     :trackable,
     :validatable
 
+  has_many :invitations,          :dependent => :restrict, :class_name => 'Invite'
   has_many :team_members,         :dependent => :restrict
   has_many :teams,                :through   => :team_members
   has_many :practice_sessions,    :dependent => :restrict

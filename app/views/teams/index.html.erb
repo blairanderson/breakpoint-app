@@ -1,9 +1,26 @@
 <% title 'Teams' %>
-<p><%= link_to 'New team', new_team_path, :class => 'btn' %></p>
 
+<% if @invitations.present? %>
+  <table class="table table-bordered table-striped">
+    <tbody>
+      <% @invitations.each do |invite| %>
+        <tr>
+          <td><%= invite.invited_by.name %> invited to the team <%= invite.team.name %>.</td>
+          <td>
+            <%= simple_form_for([invite.team, invite]) do |f| %>
+              <%= f.submit 'Accept', :class => 'pull-right btn btn-success' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<p><%= link_to 'New team', new_team_path, :class => 'btn' %></p>
 <% if @teams.empty? %>
   <div class="alert alert-block alert-info">
-    <h4>No teams created yet.</h4>
+    <h4>You are currently not on any teams.</h4>
     Make a <%= link_to 'new team', new_team_path %> to get started.
   </div>
 <% else %>

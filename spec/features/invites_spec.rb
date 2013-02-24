@@ -15,6 +15,7 @@ describe 'invites' do
     page.should have_content 'Found users'
     click_button 'Invite'
 
+    last_email.subject.should == "#{@captain.name} invited you to the team, #{@team.name}"
     page.should have_content 'Invited users'
     page.should have_content 'dave.kroondyk@example.com'
   end
@@ -26,9 +27,24 @@ describe 'invites' do
     page.should have_content 'has no account yet'
     click_button 'Invite'
 
+    last_email.subject.should == "#{@captain.name} invited you to the team, #{@team.name}"
     page.should have_selector '.alert.alert-success', :text => 'Invite sent'
     page.should have_content 'Invited users'
     page.should have_content 'new_user@example.com'
+  end
+
+  it 'accepts an invite' do
+    invite = create(:invite, :user => @user2, :invited_by => @captain, :team => @team)
+    logout
+    login(@user2)
+
+    visit teams_path
+    page.should have_content 'not on any teams'
+    page.should have_content 'invited to the team'
+    click_button 'Accept'
+    page.should have_selector '.alert.alert-success', :text => 'Invite accepted'
+    visit teams_path
+    page.should_not have_content 'not on any teams'
   end
 
   it 'deletes an invite' do
