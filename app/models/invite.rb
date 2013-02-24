@@ -6,6 +6,7 @@ class Invite < ActiveRecord::Base
   attr_accessible :email, :name, :user_id
 
   validates_presence_of :user, :team, :invited_by
+  validates_uniqueness_of :user_id, :scope => :team_id
 
   attr_writer :email, :name
 

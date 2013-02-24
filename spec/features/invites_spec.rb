@@ -20,6 +20,8 @@ describe 'invites' do
     page.should have_content 'Dave Kroondyk'
   end
 
+  it 'allows searching by name'
+
   it 'invites users not in the system' do
     fill_in 'search', :with => 'new_user@example.com'
     click_button 'Search'
@@ -46,6 +48,23 @@ describe 'invites' do
     page.should have_content 'Invited users'
     page.should have_content 'Custom Name'
     page.should_not have_content 'New User'
+  end
+
+  it 'does not allow inviting a user already on the team' do
+    fill_in 'search', :with => @captain.first_name
+    click_button 'Search'
+
+    page.should have_selector '.label.label-success', :text => 'On team'
+  end
+
+  it 'does not allow inviting a user already invited' do
+    fill_in 'search', :with => 'new_user123@example.com'
+    click_button 'Search'
+    click_button 'Invite'
+    fill_in 'search', :with => 'New'
+    click_button 'Search'
+
+    page.should have_selector '.label.label-info', :text => 'Invited'
   end
 
   it 'accepts an invite' do

@@ -44,6 +44,9 @@ class InvitesController < ApplicationController
     end
 
     redirect_to team_invites_url(@team), :notice => 'Invite sent'
+  rescue
+    flash[:error] = 'Error occurred. Was that user already invited?'
+    redirect_to team_invites_url(@team)
   end
 
   def update

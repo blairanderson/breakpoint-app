@@ -26,9 +26,15 @@
         <tr>
           <td><%= user.name %></td>
           <td>
-            <%= form_for [@team, @team.invites.build(:user_id => user.id)], :html => { :style => 'margin: 0px;' } do |f| %>
-              <%= f.hidden_field :user_id %>
-              <%= f.submit 'Invite', :class => 'btn btn-small btn-success' %>
+            <% if @team.users.include?(user) %>
+              <span class="label label-success">On team</span>
+            <% elsif @invites.collect(&:user_id).include?(user.id) %>
+              <span class="label label-info">Invited</span>
+            <% else %>
+              <%= form_for [@team, @team.invites.build(:user_id => user.id)], :html => { :style => 'margin: 0px;' } do |f| %>
+                <%= f.hidden_field :user_id %>
+                <%= f.submit 'Invite', :class => 'btn btn-small btn-success' %>
+              <% end %>
             <% end %>
           </td>
         </tr>
