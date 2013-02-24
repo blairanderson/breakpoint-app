@@ -5,7 +5,9 @@ class InvitesController < ApplicationController
   def index
     @invites = @team.invites.includes(:user).order('accepted_at asc')
     if params[:search].present?
-      @users = User.where('email LIKE :search or first_name LIKE :search or last_name LIKE :search', :search => "%#{params[:search]}%")
+      @users = params[:search].split(/\s+/).map do |name|
+        User.where('lower(email) LIKE lower(:search) or lower(first_name) LIKE lower(:search) or lower(last_name) LIKE lower(:search)', :search => "%#{name}%").all
+      end.flatten.uniq
       if @users.blank? && params[:search].match(Devise.email_regexp).present?
         @email = params[:search]
       end

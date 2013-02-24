@@ -27,7 +27,7 @@
           <td><%= user.name %></td>
           <td>
             <% if @team.users.include?(user) %>
-              <span class="label label-success">On team</span>
+              <span class="label label-info">On team</span>
             <% elsif @invites.collect(&:user_id).include?(user.id) %>
               <span class="label label-info">Invited</span>
             <% else %>

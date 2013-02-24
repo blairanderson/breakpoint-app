@@ -20,7 +20,23 @@ describe 'invites' do
     page.should have_content 'Dave Kroondyk'
   end
 
-  it 'allows searching by name'
+  it 'allows searching by name' do
+    fill_in 'search', :with => 'captain'
+    click_button 'Search'
+    page.should have_selector '.label.label-info', :text => 'On team'
+  end
+
+  it 'allows searching by name with unique results' do
+    fill_in 'search', :with => 'captain captain'
+    click_button 'Search'
+    page.should have_selector '.label.label-info', :text => 'On team', :count => 1
+  end
+
+  it 'allows searching by name case insensitive' do
+    fill_in 'search', :with => 'Captain'
+    click_button 'Search'
+    page.should have_selector '.label.label-info', :text => 'On team'
+  end
 
   it 'invites users not in the system' do
     fill_in 'search', :with => 'new_user@example.com'
@@ -54,7 +70,7 @@ describe 'invites' do
     fill_in 'search', :with => @captain.first_name
     click_button 'Search'
 
-    page.should have_selector '.label.label-success', :text => 'On team'
+    page.should have_selector '.label.label-info', :text => 'On team'
   end
 
   it 'does not allow inviting a user already invited' do
