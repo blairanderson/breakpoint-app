@@ -3,8 +3,6 @@ class Invite < ActiveRecord::Base
   belongs_to :invited_by, :class_name => 'User', :foreign_key => 'invited_by_id'
   belongs_to :team
 
-  attr_accessible :email, :name, :user_id
-
   validates_presence_of :user, :team, :invited_by
   validates_uniqueness_of :user_id, :scope => :team_id
 

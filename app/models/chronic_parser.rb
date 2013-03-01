@@ -6,7 +6,6 @@ module ChronicParser
 
   module ClassMethods
     def setup_accessible
-      attr_accessible :date_string
       validates_presence_of :date_string
     end
   end

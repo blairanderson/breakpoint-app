@@ -6,8 +6,6 @@ class Practice < ActiveRecord::Base
   has_many   :players,           :through   => :practice_sessions, :source => :user
   belongs_to :team
 
-  attr_accessible :comment, :notified_state
-
   validates_presence_of :team
 
   def team_emails

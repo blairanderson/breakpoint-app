@@ -1,7 +1,7 @@
 BreakpointApp::Application.routes.draw do
   root :to => 'teams#index'
 
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => 'users/registrations', :passwords => 'users/passwords' }
 
   resources :teams do
     resources :practices, :only => [:index, :new]

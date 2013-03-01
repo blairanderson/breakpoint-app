@@ -17,14 +17,6 @@ class User < ActiveRecord::Base
   has_many :match_availabilities, :dependent => :restrict
   has_many :matches,              :through   => :match_availabilities
 
-  attr_accessible :email,
-    :password,
-    :password_confirmation,
-    :remember_me,
-    :first_name,
-    :last_name,
-    :phone_number
-
   validate :first_name_or_last_name_present
 
   def first_name_or_last_name_present

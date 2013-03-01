@@ -32,7 +32,7 @@ class MatchesController < ApplicationController
 
   def create
     @team = Team.find(params[:team_id])
-    @match = @team.matches.build(params[:match])
+    @match = @team.matches.build(permitted_params.match)
 
     if @match.save
       redirect_to team_matches_url(@team), :notice => 'Match created'
@@ -44,7 +44,7 @@ class MatchesController < ApplicationController
   def update
     @match = Match.find(params[:id])
 
-    if @match.update_attributes(params[:match])
+    if @match.update_attributes(permitted_params.match)
       @match.reset_notified! if @match.previous_changes.present?
       redirect_to team_matches_url(@match.team), :notice => 'Match updated'
     else

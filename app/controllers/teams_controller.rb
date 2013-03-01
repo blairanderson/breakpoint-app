@@ -18,7 +18,7 @@ class TeamsController < ApplicationController
   end
 
   def create
-    @team = Team.new(params[:team])
+    @team = Team.new(permitted_params.team)
     @team.users << current_user
 
     if @team.save
@@ -31,7 +31,7 @@ class TeamsController < ApplicationController
   def update
     @team = Team.find(params[:id])
 
-    if @team.update_attributes(params[:team])
+    if @team.update_attributes(permitted_params.team)
       redirect_to teams_url, :notice => 'Team updated'
     else
       render :edit

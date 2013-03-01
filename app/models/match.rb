@@ -8,8 +8,6 @@ class Match < ActiveRecord::Base
   has_many   :players,              :through   => :match_availabilities, :source => :user
   belongs_to :team
 
-  attr_accessible :location, :opponent, :match_lineups_attributes, :notified_state
-
   validates_presence_of :team, :location, :opponent
 
   accepts_nested_attributes_for :match_lineups

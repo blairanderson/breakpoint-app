@@ -33,7 +33,7 @@ class PracticesController < ApplicationController
   def create
     @team = Team.find(params[:team_id])
     # TODO authorize team
-    @practice = @team.practices.build(params[:practice])
+    @practice = @team.practices.build(permitted_params.practice)
 
     if @practice.save
       redirect_to team_practices_url(@team), :notice => 'Practice created'
@@ -45,7 +45,7 @@ class PracticesController < ApplicationController
   def update
     @practice = Practice.find(params[:id])
 
-    if @practice.update_attributes(params[:practice])
+    if @practice.update_attributes(permitted_params.practice)
       @practice.reset_notified! if @practice.previous_changes.present?
       redirect_to team_practices_url(@practice.team), :notice => 'Practice updated'
     else

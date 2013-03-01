@@ -1,7 +1,7 @@
 class MatchAvailabilitiesController < ApplicationController
   def create
     @match = Match.find(params[:match_id])
-    @match_availability = @match.match_availabilities.build(params[:match_availability])
+    @match_availability = @match.match_availabilities.build
     @match_availability.user = current_user
     @match_availability.save
 

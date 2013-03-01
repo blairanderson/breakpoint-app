@@ -15,7 +15,7 @@ class InvitesController < ApplicationController
   end
 
   def create
-    @invite = @team.invites.build(params[:invite])
+    @invite = @team.invites.build(permitted_params.invite)
 
     is_new_user = false
     Invite.transaction do
