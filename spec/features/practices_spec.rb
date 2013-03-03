@@ -9,21 +9,23 @@ describe 'practices' do
   end
 
   it 'displays the practices' do
-    page.should have_content 'June 23, 2014 11:00 am'
+    page.should have_content 'June 23, 2014 at 11:00 am'
   end
 
   it 'creates a practice' do
     click_link 'Add a practice'
-    fill_in 'When?', :with => 'June 24, 2014 at 7pm'
+    fill_in 'What day?', :with => '6/24/2014'
+    select  '07:00 PM',  :from => 'What time?'
     click_button 'Save practice'
 
     last_email.should be_nil
     page.should have_selector '.alert.alert-success', :text => 'Practice created'
-    page.should have_content 'June 24, 2014 7:00 pm'
+    page.should have_content 'June 24, 2014 at 7:00 pm'
   end
 
   it 'shows errors for invalid practices' do
     click_link 'Add a practice'
+    fill_in 'What day?', :with => ''
     click_button 'Save practice'
 
     page.should have_selector '.alert.alert-block.alert-error'
@@ -32,19 +34,20 @@ describe 'practices' do
 
   it 'edits a practice' do
     click_link 'Edit'
-    fill_in 'When?', :with => 'June 25, 2014 at 6pm'
+    fill_in 'What day?', :with => '6/25/2014'
+    select  '06:00 PM',  :from => 'What time?'
     click_button 'Save practice'
 
     last_email.should be_nil
     page.should have_selector '.alert.alert-success', :text => 'Practice updated'
-    page.should have_content 'June 25, 2014 6:00 pm'
+    page.should have_content 'June 25, 2014 at 6:00 pm'
   end
 
   it 'deletes a practice' do
     click_link 'Delete'
 
     page.should have_selector '.alert.alert-success', :text => 'Practice deleted'
-    page.should_not have_content 'June 24, 2014 7:00 pm'
+    page.should_not have_content 'June 24, 2014 at 7:00 pm'
   end
 
   it 'notifies team members' do
@@ -66,7 +69,8 @@ describe 'practices' do
 
     # sends updated email after practice is updated
     click_link 'Edit'
-    fill_in 'When?', :with => 'June 25, 2014 at 6pm'
+    fill_in 'What day?', :with => '6/25/2014'
+    select  '06:00 PM',  :from => 'What time?'
     click_button 'Save practice'
     page.should_not have_selector '.disabled', :text => 'Notify team'
     click_link 'Notify team'

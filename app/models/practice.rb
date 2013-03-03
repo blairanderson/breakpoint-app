@@ -1,5 +1,5 @@
 class Practice < ActiveRecord::Base
-  include ChronicParser
+  include DateTimeParser
   include NotifyStateMachine
 
   has_many   :practice_sessions, :dependent => :destroy

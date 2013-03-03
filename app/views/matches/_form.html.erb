@@ -1,10 +1,8 @@
 <%= simple_form_for(@match, :html => { :class => 'form-horizontal' } ) do |f| %>
   <%= f.error_messages %>
 
-  <%= f.input :date_string,
-    :as => :string,
-    :label => 'When?',
-    :hint => 'e.g. January 5 at 7pm &ndash; or &ndash; tomorrow at 8pm' %>
+  <%= f.input :date_string, :label => 'What day?', :input_html => { :class => 'datepicker' } %>
+  <%= f.input :time_string, :as => :time_select, :label => 'What time?' %>
   <%= f.input :location, :collection => Match::LOCATIONS, :label_method => :humanize, :value_method => :to_s %>
   <%= f.input :opponent %>
 

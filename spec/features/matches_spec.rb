@@ -9,22 +9,24 @@ describe 'matches' do
   end
 
   it 'displays the matchs' do
-    page.should have_content 'June 26, 2014 11:00 am'
+    page.should have_content 'June 26, 2014 at 11:00 am'
   end
 
   it 'creates a match' do
     click_link 'Add a match'
-    fill_in 'When?',    :with => 'June 27, 2014 at 7pm'
-    select  'Home',     :from => 'Location'
-    fill_in 'Opponent', :with => 'Paxton'
+    fill_in 'What day?', :with => '6/27/2014'
+    select  '07:00 PM',  :from => 'What time?'
+    select  'Home',      :from => 'Location'
+    fill_in 'Opponent',  :with => 'Paxton'
     click_button 'Save match'
 
     page.should have_selector '.alert.alert-success', :text => 'Match created'
-    page.should have_content 'June 27, 2014 7:00 pm'
+    page.should have_content 'June 27, 2014 at 7:00 pm'
   end
 
   it 'shows errors for invalid matchs' do
     click_link 'Add a match'
+    fill_in 'What day?', :with => ''
     click_button 'Save match'
 
     page.should have_selector '.alert.alert-block.alert-error'
@@ -33,18 +35,19 @@ describe 'matches' do
 
   it 'edits a match' do
     click_link 'Edit'
-    fill_in 'When?', :with => 'June 28, 2014 at 6pm'
+    fill_in 'What day?', :with => '6/28/2014'
+    select  '06:00 PM',  :from => 'What time?'
     click_button 'Save match'
 
     page.should have_selector '.alert.alert-success', :text => 'Match updated'
-    page.should have_content 'June 28, 2014 6:00 pm'
+    page.should have_content 'June 28, 2014 at 6:00 pm'
   end
 
   it 'deletes a match' do
     click_link 'Delete'
 
     page.should have_selector '.alert.alert-success', :text => 'Match deleted'
-    page.should_not have_content 'June 27, 2014 7:00 pm'
+    page.should_not have_content 'June 27, 2014 at 7:00 pm'
   end
 
   it 'notifies team members' do
@@ -60,7 +63,8 @@ describe 'matches' do
 
     # sends updated email after match is updated
     click_link 'Edit'
-    fill_in 'When?', :with => 'June 25, 2014 at 6pm'
+    fill_in 'What day?', :with => '6/25/2014'
+    select  '06:00 PM',  :from => 'What time?'
     click_button 'Save match'
     page.should_not have_selector '.disabled', :text => 'Notify team'
     click_link 'Notify team'

@@ -1,6 +1,6 @@
 class Match < ActiveRecord::Base
   LOCATIONS = %w[home away]
-  include ChronicParser
+  include DateTimeParser
   include NotifyStateMachine
 
   has_many   :match_availabilities, :dependent => :destroy

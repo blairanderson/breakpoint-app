@@ -8,6 +8,8 @@ class MatchesController < ApplicationController
   def new
     @team = Team.find(params[:team_id])
     @match = @team.matches.build
+    Chronic.time_class = Time.zone
+    @match.date = Chronic.parse('this 02:30 PM')
   end
 
   def edit

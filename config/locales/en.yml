@@ -6,4 +6,4 @@ en:
     formats:
       default: "%m/%d/%Y"
       short: "%b %d"
-      long: "%B %d, %Y %l:%M %P"
+      long: "%B %d, %Y at %l:%M %P"

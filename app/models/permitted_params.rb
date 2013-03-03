@@ -11,11 +11,11 @@ class PermittedParams
   end
 
   def match
-    params.require(:match).permit(:date_string, :location, :opponent, :match_lineups_attributes => [ :id, :user_id ])
+    params.require(:match).permit(:date_string, :time_string, :location, :opponent, :match_lineups_attributes => [ :id, :user_id ])
   end
 
   def practice
-    params.require(:practice).permit(:date_string, :comment)
+    params.require(:practice).permit(:date_string, :time_string, :comment)
   end
 
   def team

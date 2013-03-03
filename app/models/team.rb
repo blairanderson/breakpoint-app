@@ -1,5 +1,5 @@
 class Team < ActiveRecord::Base
-  include ChronicParser
+  include DateParser
 
   has_many :practices,    :dependent => :destroy
   has_many :matches,      :dependent => :destroy

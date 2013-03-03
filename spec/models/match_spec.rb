@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Match do
   it 'accepts a string for date' do
-    tomorrow_at_7pm = Time.new Time.now.year, Time.now.month, Time.now.day + 1, 19
-    match = Match.new :date_string => 'tomorrow at 7pm', :location => 'home', :opponent => 'Paxton'
-    match.date.should eq(tomorrow_at_7pm)
+    team = create(:team)
+    match = Match.create(:team => team, :date_string => '6/13/2014', :time_string => '05:30 PM', :location => 'home', :opponent => 'Paxton')
+    match.date.should eq(Time.zone.parse('2014-06-13 17:30'))
   end
 
   it 'creates a blank match lineup based off team settings' do
