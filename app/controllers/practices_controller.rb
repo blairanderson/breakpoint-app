@@ -3,6 +3,7 @@ class PracticesController < ApplicationController
 
   def index
     @team = Team.find(params[:team_id])
+    @practices = @team.practices.order('date asc')
   end
 
   def new

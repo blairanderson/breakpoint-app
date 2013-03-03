@@ -1,7 +1,7 @@
 <% subtitle 'Practices' %>
 <p><%= link_to 'Add a practice', new_team_practice_path(@team), :class => 'btn' %></p>
 
-<% if @team.practices.empty? %>
+<% if @practices.empty? %>
   <div class="alert alert-block alert-info">
     <h4>No practices for this team yet.</h4>
     <%= link_to 'Add a practice', new_team_practice_path(@team) %> to get playing.
@@ -17,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @team.practices.each do |practice| %>
+      <% @practices.each do |practice| %>
         <tr>
           <td>
             <div class="pull-left">

@@ -1,7 +1,7 @@
 <% subtitle 'Matches' %>
 <p><%= link_to 'Add a match', new_team_match_path(@team), :class => 'btn' %></p>
 
-<% if @team.matches.empty? %>
+<% if @matches.empty? %>
   <div class="alert alert-block alert-info">
     <h4>No matches for this team yet.</h4>
     <%= link_to 'Add a match', new_team_match_path(@team) %> to get playing.
@@ -18,7 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @team.matches.each do |match| %>
+      <% @matches.each do |match| %>
         <tr>
           <td>
             <div class="pull-left">
