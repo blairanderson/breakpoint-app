@@ -30,7 +30,8 @@ class PermittedParams
                                  :remember_me,
                                  :first_name,
                                  :last_name,
-                                 :phone_number)
+                                 :phone_number,
+                                 :time_zone)
   end
 end
 

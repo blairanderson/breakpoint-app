@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   has_many :matches,              :through   => :match_availabilities
 
   validate :first_name_or_last_name_present
+  validates_inclusion_of :time_zone, in: ActiveSupport::TimeZone.zones_map(&:name)
 
   def first_name_or_last_name_present
     if first_name.blank? && last_name.blank?
