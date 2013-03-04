@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :practice do
     date "2014-06-23 11:00:00"
+    location "paxtonclub"
     comment "at Waltham"
     team
 

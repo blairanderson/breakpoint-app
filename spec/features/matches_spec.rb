@@ -4,7 +4,6 @@ describe 'matches' do
   before :each do
     login_captain
     @match = create(:match)
-    @old_match = create(:match_in_past)
     visit team_matches_path(@match.team)
   end
 
@@ -16,12 +15,12 @@ describe 'matches' do
     click_link 'Add a match'
     fill_in 'What day?', :with => '6/27/2014'
     select  '07:00 PM',  :from => 'What time?'
-    select  'Home',      :from => 'Location'
-    fill_in 'Opponent',  :with => 'Paxton'
+    fill_in 'Location',  :with => 'PaxtonBigClub'
     click_button 'Save match'
 
     page.should have_selector '.alert.alert-success', :text => 'Match created'
     page.should have_content 'June 27, 2014 at 7:00 pm'
+    page.should have_content 'PaxtonBigClub'
   end
 
   it 'shows errors for invalid matchs' do
@@ -58,6 +57,13 @@ describe 'matches' do
 
     # stays disabled if nothing in the match changed
     click_link 'Edit'
+    # there is some weird thing going on here with capybara and the \n in text areas
+    # https://github.com/jnicklas/capybara/issues/677 says it was fixed, but I'm getting
+    # a \n stored at the beginning of the comment field, which the "browser" should ignore.
+    # If I manually fill in the comment field with the same value from factory_girl,
+    # it works fine.
+    fill_in 'Location', :with => @match.location
+    fill_in 'Comment', :with => @match.comment
     click_button 'Save match'
     page.should have_selector '.disabled', :text => 'Notify team'
 

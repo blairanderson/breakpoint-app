@@ -2,8 +2,7 @@ require 'spec_helper'
 
 describe Match do
   it 'accepts a string for date' do
-    team = create(:team)
-    match = Match.create(:team => team, :date_string => '6/13/2014', :time_string => '05:30 PM', :location => 'home', :opponent => 'Paxton')
+    match = create(:match, :date_string => '6/13/2014', :time_string => '05:30 PM')
     match.date.should eq(Time.zone.parse('2014-06-13 17:30'))
   end
 

@@ -1,5 +1,4 @@
 class Match < ActiveRecord::Base
-  LOCATIONS = %w[home away]
   include DateTimeParser
   include NotifyStateMachine
 
@@ -8,18 +7,14 @@ class Match < ActiveRecord::Base
   has_many   :players,              :through   => :match_availabilities, :source => :user
   belongs_to :team
 
-  validates_presence_of :team, :location, :opponent
+  validates_presence_of :team
 
   accepts_nested_attributes_for :match_lineups
 
   after_create :setup_match_lineups
 
-  def home?
-    location == 'home'
-  end
-
-  def away?
-    location == 'away'
+  def team_location
+    home_team? ? 'Home' : 'Away'
   end
 
   def team_emails

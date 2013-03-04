@@ -1,8 +1,9 @@
 FactoryGirl.define do
   factory :match do
     date "2014-06-26 11:00:00"
-    location "home"
-    opponent "paxton"
+    home_team true
+    location "paxton"
+    comment "let's beat them"
     team
 
     factory :match_in_past do

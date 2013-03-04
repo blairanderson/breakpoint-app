@@ -1,8 +1,9 @@
 <p>
-  The match will be played <strong><%= @match.location %></strong>
-  against <strong><%= @match.opponent %></strong>
+  The match will be played <strong><%= @match.team_location %></strong>
+  at <strong><%= @match.location %></strong>
 </p>
 <p>
   Please <%= link_to 'set your availability', team_url(@match.team) %>.
 </p>
 <p>Thanks!</p>
+

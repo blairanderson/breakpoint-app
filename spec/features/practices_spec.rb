@@ -4,7 +4,6 @@ describe 'practices' do
   before :each do
     login_captain
     @practice = create(:practice)
-    @old_practice = create(:practice_in_past)
     visit team_practices_path(@practice.team)
   end
 
@@ -16,11 +15,14 @@ describe 'practices' do
     click_link 'Add a practice'
     fill_in 'What day?', :with => '6/24/2014'
     select  '07:00 PM',  :from => 'What time?'
+    fill_in 'Location',  :with => 'Paxton'
+    fill_in 'Comment',   :with => 'tonsofdetail'
     click_button 'Save practice'
 
     last_email.should be_nil
     page.should have_selector '.alert.alert-success', :text => 'Practice created'
     page.should have_content 'June 24, 2014 at 7:00 pm'
+    page.should have_content 'Paxton'
   end
 
   it 'shows errors for invalid practices' do
@@ -63,7 +65,8 @@ describe 'practices' do
     # a \n stored at the beginning of the comment field, which the "browser" should ignore.
     # If I manually fill in the comment field with the same value from factory_girl,
     # it works fine.
-    fill_in 'Comment', :with => 'at Waltham'
+    fill_in 'Location', :with => @practice.location
+    fill_in 'Comment', :with => @practice.comment
     click_button 'Save practice'
     page.should have_selector '.disabled', :text => 'Notify team'
 

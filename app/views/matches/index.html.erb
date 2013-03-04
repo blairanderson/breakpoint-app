@@ -12,7 +12,7 @@
       <tr>
         <th style="width: 182px;">Can play?</th>
         <th>Date</th>
-        <th>Opponent</th>
+        <th>Location</th>
         <th>Setup Lineup</th>
         <th style="width: 193px;">&nbsp;</th>
       </tr>
@@ -38,10 +38,10 @@
             </div>
           </td>
           <td>
-            <%= match.location.humanize %> on
+            <%= match.team_location %> on
             <%= l match.date, :format => :long %>
           </td>
-          <td><%= match.opponent %></td>
+          <td><%= simple_format match.location %></td>
           <td><%= link_to 'Set the lineup', edit_lineup_match_path(match) %></td>
           <td>
             <% if match.notified_team? %>

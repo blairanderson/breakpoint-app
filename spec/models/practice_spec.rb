@@ -2,8 +2,7 @@ require 'spec_helper'
 
 describe Practice do
   it 'accepts a string for date' do
-    team = create(:team)
-    practice = Practice.create(:team => team, :date_string => '6/13/2014', :time_string => '05:30 PM', :comment => 'at Waltham')
+    practice = create(:practice, :date_string => '6/13/2014', :time_string => '05:30 PM')
     practice.date.should eq(Time.zone.parse('2014-06-13 17:30'))
   end
 
