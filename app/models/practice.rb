@@ -8,12 +8,18 @@ class Practice < ActiveRecord::Base
 
   validates_presence_of :team
 
+  has_paper_trail :ignore => [:notified_state]
+
   def team_emails
     team.team_emails
   end
 
   def practice_session_for_user(user_id)
     practice_sessions.where(user_id: user_id).first
+  end
+
+  def recent_changes
+    versions.last.changeset
   end
 end
 

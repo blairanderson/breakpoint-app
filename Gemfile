@@ -35,4 +35,5 @@ gem 'devise',               '~> 2.2.3'
 gem 'pundit',               '~> 0.2.0'
 gem 'annotate',             '~> 2.5.0'
 gem 'strong_parameters',    '~> 0.2.0'
+gem 'paper_trail',          '~> 2.7.1'
 

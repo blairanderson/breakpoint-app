@@ -13,6 +13,8 @@ class Match < ActiveRecord::Base
 
   after_create :setup_match_lineups
 
+  has_paper_trail :ignore => [:notified_state]
+
   def team_location
     home_team? ? 'Home' : 'Away'
   end
@@ -23,6 +25,10 @@ class Match < ActiveRecord::Base
 
   def match_availability_for_user(user_id)
     match_availabilities.where(user_id: user_id).first
+  end
+
+  def recent_changes
+    versions.last.changeset
   end
 
   private
