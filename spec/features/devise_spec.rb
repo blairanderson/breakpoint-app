@@ -41,5 +41,21 @@ describe 'devise' do
 
     page.should have_selector '.alert.alert-success', :text => 'You updated your account successfully.'
   end
+
+  it 'allows forgot password' do
+    click_link 'Forgot your password?'
+    fill_in 'Email', :with => 'john.doe@example.com'
+    click_button 'Send me reset password instructions'
+
+    last_email.should_not be_nil
+    last_email.to.should == ['john.doe@example.com']
+
+    visit edit_user_password_url({:reset_password_token => User.find_by_email('john.doe@example.com').reset_password_token})
+    fill_in 'user_password', :with => 'testing2'
+    fill_in 'user_password_confirmation', :with => 'testing2'
+    click_button 'Change my password'
+
+    page.should have_selector '.alert.alert-success', :text => 'Your password was changed successfully'
+  end
 end
 

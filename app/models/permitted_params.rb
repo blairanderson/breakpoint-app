@@ -31,6 +31,7 @@ class PermittedParams
                                  :first_name,
                                  :last_name,
                                  :phone_number,
+                                 :reset_password_token,
                                  :time_zone)
   end
 end
