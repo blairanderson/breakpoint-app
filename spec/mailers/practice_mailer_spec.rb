@@ -18,7 +18,7 @@ describe PracticeMailer do
   end
 
   it 'sends practice updated email' do
-    email = PracticeMailer.practice_updated(@practice).deliver
+    email = PracticeMailer.practice_updated(@practice, @practice.recent_changes).deliver
 
     last_email.should_not be_nil
     email.to.should eq ['john.doe@example.com', 'dave.kroondyk@example.com']
