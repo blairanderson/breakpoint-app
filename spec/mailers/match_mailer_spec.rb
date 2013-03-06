@@ -18,7 +18,7 @@ describe MatchMailer do
   end
 
   it 'sends match updated email' do
-    email = MatchMailer.match_updated(@match).deliver
+    email = MatchMailer.match_updated(@match, @match.recent_changes).deliver
 
     last_email.should_not be_nil
     email.to.should eq ['john.doe@example.com', 'dave.kroondyk@example.com']
@@ -26,3 +26,4 @@ describe MatchMailer do
     email.encoded.should match /<h1>Match scheduled for/
   end
 end
+

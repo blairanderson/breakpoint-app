@@ -26,3 +26,4 @@ describe PracticeMailer do
     email.encoded.should match /<h1>Practice scheduled for/
   end
 end
+
