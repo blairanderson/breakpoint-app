@@ -24,7 +24,7 @@ class MatchesController < ApplicationController
       if @match.created?
         MatchMailer.match_scheduled(@match).deliver
       else
-        MatchMailer.match_updated(@match).deliver
+        MatchMailer.match_updated(@match, @match.recent_changes).deliver
       end
       @match.notified!
       redirect_to team_matches_url(@match.team), :notice => 'Notification email sent to team'

@@ -1,3 +1,6 @@
 <h1>Match scheduled for <%= l @match.date, :format => :long %> was updated</h1>
 
+<%= formatted_changes(@recent_changes) %>
+
 <%= render :partial => 'match' %>
+

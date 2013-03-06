@@ -1,6 +1,6 @@
 <h1>Practice scheduled for <%= l @practice.date, :format => :long %> was updated</h1>
 
-<%= @recent_changes %>
+<%= formatted_changes(@recent_changes) %>
 
 <%= render :partial => 'practice' %>
 

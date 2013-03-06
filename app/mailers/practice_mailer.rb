@@ -1,5 +1,6 @@
 class PracticeMailer < ActionMailer::Base
   layout 'mailer'
+  helper MailerHelper
 
   def practice_scheduled(practice)
     @practice = practice
