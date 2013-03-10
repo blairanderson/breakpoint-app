@@ -20,16 +20,36 @@ class MatchesController < ApplicationController
 
   def notify
     @match = Match.find(params[:id])
+
     if !@match.notified_team?
       if @match.created?
         MatchMailer.match_scheduled(@match).deliver
       else
         MatchMailer.match_updated(@match, @match.recent_changes).deliver
       end
+
       @match.notified!
       redirect_to team_matches_url(@match.team), :notice => 'Notification email sent to team'
     else
       redirect_to team_matches_url(@match.team), :notice => 'Team has already been notified'
+    end
+  end
+
+  def notify_lineup
+    @match = Match.find(params[:id])
+
+    if !@match.notified_team_lineup?
+      if @match.lineup_created?
+        MatchLineupMailer.lineup_set(@match).deliver
+      else
+        # TODO gotta get the changes of the lineup
+        MatchLineupMailer.lineup_updated(@match, []).deliver
+      end
+
+      @match.notified_lineup!
+      redirect_to team_matches_url(@match.team), :notice => 'Notification email sent to team'
+    else
+      redirect_to team_matches_url(@match.team), :notice => 'Team has already been notified of the lineup'
     end
   end
 
@@ -49,6 +69,8 @@ class MatchesController < ApplicationController
 
     if @match.update_attributes(permitted_params.match)
       @match.reset_notified! if @match.previous_changes.present?
+      # detect lineup changes and only reset then
+      @match.reset_notified_lineup!
       redirect_to team_matches_url(@match.team), :notice => 'Match updated'
     else
       @team = @match.team

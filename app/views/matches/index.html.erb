@@ -42,7 +42,14 @@
             <%= l match.date, :format => :long %>
           </td>
           <td><%= simple_format match.location %></td>
-          <td><%= link_to 'Set the lineup', edit_lineup_match_path(match) %></td>
+          <td>
+            <%= link_to 'Set the lineup', edit_lineup_match_path(match) %>
+            <% if match.notified_team_lineup? %>
+              <%= link_to 'Notify team', notify_lineup_match_path(match), :method => :post, :class => 'btn btn-small disabled' %>
+            <% else %>
+              <%= link_to 'Notify team', notify_lineup_match_path(match), :method => :post, :class => 'btn btn-small' %>
+            <% end %>
+          </td>
           <td>
             <% if match.notified_team? %>
               <%= link_to 'Notify team', notify_match_path(match), :method => :post, :class => 'btn btn-small disabled' %>

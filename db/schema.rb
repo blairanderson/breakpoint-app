@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130305024202) do
+ActiveRecord::Schema.define(:version => 20130310230302) do
 
   create_table "invites", :force => true do |t|
     t.integer  "user_id"
@@ -48,14 +48,15 @@ ActiveRecord::Schema.define(:version => 20130305024202) do
   add_index "match_lineups", ["user_id"], :name => "index_match_lineups_on_user_id"
 
   create_table "matches", :force => true do |t|
-    t.datetime "date",                             :null => false
-    t.text     "location",       :default => "",   :null => false
+    t.datetime "date",                                    :null => false
+    t.text     "location",              :default => "",   :null => false
     t.integer  "team_id"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                              :null => false
+    t.datetime "updated_at",                              :null => false
     t.string   "notified_state"
-    t.boolean  "home_team",      :default => true
+    t.boolean  "home_team",             :default => true
     t.text     "comment"
+    t.string   "notified_lineup_state"
   end
 
   add_index "matches", ["team_id"], :name => "index_matches_on_team_id"

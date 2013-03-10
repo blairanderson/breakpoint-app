@@ -21,6 +21,7 @@ BreakpointApp::Application.routes.draw do
     resources :match_availabilities, :only => [:create, :destroy]
     member do
       post 'notify'
+      post 'notify_lineup'
       get 'edit_lineup' => 'match_lineups#edit'
     end
   end

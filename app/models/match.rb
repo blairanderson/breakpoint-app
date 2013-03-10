@@ -1,4 +1,6 @@
 class Match < ActiveRecord::Base
+  NOTIFIED_LINEUP_STATES = %w[lineup_created lineup_updated notified_team_lineup]
+
   include DateTimeParser
   include NotifyStateMachine
 
@@ -13,7 +15,9 @@ class Match < ActiveRecord::Base
 
   after_create :setup_match_lineups
 
-  has_paper_trail :ignore => [:notified_state]
+  delegate :lineup_created?, :lineup_updated?, :notified_team_lineup?, :to => :notified_team_lineup_state
+
+  has_paper_trail :ignore => [:notified_state, :notified_lineup_state]
 
   def team_location
     home_team? ? 'Home' : 'Away'
@@ -29,6 +33,18 @@ class Match < ActiveRecord::Base
 
   def recent_changes
     versions.last.changeset
+  end
+
+  def notified_team_lineup_state
+    (notified_lineup_state || NOTIFIED_LINEUP_STATES.first).inquiry
+  end
+
+  def reset_notified_lineup!
+    update_attributes!(:notified_lineup_state => 'lineup_updated') if notified_team_lineup?
+  end
+
+  def notified_lineup!
+    update_attributes!(:notified_lineup_state => 'notified_team_lineup') if lineup_created? || lineup_updated?
   end
 
   private
