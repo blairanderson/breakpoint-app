@@ -1,0 +1,16 @@
+<ul>
+  <% @match.match_lineups.includes(:user).each do |lineup| %>
+    <li>
+      <strong><%= lineup.match_type %></strong>
+      <%= lineup.user.name %>
+    </li>
+  <% end %>
+</ul>
+
+<p>
+  The match will be played <strong><%= @match.team_location %></strong>
+  at <strong><%= @match.location %></strong>
+</p>
+
+<p>Thanks!</p>
+
