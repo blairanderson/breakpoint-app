@@ -34,5 +34,6 @@ end
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  notified_state :string(255)
+#  location       :text
 #
 

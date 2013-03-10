@@ -38,3 +38,16 @@ describe Invite do
   end
 end
 
+# == Schema Information
+#
+# Table name: invites
+#
+#  id            :integer          not null, primary key
+#  user_id       :integer
+#  team_id       :integer
+#  invited_by_id :integer
+#  accepted_at   :datetime
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+

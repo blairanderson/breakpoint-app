@@ -32,9 +32,10 @@ end
 #  id             :integer          not null, primary key
 #  date           :datetime         not null
 #  comment        :text
-#  team_id      :integer          default(0), not null
+#  team_id        :integer          default(0), not null
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  notified_state :string(255)
+#  location       :text
 #
 

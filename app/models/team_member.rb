@@ -5,12 +5,12 @@ end
 
 # == Schema Information
 #
-# Table name: players
+# Table name: team_members
 #
-#  created_at :datetime         not null
 #  id         :integer          not null, primary key
-#  team_id  :integer          default(0), not null
-#  updated_at :datetime         not null
+#  team_id    :integer          default(0), not null
 #  user_id    :integer          default(0), not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
 #
 

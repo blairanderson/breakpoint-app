@@ -57,11 +57,12 @@ end
 #
 #  id             :integer          not null, primary key
 #  date           :datetime         not null
-#  location       :string(255)      default(""), not null
-#  opponent       :string(255)      default(""), not null
+#  location       :text             default(""), not null
 #  team_id        :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
 #  notified_state :string(255)
+#  home_team      :boolean          default(TRUE)
+#  comment        :text
 #
 
