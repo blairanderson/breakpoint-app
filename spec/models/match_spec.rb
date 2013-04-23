@@ -9,7 +9,7 @@ describe Match do
   it 'creates a blank match lineup based off team settings' do
     team = create(:team, :singles_matches => 1, :doubles_matches => 1)
     match = create(:match, :team => team)
-    
+
     match.match_lineups.count.should eq(3)
     match.match_lineups[0].match_type.should eq('#1 Singles')
     match.match_lineups[1].match_type.should eq('#1 Doubles')
@@ -32,6 +32,15 @@ describe Match do
     match_availability = create(:match_availability, :match => match, :user => user)
 
     match.match_availability_for_user(user.id).should eq match_availability
+  end
+
+  it 'stores results in match_sets' do
+    user = create(:user)
+    team = create(:team, :users => [user])
+    match = create(:match, :team => team)
+
+    match.match_sets.create(:games_won => 6, :games_lost => 2, :ordinal => 1)
+    match.match_sets.count.should eq 1
   end
 end
 
