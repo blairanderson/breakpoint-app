@@ -2,7 +2,7 @@
   <% @match.match_lineups.includes(:user).each do |lineup| %>
     <li>
       <strong><%= lineup.match_type %></strong>
-      <%= lineup.user.name %>
+      <%= lineup.user.try(:name) %>
     </li>
   <% end %>
 </ul>
