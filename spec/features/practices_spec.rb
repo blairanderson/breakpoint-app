@@ -4,6 +4,7 @@ describe 'practices' do
   before :each do
     login_captain
     @practice = create(:practice)
+    @practice.team.users << @captain
     visit team_practices_path(@practice.team)
   end
 

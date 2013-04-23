@@ -4,6 +4,7 @@ describe 'matches' do
   before :each do
     login_captain
     @match = create(:match)
+    @match.team.users << @captain
     visit team_matches_path(@match.team)
   end
 
@@ -50,7 +51,7 @@ describe 'matches' do
   end
 
   it 'notifies team members' do
-    click_link 'Notify team'
+    within('.match-actions') { click_link 'Notify team' }
     page.should have_selector '.alert.alert-success', :text => 'Notification email sent to team'
     last_email.subject.should == 'New match scheduled'
     page.should have_selector '.disabled', :text => 'Notify team'
@@ -73,7 +74,7 @@ describe 'matches' do
     select  '06:00 PM',  :from => 'What time?'
     click_button 'Save match'
     page.should_not have_selector '.disabled', :text => 'Notify team'
-    click_link 'Notify team'
+    within('.match-actions') { click_link 'Notify team' }
     last_email.subject.should == 'Match updated'
     page.should have_selector '.disabled', :text => 'Notify team'
   end
