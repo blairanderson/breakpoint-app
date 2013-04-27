@@ -40,15 +40,6 @@ describe Match do
 
     match.match_availability_for_user(user.id).should eq match_availability
   end
-
-  it 'stores results in match_sets' do
-    user = create(:user)
-    team = create(:team, :users => [user])
-    match = create(:match, :team => team)
-
-    match.match_sets.create(:games_won => 6, :games_lost => 2, :ordinal => 1)
-    match.match_sets.count.should eq 1
-  end
 end
 
 # == Schema Information

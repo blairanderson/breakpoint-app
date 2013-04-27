@@ -6,7 +6,6 @@ class Match < ActiveRecord::Base
 
   has_many   :match_availabilities, :dependent => :destroy
   has_many   :match_lineups,        :dependent => :destroy, :order => :ordinal
-  has_many   :match_sets,           :dependent => :destroy, :order => :ordinal
   has_many   :available_players,    :through   => :match_availabilities, :source => :user
   belongs_to :team
 

@@ -1,7 +1,8 @@
 class MatchLineup < ActiveRecord::Base
   belongs_to :match
-  has_many   :match_players
-  has_many   :players, :through => :match_players, :source => :user
+  has_many   :match_players, :dependent => :destroy
+  has_many   :players,       :through => :match_players, :source => :user
+  has_many   :match_sets,    :dependent => :destroy, :order => :ordinal
 
   accepts_nested_attributes_for :match_players
 end

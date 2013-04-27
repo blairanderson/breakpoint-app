@@ -5,6 +5,6 @@ FactoryGirl.define do
     games_won 6
     games_lost 2
     ordinal 1
-    match
+    match_lineup
   end
 end
