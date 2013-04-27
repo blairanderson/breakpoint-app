@@ -1,6 +1,6 @@
 <a href="#match-<%= match.id %>" data-toggle="modal">Who can play?</a>
 <div class="modal hide" id="match-<%= match.id %>">
-  <% if match.players.empty? %>
+  <% if match.available_players.empty? %>
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal">×</button>
       <h3>There are no available players yet.</h3>
@@ -11,7 +11,7 @@
       <h3>Available players</h3>
     </div>
     <div class="modal-body">
-      <%= render :partial => 'team_members/team_members', :object => match.players %>
+      <%= render :partial => 'team_members/team_members', :object => match.available_players %>
     </div>
   <% end %>
 </div>
