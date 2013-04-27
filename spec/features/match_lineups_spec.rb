@@ -15,14 +15,14 @@ describe 'match_lineups' do
     click_button 'Save match lineup'
 
     page.should have_selector '.alert.alert-success', :text => 'Match updated'
-    @match.match_lineups.where(:user_id => @captain.id).count.should eq(1)
+    @match.match_lineups.first.match_players.where(:user_id => @captain.id).count.should eq(1)
 
     click_link 'Set the lineup'
     select '', :from => '#1 Singles'
     click_button 'Save match lineup'
 
     page.should have_selector '.alert.alert-success', :text => 'Match updated'
-    @match.match_lineups.where(:user_id => @captain.id).count.should eq(0)
+    @match.match_lineups.first.match_players.where(:user_id => @captain.id).count.should eq(0)
   end
 end
 

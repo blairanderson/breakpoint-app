@@ -7,7 +7,7 @@ describe MatchLineupMailer do
     team = create(:team, :users => [user, user2])
     @match = create(:match, :team => team)
     @match.match_lineups.each do |lineup|
-      lineup.update_attribute(:user, user)
+      lineup.match_players.create(:user => user)
     end
   end
 

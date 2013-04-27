@@ -11,7 +11,7 @@ class PermittedParams
   end
 
   def match
-    params.require(:match).permit(:date_string, :time_string, :location, :home_team, :comment, :match_lineups_attributes => [ :id, :user_id ])
+    params.require(:match).permit(:date_string, :time_string, :location, :home_team, :comment, :match_lineups_attributes => [:id, :match_players_attributes => [:id, :user_id]])
   end
 
   def practice

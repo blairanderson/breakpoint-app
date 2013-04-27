@@ -52,14 +52,14 @@ class Match < ActiveRecord::Base
   def setup_match_lineups
     ordinal = 0
     1.upto(team.singles_matches) do |singles_match|
-      match_lineups.create :match_type => "##{singles_match} Singles", :ordinal => ordinal
+      lineup = match_lineups.create :match_type => "##{singles_match} Singles", :ordinal => ordinal
+      lineup.match_players.create
       ordinal += 1
     end
 
     1.upto(team.doubles_matches) do |doubles_match|
-      2.times do
-        match_lineups.create :match_type => "##{doubles_match} Doubles", :ordinal => ordinal
-      end
+      lineup = match_lineups.create :match_type => "##{doubles_match} Doubles", :ordinal => ordinal
+      2.times { lineup.match_players.create }
       ordinal += 1
     end
   end

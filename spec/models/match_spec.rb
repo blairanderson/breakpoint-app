@@ -10,10 +10,17 @@ describe Match do
     team = create(:team, :singles_matches => 1, :doubles_matches => 1)
     match = create(:match, :team => team)
 
-    match.match_lineups.count.should eq(3)
+    match.match_lineups.count.should eq(2)
     match.match_lineups[0].match_type.should eq('#1 Singles')
     match.match_lineups[1].match_type.should eq('#1 Doubles')
-    match.match_lineups[2].match_type.should eq('#1 Doubles')
+  end
+
+  it 'creates a blank match player based off match_lineups' do
+    team = create(:team, :singles_matches => 1, :doubles_matches => 1)
+    match = create(:match, :team => team)
+
+    match.match_lineups.first.match_players.count.should eq(1)
+    match.match_lineups.last.match_players.count.should eq(2)
   end
 
   it 'returns team emails' do

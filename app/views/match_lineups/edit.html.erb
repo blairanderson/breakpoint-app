@@ -9,11 +9,14 @@
     <%= f.error_messages %>
 
     <%= f.simple_fields_for :match_lineups do |match_lineup_form| %>
-      <%= match_lineup_form.input :user_id,
-        :collection   => @match.available_players,
-        :label        => match_lineup_form.object.match_type,
-        :label_method => :name,
-        :value_method => :id %>
+      <hr>
+      <%= match_lineup_form.simple_fields_for :match_players do |match_player_form| %>
+        <%= match_player_form.input :user_id,
+          :collection   => @match.available_players,
+          :label        => match_lineup_form.object.match_type,
+          :label_method => :name,
+          :value_method => :id %>
+      <% end %>
     <% end %>
 
     <div class="form-actions">

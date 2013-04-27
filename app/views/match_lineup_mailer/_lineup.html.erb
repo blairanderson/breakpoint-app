@@ -1,8 +1,10 @@
 <ul>
-  <% @match.match_lineups.includes(:user).each do |lineup| %>
+  <% @match.match_lineups.includes(:players).each do |lineup| %>
     <li>
       <strong><%= lineup.match_type %></strong>
-      <%= lineup.user.try(:name) %>
+      <% lineup.players.each do |player| %>
+        <%= player.name %>
+      <% end %>
     </li>
   <% end %>
 </ul>
