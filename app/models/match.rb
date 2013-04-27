@@ -53,12 +53,14 @@ class Match < ActiveRecord::Base
     1.upto(team.singles_matches) do |singles_match|
       lineup = match_lineups.create :match_type => "##{singles_match} Singles", :ordinal => ordinal
       lineup.match_players.create
+      1.upto(3) { |i| lineup.match_sets.create(:ordinal => i) }
       ordinal += 1
     end
 
     1.upto(team.doubles_matches) do |doubles_match|
       lineup = match_lineups.create :match_type => "##{doubles_match} Doubles", :ordinal => ordinal
       2.times { lineup.match_players.create }
+      1.upto(3) { |i| lineup.match_sets.create(:ordinal => i) }
       ordinal += 1
     end
   end

@@ -1,0 +1,25 @@
+<% subtitle 'Results' %>
+
+<% if @matches.empty? %>
+  <div class="alert alert-block alert-info">
+    <h4>No results available because there are no matches for this team yet.</h4>
+    <%= link_to 'Add a match', new_team_match_path(@team) %> to record results.
+  </div>
+<% else %>
+  <% @matches.each do |match| %>
+    <div class="row">
+      <div class="span3">
+        <%= match.team_location %> on
+        <%= l match.date, :format => :long %>
+        <br>
+        <%= simple_format match.location %>
+      </div>
+      <div class="span7">
+        Results
+        <%= link_to 'Record results', edit_results_match_path(match) %>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+<% end %>
+

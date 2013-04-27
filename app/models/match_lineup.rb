@@ -5,6 +5,7 @@ class MatchLineup < ActiveRecord::Base
   has_many   :match_sets,    :dependent => :destroy, :order => :ordinal
 
   accepts_nested_attributes_for :match_players
+  accepts_nested_attributes_for :match_sets
 end
 
 # == Schema Information

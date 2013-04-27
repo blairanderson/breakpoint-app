@@ -69,9 +69,13 @@ class MatchesController < ApplicationController
 
     if @match.update_attributes(permitted_params.match)
       @match.reset_notified! if @match.previous_changes.present?
-      # detect lineup changes and only reset then
-      @match.reset_notified_lineup!
-      redirect_to team_matches_url(@match.team), :notice => 'Match updated'
+      if params[:commit] == 'Save results'
+        redirect_to team_results_url(@match.team), :notice => 'Results updated'
+      else
+        # detect lineup changes and only reset then
+        @match.reset_notified_lineup!
+        redirect_to team_matches_url(@match.team), :notice => 'Match updated'
+      end
     else
       @team = @match.team
       render :edit

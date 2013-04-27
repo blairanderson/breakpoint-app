@@ -6,6 +6,7 @@ BreakpointApp::Application.routes.draw do
   resources :teams do
     resources :practices, :only => [:index, :new]
     resources :matches, :only => [:index, :new]
+    resources :results, :only => [:index]
     resources :team_members, :only => :index
     resources :invites, :only => [:index, :create, :update, :destroy]
   end
@@ -23,6 +24,7 @@ BreakpointApp::Application.routes.draw do
       post 'notify'
       post 'notify_lineup'
       get 'edit_lineup' => 'match_lineups#edit'
+      get 'edit_results' => 'results#edit'
     end
   end
 end
