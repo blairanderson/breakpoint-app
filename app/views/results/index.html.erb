@@ -8,15 +8,23 @@
 <% else %>
   <% @matches.each do |match| %>
     <div class="row">
-      <div class="span3">
-        <%= match.team_location %> on
-        <%= l match.date, :format => :long %>
-        <br>
-        <%= simple_format match.location %>
+      <div class="span4">
+        <%= render :partial => 'match', :object => match %>
+        <%= link_to 'Record results', edit_results_match_path(match), :class => 'btn' %>
       </div>
-      <div class="span7">
-        Results
-        <%= link_to 'Record results', edit_results_match_path(match) %>
+      <div class="span6">
+
+        <% match.match_lineups.each do |lineup| %>
+          <%= render :partial => 'lineup', :object => lineup %>
+
+          <table class="table table-bordered table-condensed">
+            <tr>
+              <% lineup.match_sets.each do |set| %>
+                <td><%= "#{set.games_won}&ndash;#{set.games_lost}".html_safe %></td>
+              <% end %>
+            </tr>
+          </table>
+        <% end %>
       </div>
     </div>
     <hr>

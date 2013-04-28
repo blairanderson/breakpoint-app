@@ -2,13 +2,10 @@
 
 <%= form_for(@match, :html => { :class => 'form-inline' } ) do |f| %>
   <%= f.error_messages %>
+  <%= render :partial => 'match', :object => @match %>
 
   <%= f.fields_for :match_lineups do |match_lineup_form| %>
-    <p>
-      Results for <%= match_lineup_form.object.match_type %>
-      <br>
-      <%= match_lineup_form.object.players.collect(&:name).join(' and ') %>
-    </p>
+    <%= render :partial => 'lineup', :object => match_lineup_form.object %>
 
     <table class="table table-bordered">
       <thead>
