@@ -1,4 +1,10 @@
 class MatchAvailabilitiesController < ApplicationController
+  layout 'team'
+
+  def index
+    @team = Team.find(params[:team_id])
+  end
+
   def create
     @match = Match.find(params[:match_id])
     @match_availability = @match.match_availabilities.build

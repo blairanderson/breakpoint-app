@@ -6,6 +6,7 @@ BreakpointApp::Application.routes.draw do
   resources :teams do
     resources :practices, :only => [:index, :new]
     resources :matches, :only => [:index, :new]
+    resources :match_availabilities, :only => [:index]
     resources :results, :only => [:index]
     resources :team_members, :only => :index
     resources :invites, :only => [:index, :create, :update, :destroy]

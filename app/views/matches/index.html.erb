@@ -1,5 +1,8 @@
 <% subtitle 'Matches' %>
-<p><%= link_to 'Add a match', new_team_match_path(@team), :class => 'btn' %></p>
+<p>
+  <%= link_to 'Add a match', new_team_match_path(@team), :class => 'btn' %>
+  <%= link_to 'See who can play when', team_match_availabilities_path(@team), :class => 'btn' %>
+</p>
 
 <% if @matches.empty? %>
   <div class="alert alert-block alert-info">

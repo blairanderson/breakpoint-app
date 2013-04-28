@@ -1,0 +1,26 @@
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Member</th>
+      <% @team.matches.reverse.each do |match| %>
+        <th><%= l match.date, :format => :short %></th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% @team.users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <% @team.matches.reverse.each do |match| %>
+          <% available = match.available_players.include?(user) ? true : false %>
+          <td>
+            <span class="label label-<%= available ? 'success' : 'important' %>">
+              <%= available ? 'yes' : 'no' %>
+            </span>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
