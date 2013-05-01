@@ -9,10 +9,8 @@
   <% end %>
 </ul>
 
-<p>
-  The match will be played <strong><%= @match.team_location %></strong>
-  at <strong><%= @match.location %></strong>
-</p>
+<%= render :partial => 'shared/match_location', :locals => { :match => @match } %>
+<%= render :partial => 'shared/commentable', :object => @match %>
 
 <p>Thanks!</p>
 
