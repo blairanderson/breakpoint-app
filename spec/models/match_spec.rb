@@ -23,6 +23,28 @@ describe Match do
     match.match_lineups.last.match_players.count.should eq(2)
   end
 
+  it 'creates 3 blank sets for each match_lineup' do
+    team = create(:team, :singles_matches => 1, :doubles_matches => 1)
+    match = create(:match, :team => team)
+
+    match.match_lineups.each do |lineup|
+      lineup.match_sets.count.should == 3
+    end
+  end
+
+  it 'determines victory' do
+    team = create(:team, :singles_matches => 1, :doubles_matches => 1)
+    match = create(:match, :team => team)
+
+    match.match_lineups.each do |lineup|
+      lineup.match_sets[0].update_attributes(:games_won => 6, :games_lost => 2)
+      lineup.match_sets[1].update_attributes(:games_won => 6, :games_lost => 4)
+    end
+
+    match.matches_won.should == 2
+    match.won?.should == true
+  end
+
   it 'returns team emails' do
     user = create(:user)
     user2 = create(:user2)

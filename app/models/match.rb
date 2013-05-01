@@ -47,6 +47,18 @@ class Match < ActiveRecord::Base
     update_attributes!(:notified_lineup_state => 'notified_team_lineup') if lineup_created? || lineup_updated?
   end
 
+  def won?
+    matches_won > matches_lost
+  end
+
+  def matches_won
+    result[true]
+  end
+
+  def matches_lost
+    result[false]
+  end
+
   private
   def setup_match_lineups
     ordinal = 0
@@ -63,6 +75,10 @@ class Match < ActiveRecord::Base
       1.upto(3) { |i| lineup.match_sets.create(:ordinal => i) }
       ordinal += 1
     end
+  end
+
+  def result
+    @result ||= match_lineups.collect { |l| l.won? }.inject(Hash.new(0)) { |h,i| h[i] += 1; h }
   end
 end
 

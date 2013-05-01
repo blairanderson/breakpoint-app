@@ -6,6 +6,18 @@ class MatchLineup < ActiveRecord::Base
 
   accepts_nested_attributes_for :match_players
   accepts_nested_attributes_for :match_sets
+
+  def won?
+    games_won > games_lost
+  end
+
+  def games_won
+    match_sets.sum(:games_won)
+  end
+
+  def games_lost
+    match_sets.sum(:games_lost)
+  end
 end
 
 # == Schema Information
