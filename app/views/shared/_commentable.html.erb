@@ -1,4 +1,4 @@
-<% unless commentable.comment.blank? %>
+<% if commentable.comment.present? %>
   <p>
     Comments for this <%= commentable.class.to_s.downcase %>
     <blockquote>

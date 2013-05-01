@@ -1,11 +1,3 @@
-<p>
-  <% if @practice.comment.present? %>
-    Your team captain says: <%= @practice.comment %>
-  <% else %>
-    Coordinate with the captain for further details.
-  <% end %>
-</p>
-
 <%= render :partial => 'shared/commentable', :object => @practice %>
 
 <p>
