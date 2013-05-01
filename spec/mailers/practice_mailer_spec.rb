@@ -13,7 +13,7 @@ describe PracticeMailer do
     
     last_email.should_not be_nil
     email.to.should eq ['john.doe@example.com', 'dave.kroondyk@example.com']
-    email.subject.should eq 'New practice scheduled'
+    email.subject.should eq "[#{@practice.team.name}] New practice scheduled"
     email.encoded.should match /<h1>New practice scheduled for/
   end
 
@@ -22,7 +22,7 @@ describe PracticeMailer do
 
     last_email.should_not be_nil
     email.to.should eq ['john.doe@example.com', 'dave.kroondyk@example.com']
-    email.subject.should eq 'Practice updated'
+    email.subject.should eq "[#{@practice.team.name}] Practice updated"
     email.encoded.should match /<h1>Practice scheduled for/
   end
 end

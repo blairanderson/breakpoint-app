@@ -53,7 +53,7 @@ describe 'matches' do
   it 'notifies team members' do
     within('.match-actions') { click_link 'Notify team' }
     page.should have_selector '.alert.alert-success', :text => 'Notification email sent to team'
-    last_email.subject.should == 'New match scheduled'
+    last_email.subject.should == "[#{@match.team.name}] New match scheduled"
     page.should have_selector '.disabled', :text => 'Notify team'
 
     # stays disabled if nothing in the match changed
@@ -75,7 +75,7 @@ describe 'matches' do
     click_button 'Save match'
     page.should_not have_selector '.disabled', :text => 'Notify team'
     within('.match-actions') { click_link 'Notify team' }
-    last_email.subject.should == 'Match updated'
+    last_email.subject.should == "[#{@match.team.name}] Match updated"
     page.should have_selector '.disabled', :text => 'Notify team'
   end
 end

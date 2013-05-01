@@ -13,7 +13,7 @@ describe MatchMailer do
 
     last_email.should_not be_nil
     email.to.should eq ['john.doe@example.com', 'dave.kroondyk@example.com']
-    email.subject.should eq 'New match scheduled'
+    email.subject.should eq "[#{@match.team.name}] New match scheduled"
     email.encoded.should match /<h1>New match scheduled for/
   end
 
@@ -22,7 +22,7 @@ describe MatchMailer do
 
     last_email.should_not be_nil
     email.to.should eq ['john.doe@example.com', 'dave.kroondyk@example.com']
-    email.subject.should eq 'Match updated'
+    email.subject.should eq "[#{@match.team.name}] Match updated"
     email.encoded.should match /<h1>Match scheduled for/
   end
 end

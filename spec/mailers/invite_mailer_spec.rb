@@ -13,7 +13,7 @@ describe InviteMailer do
 
     last_email.should_not be_nil
     email.to.should eq ['dave.kroondyk@example.com']
-    email.subject.should eq "#{@user.name} invited you to the team, #{@team.name}"
+    email.subject.should eq "[#{@team.name}] #{@user.name} invited you to the team"
     email.encoded.should match /<h1>Please join your team on Breakpoint App/
   end
 
@@ -22,7 +22,7 @@ describe InviteMailer do
 
     last_email.should_not be_nil
     email.to.should eq ['dave.kroondyk@example.com']
-    email.subject.should eq "#{@user.name} invited you to the team, #{@team.name}"
+    email.subject.should eq "[#{@team.name}] #{@user.name} invited you to the team"
     email.encoded.should match /Please accept your invitation/
   end
 end

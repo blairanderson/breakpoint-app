@@ -15,7 +15,7 @@ describe 'invites' do
     page.should have_content 'Found users'
     click_button 'Invite'
 
-    last_email.subject.should == "#{@captain.name} invited you to the team, #{@team.name}"
+    last_email.subject.should == "[#{@team.name}] #{@captain.name} invited you to the team"
     page.should have_content 'Invited users'
     page.should have_content 'Dave Kroondyk'
   end
@@ -45,7 +45,7 @@ describe 'invites' do
     page.should have_content 'has no account yet'
     click_button 'Invite'
 
-    last_email.subject.should == "#{@captain.name} invited you to the team, #{@team.name}"
+    last_email.subject.should == "[#{@team.name}] #{@captain.name} invited you to the team"
     page.should have_selector '.alert.alert-success', :text => 'Invite sent'
     page.should have_content 'Invited users'
     page.should have_content 'New User'
@@ -59,7 +59,7 @@ describe 'invites' do
     fill_in 'name', :with => 'Custom Name'
     click_button 'Invite'
 
-    last_email.subject.should == "#{@captain.name} invited you to the team, #{@team.name}"
+    last_email.subject.should == "[#{@team.name}] #{@captain.name} invited you to the team"
     page.should have_selector '.alert.alert-success', :text => 'Invite sent'
     page.should have_content 'Invited users'
     page.should have_content 'Custom Name'

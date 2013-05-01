@@ -56,7 +56,7 @@ describe 'practices' do
   it 'notifies team members' do
     click_link 'Notify team'
     page.should have_selector '.alert.alert-success', :text => 'Notification email sent to team'
-    last_email.subject.should == 'New practice scheduled'
+    last_email.subject.should == "[#{@practice.team.name}] New practice scheduled"
     page.should have_selector '.disabled', :text => 'Notify team'
 
     # stays disabled if nothing in the practice changed
@@ -78,7 +78,7 @@ describe 'practices' do
     click_button 'Save practice'
     page.should_not have_selector '.disabled', :text => 'Notify team'
     click_link 'Notify team'
-    last_email.subject.should == 'Practice updated'
+    last_email.subject.should == "[#{@practice.team.name}] Practice updated"
     page.should have_selector '.disabled', :text => 'Notify team'
   end
 end

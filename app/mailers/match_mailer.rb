@@ -4,13 +4,13 @@ class MatchMailer < ActionMailer::Base
 
   def match_scheduled(match)
     @match = match
-    mail :to => match.team_emails, :subject => 'New match scheduled'
+    mail :to => match.team_emails, :subject => "[#{@match.team.name}] New match scheduled"
   end
 
   def match_updated(match, recent_changes)
     @match = match
     @recent_changes = recent_changes
-    mail :to => match.team_emails, :subject => 'Match updated'
+    mail :to => match.team_emails, :subject => "[#{@match.team.name}] Match updated"
   end
 end
 

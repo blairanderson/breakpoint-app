@@ -4,13 +4,13 @@ class PracticeMailer < ActionMailer::Base
 
   def practice_scheduled(practice)
     @practice = practice
-    mail :to => practice.team_emails, :subject => 'New practice scheduled'
+    mail :to => practice.team_emails, :subject => "[#{@practice.team.name}] New practice scheduled"
   end
 
   def practice_updated(practice, recent_changes)
     @practice = practice
     @recent_changes = recent_changes
-    mail :to => practice.team_emails, :subject => 'Practice updated'
+    mail :to => practice.team_emails, :subject => "[#{@practice.team.name}] Practice updated"
   end
 end
 
