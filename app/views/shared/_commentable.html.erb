@@ -1,0 +1,9 @@
+<% unless commentable.comment.blank? %>
+  <p>
+    Comments for this <%= commentable.class.to_s.downcase %>
+    <blockquote>
+      <p><%= simple_format commentable.comment %></p>
+    </blockquote>
+  </p>
+<% end %>
+

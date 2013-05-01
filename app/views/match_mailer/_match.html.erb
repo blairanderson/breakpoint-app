@@ -2,8 +2,12 @@
   The match will be played <strong><%= @match.team_location %></strong>
   at <strong><%= @match.location %></strong>
 </p>
+
+<%= render :partial => 'shared/commentable', :object => @match %>
+
 <p>
   Please <%= link_to 'set your availability', team_matches_url(@match.team) %>.
 </p>
+
 <p>Thanks!</p>
 
