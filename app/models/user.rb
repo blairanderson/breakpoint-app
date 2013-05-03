@@ -9,12 +9,12 @@ class User < ActiveRecord::Base
     :trackable,
     :validatable
 
-  has_many :invitations,          :dependent => :restrict, :class_name => 'Invite'
-  has_many :team_members,         :dependent => :restrict
+  has_many :invitations,          :dependent => :restrict_with_exception, :class_name => 'Invite'
+  has_many :team_members,         :dependent => :restrict_with_exception
   has_many :teams,                :through   => :team_members
-  has_many :practice_sessions,    :dependent => :restrict
+  has_many :practice_sessions,    :dependent => :restrict_with_exception
   has_many :practices,            :through   => :practice_sessions
-  has_many :match_availabilities, :dependent => :restrict
+  has_many :match_availabilities, :dependent => :restrict_with_exception
   has_many :matches,              :through   => :match_availabilities
 
   validate :first_name_or_last_name_present
