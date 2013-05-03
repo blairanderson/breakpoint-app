@@ -3,7 +3,7 @@ class MatchesController < ApplicationController
 
   def index
     @team = Team.find(params[:team_id])
-    @matches = @team.matches.order('date asc')
+    @matches = @team.matches
   end
 
   def new

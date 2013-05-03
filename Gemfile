@@ -4,7 +4,7 @@ gem 'rails',                '4.0.0.rc1'
 gem 'pg',                   '0.14.1'
 
 group :development do
-  gem 'quiet_assets',       '~> 1.0.1'
+  gem 'quiet_assets',       '~> 1.0.2'
   gem 'letter_opener',      '~> 1.1.0'
 end
 
@@ -25,7 +25,7 @@ end
 
 gem 'jquery-rails',         '~> 2.2.1'
 gem 'jquery-ui-rails',      '~> 4.0.1'
-gem 'bootstrap-sass',       '~> 2.3.0.0'
+gem 'bootstrap-sass',       '~> 2.3.1.0'
 gem 'simple_form',          '~> 3.0.0.beta1'
 gem 'chronic',              '~> 0.9.1'
 gem 'devise',               :git => 'git://github.com/plataformatec/devise.git', :branch => 'rails4'

@@ -1,8 +1,8 @@
 class Team < ActiveRecord::Base
   include DateParser
 
-  has_many :practices,    :dependent => :destroy
-  has_many :matches,      :dependent => :destroy
+  has_many :practices,    -> { order(:date => :asc) }, :dependent => :destroy
+  has_many :matches,      -> { order(:date => :asc) }, :dependent => :destroy
   has_many :invites,      :dependent => :destroy
   has_many :team_members, :dependent => :destroy
   has_many :users,        :through   => :team_members
