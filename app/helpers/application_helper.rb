@@ -20,5 +20,10 @@ module ApplicationHelper
       capture(&block)
     end
   end
+
+  def match_result_class(match)
+    return 'alert-info' unless match.has_results?
+    match.won? ? 'alert-success' : 'alert-error'
+  end
 end
 

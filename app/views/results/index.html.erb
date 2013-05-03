@@ -18,7 +18,11 @@
           <%= render :partial => 'lineup', :object => lineup %>
 
           <table class="table table-bordered table-condensed">
-            <tr>
+            <% if lineup.has_results? %>
+              <tr class="<%= lineup.won? ? 'success' : 'error' %>">
+            <% else %>
+              <tr>
+            <% end %>
               <% lineup.match_sets.each do |set| %>
                 <td><%= "#{set.games_won}&ndash;#{set.games_lost}".html_safe %></td>
               <% end %>

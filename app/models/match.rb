@@ -47,6 +47,10 @@ class Match < ActiveRecord::Base
     update_attributes!(:notified_lineup_state => 'notified_team_lineup') if lineup_created? || lineup_updated?
   end
 
+  def has_results?
+    match_lineups.collect { |l| l.has_results? }.any?
+  end
+
   def won?
     matches_won > matches_lost
   end
