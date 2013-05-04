@@ -35,6 +35,12 @@ class User < ActiveRecord::Base
       "#{first_name}"
     end
   end
+
+  def captain_of?(team)
+    member = team_members.where(:team_id => team.id).first
+    return false if member.nil?
+    member.role == 'captain' || member.role == 'co-captain'
+  end
 end
 
 # == Schema Information

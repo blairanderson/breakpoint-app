@@ -13,7 +13,9 @@
         <th style="width: 182px;">Going?</th>
         <th>Date</th>
         <th>Location</th>
-        <th style="width: 193px;">&nbsp;</th>
+        <% if current_user.captain_of?(@team) %>
+          <th style="width: 193px;">&nbsp;</th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
@@ -38,19 +40,21 @@
           </td>
           <td><%= l practice.date, :format => :long %></td>
           <td><%= simple_format practice.location %></td>
-          <td>
-            <% if practice.notified_team? %>
-              <%= link_to 'Notify team', notify_practice_path(practice), :method => :post, :class => 'btn btn-small disabled' %>
-            <% else %>
-              <%= link_to 'Notify team', notify_practice_path(practice), :method => :post, :class => 'btn btn-small' %>
-            <% end %>
-            <%= link_to 'Edit', edit_practice_path(practice), :class => 'btn btn-small' %>
-            <%= link_to 'Delete',
-              practice_path(practice),
-              :data => { :confirm => 'Are you sure?' },
-              :method => :delete,
-              :class => 'btn btn-small btn-danger' %>
-          </td>
+          <% if current_user.captain_of?(@team) %>
+            <td>
+              <% if practice.notified_team? %>
+                <%= link_to 'Notify team', notify_practice_path(practice), :method => :post, :class => 'btn btn-small disabled' %>
+              <% else %>
+                <%= link_to 'Notify team', notify_practice_path(practice), :method => :post, :class => 'btn btn-small' %>
+              <% end %>
+              <%= link_to 'Edit', edit_practice_path(practice), :class => 'btn btn-small' %>
+              <%= link_to 'Delete',
+                practice_path(practice),
+                :data => { :confirm => 'Are you sure?' },
+                :method => :delete,
+                :class => 'btn btn-small btn-danger' %>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>

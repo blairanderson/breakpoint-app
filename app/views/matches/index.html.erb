@@ -16,8 +16,10 @@
         <th style="width: 182px;">Can play?</th>
         <th>Date</th>
         <th>Location</th>
-        <th>Setup Lineup</th>
-        <th style="width: 193px;">&nbsp;</th>
+        <% if current_user.captain_of?(@team) %>
+          <th>Setup Lineup</th>
+          <th style="width: 193px;">&nbsp;</th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
@@ -45,29 +47,31 @@
             <%= l match.date, :format => :long %>
           </td>
           <td><%= simple_format match.location %></td>
-          <td>
-            <%= link_to 'Set the lineup', edit_lineup_match_path(match) %>
-            <% if match.notified_team_lineup? %>
-              <%= link_to 'Notify team', notify_lineup_match_path(match), :method => :post, :class => 'btn btn-small disabled' %>
-            <% else %>
-              <%= link_to 'Notify team', notify_lineup_match_path(match), :method => :post, :class => 'btn btn-small' %>
-            <% end %>
-          </td>
-          <td>
-            <div class="match-actions">
-              <% if match.notified_team? %>
-                <%= link_to 'Notify team', notify_match_path(match), :method => :post, :class => 'btn btn-small disabled' %>
+          <% if current_user.captain_of?(@team) %>
+            <td>
+              <%= link_to 'Set the lineup', edit_lineup_match_path(match) %>
+              <% if match.notified_team_lineup? %>
+                <%= link_to 'Notify team', notify_lineup_match_path(match), :method => :post, :class => 'btn btn-small disabled' %>
               <% else %>
-                <%= link_to 'Notify team', notify_match_path(match), :method => :post, :class => 'btn btn-small' %>
+                <%= link_to 'Notify team', notify_lineup_match_path(match), :method => :post, :class => 'btn btn-small' %>
               <% end %>
-              <%= link_to 'Edit', edit_match_path(match), :class => 'btn btn-small' %>
-              <%= link_to 'Delete',
-                match_path(match),
-                :data => { :confirm => 'Are you sure?' },
-                :method => :delete,
-                :class => 'btn btn-small btn-danger' %>
-            </div>
-          </td>
+            </td>
+            <td>
+              <div class="match-actions">
+                <% if match.notified_team? %>
+                  <%= link_to 'Notify team', notify_match_path(match), :method => :post, :class => 'btn btn-small disabled' %>
+                <% else %>
+                  <%= link_to 'Notify team', notify_match_path(match), :method => :post, :class => 'btn btn-small' %>
+                <% end %>
+                <%= link_to 'Edit', edit_match_path(match), :class => 'btn btn-small' %>
+                <%= link_to 'Delete',
+                  match_path(match),
+                  :data => { :confirm => 'Are you sure?' },
+                  :method => :delete,
+                  :class => 'btn btn-small btn-danger' %>
+              </div>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>

@@ -4,7 +4,7 @@ describe 'matches' do
   before :each do
     login_captain
     @match = create(:match)
-    @match.team.users << @captain
+    @match.team.team_members.create(:user => @captain, :role => 'captain')
     visit team_matches_path(@match.team)
   end
 

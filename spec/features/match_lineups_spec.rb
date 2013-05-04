@@ -4,7 +4,7 @@ describe 'match_lineups' do
   before :each do
     login_captain
     @match = create(:match)
-    @old_match = create(:match_in_past)
+    @match.team.team_members.create(:user => @captain, :role => 'captain')
     visit team_matches_path(@match.team)
   end
 

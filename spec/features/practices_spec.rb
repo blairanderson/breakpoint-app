@@ -4,7 +4,7 @@ describe 'practices' do
   before :each do
     login_captain
     @practice = create(:practice)
-    @practice.team.users << @captain
+    @practice.team.team_members.create(:user => @captain, :role => 'captain')
     visit team_practices_path(@practice.team)
   end
 
