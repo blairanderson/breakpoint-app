@@ -6,6 +6,28 @@
     <%= link_to 'Add team members', team_team_members_path(@team) %> to get the team started.
   </div>
 <% else %>
-  <%= render :partial => 'team_members/team_members', :object => @team.team_members.includes(:user) %>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @team.team_members.includes(:user).each do |team_member| %>
+      <tr>
+        <td><%= team_member.user.name %></td>
+        <td><%= mail_to team_member.user.email %></td>
+        <td><%= team_member.user.phone_number %></td>
+        <td>
+          <%= link_to 'Edit', edit_team_member_path(team_member), :class => 'btn btn-small' %>
+          <%= team_member.role.humanize %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>
 
