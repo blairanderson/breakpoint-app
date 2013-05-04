@@ -1,4 +1,6 @@
 class TeamMember < ActiveRecord::Base
+  ROLES = %w[captain co-captain member]
+
   belongs_to :team
   belongs_to :user
 end

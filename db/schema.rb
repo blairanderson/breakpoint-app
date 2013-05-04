@@ -9,148 +9,149 @@
 # from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
-# It's strongly recommended to check this file into your version control system.
+# It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130427171936) do
+ActiveRecord::Schema.define(version: 20130504015344) do
 
-  create_table "invites", :force => true do |t|
+  create_table "invites", force: true do |t|
     t.integer  "user_id"
     t.integer  "team_id"
     t.integer  "invited_by_id"
     t.datetime "accepted_at"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
-  add_index "invites", ["team_id"], :name => "index_invites_on_team_id"
-  add_index "invites", ["user_id"], :name => "index_invites_on_user_id"
+  add_index "invites", ["team_id"], name: "index_invites_on_team_id", using: :btree
+  add_index "invites", ["user_id"], name: "index_invites_on_user_id", using: :btree
 
-  create_table "match_availabilities", :force => true do |t|
+  create_table "match_availabilities", force: true do |t|
     t.integer  "user_id"
     t.integer  "match_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "match_availabilities", ["match_id"], :name => "index_match_availabilities_on_match_id"
-  add_index "match_availabilities", ["user_id"], :name => "index_match_availabilities_on_user_id"
+  add_index "match_availabilities", ["match_id"], name: "index_match_availabilities_on_match_id", using: :btree
+  add_index "match_availabilities", ["user_id"], name: "index_match_availabilities_on_user_id", using: :btree
 
-  create_table "match_lineups", :force => true do |t|
-    t.string   "match_type", :default => "", :null => false
-    t.integer  "ordinal",                    :null => false
+  create_table "match_lineups", force: true do |t|
+    t.string   "match_type", default: "", null: false
+    t.integer  "ordinal",                 null: false
     t.integer  "match_id"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
-  add_index "match_lineups", ["match_id"], :name => "index_match_lineups_on_match_id"
+  add_index "match_lineups", ["match_id"], name: "index_match_lineups_on_match_id", using: :btree
 
-  create_table "match_players", :force => true do |t|
+  create_table "match_players", force: true do |t|
     t.integer  "user_id"
     t.integer  "match_lineup_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
-  add_index "match_players", ["match_lineup_id"], :name => "index_match_players_on_match_lineup_id"
-  add_index "match_players", ["user_id"], :name => "index_match_players_on_user_id"
+  add_index "match_players", ["match_lineup_id"], name: "index_match_players_on_match_lineup_id", using: :btree
+  add_index "match_players", ["user_id"], name: "index_match_players_on_user_id", using: :btree
 
-  create_table "match_sets", :force => true do |t|
+  create_table "match_sets", force: true do |t|
     t.integer  "games_won"
     t.integer  "games_lost"
-    t.integer  "ordinal",         :null => false
-    t.integer  "match_lineup_id", :null => false
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.integer  "ordinal",         null: false
+    t.integer  "match_lineup_id", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
-  create_table "matches", :force => true do |t|
-    t.datetime "date",                                    :null => false
-    t.text     "location",              :default => "",   :null => false
+  create_table "matches", force: true do |t|
+    t.datetime "date",                                 null: false
+    t.text     "location",              default: "",   null: false
     t.integer  "team_id"
-    t.datetime "created_at",                              :null => false
-    t.datetime "updated_at",                              :null => false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.string   "notified_state"
-    t.boolean  "home_team",             :default => true
+    t.boolean  "home_team",             default: true
     t.text     "comment"
     t.string   "notified_lineup_state"
   end
 
-  add_index "matches", ["team_id"], :name => "index_matches_on_team_id"
+  add_index "matches", ["team_id"], name: "index_matches_on_team_id", using: :btree
 
-  create_table "practice_sessions", :force => true do |t|
+  create_table "practice_sessions", force: true do |t|
     t.integer  "user_id"
     t.integer  "practice_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
-  add_index "practice_sessions", ["practice_id"], :name => "index_practice_sessions_on_practice_id"
-  add_index "practice_sessions", ["user_id"], :name => "index_practice_sessions_on_user_id"
+  add_index "practice_sessions", ["practice_id"], name: "index_practice_sessions_on_practice_id", using: :btree
+  add_index "practice_sessions", ["user_id"], name: "index_practice_sessions_on_user_id", using: :btree
 
-  create_table "practices", :force => true do |t|
-    t.datetime "date",                          :null => false
+  create_table "practices", force: true do |t|
+    t.datetime "date",                       null: false
     t.text     "comment"
-    t.integer  "team_id",        :default => 0, :null => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.integer  "team_id",        default: 0, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.string   "notified_state"
     t.text     "location"
   end
 
-  add_index "practices", ["team_id"], :name => "index_practices_on_team_id"
+  add_index "practices", ["team_id"], name: "index_practices_on_team_id", using: :btree
 
-  create_table "team_members", :force => true do |t|
-    t.integer  "team_id",    :default => 0, :null => false
-    t.integer  "user_id",    :default => 0, :null => false
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+  create_table "team_members", force: true do |t|
+    t.integer  "team_id",    default: 0,        null: false
+    t.integer  "user_id",    default: 0,        null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "role",       default: "member"
   end
 
-  add_index "team_members", ["team_id"], :name => "index_players_on_team_id"
-  add_index "team_members", ["user_id"], :name => "index_players_on_user_id"
+  add_index "team_members", ["team_id"], name: "index_players_on_team_id", using: :btree
+  add_index "team_members", ["user_id"], name: "index_players_on_user_id", using: :btree
 
-  create_table "teams", :force => true do |t|
-    t.string   "name",            :default => "", :null => false
-    t.datetime "date",                            :null => false
-    t.integer  "singles_matches",                 :null => false
-    t.integer  "doubles_matches",                 :null => false
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+  create_table "teams", force: true do |t|
+    t.string   "name",            default: "", null: false
+    t.datetime "date",                         null: false
+    t.integer  "singles_matches",              null: false
+    t.integer  "doubles_matches",              null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
-  create_table "users", :force => true do |t|
-    t.string   "first_name",             :default => ""
-    t.string   "last_name",              :default => ""
+  create_table "users", force: true do |t|
+    t.string   "first_name",             default: ""
+    t.string   "last_name",              default: ""
     t.string   "phone_number"
-    t.string   "email",                  :default => "",                           :null => false
-    t.string   "encrypted_password",     :default => ""
+    t.string   "email",                  default: "",                           null: false
+    t.string   "encrypted_password",     default: ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          :default => 0
+    t.integer  "sign_in_count",          default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                                       :null => false
-    t.datetime "updated_at",                                                       :null => false
-    t.string   "time_zone",              :default => "Eastern Time (US & Canada)"
+    t.datetime "created_at",                                                    null: false
+    t.datetime "updated_at",                                                    null: false
+    t.string   "time_zone",              default: "Eastern Time (US & Canada)"
   end
 
-  add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "versions", :force => true do |t|
-    t.string   "item_type",      :null => false
-    t.integer  "item_id",        :null => false
-    t.string   "event",          :null => false
+  create_table "versions", force: true do |t|
+    t.string   "item_type",      null: false
+    t.integer  "item_id",        null: false
+    t.string   "event",          null: false
     t.string   "whodunnit"
     t.text     "object"
     t.datetime "created_at"
     t.text     "object_changes"
   end
 
-  add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
+  add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id", using: :btree
 
 end

@@ -6,6 +6,6 @@
     <%= link_to 'Add team members', team_team_members_path(@team) %> to get the team started.
   </div>
 <% else %>
-  <%= render :partial => 'team_members/team_members', :object => @team.users %>
+  <%= render :partial => 'team_members/team_members', :object => @team.team_members.includes(:user) %>
 <% end %>
 

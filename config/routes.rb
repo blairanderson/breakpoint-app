@@ -28,5 +28,7 @@ BreakpointApp::Application.routes.draw do
       get 'edit_results' => 'results#edit'
     end
   end
+
+  resources :team_members, :only => [:edit, :update]
 end
 
