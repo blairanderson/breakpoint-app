@@ -11,5 +11,15 @@ describe 'team members' do
   it 'shows team members in a team' do
     page.should have_content 'John Doe'
   end
+
+  it 'edit team members role' do
+    page.should have_content 'Captain'
+    click_link 'Edit'
+    select 'Member', :from => 'team_member_role'
+    click_button 'Save role'
+    page.should have_content 'Team member updated'
+    page.should have_content 'Member'
+    page.should_not have_content 'Captain'
+  end
 end
 

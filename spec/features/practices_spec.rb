@@ -12,6 +12,14 @@ describe 'practices' do
     page.should have_content 'June 23, 2014 at 11:00 am'
   end
 
+  it 'shows edit practice only to captains' do
+    page.should have_content 'Edit'
+    page.should have_content 'Delete'
+    @captain.team_members.where(:team => @practice.team).first.update_attributes(:role => 'member')
+    visit team_practices_path(@practice.team)
+    page.should_not have_content 'Edit'
+    page.should_not have_content 'Delete'
+  end
   it 'creates a practice' do
     click_link 'Add a practice'
     fill_in 'What day?', :with => '6/24/2014'
