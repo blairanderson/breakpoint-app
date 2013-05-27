@@ -21,6 +21,10 @@ class PermittedParams
                                     :match_sets_attributes => [:id, :games_won, :games_lost]])
   end
 
+  def match_availabilities
+    params.require(:match_availability).permit(:available)
+  end
+
   def practice
     params.require(:practice).permit(:date_string, :time_string, :location, :comment)
   end

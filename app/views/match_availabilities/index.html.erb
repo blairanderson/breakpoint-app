@@ -12,11 +12,15 @@
       <tr>
         <td><%= user.name %></td>
         <% @team.matches.each do |match| %>
-          <% available = match.available_players.include?(user) ? true : false %>
+          <% availablility = match.match_availability_for(user.id) %>
           <td>
-            <span class="label label-<%= available ? 'success' : 'important' %>">
-              <%= available ? 'yes' : 'no' %>
-            </span>
+            <% if availablility.new_record? %>
+              <span class="label">n/a</span>
+            <% else %>
+              <span class="label label-<%= availablility.available? ? 'success' : 'important' %>">
+                <%= availablility.available? ? 'yes' : 'no' %>
+              </span>
+            <% end %>
           </td>
         <% end %>
       </tr>

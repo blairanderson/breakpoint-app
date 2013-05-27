@@ -4,23 +4,41 @@ describe 'match_availabilities' do
   before :each do
     login_captain
     @match = create(:match)
-    @old_match = create(:match_in_past)
+    @match.team.team_members.create(:user => @captain, :role => 'captain')
     visit team_matches_path(@match.team)
   end
 
-  it 'creates a match_availability' do
-    page.should have_content 'There are no available players yet'
+  it 'lists all match_availabilities' do
+    click_link 'See who can play when'
+    page.should have_selector '.label', :text => 'n/a'
+
+    visit team_matches_path(@match.team)
+    click_button "I can't play"
+    click_link 'See who can play when'
+    page.should have_selector '.label-important', :text => 'no'
+
+    visit team_matches_path(@match.team)
     click_button 'I can play'
-    page.should have_content "I can't play"
-    page.should have_content 'Available players'
+    click_link 'See who can play when'
+    page.should have_selector '.label-success', :text => 'yes'
   end
 
-  it 'deletes a match_availability' do
+  it 'creates a match_availability as available' do
     click_button 'I can play'
-    page.should have_content 'Available players'
+    page.should have_content 'You can play'
+  end
 
-    click_link "I can't play"
-    page.should have_content 'There are no available players yet'
+  it 'creates a match_availability as not available' do
+    click_button "I can't play"
+    page.should have_content "You can't play"
+  end
+
+  it 'toggles match_availability' do
+    click_button 'I can play'
+    page.should have_content 'You can play'
+
+    click_button "I can't play"
+    page.should have_content "You can't play"
   end
 end
 

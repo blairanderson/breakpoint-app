@@ -60,7 +60,7 @@ describe Match do
     match = create(:match, :team => team)
     match_availability = create(:match_availability, :match => match, :user => user)
 
-    match.match_availability_for_user(user.id).should eq match_availability
+    match.match_availability_for(user.id).should eq match_availability
   end
 end
 

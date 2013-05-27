@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130504015344) do
+ActiveRecord::Schema.define(version: 20130527175950) do
 
   create_table "invites", force: true do |t|
     t.integer  "user_id"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20130504015344) do
     t.integer  "match_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean  "available"
   end
 
   add_index "match_availabilities", ["match_id"], name: "index_match_availabilities_on_match_id", using: :btree

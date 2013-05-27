@@ -24,22 +24,30 @@
     </thead>
     <tbody>
       <% @matches.each do |match| %>
-        <tr>
+        <% match_availability = match.match_availability_for(current_user.id) %>
+        <% show_yes_form = match_availability.new_record? ? true : !match_availability.available? %>
+        <% show_no_form = match_availability.new_record? ? true : match_availability.available? %>
+        <tr class="<%= match_availability.new_record? ? '' : (match_availability.available? ? 'success' : 'error') %>">
           <td>
             <div class="pull-left">
-              <% if match_availability = match.match_availability_for_user(current_user.id) %>
-                <%= link_to "I can't play",
-                  match_match_availability_path(match, match_availability),
-                  :method => :delete,
-                  :class => 'btn btn-small btn-warning' %>
-              <% else %>
-                <%= form_tag match_match_availabilities_path(match), :style => 'margin-bottom: 0px;' do %>
-                  <%= submit_tag "I can play", :class => 'btn btn-small' %>
+              <% if show_yes_form %>
+                <%= form_for [match, match_availability], html: { style: 'margin-bottom: 0px;' } do |f| %>
+                  <%= f.hidden_field :available, value: true %>
+                  <%= submit_tag 'I can play', :class => 'btn btn-small' %>
                 <% end %>
+              <% else %>
+                <span class="label label-success">You can play</span>
               <% end %>
             </div>
             <div class="pull-right">
-              <%= render :partial => 'match_availabilities', :locals => { :match => match } %>
+              <% if show_no_form %>
+                <%= form_for [match, match_availability], html: { style: 'margin-bottom: 0px;' } do |f| %>
+                  <%= f.hidden_field :available, value: false %>
+                  <%= submit_tag "I can't play", :class => 'btn btn-small' %>
+                <% end %>
+              <% else %>
+                <span class="label label-important">You can't play</span>
+              <% end %>
             </div>
           </td>
           <td>

@@ -6,7 +6,7 @@ class Match < ActiveRecord::Base
 
   has_many   :match_availabilities, :dependent => :destroy
   has_many   :match_lineups,        -> { order(:ordinal) }, :dependent => :destroy
-  has_many   :available_players,    :through   => :match_availabilities, :source => :user
+  has_many   :players,              :through   => :match_availabilities, :source => :user
   belongs_to :team
 
   validates_presence_of :team
@@ -27,8 +27,12 @@ class Match < ActiveRecord::Base
     team.team_emails
   end
 
-  def match_availability_for_user(user_id)
-    match_availabilities.where(user_id: user_id).first
+  def match_availability_for(user_id)
+    match_availabilities.where(user_id: user_id).first || match_availabilities.build(user_id: user_id)
+  end
+
+  def available_players
+    match_availabilities.includes(:user).where(:available => true).collect(&:user)
   end
 
   def recent_changes
