@@ -3,7 +3,7 @@ class MatchAvailabilitiesController < ApplicationController
   before_filter :load_match, :except => [:index]
 
   def index
-    @team = Team.find(params[:team_id])
+    @team = current_user.teams.find(params[:team_id])
   end
 
   def create
@@ -37,6 +37,7 @@ class MatchAvailabilitiesController < ApplicationController
 
   def load_match
     @match = Match.find(params[:match_id])
+    authorize @match, :set_availabilities?
   end
 end
 
