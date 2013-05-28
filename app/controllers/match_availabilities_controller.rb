@@ -16,21 +16,14 @@ class MatchAvailabilitiesController < ApplicationController
 
   def update
     @match_availability = MatchAvailability.find(params[:id])
+    authorize @match_availability
+
     if @match_availability.update_attributes(permitted_params.match_availabilities)
       redirect_to team_matches_url(@match.team)
     else
       flash[:error] = 'Availability was not updated. Try again or contact support'
       redirect_to team_matches_url(@match.team)
     end
-  end
-
-  def destroy
-    @match_availability = MatchAvailability.find(params[:id])
-    authorize @match_availability
-
-    @match_availability.destroy
-
-    redirect_to team_matches_url(@match.team)
   end
 
   private

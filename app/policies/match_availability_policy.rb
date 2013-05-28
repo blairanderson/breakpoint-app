@@ -5,7 +5,13 @@ class MatchAvailabilityPolicy < ApplicationPolicy
     end
   end
 
-  def destroy?
+  def update?
+    owner?
+  end
+
+  private
+
+  def owner?
     user.id == record.user_id
   end
 end

@@ -20,7 +20,7 @@ BreakpointApp::Application.routes.draw do
   end
 
   resources :matches, :except => [:index, :new] do
-    resources :match_availabilities, :only => [:create, :update, :destroy]
+    resources :match_availabilities, :only => [:create, :update]
     member do
       post 'notify'
       post 'notify_lineup'
