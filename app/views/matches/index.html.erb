@@ -17,8 +17,9 @@
         <th>Date</th>
         <th>Location</th>
         <% if policy(@team).captain? %>
-          <th>Setup Lineup</th>
-          <th style="width: 193px;">&nbsp;</th>
+          <th>Notification</th>
+          <th>Lineup</th>
+          <th>&nbsp;</th>
         <% end %>
       </tr>
     </thead>
@@ -57,27 +58,34 @@
           <td><%= simple_format match.location %></td>
           <% if policy(@team).captain? %>
             <td>
-              <%= link_to 'Set the lineup', edit_lineup_match_path(match) %>
-              <% if match.notified_team_lineup? %>
-                <%= link_to 'Notify team', notify_lineup_match_path(match), :method => :post, :class => 'btn btn-small disabled' %>
-              <% else %>
-                <%= link_to 'Notify team', notify_lineup_match_path(match), :method => :post, :class => 'btn btn-small' %>
-              <% end %>
+              <p><%= render :partial => 'match_availabilities', :locals => { :match => match } %></p>
+              <p><%= link_to 'Set the lineup', edit_lineup_match_path(match) %></p>
             </td>
             <td>
-              <div class="match-actions">
+              <p>
                 <% if match.notified_team? %>
                   <%= link_to 'Notify team', notify_match_path(match), :method => :post, :class => 'btn btn-small disabled' %>
                 <% else %>
                   <%= link_to 'Notify team', notify_match_path(match), :method => :post, :class => 'btn btn-small' %>
                 <% end %>
-                <%= link_to 'Edit', edit_match_path(match), :class => 'btn btn-small' %>
+              </p>
+              <p>
+                <% if match.notified_team_lineup? %>
+                  <%= link_to 'Email lineup', notify_lineup_match_path(match), :method => :post, :class => 'btn btn-small disabled' %>
+                <% else %>
+                  <%= link_to 'Email lineup', notify_lineup_match_path(match), :method => :post, :class => 'btn btn-small' %>
+                <% end %>
+              </p>
+            </td>
+            <td>
+              <p><%= link_to 'Edit', edit_match_path(match), :class => 'btn btn-small' %></p>
+              <p>
                 <%= link_to 'Delete',
                   match_path(match),
                   :data => { :confirm => 'Are you sure?' },
                   :method => :delete,
                   :class => 'btn btn-small btn-danger' %>
-              </div>
+              </p>
             </td>
           <% end %>
         </tr>

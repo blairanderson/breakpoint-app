@@ -12,13 +12,15 @@ describe 'matches' do
     page.should have_content 'June 26, 2014 at 11:00 am'
   end
 
-  it 'shows setup lineup and edit match only to captains' do
-    page.should have_content 'Setup Lineup'
+  it 'shows notification, lineup, and edit match only to captains' do
+    page.should have_content 'Notification'
+    page.should have_content 'Lineup'
     page.should have_content 'Edit'
     page.should have_content 'Delete'
     @captain.team_members.where(:team => @match.team).first.update_attributes(:role => 'member')
     visit team_matches_path(@match.team)
-    page.should_not have_content 'Setup Lineup'
+    page.should_not have_content 'Notification'
+    page.should_not have_content 'Lineup'
     page.should_not have_content 'Edit'
     page.should_not have_content 'Delete'
   end
@@ -62,7 +64,7 @@ describe 'matches' do
   end
 
   it 'notifies team members' do
-    within('.match-actions') { click_link 'Notify team' }
+    click_link 'Notify team'
     page.should have_selector '.alert.alert-success', :text => 'Notification email sent to team'
     last_email.subject.should == "[#{@match.team.name}] New match scheduled"
     page.should have_selector '.disabled', :text => 'Notify team'
@@ -85,7 +87,7 @@ describe 'matches' do
     select  '06:00 PM',  :from => 'What time?'
     click_button 'Save match'
     page.should_not have_selector '.disabled', :text => 'Notify team'
-    within('.match-actions') { click_link 'Notify team' }
+    click_link 'Notify team'
     last_email.subject.should == "[#{@match.team.name}] Match updated"
     page.should have_selector '.disabled', :text => 'Notify team'
   end
