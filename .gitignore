@@ -16,3 +16,5 @@
 .DS_Store
 config/database.yml
 
+latest.dump
+
