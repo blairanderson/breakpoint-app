@@ -10,7 +10,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'debugger',           '~> 1.5.0'
+  gem 'debugger',           '~> 1.6.0'
   gem 'rspec-rails',        '~> 2.13.1'
   gem 'capybara',           '~> 2.1.0'
   gem 'factory_girl_rails', '~> 4.2.1'
