@@ -10,7 +10,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'debugger',           '~> 1.6.0'
+  gem 'debugger',           '~> 1.6.1'
   gem 'rspec-rails',        '~> 2.13.1'
   gem 'capybara',           '~> 2.1.0'
   gem 'factory_girl_rails', '~> 4.2.1'
@@ -33,4 +33,5 @@ gem 'devise',               :git => 'git://github.com/plataformatec/devise.git',
 gem 'pundit',               :git => 'git://github.com/elabs/pundit.git', :ref => '3da8b0d7f4146865805c1e2c43cff522ccc4d863'
 gem 'annotate',             '~> 2.5.0'
 gem 'paper_trail',          :git => 'git://github.com/airblade/paper_trail.git', :branch => 'rails4'
+gem 'capistrano',           '~> 2.15.5'
 
