@@ -12,7 +12,7 @@ describe Practice do
     team = create(:team, :users => [user, user2])
     practice = create(:practice, :team => team)
 
-    practice.team_emails.should eq ['john.doe@example.com', 'dave.kroondyk@example.com']
+    practice.team_emails.should =~ ['john.doe@example.com', 'dave.kroondyk@example.com']
   end
 
   it 'returns the practice session for a specified user id' do

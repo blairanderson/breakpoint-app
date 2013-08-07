@@ -16,7 +16,7 @@ describe 'team members' do
     page.should have_content 'Captain'
     click_link 'Edit'
     select 'Member', :from => 'team_member_role'
-    click_button 'Save role'
+    click_button 'Save settings'
     page.should have_content 'Team member updated'
     page.should have_content 'Member'
     page.should_not have_content 'Captain'

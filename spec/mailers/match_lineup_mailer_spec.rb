@@ -15,7 +15,7 @@ describe MatchLineupMailer do
     email = MatchLineupMailer.lineup_set(@match).deliver
 
     last_email.should_not be_nil
-    email.to.should eq ['john.doe@example.com', 'dave.kroondyk@example.com']
+    email.to.should =~ ['john.doe@example.com', 'dave.kroondyk@example.com']
     email.subject.should match /\[#{@match.team.name}\] Lineup set for match on/
     email.encoded.should match /<h1>The lineup has been set/
   end
@@ -24,7 +24,7 @@ describe MatchLineupMailer do
     email = MatchLineupMailer.lineup_updated(@match, @match.recent_changes).deliver
 
     last_email.should_not be_nil
-    email.to.should eq ['john.doe@example.com', 'dave.kroondyk@example.com']
+    email.to.should =~ ['john.doe@example.com', 'dave.kroondyk@example.com']
     email.subject.should match /\[#{@match.team.name}\] Lineup updated for match on/
     email.encoded.should match /<h1>The lineup was updated for/
   end

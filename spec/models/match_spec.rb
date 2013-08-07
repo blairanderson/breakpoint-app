@@ -51,7 +51,7 @@ describe Match do
     team = create(:team, :users => [user, user2])
     match = create(:match, :team => team)
 
-    match.team_emails.should eq ['john.doe@example.com', 'dave.kroondyk@example.com']
+    match.team_emails.should =~ ['john.doe@example.com', 'dave.kroondyk@example.com']
   end
 
   it 'returns the match availability for a specified user id' do

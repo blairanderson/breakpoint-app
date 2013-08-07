@@ -34,7 +34,7 @@ class PermittedParams
   end
 
   def team_member
-    params.require(:team_member).permit(:role)
+    params.require(:team_member).permit(:role, :receive_email)
   end
 
   def user

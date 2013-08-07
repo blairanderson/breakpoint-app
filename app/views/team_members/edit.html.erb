@@ -1,12 +1,13 @@
-<% subtitle "Edit role for #{@team_member.user.name}" %>
+<% subtitle "Edit settings for #{@team_member.user.name}" %>
 
 <%= simple_form_for(@team_member, :html => { :class => 'form-horizontal' } ) do |f| %>
   <%= f.error_messages %>
 
   <%= f.input :role, :collection => TeamMember::ROLES, :value_method => :to_s, :label_method => :humanize, :include_blank => false %>
+  <%= f.input :receive_email %>
 
   <div class="form-actions">
-    <%= f.submit 'Save role', :class => 'btn btn-primary' %>
+    <%= f.submit 'Save settings', :class => 'btn btn-primary' %>
   </div>
 <% end %>
 

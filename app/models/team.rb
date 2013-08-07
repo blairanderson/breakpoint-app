@@ -22,7 +22,7 @@ class Team < ActiveRecord::Base
   end
 
   def team_emails
-    users.select(&:email).collect(&:email)
+    users.where('team_members.receive_email = true').pluck(:email)
   end
 end
 
