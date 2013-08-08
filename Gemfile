@@ -14,6 +14,7 @@ group :development, :test do
   gem 'rspec-rails',        '~> 2.13.1'
   gem 'capybara',           '~> 2.1.0'
   gem 'factory_girl_rails', '~> 4.2.1'
+  gem 'dotenv-rails'
 end
 
 gem 'sass-rails',           '~> 4.0.0.rc1'
