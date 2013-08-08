@@ -15,9 +15,9 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: tennisone_development
+  database: breakpoint_app_development
   pool: 5
-  username: kroondyk
+  username: breakpoint_app
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -41,15 +41,15 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: tennisone_test
+  database: breakpoint_app_test
   pool: 5
-  username: kroondyk
+  username: breakpoint_app
   password:
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: tennisone_production
+  database: breakpoint_app_production
   pool: 5
-  username: tennisone
+  username: breakpoint_app
   password:
