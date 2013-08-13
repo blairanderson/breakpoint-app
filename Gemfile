@@ -34,8 +34,8 @@ gem 'devise',               :git => 'git://github.com/plataformatec/devise.git',
 gem 'pundit',               :git => 'git://github.com/elabs/pundit.git', :ref => '3da8b0d7f4146865805c1e2c43cff522ccc4d863'
 gem 'annotate',             '~> 2.5.0'
 gem 'paper_trail',          :git => 'git://github.com/airblade/paper_trail.git', :branch => 'rails4'
-gem 'capistrano',           '~> 3.0.0.pre14'
-gem 'capistrano-chruby',    :github => 'capistrano/chruby'
+gem 'capistrano',           :github => 'capistrano/capistrano', :branch => 'v3'
+gem 'capistrano-rbenv',     :github => 'capistrano/rbenv'
 gem 'capistrano-bundler',   :github => 'capistrano/bundler'
-gem 'capistrano-rails',     '~> 0.0.7'
+gem 'capistrano-rails',     :github => 'capistrano/rails'
 
