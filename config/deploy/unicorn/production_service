@@ -1,0 +1,59 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          unicorn
+# Required-Start:    $local_fs $remote_fs $network $syslog
+# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts the unicorn app server
+# Description:       starts unicorn using start-stop-daemon
+### END INIT INFO
+
+set -e
+
+# app settings
+USER="breakpointapp"
+APP_NAME="breakpoint-app"
+APP_ROOT="/home/$USER/app/current"
+ENV="production"
+
+# environment settings
+# need to update with chruby
+PATH="/home/$USER/.rbenv/shims:/home/$USER/.rbenv/bin:$PATH"
+DAEMON="$APP_ROOT/bin/unicorn"
+DAEMON_OPTS="-c $APP_ROOT/config/unicorn.rb -E $ENV -D"
+PID="$APP_ROOT/tmp/pids/unicorn.pid"
+
+case "$1" in
+  start)
+    echo -n "Starting $APP_NAME: "
+    start-stop-daemon --start --quiet --pidfile $PID \
+      --chuid $USER --exec $DAEMON -- $DAEMON_OPTS
+    echo "$APP_NAME."
+    ;;
+  stop)
+    echo -n "Stopping $APP_NAME: "
+    start-stop-daemon --stop --signal QUIT --quiet --pidfile $PID --chuid $USER
+    echo "$APP_NAME."
+    ;;
+  restart)
+    echo -n "Restarting $APP_NAME: "
+    start-stop-daemon --stop --signal QUIT --quiet --pidfile $PID --chuid $USER
+    sleep 1
+    start-stop-daemon --start --quiet --pidfile $PID \
+      --chuid $USER --exec $DAEMON -- $DAEMON_OPTS
+    echo "$APP_NAME."
+    ;;
+  reload)
+    echo -n "Reloading $APP_NAME configuration: "
+    start-stop-daemon --stop --signal HUP --quiet --pidfile $PID --chuid $USER
+    echo "$APP_NAME."
+    ;;
+  *)
+  echo "Usage: $APP_NAME {start|stop|restart|reload}" >&2
+  exit 1
+  ;;
+esac
+
+exit 0

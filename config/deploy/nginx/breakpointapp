@@ -1,0 +1,42 @@
+upstream unicorn_breakpointapp_production {
+  server unix:/tmp/unicorn.breakpointapp_production.sock fail_timeout=0;
+}
+
+server {
+  listen 80;
+  server_name localhost;
+
+  root /home/breakpointapp/app/current/public;
+
+  access_log /home/breakpointapp/app/current/log/access.log;
+  error_log  /home/breakpointapp/app/current/log/error.log;
+
+  location ^~ /assets/ {
+    expires max;
+    gzip_static on; # to serve pre-gzipped version
+    add_header Cache-Control public;
+  }
+
+  try_files $uri/index.html $uri.html $uri @unicorn_breakpointapp_production;
+  location @unicorn_breakpointapp_production {
+    proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+    proxy_set_header Host              $http_host;
+    proxy_set_header X-Real-IP         $remote_addr;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_redirect   off;
+
+    proxy_pass http://unicorn_breakpointapp_production;
+  }
+
+  location = /favicon.ico {
+    expires    max;
+    add_header Cache-Control public;
+  }
+
+  error_page 404 /404.html;
+  error_page 422 /422.html;
+  error_page 500 502 503 504 /500.html;
+  client_max_body_size 100m; # max of 100mb uploads
+  keepalive_timeout 10;
+}
+
