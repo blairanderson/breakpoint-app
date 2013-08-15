@@ -8,13 +8,6 @@ GIT
       railties (>= 4.0.0.beta, < 5.0)
 
 GIT
-  remote: git://github.com/capistrano/bundler.git
-  revision: 78609b2df12929aa22377f047e5144f771d67a34
-  specs:
-    capistrano-bundler (0.0.1)
-      capistrano (>= 3.0.0.pre)
-
-GIT
   remote: git://github.com/capistrano/capistrano.git
   revision: a578e8dc410f2079d74fe32e11996715db907786
   branch: v3
@@ -37,6 +30,13 @@ GIT
   specs:
     capistrano-rails (0.0.7)
       capistrano
+
+GIT
+  remote: git://github.com/davekaro/bundler.git
+  revision: 4b4b43a825d675f32c95cee63a094de24d1130c9
+  specs:
+    capistrano-bundler (0.0.1)
+      capistrano (>= 3.0.0.pre)
 
 GIT
   remote: git://github.com/elabs/pundit.git
