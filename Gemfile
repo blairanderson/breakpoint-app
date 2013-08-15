@@ -35,7 +35,7 @@ gem 'pundit',               :git => 'git://github.com/elabs/pundit.git', :ref =>
 gem 'annotate',             '~> 2.5.0'
 gem 'paper_trail',          :git => 'git://github.com/airblade/paper_trail.git', :branch => 'rails4'
 gem 'capistrano',           :github => 'capistrano/capistrano', :branch => 'v3'
-gem 'capistrano-rbenv',     :github => 'capistrano/rbenv'
+gem 'capistrano-chruby',    :github => 'capistrano/chruby'
 gem 'capistrano-bundler',   :github => 'capistrano/bundler'
 gem 'capistrano-rails',     :github => 'capistrano/rails'
 

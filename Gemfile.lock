@@ -25,17 +25,17 @@ GIT
       sshkit (>= 0.0.23)
 
 GIT
+  remote: git://github.com/capistrano/chruby.git
+  revision: ac952211cf3e490fdc408197e2bfdd55b8c4f1e1
+  specs:
+    capistrano-chruby (0.0.1)
+      capistrano
+
+GIT
   remote: git://github.com/capistrano/rails.git
   revision: 892e527ad51e0d3f3c661c34531a7327a5d475d0
   specs:
     capistrano-rails (0.0.7)
-      capistrano
-
-GIT
-  remote: git://github.com/capistrano/rbenv.git
-  revision: 7e568ec1d0ead017cca3208c0f30d5b4a6077084
-  specs:
-    capistrano-rbenv (0.0.1)
       capistrano
 
 GIT
@@ -247,8 +247,8 @@ DEPENDENCIES
   bootstrap-sass (~> 2.3.1.0)
   capistrano!
   capistrano-bundler!
+  capistrano-chruby!
   capistrano-rails!
-  capistrano-rbenv!
   capybara (~> 2.1.0)
   chronic (~> 0.9.1)
   coffee-rails (~> 4.0.0)
