@@ -35,5 +35,5 @@ namespace :deploy do
 
 end
 
-set :chruby_ruby, `cat .ruby-version`
+set :chruby_ruby, `cat .ruby-version | tr -d "\n"`
 
