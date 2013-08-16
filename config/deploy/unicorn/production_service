@@ -19,8 +19,6 @@ APP_ROOT="/home/$USER/app/current"
 ENV="production"
 
 # environment settings
-# need to update with chruby
-PATH="/home/$USER/.rbenv/shims:/home/$USER/.rbenv/bin:$PATH"
 DAEMON="$APP_ROOT/bin/unicorn"
 DAEMON_OPTS="-c $APP_ROOT/config/unicorn.rb -E $ENV -D"
 PID="$APP_ROOT/tmp/pids/unicorn.pid"
