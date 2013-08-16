@@ -22,6 +22,7 @@ gem 'uglifier',             '~> 2.0.1'
 
 group :production do
   gem 'simple_postmark',    :git => 'git://github.com/haihappen/simple_postmark.git', :ref => '02b49d3d9612b46b0a3c120f62762b8a6e4b81bc'
+  gem 'unicorn',            '~> 4.6.3'
 end
 
 gem 'jquery-rails',         '~> 2.2.1'
