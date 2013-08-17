@@ -37,10 +37,7 @@ case "$1" in
     ;;
   restart)
     echo -n "Restarting $APP_NAME: "
-    start-stop-daemon --stop --signal QUIT --quiet --pidfile $PID --chuid $USER
-    sleep 1
-    start-stop-daemon --start --quiet --pidfile $PID \
-      --chuid $USER --exec $DAEMON -- $DAEMON_OPTS
+    start-stop-daemon --stop --signal USR2 --quiet --pidfile $PID --chuid $USER
     echo "$APP_NAME."
     ;;
   reload)
