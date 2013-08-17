@@ -17,7 +17,7 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      execute :service, 'breakpointapp restart'
+      execute fetch(:chruby_exec), "#{fetch(:chruby_ruby)} -- service breakpointapp restart"
     end
   end
 
