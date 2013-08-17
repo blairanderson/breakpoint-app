@@ -4,7 +4,7 @@ upstream unicorn_breakpointapp_production {
 
 server {
   listen 80;
-  server_name localhost;
+  server_name www.breakpointapp.com;
 
   root /home/breakpointapp/app/current/public;
 
