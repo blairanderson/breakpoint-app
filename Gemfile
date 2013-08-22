@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby   '2.0.0'
 
-gem 'rails',                '4.0.0.rc1'
+gem 'rails',                '4.0.0'
 gem 'pg',                   '0.14.1'
 
 group :development do
@@ -16,7 +16,7 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.2.1'
 end
 
-gem 'sass-rails',           '~> 4.0.0.rc1'
+gem 'sass-rails',           '~> 4.0.0'
 gem 'coffee-rails',         '~> 4.0.0'
 gem 'uglifier',             '~> 2.0.1'
 
