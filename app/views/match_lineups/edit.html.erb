@@ -1,27 +1,21 @@
 <% subtitle 'Set match lineup' %>
 
-<% if @match.available_players.empty? %>
-  <div class="alert alert-info">
-    There are no available players yet.
-  </div>
-<% else %>
-  <%= simple_form_for(@match, :html => { :class => 'form-horizontal' } ) do |f| %>
-    <%= f.error_messages %>
+<%= simple_form_for(@match, :html => { :class => 'form-horizontal' } ) do |f| %>
+  <%= f.error_messages %>
 
-    <%= f.simple_fields_for :match_lineups do |match_lineup_form| %>
-      <hr>
-      <%= match_lineup_form.simple_fields_for :match_players do |match_player_form| %>
-        <%= match_player_form.input :user_id,
-          :collection   => @match.available_players,
-          :label        => match_lineup_form.object.match_type,
-          :label_method => :name,
-          :value_method => :id %>
-      <% end %>
+  <%= f.simple_fields_for :match_lineups do |match_lineup_form| %>
+    <hr>
+    <%= match_lineup_form.simple_fields_for :match_players do |match_player_form| %>
+      <%= match_player_form.input :user_id,
+        :collection   => @team.users,
+        :label        => match_lineup_form.object.match_type,
+        :label_method => :name,
+        :value_method => :id %>
     <% end %>
-
-    <div class="form-actions">
-      <%= f.submit 'Save match lineup', :class => 'btn btn-primary' %>
-    </div>
   <% end %>
+
+  <div class="form-actions">
+    <%= f.submit 'Save match lineup', :class => 'btn btn-primary' %>
+  </div>
 <% end %>
 
