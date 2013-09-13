@@ -22,10 +22,10 @@ describe 'practices' do
   end
   it 'creates a practice' do
     click_link 'Add a practice'
-    fill_in 'What day?', :with => '6/24/2014'
-    select  '07:00 PM',  :from => 'What time?'
-    fill_in 'Location',  :with => 'Paxton'
-    fill_in 'Comment',   :with => 'tonsofdetail'
+    fill_in 'What day?',  :with => '6/24/2014'
+    fill_in 'What time?', :with => '07:00 PM'
+    fill_in 'Location',   :with => 'Paxton'
+    fill_in 'Comment',    :with => 'tonsofdetail'
     click_button 'Save practice'
 
     last_email.should be_nil
@@ -46,7 +46,7 @@ describe 'practices' do
   it 'edits a practice' do
     click_link 'Edit'
     fill_in 'What day?', :with => '6/25/2014'
-    select  '06:00 PM',  :from => 'What time?'
+    fill_in 'What time?', :with => '06:00 PM'
     click_button 'Save practice'
 
     last_email.should be_nil
@@ -82,7 +82,7 @@ describe 'practices' do
     # sends updated email after practice is updated
     click_link 'Edit'
     fill_in 'What day?', :with => '6/25/2014'
-    select  '06:00 PM',  :from => 'What time?'
+    fill_in 'What time?', :with => '06:00 PM'
     click_button 'Save practice'
     page.should_not have_selector '.disabled', :text => 'Notify team'
     click_link 'Notify team'

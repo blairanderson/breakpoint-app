@@ -9,8 +9,6 @@ class PracticesController < ApplicationController
   def new
     @team = Team.find(params[:team_id])
     @practice = @team.practices.build
-    Chronic.time_class = Time.zone
-    @practice.date = Chronic.parse('this 02:30 PM')
   end
 
   def edit

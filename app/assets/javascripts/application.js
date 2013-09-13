@@ -14,9 +14,11 @@
 //= require jquery_ujs
 //= require jquery.ui.datepicker
 //= require bootstrap
+//= require bootstrap-timepicker
 
 $(function() {
   $("a.disabled").on("click", false);
-  $( ".datepicker" ).datepicker({ numberOfMonths: 2 });
+  $(".datepicker").datepicker({ numberOfMonths: 2 });
+  $(".timepicker").timepicker();
 });
 
