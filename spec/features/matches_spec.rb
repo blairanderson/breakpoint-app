@@ -28,7 +28,7 @@ describe 'matches' do
   it 'creates a match' do
     click_link 'Add a match'
     fill_in 'What day?', :with => '6/27/2014'
-    select  '07:00 PM',  :from => 'What time?'
+    fill_in 'What time?', :with => '07:00 PM'
     fill_in 'Location',  :with => 'PaxtonBigClub'
     click_button 'Save match'
 
@@ -49,7 +49,7 @@ describe 'matches' do
   it 'edits a match' do
     click_link 'Edit'
     fill_in 'What day?', :with => '6/28/2014'
-    select  '06:00 PM',  :from => 'What time?'
+    fill_in 'What time?', :with => '06:00 PM'
     click_button 'Save match'
 
     page.should have_selector '.alert.alert-success', :text => 'Match updated'
@@ -84,7 +84,7 @@ describe 'matches' do
     # sends updated email after match is updated
     click_link 'Edit'
     fill_in 'What day?', :with => '6/25/2014'
-    select  '06:00 PM',  :from => 'What time?'
+    fill_in 'What time?', :with => '06:00 PM'
     click_button 'Save match'
     page.should_not have_selector '.disabled', :text => 'Notify team'
     click_link 'Notify team'

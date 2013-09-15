@@ -2,19 +2,7 @@
   <%= f.error_messages %>
 
   <%= f.input :date_string, :label => 'What day?', :input_html => { :class => 'datepicker' } %>
-  <%= f.input :time_string, :as => :time_select, :label => 'What time?', :input_html => { :class => 'timepicker' } %>
-  <div class="control-group">
-    <label class="control-label" for="practice_time_string">
-      <abbr title="required">*</abbr>
-      What time?
-    </label>
-    <div class="controls">
-      <div class="input-append bootstrap-timepicker">
-        <%= f.text_field :time_string, :class => 'timepicker' %>
-        <span class="add-on"><i class="icon-time"></i></span>
-      </div>
-    </div>
-  </div>
+  <%= f.input :time_string, :as => :time_select, :label => 'What time?' %>
   <%= f.input :location, :input_html => { :rows => '3' }, :hint => 'include club name and address' %>
   <%= f.input :comment, :input_html => { :rows => '3' }, :hint => 'provide any additional information here' %>
 
