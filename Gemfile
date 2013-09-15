@@ -27,7 +27,7 @@ end
 
 gem 'jquery-rails',         '~> 2.2.1'
 gem 'jquery-ui-rails',      '~> 4.0.1'
-gem 'bootstrap-sass',       '~> 2.3.1.0'
+gem 'bootstrap-sass',       '~> 2.3.2.2'
 gem 'simple_form',          '~> 3.0.0.beta1'
 gem 'chronic',              '~> 0.9.1'
 gem 'devise',               :git => 'git://github.com/plataformatec/devise.git', :branch => 'rails4'
