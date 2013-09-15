@@ -81,9 +81,9 @@
         <td><%= invite.user.name %></td>
         <td><%= l invite.created_at %></td>
         <td><%= invite.invited_by.name %></td>
-        <td><%= l invite.accepted_at if invite.accepted_at.present? %></td>
+        <td><%= l invite.accepted_at if invite.accepted? %></td>
         <td>
-          <% unless invite.accepted_at.present? %>
+          <% unless invite.accepted? %>
             <%= link_to 'Delete',
               team_invite_path(@team, invite),
               :data => { :confirm => 'Are you sure?' },

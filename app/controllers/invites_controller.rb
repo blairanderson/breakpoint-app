@@ -53,6 +53,10 @@ class InvitesController < ApplicationController
 
   def update
     @invite = Invite.find(params[:id])
+    if @invite.accepted?
+      redirect_to team_team_members_url(@team), :notice => 'Invite accepted'
+    end
+
     # TODO authorize invite
     Invite.transaction do
       @invite.accepted_at = Time.now

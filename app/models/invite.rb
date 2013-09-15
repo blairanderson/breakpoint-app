@@ -35,6 +35,10 @@ class Invite < ActiveRecord::Base
     return name.split(' ')[1..-1].join(' ') if new_record?
     user.last_name
   end
+
+  def accepted?
+    accepted_at.present?
+  end
 end
 
 # == Schema Information
