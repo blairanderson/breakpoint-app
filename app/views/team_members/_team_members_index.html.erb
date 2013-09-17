@@ -1,0 +1,26 @@
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Receive Email</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% team_members_index.each do |team_member| %>
+    <tr>
+      <td><%= team_member.user.name %></td>
+      <td><%= mail_to team_member.user.email %></td>
+      <td><%= team_member.user.phone_number %></td>
+      <td style="text-align: center;"><%= '<i class="icon-ok"></i>'.html_safe if team_member.receive_email %></td>
+      <td>
+        <%= link_to 'Edit', edit_team_member_path(team_member), :class => 'btn btn-small' %>
+        <%= team_member.role.humanize %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+

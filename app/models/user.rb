@@ -35,6 +35,11 @@ class User < ActiveRecord::Base
       "#{first_name}"
     end
   end
+
+  def accepted_teams
+    excluded_team_ids = invitations.not_accepted.pluck(:team_id)
+    teams.newest.reject { |t| excluded_team_ids.include?(t.id) }
+  end
 end
 
 # == Schema Information

@@ -85,6 +85,8 @@ describe 'invites' do
 
   it 'accepts an invite' do
     invite = create(:invite, :user => @user2, :invited_by => @captain, :team => @team)
+    @team.users << invite.user
+    @team.save!
     logout
     login(@user2)
 
@@ -95,16 +97,6 @@ describe 'invites' do
     page.should have_selector '.alert.alert-success', :text => 'Invite accepted'
     visit teams_path
     page.should_not have_content 'not on any teams'
-  end
-
-  it 'deletes an invite' do
-    fill_in 'search', :with => 'dave'
-    click_button 'Search'
-    click_button 'Invite'
-    click_link 'Delete'
-
-    page.should have_selector '.alert.alert-success', :text => 'Invite deleted'
-    page.should_not have_content 'dave.kroondyk@example.com'
   end
 end
 

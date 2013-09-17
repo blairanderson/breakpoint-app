@@ -8,6 +8,10 @@ class Invite < ActiveRecord::Base
 
   attr_writer :email, :name
 
+  def self.not_accepted
+    where(:accepted_at => nil)
+  end
+
   def email
     return user.email if user.present?
     @email

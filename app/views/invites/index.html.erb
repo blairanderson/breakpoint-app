@@ -26,9 +26,9 @@
         <tr>
           <td><%= user.name %></td>
           <td>
-            <% if @team.users.include?(user) %>
+            <% if @team.accepted_team_members.collect(&:user_id).include?(user.id) %>
               <span class="label label-info">On team</span>
-            <% elsif @invites.collect(&:user_id).include?(user.id) %>
+            <% elsif @team.not_accepted_team_members.collect(&:user_id).include?(user.id) %>
               <span class="label label-info">Invited</span>
             <% else %>
               <%= form_for [@team, @team.invites.build(:user_id => user.id)], :html => { :style => 'margin: 0px;' } do |f| %>
@@ -72,7 +72,6 @@
         <th>Invited on</th>
         <th>Invited by</th>
         <th>Accepted on</th>
-        <th style="width: 55px;">&nbsp;</th>
       </tr>
     </thead>
     <tbody>
@@ -82,15 +81,6 @@
         <td><%= l invite.created_at %></td>
         <td><%= invite.invited_by.name %></td>
         <td><%= l invite.accepted_at if invite.accepted? %></td>
-        <td>
-          <% unless invite.accepted? %>
-            <%= link_to 'Delete',
-              team_invite_path(@team, invite),
-              :data => { :confirm => 'Are you sure?' },
-              :method => :delete,
-              :class => 'btn btn-small btn-danger' %>
-          <% end %>
-        </td>
       </tr>
       <% end %>
     </tbody>

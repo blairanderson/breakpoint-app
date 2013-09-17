@@ -6,30 +6,17 @@
     <%= link_to 'Add team members', team_team_members_path(@team) %> to get the team started.
   </div>
 <% else %>
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone Number</th>
-        <th>Receive Email</th>
-        <th>Role</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @team.team_members.includes(:user).each do |team_member| %>
-      <tr>
-        <td><%= team_member.user.name %></td>
-        <td><%= mail_to team_member.user.email %></td>
-        <td><%= team_member.user.phone_number %></td>
-        <td style="text-align: center;"><%= '<i class="icon-ok"></i>'.html_safe if team_member.receive_email %></td>
-        <td>
-          <%= link_to 'Edit', edit_team_member_path(team_member), :class => 'btn btn-small' %>
-          <%= team_member.role.humanize %>
-        </td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <% if @accepted_team_members.present? %>
+    <%= render :partial => "team_members_index", :object => @accepted_team_members %>
+  <% end %>
+
+  <% if @not_accepted_team_members.present? %>
+    <h4>Team members who have not accepted their invite</h4>
+    <div class="alert alert-info">
+      To set practice/match availability, members must accept their invitation
+    </div>
+
+    <%= render :partial => "team_members_index", :object => @not_accepted_team_members %>
+  <% end %>
 <% end %>
 

@@ -3,6 +3,8 @@ class TeamMembersController < ApplicationController
 
   def index
     @team = Team.find(params[:team_id])
+    @accepted_team_members     = @team.accepted_team_members
+    @not_accepted_team_members = @team.not_accepted_team_members
   end
 
   def edit

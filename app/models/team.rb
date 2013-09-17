@@ -6,7 +6,7 @@ class Team < ActiveRecord::Base
   has_many :invites,      :dependent => :destroy
   has_many :team_members, :dependent => :destroy
   has_many :users,        :through   => :team_members
-  
+
   validates_presence_of :name, :singles_matches, :doubles_matches
 
   def self.newest
@@ -23,6 +23,18 @@ class Team < ActiveRecord::Base
 
   def team_emails
     users.where('team_members.receive_email = true').pluck(:email)
+  end
+
+  def not_accepted_user_ids
+    invites.not_accepted.pluck(:user_id)
+  end
+
+  def accepted_team_members
+    team_members.includes(:user).reject { |u| not_accepted_user_ids.include?(u.user_id) }
+  end
+
+  def not_accepted_team_members
+    team_members.includes(:user).select { |u| not_accepted_user_ids.include?(u.user_id) }
   end
 end
 

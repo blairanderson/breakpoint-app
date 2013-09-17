@@ -24,8 +24,19 @@ describe Team do
     user2 = create(:user2)
     team = create(:team, :users => [user, user2])
     user2.team_members.first.update_attribute(:receive_email, false)
-  
+
     team.team_emails.should eq ['john.doe@example.com']
+  end
+
+  it 'returns team members who accepted and not accepted their invite' do
+    user = create(:user)
+    user2 = create(:user2)
+    team = create(:team, :users => [user, user2])
+    invite = create(:invite, :user => user, :team => team, :invited_by => user, :accepted_at => Time.now)
+    invite = create(:invite, :user => user2, :team => team, :invited_by => user)
+
+    team.accepted_team_members.collect(&:user_id).should eq [user.id]
+    team.not_accepted_team_members.collect(&:user_id).should eq [user2.id]
   end
 end
 

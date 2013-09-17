@@ -1,7 +1,7 @@
 class TeamsController < ApplicationController
   def index
-    @teams = current_user.teams.newest
-    @invitations = current_user.invitations.where(:accepted_at => nil)
+    @teams = current_user.accepted_teams
+    @invitations = current_user.invitations.not_accepted
   end
 
   def show

@@ -37,6 +37,8 @@ class InvitesController < ApplicationController
 
       @invite.invited_by = current_user
       @invite.save!
+      @team.users << @invite.user
+      @team.save!
     end
 
     if is_new_user
@@ -61,17 +63,8 @@ class InvitesController < ApplicationController
     Invite.transaction do
       @invite.accepted_at = Time.now
       @invite.save!
-      @team.users << current_user
-      @team.save!
     end
     redirect_to team_team_members_url(@team), :notice => 'Invite accepted'
-  end
-
-  def destroy
-    @invite = Invite.find(params[:id])
-    @invite.destroy
-
-    redirect_to team_invites_url(@team), :notice => 'Invite deleted'
   end
 
   private
