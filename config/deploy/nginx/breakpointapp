@@ -5,6 +5,21 @@ upstream unicorn_breakpointapp_production {
 server {
   listen 80;
   server_name www.breakpointapp.com;
+  return 301 https://$host$request_uri;
+}
+
+server {
+  listen 443 ssl spdy;
+
+  ssl_certificate     /home/breakpointapp/app/shared/ssh/breakpointapp_chain.crt;
+  ssl_certificate_key /home/breakpointapp/app/shared/ssh/breakpointapp-private-decrypted.key;
+
+  # prefer certain ciphersuites, to enforce Perfect Forward Secrecy and avoid known vulnerabilities.
+  # done in consultation with:
+  #   http://ggramaize.wordpress.com/2013/08/02/tls-perfect-forward-secrecy-support-with-apache/
+  #   https://www.ssllabs.com/ssltest/analyze.html
+  ssl_prefer_server_ciphers on;
+  ssl_ciphers ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-SHA256:ECDHE-RSA-RC4-SHA:ECDHE-RSA-AES256-SHA:DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-SHA256:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA256:DHE-RSA-AES256-SHA:DHE-RSA-AES128-SHA:RC4-SHA:AES256-GCM-SHA384:AES256-SHA256:CAMELLIA256-SHA:ECDHE-RSA-AES128-SHA:AES128-GCM-SHA256:AES128-SHA256:AES128-SHA:CAMELLIA128-SHA;
 
   root /home/breakpointapp/app/current/public;
 
@@ -37,6 +52,11 @@ server {
   error_page 422 /422.html;
   error_page 500 502 503 504 /500.html;
   client_max_body_size 100m; # max of 100mb uploads
-  keepalive_timeout 10;
+
+  # turn on session resumption, using a 10 min cache shared across nginx processes
+  # as recommended by http://nginx.org/en/docs/http/configuring_https_servers.html
+  ssl_session_cache   shared:SSL:10m;
+  ssl_session_timeout 10m;
+  keepalive_timeout   70;
 }
 
