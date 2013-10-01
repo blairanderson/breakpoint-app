@@ -1,6 +1,21 @@
 require 'spec_helper'
 
 describe Team do
+  it 'validates email' do
+    team = create(:team)
+    team.update_attributes(email: "no_UPPER_case")
+    team.valid?.should be_false
+
+    team.update_attributes(email: "no_@_allowed")
+    team.valid?.should be_false
+
+    team.update_attributes(email: "no_!#$%^&*(_allowed")
+    team.valid?.should be_false
+
+    team.update_attributes(email: "valid-with-under_score-or-dashes")
+    team.valid?.should be_true
+  end
+
   it 'returns upcoming practices' do
     team = create(:team)
     practice = create(:practice, :team => team)
