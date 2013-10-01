@@ -17,6 +17,7 @@ class TeamEmail
   end
 
   def valid?
+    return true if from == ActionMailer::Base.default[:from]
     user && team && user_on_team?
   end
 

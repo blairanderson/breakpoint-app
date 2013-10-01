@@ -14,7 +14,6 @@ class Api::PostmarkController < ApplicationController
           reply_to:  email.to,
           to:        team_member_email,
           subject:   email.subject,
-          text_body: email.text_body,
           html_body: email.html_body
         }
       end
