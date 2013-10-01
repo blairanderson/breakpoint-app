@@ -2,7 +2,7 @@
   <%= f.error_messages %>
 
   <%= f.input :name %>
-  <%= f.input :email %>
+  <%= f.input :email, :hint => "Anyone on the team can send email to this address @mail.breakpointapp.com" %>
   <%= f.input :date_string, :label => 'Starting when?', :input_html => { :class => 'datepicker' } %>
   <%= f.input :singles_matches, :collection => 0..9, :input_html => { :class => 'span1' } %>
   <%= f.input :doubles_matches, :collection => 0..9, :input_html => { :class => 'span1' } %>
