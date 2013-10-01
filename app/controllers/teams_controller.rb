@@ -4,11 +4,6 @@ class TeamsController < ApplicationController
     @invitations = current_user.invitations.not_accepted
   end
 
-  def show
-    @team = Team.find(params[:id])
-    render :layout => 'team'
-  end
-
   def new
     @team = Team.new
   end

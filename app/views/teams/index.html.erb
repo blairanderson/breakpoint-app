@@ -28,6 +28,7 @@
     <thead>
       <tr>
         <th>Name</th>
+        <th>Email</th>
         <th>Date</th>
         <th>Matches</th>
         <th style="width: 102px;">&nbsp;</th>
@@ -37,6 +38,7 @@
       <% @teams.each do |team| %>
       <tr>
         <td><%= link_to team.name, team_practices_path(team) %></td>
+        <td><%= mail_to team.email_address %></td>
         <td><%= l team.date %></td>
         <td>
           <%= team.singles_matches %> singles,

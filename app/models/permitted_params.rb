@@ -30,7 +30,7 @@ class PermittedParams
   end
 
   def team
-    params.require(:team).permit(:name, :date_string, :singles_matches, :doubles_matches)
+    params.require(:team).permit(:name, :email, :date_string, :singles_matches, :doubles_matches)
   end
 
   def team_member

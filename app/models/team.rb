@@ -7,10 +7,17 @@ class Team < ActiveRecord::Base
   has_many :team_members, :dependent => :destroy
   has_many :users,        :through   => :team_members
 
-  validates_presence_of :name, :singles_matches, :doubles_matches
+  validates :name,            presence: true, uniqueness: true
+  validates :email,           presence: true, uniqueness: true, format: { with: /\A[a-z0-9\-_]+\z/, message: "can only contain lowercase letters, numbers, - and _" }
+  validates :singles_matches, presence: true
+  validates :doubles_matches, presence: true
 
   def self.newest
     order('date desc')
+  end
+
+  def email_address
+    "#{email}@mail.breakpointapp.com"
   end
 
   def upcoming_practices

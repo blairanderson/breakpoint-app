@@ -3,7 +3,7 @@ BreakpointApp::Application.routes.draw do
 
   devise_for :users, :controllers => { :registrations => 'users/registrations' }
 
-  resources :teams do
+  resources :teams, :except => [:show] do
     resources :practices, :only => [:index, :new]
     resources :matches, :only => [:index, :new]
     resources :match_availabilities, :only => [:index]
