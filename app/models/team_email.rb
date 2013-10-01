@@ -10,7 +10,7 @@ class TeamEmail
   def initialize(message)
     @from      = message[:from]
     @from_name = message[:from_full][:name]
-    @to        = message[:to]
+    @to        = message[:to_full][:email]
     @subject   = message[:subject]
     @text_body = message[:text_body]
     @html_body = message[:html_body]
