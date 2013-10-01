@@ -1,4 +1,5 @@
 class Api::PostmarkController < ApplicationController
+  protect_from_forgery except: :inbound
   skip_before_filter :authenticate_user!
 
   def inbound
