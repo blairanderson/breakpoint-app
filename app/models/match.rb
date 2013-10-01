@@ -23,10 +23,6 @@ class Match < ActiveRecord::Base
     home_team? ? 'Home' : 'Away'
   end
 
-  def team_emails
-    team.team_emails
-  end
-
   def match_availability_for(user_id)
     match_availabilities.where(user_id: user_id).first || match_availabilities.build(user_id: user_id)
   end

@@ -6,15 +6,6 @@ describe Practice do
     practice.date.should eq(Time.zone.parse('2014-06-13 17:30'))
   end
 
-  it 'returns team emails' do
-    user = create(:user)
-    user2 = create(:user2)
-    team = create(:team, :users => [user, user2])
-    practice = create(:practice, :team => team)
-
-    practice.team_emails.should =~ ['john.doe@example.com', 'dave.kroondyk@example.com']
-  end
-
   it 'returns the practice session for a specified user id' do
     user = create(:user)
     team = create(:team, :users => [user])

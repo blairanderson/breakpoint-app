@@ -45,15 +45,6 @@ describe Match do
     match.won?.should == true
   end
 
-  it 'returns team emails' do
-    user = create(:user)
-    user2 = create(:user2)
-    team = create(:team, :users => [user, user2])
-    match = create(:match, :team => team)
-
-    match.team_emails.should =~ ['john.doe@example.com', 'dave.kroondyk@example.com']
-  end
-
   it 'returns the match availability for a specified user id' do
     user = create(:user)
     team = create(:team, :users => [user])

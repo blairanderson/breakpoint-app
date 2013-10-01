@@ -30,5 +30,9 @@ BreakpointApp::Application.routes.draw do
   end
 
   resources :team_members, :only => [:edit, :update]
+
+  namespace :api do
+    post 'postmark/inbound' => 'postmark#inbound'
+  end
 end
 

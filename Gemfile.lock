@@ -47,17 +47,6 @@ GIT
       rails (>= 3.0.0)
 
 GIT
-  remote: git://github.com/haihappen/simple_postmark.git
-  revision: 02b49d3d9612b46b0a3c120f62762b8a6e4b81bc
-  ref: 02b49d3d9612b46b0a3c120f62762b8a6e4b81bc
-  specs:
-    simple_postmark (0.5.1)
-      activesupport (>= 3.0)
-      httparty
-      json
-      mail
-
-GIT
   remote: git://github.com/plataformatec/devise.git
   revision: c6189696772925ae0c608fdd8d535f735e8e114e
   branch: rails4
@@ -138,9 +127,6 @@ GEM
       factory_girl (~> 4.2.0)
       railties (>= 3.0.0)
     hike (1.2.3)
-    httparty (0.11.0)
-      multi_json (~> 1.0)
-      multi_xml (>= 0.5.2)
     i18n (0.6.5)
     jquery-rails (2.2.1)
       railties (>= 3.0, < 5.0)
@@ -148,7 +134,7 @@ GEM
     jquery-ui-rails (4.0.2)
       jquery-rails
       railties (>= 3.1.0)
-    json (1.7.7)
+    json (1.8.0)
     kgio (2.8.0)
     launchy (2.2.0)
       addressable (~> 2.3)
@@ -160,7 +146,6 @@ GEM
     mime-types (1.24)
     minitest (4.7.5)
     multi_json (1.7.9)
-    multi_xml (0.5.3)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (2.6.8)
@@ -168,6 +153,12 @@ GEM
     orm_adapter (0.4.0)
     pg (0.14.1)
     polyglot (0.3.3)
+    postmark (1.0.1)
+      json
+      rake
+    postmark-rails (0.5.2)
+      actionmailer (>= 3.0.0)
+      postmark (~> 1.0)
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
     rack (1.5.2)
@@ -265,12 +256,12 @@ DEPENDENCIES
   letter_opener (~> 1.1.0)
   paper_trail!
   pg (= 0.14.1)
+  postmark-rails (~> 0.5.2)
   pundit!
   quiet_assets (~> 1.0.2)
   rails (= 4.0.0)
   rspec-rails (~> 2.13.1)
   sass-rails (~> 4.0.0)
   simple_form (~> 3.0.0.beta1)
-  simple_postmark!
   uglifier (~> 2.0.1)
   unicorn (~> 4.6.3)

@@ -21,7 +21,6 @@ gem 'coffee-rails',         '~> 4.0.0'
 gem 'uglifier',             '~> 2.0.1'
 
 group :production do
-  gem 'simple_postmark',    :git => 'git://github.com/haihappen/simple_postmark.git', :ref => '02b49d3d9612b46b0a3c120f62762b8a6e4b81bc'
   gem 'unicorn',            '~> 4.6.3'
 end
 
@@ -39,4 +38,5 @@ gem 'capistrano-chruby',    :github => 'capistrano/chruby'
 gem 'capistrano-bundler',   :github => 'capistrano/bundler'
 gem 'capistrano-rails',     :github => 'capistrano/rails'
 gem 'dotenv-rails'
+gem 'postmark-rails',       '~> 0.5.2'
 
