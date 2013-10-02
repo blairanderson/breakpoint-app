@@ -9,7 +9,7 @@ describe ReceivesInboundEmail do
     email.subject.should    eq "This is an inbound message"
     email.text_body.should  eq "[ASCII]"
     email.html_body.should  eq "[HTML(encoded)]"
-    email.team_email.should eq "451d9b70cf9364d23ff6f9d51d870251569e+ahoy"
+    email.send(:team_email).should eq "451d9b70cf9364d23ff6f9d51d870251569e+ahoy"
   end
 end
 

@@ -21,12 +21,14 @@ class ReceivesInboundEmail
     user && team && user_on_team?
   end
 
-  def user
-    @user ||= User.find_by(email: from)
-  end
-
   def team
     @team ||= Team.find_by(email: team_email)
+  end
+
+  private
+
+  def user
+    User.find_by(email: from)
   end
 
   def team_email
