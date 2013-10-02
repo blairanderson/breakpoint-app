@@ -19,12 +19,7 @@ class Api::PostmarkController < ApplicationController
         }
       end
 
-      if messages.size > 1
-        client.deliver_in_batches(messages)
-      elsif messages.size == 1
-        client.deliver(messages.first)
-      end
-
+      client.deliver_in_batches(messages.compact)
       render text: "Success", status: 200
     else
       render text: "Not valid", status: 200
