@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe TeamEmail do
+describe ReceivesInboundEmail do
   it 'parses the json' do
-    email = TeamEmail.create_from_inbound_hook(File.read(File.expand_path("../team_email.json", __FILE__)))
+    email = ReceivesInboundEmail.receive(File.read(File.expand_path("../team_email.json", __FILE__)))
     email.from.should       eq "myUser@theirDomain.com"
     email.from_name.should  eq "John Doe"
     email.to.should         eq "451d9b70cf9364d23ff6f9d51d870251569e+ahoy@inbound.postmarkapp.com"

@@ -1,7 +1,7 @@
-class TeamEmail
+class ReceivesInboundEmail
   attr_reader :from, :from_name, :to, :subject, :text_body, :html_body
 
-  def self.create_from_inbound_hook(message)
+  def self.receive(message)
     message = Postmark::Json.decode(message)
     message = Postmark::Inbound.to_ruby_hash(message)
     self.new(message)
