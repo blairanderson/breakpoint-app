@@ -14,7 +14,7 @@ class Api::PostmarkController < ApplicationController
           reply_to:  email.to,
           to:        team_member_email,
           subject:   email.subject,
-          html_body: email.html_body
+          html_body: CGI::unescapeHTML(email.html_body)
         }
       end
 
