@@ -3,6 +3,10 @@ class TeamMember < ActiveRecord::Base
 
   belongs_to :team
   belongs_to :user
+
+  def captain?
+    role == 'captain' || role == 'co-captain'
+  end
 end
 
 # == Schema Information

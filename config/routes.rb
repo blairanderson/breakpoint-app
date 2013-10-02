@@ -33,6 +33,7 @@ BreakpointApp::Application.routes.draw do
 
   namespace :api do
     post 'postmark/inbound' => 'postmark#inbound'
+    post 'postmark/bounce'  => 'postmark#bounce'
   end
 end
 

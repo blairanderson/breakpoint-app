@@ -1,5 +1,5 @@
 class Api::PostmarkController < ApplicationController
-  protect_from_forgery except: :inbound
+  protect_from_forgery except: [:inbound, :bounce]
   skip_before_filter :authenticate_user!
 
   def inbound
@@ -11,6 +11,13 @@ class Api::PostmarkController < ApplicationController
     else
       render text: "Not valid", status: 200
     end
+  end
+
+  def bounce
+    request.body.rewind
+    bounce = ReceivesBouncedEmail.receive(request.body.read)
+    bounce.notify
+    render text: "Success", status: 200
   end
 end
 
