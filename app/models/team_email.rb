@@ -1,5 +1,5 @@
 class TeamEmail
-  attr_reader :from, :from_name, :to, :subject, :html_body
+  attr_reader :from, :from_name, :to, :subject, :text_body, :html_body
 
   def self.create_from_inbound_hook(message)
     message = Postmark::Json.decode(message)
@@ -8,10 +8,11 @@ class TeamEmail
   end
 
   def initialize(message)
-    @from      = message[:from]
+    @from      = message[:from_full][:email]
     @from_name = message[:from_full][:name]
     @to        = message[:to_full].first[:email]
     @subject   = message[:subject]
+    @text_body = message[:text_body]
     @html_body = message[:html_body]
   end
 

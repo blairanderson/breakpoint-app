@@ -14,11 +14,17 @@ class Api::PostmarkController < ApplicationController
           reply_to:  email.to,
           to:        team_member_email,
           subject:   email.subject,
+          text_body: email.text_body,
           html_body: CGI::unescapeHTML(email.html_body)
         }
       end
 
-      client.deliver_in_batches(messages)
+      if messages.size > 1
+        client.deliver_in_batches(messages)
+      elsif messages.size == 1
+        client.deliver(messages.first)
+      end
+
       render text: "Success", status: 200
     else
       render text: "Not valid", status: 200
