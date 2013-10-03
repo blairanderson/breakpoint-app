@@ -43,6 +43,7 @@ describe 'devise' do
   end
 
   it 'allows forgot password' do
+    click_link 'Sign in'
     click_link 'Forgot your password?'
     fill_in 'Email', :with => 'john.doe@example.com'
     click_button 'Send me reset password instructions'
