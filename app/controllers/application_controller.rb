@@ -3,8 +3,8 @@ class ApplicationController < ActionController::Base
 
   protect_from_forgery :with => :exception
 
-  before_filter :authenticate_user!
-  around_filter :user_time_zone, if: :current_user
+  before_action :authenticate_user!
+  around_action :user_time_zone, if: :current_user
 
   rescue_from Pundit::NotAuthorizedError do |exception|
     if current_user

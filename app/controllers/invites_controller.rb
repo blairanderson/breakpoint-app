@@ -1,6 +1,6 @@
 class InvitesController < ApplicationController
   layout 'team'
-  before_filter :load_team
+  before_action :load_team
 
   def index
     @invites = @team.invites.includes(:user).order('accepted_at asc')

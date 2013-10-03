@@ -1,6 +1,6 @@
 class MatchAvailabilitiesController < ApplicationController
   layout 'team'
-  before_filter :load_match, :except => [:index]
+  before_action :load_match, :except => [:index]
 
   def index
     @team = current_user.teams.find(params[:team_id])

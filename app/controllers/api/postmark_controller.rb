@@ -1,6 +1,6 @@
 class Api::PostmarkController < ApplicationController
   protect_from_forgery except: [:inbound, :bounce]
-  skip_before_filter :authenticate_user!
+  skip_before_action :authenticate_user!
 
   def inbound
     request.body.rewind
