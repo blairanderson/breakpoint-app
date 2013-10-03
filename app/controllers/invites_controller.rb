@@ -28,8 +28,6 @@ class InvitesController < ApplicationController
         new_user.last_name              = @invite.last_name
         new_user.email                  = @invite.email
         new_user.password               = SecureRandom.uuid
-        new_user.reset_password_token   = User.reset_password_token
-        new_user.reset_password_sent_at = Time.now
         new_user.save!
         @invite.user = new_user
         is_new_user = true

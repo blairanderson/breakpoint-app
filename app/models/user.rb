@@ -40,6 +40,17 @@ class User < ActiveRecord::Base
     excluded_team_ids = invitations.not_accepted.pluck(:team_id)
     teams.newest.reject { |t| excluded_team_ids.include?(t.id) }
   end
+
+  # copied from https://github.com/plataformatec/devise/blob/354e5022bf2aa482aba7c13bddeb12535b9858ad/lib/devise/models/recoverable.rb#L47-L56
+  # because no way to reset the reset_password_token without sending email since
+  # they are stored in the DB encrypted
+  def reset_password_token!
+    raw, enc = Devise.token_generator.generate(self.class, :reset_password_token)
+    reset_password_token   = enc
+    reset_password_sent_at = Time.now.utc
+    save(:validate => false)
+    raw
+  end
 end
 
 # == Schema Information

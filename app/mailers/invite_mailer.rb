@@ -3,6 +3,7 @@ class InviteMailer < ActionMailer::Base
 
   def new_user_invitation(invite)
     @invite = invite
+    @token = invite.user.reset_password_token!
     @invite_title = "[#{@invite.team.name}] #{@invite.invited_by.name} invited you to the team"
     mail :to => invite.user.email, :subject => @invite_title
   end

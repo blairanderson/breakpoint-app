@@ -12,8 +12,8 @@ describe 'devise' do
     fill_in 'Last name',                  :with => 'Kroondyk'
     fill_in 'Email',                      :with => 'davekaro@gmail.com'
     fill_in 'Phone number',               :with => '555-555-5555'
-    fill_in 'user_password',              :with => 'testing'
-    fill_in 'user_password_confirmation', :with => 'testing'
+    fill_in 'user_password',              :with => 'password'
+    fill_in 'user_password_confirmation', :with => 'password'
     click_button 'Sign up'
 
     page.should have_selector '.alert.alert-success', :text => 'Welcome!'
@@ -31,12 +31,12 @@ describe 'devise' do
   it 'changes a user profile' do
     click_link 'Sign in'
     fill_in 'Email',    :with => 'john.doe@example.com'
-    fill_in 'Password', :with => 'testing'
+    fill_in 'Password', :with => 'password'
     click_button 'Sign in'
 
     click_link 'John Doe'
     fill_in 'Phone number',     :with => '111-111-1111'
-    fill_in 'Current password', :with => 'testing'
+    fill_in 'Current password', :with => 'password'
     click_button 'Update'
 
     page.should have_selector '.alert.alert-success', :text => 'You updated your account successfully.'
@@ -51,9 +51,9 @@ describe 'devise' do
     last_email.should_not be_nil
     last_email.to.should == ['john.doe@example.com']
 
-    visit edit_user_password_url({:reset_password_token => User.find_by_email('john.doe@example.com').reset_password_token})
-    fill_in 'user_password', :with => 'testing2'
-    fill_in 'user_password_confirmation', :with => 'testing2'
+    visit edit_user_password_url({:reset_password_token => extract_token_from_email(:reset_password)})
+    fill_in 'user_password', :with => 'password2'
+    fill_in 'user_password_confirmation', :with => 'password2'
     click_button 'Change my password'
 
     page.should have_selector '.alert.alert-success', :text => 'Your password was changed successfully'

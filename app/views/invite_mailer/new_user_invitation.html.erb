@@ -3,7 +3,7 @@
 <p><%= @invite_title %></p>
 
 <p>
-  <%= link_to 'Begin by setting your password', edit_user_password_url({:reset_password_token => @invite.user.reset_password_token}) %>
+  <%= link_to 'Begin by setting your password', edit_user_password_url({:reset_password_token => @token}) %>
 </p>
 
 <p>Thanks!</p>
