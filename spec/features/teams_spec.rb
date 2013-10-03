@@ -24,6 +24,7 @@ describe 'teams' do
     page.should have_selector '.alert.alert-success', :text => 'Team created'
     page.should have_content '2013 Summer'
     Team.find_by_name('2013 Summer').users.first.should == @captain
+    Team.find_by_name('2013 Summer').team_members.first.role.should == TeamMember::ROLES.first
   end
 
   it 'shows errors for invalid teams' do
