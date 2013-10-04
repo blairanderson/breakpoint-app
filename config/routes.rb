@@ -13,14 +13,14 @@ BreakpointApp::Application.routes.draw do
     resources :invites, :only => [:index, :create, :update]
   end
 
-  resources :practices, :except => [:index, :new] do
+  resources :practices, :except => [:index, :new, :show] do
     resources :practice_sessions, :only => [:create, :destroy]
     member do
       post 'notify'
     end
   end
 
-  resources :matches, :except => [:index, :new] do
+  resources :matches, :except => [:index, :new, :show] do
     resources :match_availabilities, :only => [:create, :update]
     member do
       post 'notify'
