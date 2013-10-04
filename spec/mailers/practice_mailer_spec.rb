@@ -17,7 +17,7 @@ describe PracticeMailer do
     email.encoded.should match /<h1>New practice scheduled for/
   end
 
-  it 'sends practice updated email' do
+  it 'sends practice updated email', :versioning => true do
     email = PracticeMailer.practice_updated(@practice, @practice.recent_changes).deliver
 
     last_email.should_not be_nil

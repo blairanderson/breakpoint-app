@@ -63,7 +63,7 @@ describe 'matches' do
     page.should_not have_content 'June 27, 2014 at 7:00 pm'
   end
 
-  it 'notifies team members' do
+  it 'notifies team members', :versioning => true do
     click_link 'Notify team'
     page.should have_selector '.alert.alert-success', :text => 'Notification email sent to team'
     last_email.subject.should == "[#{@match.team.name}] New match scheduled"

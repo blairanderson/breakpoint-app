@@ -17,7 +17,7 @@ describe MatchMailer do
     email.encoded.should match /<h1>New match scheduled for/
   end
 
-  it 'sends match updated email' do
+  it 'sends match updated email', :versioning => true do
     email = MatchMailer.match_updated(@match, @match.recent_changes).deliver
 
     last_email.should_not be_nil
