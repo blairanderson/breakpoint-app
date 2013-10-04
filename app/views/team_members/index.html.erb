@@ -1,9 +1,9 @@
 <% subtitle 'Team' %>
 
-<% if @team.team_members.empty? %>
+<% if current_team.team_members.empty? %>
   <div class="alert alert-block alert-info">
     <h4>No team members for this team yet.</h4>
-    <%= link_to 'Add team members', team_team_members_path(@team) %> to get the team started.
+    <%= link_to 'Add team members', team_team_members_path(current_team) %> to get the team started.
   </div>
 <% else %>
   <% if @accepted_team_members.present? %>

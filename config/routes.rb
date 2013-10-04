@@ -5,22 +5,22 @@ BreakpointApp::Application.routes.draw do
   get 'teams' => 'teams#index', as: :user_root
 
   resources :teams, :except => [:show] do
-    resources :practices, :only => [:index, :new]
-    resources :matches, :only => [:index, :new]
+    resources :practices, :except => [:show]
+    resources :matches, :except => [:show]
     resources :match_availabilities, :only => [:index]
     resources :results, :only => [:index]
-    resources :team_members, :only => :index
+    resources :team_members, :only => [:index, :edit, :update]
     resources :invites, :only => [:index, :create, :update]
   end
 
-  resources :practices, :except => [:index, :new, :show] do
+  resources :practices, :only => [] do
     resources :practice_sessions, :only => [:create, :destroy]
     member do
       post 'notify'
     end
   end
 
-  resources :matches, :except => [:index, :new, :show] do
+  resources :matches, :only => [] do
     resources :match_availabilities, :only => [:create, :update]
     member do
       post 'notify'
@@ -29,8 +29,6 @@ BreakpointApp::Application.routes.draw do
       get 'edit_results' => 'results#edit'
     end
   end
-
-  resources :team_members, :only => [:edit, :update]
 
   namespace :api do
     post 'postmark/inbound' => 'postmark#inbound'

@@ -5,7 +5,12 @@ describe PracticeMailer do
     user = create(:user)
     user2 = create(:user2)
     team = create(:team, :users => [user, user2]) 
-    @practice = create(:practice, :team => team)
+    ActsAsTenant.current_tenant = team
+    @practice = create(:practice)
+  end
+
+  after :each do
+    ActsAsTenant.current_tenant = nil
   end
 
   it 'sends practice scheduled email' do

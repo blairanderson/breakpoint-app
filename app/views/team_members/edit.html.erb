@@ -1,6 +1,6 @@
 <% subtitle "Edit settings for #{@team_member.user.name}" %>
 
-<%= simple_form_for(@team_member, :html => { :class => 'form-horizontal' } ) do |f| %>
+<%= simple_form_for([current_team, @team_member], :html => { :class => 'form-horizontal' } ) do |f| %>
   <%= f.error_messages %>
 
   <%= f.input :role, :collection => TeamMember::ROLES, :value_method => :to_s, :label_method => :humanize, :include_blank => false %>

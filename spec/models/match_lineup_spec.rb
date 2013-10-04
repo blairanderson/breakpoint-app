@@ -4,7 +4,8 @@ describe MatchLineup do
   it 'stores results in match_sets' do
     user = create(:user)
     team = create(:team, :users => [user])
-    match = create(:match, :team => team)
+    ActsAsTenant.current_tenant = team
+    match = create(:match)
 
     match.match_lineups.each do |lineup|
       lineup.match_sets[0].update_attributes(:games_won => 6, :games_lost => 2)
@@ -13,6 +14,7 @@ describe MatchLineup do
       lineup.games_lost.should == 6
       lineup.won?.should == true
     end
+    ActsAsTenant.current_tenant = nil
   end
 end
 

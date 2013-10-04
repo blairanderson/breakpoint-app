@@ -3,8 +3,10 @@ require 'spec_helper'
 describe 'match_availabilities' do
   before :each do
     login_captain
-    @match = create(:match)
+    ActsAsTenant.current_tenant = create(:team)
+    @match = create(:match, team: ActsAsTenant.current_tenant)
     @match.team.team_members.create(:user => @captain, :role => 'captain')
+    ActsAsTenant.current_tenant = nil
     visit team_matches_path(@match.team)
   end
 

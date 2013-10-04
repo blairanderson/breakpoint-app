@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131001184535) do
+ActiveRecord::Schema.define(version: 20131004192202) do
 
   create_table "invites", force: true do |t|
     t.integer  "user_id"
@@ -31,9 +31,11 @@ ActiveRecord::Schema.define(version: 20131001184535) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean  "available"
+    t.integer  "team_id"
   end
 
   add_index "match_availabilities", ["match_id"], name: "index_match_availabilities_on_match_id", using: :btree
+  add_index "match_availabilities", ["team_id"], name: "index_match_availabilities_on_team_id", using: :btree
   add_index "match_availabilities", ["user_id"], name: "index_match_availabilities_on_user_id", using: :btree
 
   create_table "match_lineups", force: true do |t|
@@ -42,18 +44,22 @@ ActiveRecord::Schema.define(version: 20131001184535) do
     t.integer  "match_id"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+    t.integer  "team_id"
   end
 
   add_index "match_lineups", ["match_id"], name: "index_match_lineups_on_match_id", using: :btree
+  add_index "match_lineups", ["team_id"], name: "index_match_lineups_on_team_id", using: :btree
 
   create_table "match_players", force: true do |t|
     t.integer  "user_id"
     t.integer  "match_lineup_id"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "team_id"
   end
 
   add_index "match_players", ["match_lineup_id"], name: "index_match_players_on_match_lineup_id", using: :btree
+  add_index "match_players", ["team_id"], name: "index_match_players_on_team_id", using: :btree
   add_index "match_players", ["user_id"], name: "index_match_players_on_user_id", using: :btree
 
   create_table "match_sets", force: true do |t|
@@ -63,7 +69,10 @@ ActiveRecord::Schema.define(version: 20131001184535) do
     t.integer  "match_lineup_id", null: false
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "team_id"
   end
+
+  add_index "match_sets", ["team_id"], name: "index_match_sets_on_team_id", using: :btree
 
   create_table "matches", force: true do |t|
     t.datetime "date",                                 null: false
@@ -84,9 +93,11 @@ ActiveRecord::Schema.define(version: 20131001184535) do
     t.integer  "practice_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "team_id"
   end
 
   add_index "practice_sessions", ["practice_id"], name: "index_practice_sessions_on_practice_id", using: :btree
+  add_index "practice_sessions", ["team_id"], name: "index_practice_sessions_on_team_id", using: :btree
   add_index "practice_sessions", ["user_id"], name: "index_practice_sessions_on_user_id", using: :btree
 
   create_table "practices", force: true do |t|

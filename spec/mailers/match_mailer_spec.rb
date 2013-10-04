@@ -5,7 +5,12 @@ describe MatchMailer do
     user = create(:user)
     user2 = create(:user2)
     team = create(:team, :users => [user, user2])
-    @match = create(:match, :team => team)
+    ActsAsTenant.current_tenant = team
+    @match = create(:match)
+  end
+
+  after :each do
+    ActsAsTenant.current_tenant = nil
   end
 
   it 'sends match scheduled email' do

@@ -4,10 +4,10 @@ class Practice < ActiveRecord::Base
 
   has_many   :practice_sessions, :dependent => :destroy
   has_many   :players,           :through   => :practice_sessions, :source => :user
-  belongs_to :team
 
   validates_presence_of :team
 
+  acts_as_tenant :team
   has_paper_trail :ignore => [:notified_state]
 
   def practice_session_for_user(user_id)

@@ -2,18 +2,15 @@ class PracticesController < ApplicationController
   layout 'team'
 
   def index
-    @team = Team.find(params[:team_id])
-    @practices = @team.practices
+    @practices = current_team.practices
   end
 
   def new
-    @team = Team.find(params[:team_id])
-    @practice = @team.practices.build
+    @practice = current_team.practices.build
   end
 
   def edit
     @practice = Practice.find(params[:id])
-    @team = @practice.team
   end
 
   def notify
@@ -32,12 +29,10 @@ class PracticesController < ApplicationController
   end
 
   def create
-    @team = Team.find(params[:team_id])
-    # TODO authorize team
-    @practice = @team.practices.build(permitted_params.practice)
+    @practice = current_team.practices.build(permitted_params.practice)
 
     if @practice.save
-      redirect_to team_practices_url(@team), :notice => 'Practice created'
+      redirect_to team_practices_url(current_team), :notice => 'Practice created'
     else
       render :new
     end
@@ -50,7 +45,6 @@ class PracticesController < ApplicationController
       @practice.reset_notified! if @practice.previous_changes.present?
       redirect_to team_practices_url(@practice.team), :notice => 'Practice updated'
     else
-      @team = @practice.team
       render :edit
     end
   end

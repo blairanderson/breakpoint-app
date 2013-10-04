@@ -1,19 +1,19 @@
 <% content_for :team_nav do %>
-  <% title @team.name %>
+  <% title current_team.name %>
   <div class="row">
     <div class="span2">
       <ul class="nav nav-tabs nav-stacked">
         <%= active_tab 'practices' do %>
-          <%= link_to 'Practices', team_practices_path(@team) %>
+          <%= link_to 'Practices', team_practices_path(current_team) %>
         <% end %>
         <%= active_tab 'match' do %>
-          <%= link_to 'Matches', team_matches_path(@team) %>
+          <%= link_to 'Matches', team_matches_path(current_team) %>
         <% end %>
         <%= active_tab 'team_members' do %>
-          <%= link_to 'Team', team_team_members_path(@team) %>
+          <%= link_to 'Team', team_team_members_path(current_team) %>
         <% end %>
         <%= active_tab 'invites' do %>
-          <%= link_to 'Invite members', team_invites_path(@team) %>
+          <%= link_to 'Invite members', team_invites_path(current_team) %>
         <% end %>
       </ul>
     </div>

@@ -3,7 +3,6 @@ class MatchLineupsController < ApplicationController
 
   def edit
     @match = Match.find(params[:id])
-    @team = @match.team
   end
 end
 

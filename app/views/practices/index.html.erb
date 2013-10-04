@@ -1,10 +1,10 @@
 <% subtitle 'Practices' %>
-<p><%= link_to 'Add a practice', new_team_practice_path(@team), :class => 'btn' %></p>
+<p><%= link_to 'Add a practice', new_team_practice_path(current_team), :class => 'btn' %></p>
 
 <% if @practices.empty? %>
   <div class="alert alert-block alert-info">
     <h4>No practices for this team yet.</h4>
-    <%= link_to 'Add a practice', new_team_practice_path(@team) %> to get playing.
+    <%= link_to 'Add a practice', new_team_practice_path(current_team) %> to get playing.
   </div>
 <% else %>
   <table class="table table-bordered table-striped">
@@ -13,7 +13,7 @@
         <th style="width: 182px;">Going?</th>
         <th>Date</th>
         <th>Location</th>
-        <% if policy(@team).captain? %>
+        <% if policy(current_team).captain? %>
           <th style="width: 193px;">&nbsp;</th>
         <% end %>
       </tr>
@@ -25,11 +25,11 @@
             <div class="pull-left">
               <% if practice_session = practice.practice_session_for_user(current_user.id) %>
                 <%= link_to "I'm not going",
-                  practice_practice_session_path(practice, practice_session),
+                  practice_practice_session_path(practice, practice_session, team_id: current_team.id),
                   :method => :delete,
                   :class => 'btn btn-small btn-warning' %>
               <% else %>
-                <%= form_tag practice_practice_sessions_path(practice), :style => 'margin-bottom: 0px;' do %>
+                <%= form_tag practice_practice_sessions_path(practice, team_id: current_team.id), :style => 'margin-bottom: 0px;' do %>
                   <%= submit_tag "I'm going", :class => 'btn btn-small' %>
                 <% end %>
               <% end %>
@@ -40,16 +40,16 @@
           </td>
           <td><%= l practice.date, :format => :long %></td>
           <td><%= simple_format practice.location %></td>
-          <% if policy(@team).captain? %>
+          <% if policy(current_team).captain? %>
             <td>
               <% if practice.notified_team? %>
-                <%= link_to 'Notify team', notify_practice_path(practice), :method => :post, :class => 'btn btn-small disabled' %>
+                <%= link_to 'Notify team', notify_practice_path(practice, team_id: current_team), :method => :post, :class => 'btn btn-small disabled' %>
               <% else %>
-                <%= link_to 'Notify team', notify_practice_path(practice), :method => :post, :class => 'btn btn-small' %>
+                <%= link_to 'Notify team', notify_practice_path(practice, team_id: current_team), :method => :post, :class => 'btn btn-small' %>
               <% end %>
-              <%= link_to 'Edit', edit_practice_path(practice), :class => 'btn btn-small' %>
+              <%= link_to 'Edit', edit_team_practice_path(current_team, practice), :class => 'btn btn-small' %>
               <%= link_to 'Delete',
-                practice_path(practice),
+                team_practice_path(current_team, practice),
                 :data => { :confirm => 'Are you sure?' },
                 :method => :delete,
                 :class => 'btn btn-small btn-danger' %>

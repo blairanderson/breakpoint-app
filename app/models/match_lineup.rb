@@ -7,6 +7,8 @@ class MatchLineup < ActiveRecord::Base
   accepts_nested_attributes_for :match_players
   accepts_nested_attributes_for :match_sets
 
+  acts_as_tenant :team
+
   def has_results?
     @has_results ||= match_sets.pluck(:games_won, :games_lost).flatten.compact.count > 0
   end

@@ -3,5 +3,7 @@ class MatchSet < ActiveRecord::Base
 
   validates :ordinal,      :presence => true
   validates :match_lineup, :presence => true
+
+  acts_as_tenant :team
 end
 

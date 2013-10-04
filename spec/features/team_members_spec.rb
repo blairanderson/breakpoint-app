@@ -3,13 +3,17 @@ require 'spec_helper'
 describe 'team members' do
   before :each do
     login_captain
-    @team_member = create(:team_member)
+    team = create(:team)
+    ActsAsTenant.current_tenant = team
+    team.team_members.create(:user => @captain, :role => 'captain')
     @user2 = create(:user2)
-    visit team_team_members_path(@team_member.team)
+    ActsAsTenant.current_tenant = nil
+    visit team_team_members_path(team)
   end
 
   it 'shows team members in a team' do
-    page.should have_content 'John Doe'
+    page.should have_content 'captain captain'
+    page.should_not have_content 'Dave Kroondyk'
   end
 
   it 'edit team members role' do

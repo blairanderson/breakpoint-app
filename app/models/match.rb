@@ -4,10 +4,9 @@ class Match < ActiveRecord::Base
   include DateTimeParser
   include NotifyStateMachine
 
-  has_many   :match_availabilities, :dependent => :destroy
-  has_many   :match_lineups,        -> { order(:ordinal) }, :dependent => :destroy
-  has_many   :players,              :through   => :match_availabilities, :source => :user
-  belongs_to :team
+  has_many :match_availabilities, :dependent => :destroy
+  has_many :match_lineups,        -> { order(:ordinal) }, :dependent => :destroy
+  has_many :players,              :through   => :match_availabilities, :source => :user
 
   validates_presence_of :team
 
@@ -17,6 +16,7 @@ class Match < ActiveRecord::Base
 
   delegate :lineup_created?, :lineup_updated?, :notified_team_lineup?, :to => :notified_team_lineup_state
 
+  acts_as_tenant :team
   has_paper_trail :ignore => [:notified_state, :notified_lineup_state]
 
   def team_location

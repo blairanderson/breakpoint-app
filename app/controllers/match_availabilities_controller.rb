@@ -3,11 +3,11 @@ class MatchAvailabilitiesController < ApplicationController
   before_action :load_match, :except => [:index]
 
   def index
-    @team = current_user.teams.find(params[:team_id])
   end
 
   def create
     @match_availability = @match.match_availabilities.build(permitted_params.match_availabilities)
+    @match_availability.team = current_team
     @match_availability.user = current_user
     @match_availability.save
 
@@ -30,7 +30,6 @@ class MatchAvailabilitiesController < ApplicationController
 
   def load_match
     @match = Match.find(params[:match_id])
-    authorize @match, :set_availabilities?
   end
 end
 

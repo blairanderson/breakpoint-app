@@ -53,11 +53,12 @@ class InvitesController < ApplicationController
 
   def update
     @invite = Invite.find(params[:id])
+    authorize @invite
+
     if @invite.accepted?
       return redirect_to team_team_members_url(@team), :notice => 'Invite accepted'
     end
 
-    # TODO authorize invite
     Invite.transaction do
       @invite.accepted_at = Time.now
       @invite.save!
@@ -68,7 +69,7 @@ class InvitesController < ApplicationController
   private
 
   def load_team
-    @team = Team.find(params[:team_id])
+    @team = current_user.teams.find(params[:team_id])
   end
 end
 

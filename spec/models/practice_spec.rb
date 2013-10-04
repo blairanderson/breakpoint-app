@@ -1,6 +1,15 @@
 require 'spec_helper'
 
 describe Practice do
+  before :each do
+    @team = create(:team, :singles_matches => 1, :doubles_matches => 1)
+    ActsAsTenant.current_tenant = @team
+  end
+
+  after :each do
+    ActsAsTenant.current_tenant = nil
+  end
+
   it 'accepts a string for date' do
     practice = create(:practice, :date_string => '6/13/2014', :time_string => '05:30 PM')
     practice.date.should eq(Time.zone.parse('2014-06-13 17:30'))
@@ -8,8 +17,8 @@ describe Practice do
 
   it 'returns the practice session for a specified user id' do
     user = create(:user)
-    team = create(:team, :users => [user])
-    practice = create(:practice, :team => team)
+    @team.users << user
+    practice = create(:practice)
     practice_session = create(:practice_session, :practice => practice, :user => user)
 
     practice.practice_session_for_user(user.id).should eq practice_session

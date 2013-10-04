@@ -3,7 +3,10 @@ require 'spec_helper'
 describe 'teams' do
   before :each do
     login_captain
-    @team = create(:team, :users => [@captain])
+    @team = create(:team)
+    ActsAsTenant.current_tenant = @team
+    @team.team_members.create(:user => @captain, :role => 'captain')
+    ActsAsTenant.current_tenant = nil
     visit teams_path
   end
 

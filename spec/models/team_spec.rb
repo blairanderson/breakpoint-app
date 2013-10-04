@@ -18,20 +18,24 @@ describe Team do
 
   it 'returns upcoming practices' do
     team = create(:team)
-    practice = create(:practice, :team => team)
-    practice2 = create(:practice_in_past, :team => team)
+    ActsAsTenant.current_tenant = team
+    practice = create(:practice)
+    practice2 = create(:practice_in_past)
 
     team.practices.count.should eq(2)
     team.upcoming_practices.count.should eq(1)
+    ActsAsTenant.current_tenant = nil
   end
 
   it 'returns upcoming matches' do
     team = create(:team)
-    match = create(:match, :team => team)
-    match2 = create(:match_in_past, :team => team)
+    ActsAsTenant.current_tenant = team
+    match = create(:match)
+    match2 = create(:match_in_past)
 
     team.matches.count.should eq(2)
     team.upcoming_matches.count.should eq(1)
+    ActsAsTenant.current_tenant = nil
   end
 
   it 'returns team emails for team members who receive emails' do

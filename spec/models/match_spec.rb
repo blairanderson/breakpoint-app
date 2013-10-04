@@ -1,14 +1,22 @@
 require 'spec_helper'
 
 describe Match do
+  before :each do
+    @team = create(:team, :singles_matches => 1, :doubles_matches => 1)
+    ActsAsTenant.current_tenant = @team
+  end
+
+  after :each do
+    ActsAsTenant.current_tenant = nil
+  end
+
   it 'accepts a string for date' do
     match = create(:match, :date_string => '6/13/2014', :time_string => '05:30 PM')
     match.date.should eq(Time.zone.parse('2014-06-13 17:30'))
   end
 
   it 'creates a blank match lineup based off team settings' do
-    team = create(:team, :singles_matches => 1, :doubles_matches => 1)
-    match = create(:match, :team => team)
+    match = create(:match)
 
     match.match_lineups.count.should eq(2)
     match.match_lineups[0].match_type.should eq('#1 Singles')
@@ -16,16 +24,14 @@ describe Match do
   end
 
   it 'creates a blank match player based off match_lineups' do
-    team = create(:team, :singles_matches => 1, :doubles_matches => 1)
-    match = create(:match, :team => team)
+    match = create(:match)
 
     match.match_lineups.first.match_players.count.should eq(1)
     match.match_lineups.last.match_players.count.should eq(2)
   end
 
   it 'creates 3 blank sets for each match_lineup' do
-    team = create(:team, :singles_matches => 1, :doubles_matches => 1)
-    match = create(:match, :team => team)
+    match = create(:match)
 
     match.match_lineups.each do |lineup|
       lineup.match_sets.count.should == 3
@@ -33,8 +39,7 @@ describe Match do
   end
 
   it 'determines victory' do
-    team = create(:team, :singles_matches => 1, :doubles_matches => 1)
-    match = create(:match, :team => team)
+    match = create(:match)
 
     match.match_lineups.each do |lineup|
       lineup.match_sets[0].update_attributes(:games_won => 6, :games_lost => 2)
@@ -47,8 +52,8 @@ describe Match do
 
   it 'returns the match availability for a specified user id' do
     user = create(:user)
-    team = create(:team, :users => [user])
-    match = create(:match, :team => team)
+    @team.users << user
+    match = create(:match)
     match_availability = create(:match_availability, :match => match, :user => user)
 
     match.match_availability_for(user.id).should eq match_availability

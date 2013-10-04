@@ -1,6 +1,8 @@
 class MatchAvailability < ActiveRecord::Base
   belongs_to :user
   belongs_to :match
+
+  acts_as_tenant :team
 end
 
 # == Schema Information

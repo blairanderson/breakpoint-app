@@ -5,10 +5,15 @@ describe MatchLineupMailer do
     user = create(:user)
     user2 = create(:user2)
     team = create(:team, :users => [user, user2])
-    @match = create(:match, :team => team)
+    ActsAsTenant.current_tenant = team
+    @match = create(:match)
     @match.match_lineups.each do |lineup|
       lineup.match_players.create(:user => user)
     end
+  end
+
+  after :each do
+    ActsAsTenant.current_tenant = nil
   end
 
   it 'sends match lineup set email' do

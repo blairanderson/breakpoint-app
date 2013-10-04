@@ -2,20 +2,17 @@ class MatchesController < ApplicationController
   layout 'team'
 
   def index
-    @team = Team.find(params[:team_id])
-    @matches = @team.matches
+    @matches = current_team.matches
   end
 
   def new
-    @team = Team.find(params[:team_id])
-    @match = @team.matches.build
+    @match = current_team.matches.build
     Chronic.time_class = Time.zone
     @match.date = Chronic.parse('this 02:30 PM')
   end
 
   def edit
     @match = Match.find(params[:id])
-    @team = @match.team
   end
 
   def notify
@@ -54,11 +51,10 @@ class MatchesController < ApplicationController
   end
 
   def create
-    @team = Team.find(params[:team_id])
-    @match = @team.matches.build(permitted_params.match)
+    @match = current_team.matches.build(permitted_params.match)
 
     if @match.save
-      redirect_to team_matches_url(@team), :notice => 'Match created'
+      redirect_to team_matches_url(current_team), :notice => 'Match created'
     else
       render :new
     end
@@ -77,7 +73,6 @@ class MatchesController < ApplicationController
         redirect_to team_matches_url(@match.team), :notice => 'Match updated'
       end
     else
-      @team = @match.team
       render :edit
     end
   end

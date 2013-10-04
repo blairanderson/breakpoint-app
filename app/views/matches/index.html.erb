@@ -1,13 +1,13 @@
 <% subtitle 'Matches' %>
 <p>
-  <%= link_to 'Add a match', new_team_match_path(@team), :class => 'btn' %>
-  <%= link_to 'See who can play when', team_match_availabilities_path(@team), :class => 'btn' %>
+  <%= link_to 'Add a match', new_team_match_path(current_team), :class => 'btn' %>
+  <%= link_to 'See who can play when', team_match_availabilities_path(current_team), :class => 'btn' %>
 </p>
 
 <% if @matches.empty? %>
   <div class="alert alert-block alert-info">
     <h4>No matches for this team yet.</h4>
-    <%= link_to 'Add a match', new_team_match_path(@team) %> to get playing.
+    <%= link_to 'Add a match', new_team_match_path(current_team) %> to get playing.
   </div>
 <% else %>
   <table class="table table-bordered table-striped">
@@ -16,7 +16,7 @@
         <th style="width: 182px;">Can play?</th>
         <th>Date</th>
         <th>Location</th>
-        <% if policy(@team).captain? %>
+        <% if policy(current_team).captain? %>
           <th>Lineup</th>
           <th>Notification</th>
           <th>&nbsp;</th>
@@ -34,6 +34,7 @@
               <% if show_yes_form %>
                 <%= form_for [match, match_availability], html: { style: 'margin-bottom: 0px;' } do |f| %>
                   <%= f.hidden_field :available, value: true %>
+                  <%= hidden_field_tag :team_id, current_team.id %>
                   <%= submit_tag 'I can play', :class => 'btn btn-small' %>
                 <% end %>
               <% else %>
@@ -44,6 +45,7 @@
               <% if show_no_form %>
                 <%= form_for [match, match_availability], html: { style: 'margin-bottom: 0px;' } do |f| %>
                   <%= f.hidden_field :available, value: false %>
+                  <%= hidden_field_tag :team_id, current_team.id %>
                   <%= submit_tag "I can't play", :class => 'btn btn-small' %>
                 <% end %>
               <% else %>
@@ -56,32 +58,32 @@
             <%= l match.date, :format => :long %>
           </td>
           <td><%= simple_format match.location %></td>
-          <% if policy(@team).captain? %>
+          <% if policy(current_team).captain? %>
             <td>
               <p><%= render :partial => 'match_availabilities', :locals => { :match => match } %></p>
-              <p><%= link_to 'Set the lineup', edit_lineup_match_path(match) %></p>
+              <p><%= link_to 'Set the lineup', edit_lineup_match_path(match, team_id: current_team.id) %></p>
             </td>
             <td>
               <p>
                 <% if match.notified_team? %>
-                  <%= link_to 'Notify team', notify_match_path(match), :method => :post, :class => 'btn btn-small disabled' %>
+                  <%= link_to 'Notify team', notify_match_path(match, team_id: current_team.id), :method => :post, :class => 'btn btn-small disabled' %>
                 <% else %>
-                  <%= link_to 'Notify team', notify_match_path(match), :method => :post, :class => 'btn btn-small' %>
+                  <%= link_to 'Notify team', notify_match_path(match, team_id: current_team.id), :method => :post, :class => 'btn btn-small' %>
                 <% end %>
               </p>
               <p>
                 <% if match.notified_team_lineup? %>
-                  <%= link_to 'Email lineup', notify_lineup_match_path(match), :method => :post, :class => 'btn btn-small disabled' %>
+                  <%= link_to 'Email lineup', notify_lineup_match_path(match, team_id: current_team.id), :method => :post, :class => 'btn btn-small disabled' %>
                 <% else %>
-                  <%= link_to 'Email lineup', notify_lineup_match_path(match), :method => :post, :class => 'btn btn-small' %>
+                  <%= link_to 'Email lineup', notify_lineup_match_path(match, team_id: current_team.id), :method => :post, :class => 'btn btn-small' %>
                 <% end %>
               </p>
             </td>
             <td>
-              <p><%= link_to 'Edit', edit_match_path(match), :class => 'btn btn-small' %></p>
+              <p><%= link_to 'Edit', edit_team_match_path(current_team, match), :class => 'btn btn-small' %></p>
               <p>
                 <%= link_to 'Delete',
-                  match_path(match),
+                  team_match_path(current_team, match),
                   :data => { :confirm => 'Are you sure?' },
                   :method => :delete,
                   :class => 'btn btn-small btn-danger' %>

@@ -1,8 +1,8 @@
 class TeamMember < ActiveRecord::Base
   ROLES = %w[captain co-captain member]
 
-  belongs_to :team
   belongs_to :user
+  belongs_to :team
 
   def captain?
     role == 'captain' || role == 'co-captain'

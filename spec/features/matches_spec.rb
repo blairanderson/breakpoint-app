@@ -3,8 +3,10 @@ require 'spec_helper'
 describe 'matches' do
   before :each do
     login_captain
+    ActsAsTenant.current_tenant = create(:team)
+    ActsAsTenant.current_tenant.team_members.create(:user => @captain, :role => 'captain')
     @match = create(:match)
-    @match.team.team_members.create(:user => @captain, :role => 'captain')
+    ActsAsTenant.current_tenant = nil
     visit team_matches_path(@match.team)
   end
 
