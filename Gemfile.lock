@@ -29,14 +29,6 @@ GIT
     capistrano-rails (0.0.7)
       capistrano
 
-GIT
-  remote: git://github.com/elabs/pundit.git
-  revision: 3da8b0d7f4146865805c1e2c43cff522ccc4d863
-  ref: 3da8b0d7f4146865805c1e2c43cff522ccc4d863
-  specs:
-    pundit (0.2.0)
-      rails (>= 3.0.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -147,6 +139,8 @@ GEM
     postmark-rails (0.5.2)
       actionmailer (>= 3.0.0)
       postmark (~> 1.0)
+    pundit (0.2.1)
+      activesupport (>= 3.0.0)
     quiet_assets (1.0.2)
       railties (>= 3.1, < 5.0)
     rack (1.5.2)
@@ -245,7 +239,7 @@ DEPENDENCIES
   paper_trail (= 3.0.0.beta1)
   pg (= 0.14.1)
   postmark-rails (~> 0.5.2)
-  pundit!
+  pundit (~> 0.2.1)
   quiet_assets (~> 1.0.2)
   rails (= 4.0.0)
   rspec-rails (~> 2.13.1)
