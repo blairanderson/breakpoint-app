@@ -5,7 +5,7 @@ class Practice < ActiveRecord::Base
   has_many   :practice_sessions, :dependent => :destroy
   has_many   :players,           :through   => :practice_sessions, :source => :user
 
-  validates_presence_of :team
+  validates :team, presence: true
 
   acts_as_tenant :team
   has_paper_trail :ignore => [:notified_state]

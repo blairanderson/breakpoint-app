@@ -8,7 +8,7 @@ class Match < ActiveRecord::Base
   has_many :match_lineups,        -> { order(:ordinal) }, :dependent => :destroy
   has_many :players,              :through   => :match_availabilities, :source => :user
 
-  validates_presence_of :team
+  validates :team, presence: true
 
   accepts_nested_attributes_for :match_lineups
 

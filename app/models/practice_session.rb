@@ -2,6 +2,8 @@ class PracticeSession < ActiveRecord::Base
   belongs_to :user
   belongs_to :practice
 
+  validates :team, presence: true
+
   acts_as_tenant :team
 end
 

@@ -2,6 +2,8 @@ class MatchAvailability < ActiveRecord::Base
   belongs_to :user
   belongs_to :match
 
+  validates :team, presence: true
+
   acts_as_tenant :team
 end
 

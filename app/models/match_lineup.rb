@@ -4,6 +4,8 @@ class MatchLineup < ActiveRecord::Base
   has_many   :players,       :through => :match_players, :source => :user
   has_many   :match_sets,    -> { order(:ordinal) }, :dependent => :destroy
 
+  validates :team, presence: true
+
   accepts_nested_attributes_for :match_players
   accepts_nested_attributes_for :match_sets
 
