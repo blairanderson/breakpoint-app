@@ -7,6 +7,9 @@ class TeamMailer
 
   def deliver
     client = Postmark::ApiClient.new(ENV['SIMPLE_POSTMARK_API_KEY'], secure: true)
+    Rails.logger.info "----------------------------------------------"
+    Rails.logger.info "messages: #{messages.size}"
+    Rails.logger.info "----------------------------------------------"
     client.deliver_in_batches(messages)
   end
 

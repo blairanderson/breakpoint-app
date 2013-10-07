@@ -6,6 +6,9 @@ class Api::PostmarkController < ApplicationController
     request.body.rewind
     email = ReceivesInboundEmail.receive(request.body.read)
     if email.valid?
+      Rails.logger.info "----------------------------------------------"
+      Rails.logger.info "valid?: yes"
+      Rails.logger.info "----------------------------------------------"
       TeamMailer.new(email).deliver
       render text: "Success", status: 200
     else
