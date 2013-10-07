@@ -7,17 +7,7 @@ class TeamMailer
 
   def deliver
     client = Postmark::ApiClient.new(ENV['SIMPLE_POSTMARK_API_KEY'], secure: true)
-    Rails.logger.info "----------------------------------------------"
-    Rails.logger.info "messages: #{messages.size}"
-    Rails.logger.info "first message attachment: #{messages.first[:attachments].first.inspect}"
-    Rails.logger.info "last message attachment: #{messages.last[:attachments].last.inspect}"
-    Rails.logger.info "loop the attachmetns: #{messages.map { |m| m[:attachments].first[:name] }}"
-    Rails.logger.info "----------------------------------------------"
-
     client.deliver_in_batches(messages)
-    Rails.logger.info "----------------------------------------------"
-    Rails.logger.info "batches delivered"
-    Rails.logger.info "----------------------------------------------"
   end
 
   private
