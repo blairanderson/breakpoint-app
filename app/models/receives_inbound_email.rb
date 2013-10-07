@@ -1,5 +1,5 @@
 class ReceivesInboundEmail
-  attr_reader :from, :from_name, :to, :subject, :text_body, :html_body
+  attr_reader :from, :from_name, :to, :subject, :text_body, :html_body, :attachments
 
   def self.receive(message)
     message = Postmark::Json.decode(message)
