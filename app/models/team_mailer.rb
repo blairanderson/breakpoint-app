@@ -26,12 +26,13 @@ class TeamMailer
 
   def message(to)
     {
-      from:      "#{email.from_name} <#{ActionMailer::Base.default[:from]}>",
-      reply_to:  email.to,
-      to:        to,
-      subject:   email.subject,
-      text_body: email.text_body,
-      html_body: CGI::unescapeHTML(email.html_body)
+      from:        "#{email.from_name} <#{ActionMailer::Base.default[:from]}>",
+      reply_to:    email.to,
+      to:          to,
+      subject:     email.subject,
+      text_body:   email.text_body,
+      html_body:   CGI::unescapeHTML(email.html_body),
+      attachments: email.attachments
     }
   end
 end
