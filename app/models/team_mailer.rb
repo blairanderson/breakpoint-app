@@ -1,4 +1,6 @@
 class TeamMailer
+  Tag = "sent-to-team"
+
   attr_reader :email
 
   def initialize(email)
@@ -31,7 +33,7 @@ class TeamMailer
       subject:     email.subject,
       text_body:   email.text_body,
       html_body:   CGI::unescapeHTML(email.html_body),
-      tag:         "sent-to-team",
+      tag:         Tag,
       attachments: email.attachments
     }
   end
