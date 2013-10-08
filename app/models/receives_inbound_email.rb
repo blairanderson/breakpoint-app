@@ -9,7 +9,7 @@ class ReceivesInboundEmail
 
   def initialize(message)
     @from        = message[:from_full][:email]
-    @from_name   = message[:from_full][:name]
+    @from_name   = message[:from_full][:name].present? ? message[:from_full][:name] : @from
     @to          = message[:to_full].first[:email]
     @subject     = message[:subject]
     @text_body   = message[:text_body]

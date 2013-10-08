@@ -13,12 +13,13 @@ describe TeamMailer do
     mailer = TeamMailer.new(email)
     message = {
       from:        "Dave <#{ActionMailer::Base.default[:from]}>",
+      reply_to:    "team@mail.breakpointapp.com",
       to:          "team@mail.breakpointapp.com",
       bcc:         ["john@example.com", "steve@example.com"],
       subject:     "test",
       text_body:   "test",
       html_body:   "<p>test</p>",
-      tag:         "generated-by-app",
+      tag:         "sent-to-team",
       attachments: [{name: "myimage.png", content: "[BASE64-ENCODED CONTENT]", content_type: "image/png"}]
     }
 
