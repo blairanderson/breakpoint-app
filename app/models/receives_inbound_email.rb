@@ -19,7 +19,7 @@ class ReceivesInboundEmail
   end
 
   def valid?
-    return false if tag == "generated-by-app"
+    return false if tag == "sent-to-team"
     return true if from == ActionMailer::Base.default[:from]
     user && team && user_on_team?
   end
