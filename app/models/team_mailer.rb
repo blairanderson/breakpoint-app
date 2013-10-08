@@ -24,6 +24,7 @@ class TeamMailer
 
   def message(bcc)
     Rails.logger.info "-----------------------------------------"
+    Rails.logger.info "email from: #{email.from_name} <#{ActionMailer::Base.default[:from]}>"
     Rails.logger.info "email.to: #{email.to}"
     Rails.logger.info "bcc: #{bcc}"
     Rails.logger.info "-----------------------------------------"
