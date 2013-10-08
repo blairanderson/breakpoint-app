@@ -1,5 +1,5 @@
 class ReceivesInboundEmail
-  attr_reader :from, :from_name, :to, :subject, :text_body, :html_body, :attachments
+  attr_reader :from, :from_name, :to, :subject, :text_body, :html_body, :tag, :attachments
 
   def self.receive(message)
     message = Postmark::Json.decode(message)
@@ -14,10 +14,12 @@ class ReceivesInboundEmail
     @subject     = message[:subject]
     @text_body   = message[:text_body]
     @html_body   = message[:html_body]
+    @tag         = message[:tag]
     @attachments = message[:attachments]
   end
 
   def valid?
+    return false if tag == "generated-by-app"
     return true if from == ActionMailer::Base.default[:from]
     user && team && user_on_team?
   end

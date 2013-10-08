@@ -11,28 +11,18 @@ describe TeamMailer do
                  attachments: [{name: "myimage.png", content: "[BASE64-ENCODED CONTENT]", content_type: "image/png"}],
                  team:        stub(:team_emails => ["dave@example.com", "john@example.com", "steve@example.com"]))
     mailer = TeamMailer.new(email)
-    messages = [
-      {
-        from:        "Dave <#{ActionMailer::Base.default[:from]}>",
-        reply_to:    "team@mail.breakpointapp.com",
-        to:          "john@example.com",
-        subject:     "test",
-        text_body:   "test",
-        html_body:   "<p>test</p>",
-        attachments: [{name: "myimage.png", content: "[BASE64-ENCODED CONTENT]", content_type: "image/png"}]
-      },
-      {
-        from:        "Dave <#{ActionMailer::Base.default[:from]}>",
-        reply_to:    "team@mail.breakpointapp.com",
-        to:          "steve@example.com",
-        subject:     "test",
-        text_body:   "test",
-        html_body:   "<p>test</p>",
-        attachments: [{name: "myimage.png", content: "[BASE64-ENCODED CONTENT]", content_type: "image/png"}]
-      }
-    ]
+    message = {
+      from:        "Dave <#{ActionMailer::Base.default[:from]}>",
+      to:          "team@mail.breakpointapp.com",
+      bcc:         ["john@example.com", "steve@example.com"],
+      subject:     "test",
+      text_body:   "test",
+      html_body:   "<p>test</p>",
+      tag:         "generated-by-app",
+      attachments: [{name: "myimage.png", content: "[BASE64-ENCODED CONTENT]", content_type: "image/png"}]
+    }
 
-    mailer.send(:messages).should eq messages
+    mailer.send(:message, ["john@example.com", "steve@example.com"]).should eq message
   end
 end
 

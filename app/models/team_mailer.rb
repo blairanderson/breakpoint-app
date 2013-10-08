@@ -7,7 +7,9 @@ class TeamMailer
 
   def deliver
     client = Postmark::ApiClient.new(ENV['SIMPLE_POSTMARK_API_KEY'], secure: true)
-    client.deliver_in_batches(messages)
+    team_emails.in_groups_of(20, false).each do |group|
+      client.deliver(message(group))
+    end
   end
 
   private
@@ -20,18 +22,15 @@ class TeamMailer
     emails.reject { |e| email.from == e }
   end
 
-  def messages
-    team_emails.map { |e| message(e) }
-  end
-
-  def message(to)
+  def message(bcc)
     {
       from:        "#{email.from_name} <#{ActionMailer::Base.default[:from]}>",
-      reply_to:    email.to,
-      to:          to,
+      to:          email.to,
+      bcc:         bcc,
       subject:     email.subject,
       text_body:   email.text_body,
       html_body:   CGI::unescapeHTML(email.html_body),
+      tag:         "generated-by-app",
       attachments: email.attachments
     }
   end
