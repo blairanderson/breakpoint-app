@@ -25,6 +25,10 @@ class PermittedParams
     params.require(:match_availability).permit(:available)
   end
 
+  def practice_sessions
+    params.require(:practice_session).permit(:available)
+  end
+
   def practice
     params.require(:practice).permit(:date_string, :time_string, :location, :comment)
   end

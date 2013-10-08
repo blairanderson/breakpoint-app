@@ -5,8 +5,17 @@ class PracticeSessionPolicy < ApplicationPolicy
     end
   end
 
+  def update?
+    owner?
+  end
+
   def destroy?
     user.id == record.user_id
   end
-end
 
+  private
+
+  def owner?
+    user.id == record.user_id
+  end
+end

@@ -11,7 +11,7 @@ class Practice < ActiveRecord::Base
   has_paper_trail :ignore => [:notified_state]
 
   def practice_session_for_user(user_id)
-    practice_sessions.where(user_id: user_id).first
+    practice_sessions.where(user_id: user_id).first || practice_sessions.build(user_id: user_id)
   end
 
   def recent_changes
