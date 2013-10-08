@@ -19,8 +19,14 @@ class ReceivesInboundEmail
   end
 
   def valid?
+    Rails.logger.info "-----------------------------------------"
+    Rails.logger.info "in valid"
+    Rails.logger.info "-----------------------------------------"
     return false if tag == "generated-by-app"
     return true if from == ActionMailer::Base.default[:from]
+    Rails.logger.info "-----------------------------------------"
+    Rails.logger.info "tag (#{tag}) does not match"
+    Rails.logger.info "-----------------------------------------"
     user && team && user_on_team?
   end
 
