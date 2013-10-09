@@ -14,13 +14,14 @@
         <th>Date</th>
         <th>Location</th>
         <% if policy(current_team).captain? %>
+          <th>Available</th>
           <th style="width: 193px;">&nbsp;</th>
         <% end %>
       </tr>
       </thead>
       <tbody>
       <% @practices.each do |practice| %>
-          <% practice_session = practice.practice_session_for_user(current_user.id) %>
+          <% practice_session = practice.practice_session_for(current_user.id) %>
           <% show_yes_form = practice_session.new_record? ? true : !practice_session.available? %>
           <% show_no_form = practice_session.new_record? ? true : practice_session.available? %>
           <tr class="<%= practice_session.new_record? ? '' : (practice_session.available? ? 'success' : 'error') %>">
@@ -51,6 +52,9 @@
             <td><%= l practice.date, :format => :long %></td>
             <td><%= simple_format practice.location %></td>
             <% if policy(current_team).captain? %>
+                <td>
+                  <p><%= render :partial => 'practice_confirmations', :locals => { :practice => practice } %></p>
+                </td>
                 <td>
                   <% if practice.notified_team? %>
                       <%= link_to 'Notify team', notify_practice_path(practice, team_id: current_team), :method => :post, :class => 'btn btn-small disabled' %>

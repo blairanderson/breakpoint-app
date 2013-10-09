@@ -21,7 +21,7 @@ describe Practice do
     practice = create(:practice)
     practice_session = create(:practice_session, :practice => practice, :user => user)
 
-    practice.practice_session_for_user(user.id).should eq practice_session
+    practice.practice_session_for(user.id).should eq practice_session
   end
 end
 

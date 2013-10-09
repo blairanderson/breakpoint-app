@@ -1,6 +1,6 @@
-<a href="#practice-<%= practice.id %>" data-toggle="modal">Who's going?</a>
+<a href="#practice-<%= practice.id %>" data-toggle="modal">Who can play?</a>
 <div class="modal hide" id="practice-<%= practice.id %>">
-  <% if practice.players.empty? %>
+  <% if practice.available_players.empty? %>
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal">×</button>
       <h3>There are no confirmed players yet.</h3>
@@ -11,7 +11,7 @@
       <h3>Confirmed players</h3>
     </div>
     <div class="modal-body">
-      <%= render :partial => 'team_members/team_members', :object => practice.players %>
+      <%= render :partial => 'team_members/team_members', :object => practice.available_players %>
     </div>
   <% end %>
 </div>

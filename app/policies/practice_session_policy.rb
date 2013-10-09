@@ -9,10 +9,6 @@ class PracticeSessionPolicy < ApplicationPolicy
     owner?
   end
 
-  def destroy?
-    user.id == record.user_id
-  end
-
   private
 
   def owner?

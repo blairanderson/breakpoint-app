@@ -10,8 +10,12 @@ class Practice < ActiveRecord::Base
   acts_as_tenant :team
   has_paper_trail :ignore => [:notified_state]
 
-  def practice_session_for_user(user_id)
+  def practice_session_for(user_id)
     practice_sessions.where(user_id: user_id).first || practice_sessions.build(user_id: user_id)
+  end
+
+  def available_players
+    practice_sessions.includes(:user).where(:available => true).collect(&:user)
   end
 
   def recent_changes
