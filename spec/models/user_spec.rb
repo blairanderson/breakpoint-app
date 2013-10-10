@@ -26,6 +26,13 @@ describe User do
     user = build(:user, :first_name => 'dkrow', :last_name => nil, :email => 'dkrow@example.com')
     user.name.should eq 'dkrow'
   end
+
+  it 'resets password token' do
+    user = create(:user)
+    token = user.reset_password_token!
+    user.reset_password_token.should_not be_nil
+    user.reset_password_token.should eq Devise.token_generator.digest(User.class, :reset_password_token, token)
+  end
 end
 
 # == Schema Information

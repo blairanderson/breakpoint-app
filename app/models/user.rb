@@ -46,9 +46,9 @@ class User < ActiveRecord::Base
   # they are stored in the DB encrypted
   def reset_password_token!
     raw, enc = Devise.token_generator.generate(self.class, :reset_password_token)
-    reset_password_token   = enc
-    reset_password_sent_at = Time.now.utc
-    save(:validate => false)
+    self.reset_password_token   = enc
+    self.reset_password_sent_at = Time.now.utc
+    save(validate: false)
     raw
   end
 end
