@@ -28,6 +28,19 @@ class ReceivesInboundEmail
     @team ||= Team.find_by(email: team_email)
   end
 
+  def serialize
+    {
+      team_id:     team.id,
+      from:        from,
+      from_name:   from_name,
+      to:          to,
+      subject:     subject,
+      text_body:   text_body,
+      html_body:   html_body,
+      attachments: attachments
+    }
+  end
+
   private
 
   def user

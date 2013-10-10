@@ -1,8 +1,14 @@
+require 'sidekiq/web'
+
 BreakpointApp::Application.routes.draw do
   root :to => 'home#index'
 
   devise_for :users, :controllers => { :registrations => 'users/registrations' }
   get 'teams' => 'teams#index', as: :user_root
+
+  authenticate :user, lambda { |u| u.email == "davekaro@gmail.com" } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 
   resources :teams, :except => [:show] do
     resources :practices, :except => [:show]

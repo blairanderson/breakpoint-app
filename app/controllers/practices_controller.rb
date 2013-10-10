@@ -17,9 +17,9 @@ class PracticesController < ApplicationController
     @practice = Practice.find(params[:id])
     if !@practice.notified_team?
       if @practice.created?
-        PracticeMailer.practice_scheduled(@practice).deliver
+        PracticeMailer.delay.practice_scheduled(current_team.id, @practice.id)
       else
-        PracticeMailer.practice_updated(@practice, @practice.recent_changes).deliver
+        PracticeMailer.delay.practice_updated(current_team.id, @practice.id, @practice.recent_changes)
       end
       @practice.notified!
       redirect_to team_practices_url(@practice.team), :notice => 'Notification email sent to team'

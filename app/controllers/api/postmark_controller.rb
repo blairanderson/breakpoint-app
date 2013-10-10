@@ -6,7 +6,7 @@ class Api::PostmarkController < ApplicationController
     request.body.rewind
     email = ReceivesInboundEmail.receive(request.body.read)
     if email.valid?
-      TeamMailer.new(email).deliver
+      TeamMailer.delay.deliver(email.serialize)
       render text: "Success", status: 200
     else
       render text: "Not valid", status: 200

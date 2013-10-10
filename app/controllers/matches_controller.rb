@@ -20,9 +20,9 @@ class MatchesController < ApplicationController
 
     if !@match.notified_team?
       if @match.created?
-        MatchMailer.match_scheduled(@match).deliver
+        MatchMailer.delay.match_scheduled(current_team.id, @match.id)
       else
-        MatchMailer.match_updated(@match, @match.recent_changes).deliver
+        MatchMailer.delay.match_updated(current_team.id, @match.id, @match.recent_changes)
       end
 
       @match.notified!
@@ -37,10 +37,10 @@ class MatchesController < ApplicationController
 
     if !@match.notified_team_lineup?
       if @match.lineup_created?
-        MatchLineupMailer.lineup_set(@match).deliver
+        MatchLineupMailer.delay.lineup_set(current_team.id, @match.id)
       else
         # TODO gotta get the changes of the lineup
-        MatchLineupMailer.lineup_updated(@match, []).deliver
+        MatchLineupMailer.delay.lineup_updated(current_team.id, @match.id, [])
       end
 
       @match.notified_lineup!

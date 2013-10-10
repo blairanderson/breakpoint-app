@@ -4,8 +4,8 @@ describe MatchLineupMailer do
   before :each do
     user = create(:user)
     user2 = create(:user2)
-    team = create(:team, :users => [user, user2])
-    ActsAsTenant.current_tenant = team
+    @team = create(:team, :users => [user, user2])
+    ActsAsTenant.current_tenant = @team
     @match = create(:match)
     @match.match_lineups.each do |lineup|
       lineup.match_players.create(:user => user)
@@ -17,7 +17,7 @@ describe MatchLineupMailer do
   end
 
   it 'sends match lineup set email' do
-    email = MatchLineupMailer.lineup_set(@match).deliver
+    email = MatchLineupMailer.lineup_set(@team.id, @match.id).deliver
 
     last_email.should_not be_nil
     email.to.should =~ ['team-email@mail.breakpointapp.com']
@@ -26,7 +26,7 @@ describe MatchLineupMailer do
   end
 
   it 'sends match lineup updated email', :versioning => true do
-    email = MatchLineupMailer.lineup_updated(@match, @match.recent_changes).deliver
+    email = MatchLineupMailer.lineup_updated(@team.id, @match.id, @match.recent_changes).deliver
 
     last_email.should_not be_nil
     email.to.should =~ ['team-email@mail.breakpointapp.com']

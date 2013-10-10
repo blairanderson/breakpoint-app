@@ -9,7 +9,7 @@ describe InviteMailer do
   end
 
   it 'sends new user invitation email' do
-    email = InviteMailer.new_user_invitation(@invite).deliver
+    email = InviteMailer.new_user_invitation(@team.id, @invite.id).deliver
 
     last_email.should_not be_nil
     email.to.should eq ['dave.kroondyk@example.com']
@@ -18,7 +18,7 @@ describe InviteMailer do
   end
 
   it 'sends invitation email' do
-    email = InviteMailer.invitation(@invite).deliver
+    email = InviteMailer.invitation(@team.id, @invite.id).deliver
 
     last_email.should_not be_nil
     email.to.should eq ['dave.kroondyk@example.com']

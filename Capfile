@@ -18,6 +18,7 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       execute fetch(:chruby_exec), "#{fetch(:chruby_ruby)} -- service breakpointapp restart"
+      execute :restart, "workers" # restart sidekiq
     end
   end
 

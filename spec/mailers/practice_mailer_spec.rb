@@ -4,8 +4,8 @@ describe PracticeMailer do
   before :each do
     user = create(:user)
     user2 = create(:user2)
-    team = create(:team, :users => [user, user2]) 
-    ActsAsTenant.current_tenant = team
+    @team = create(:team, :users => [user, user2]) 
+    ActsAsTenant.current_tenant = @team
     @practice = create(:practice)
   end
 
@@ -14,7 +14,7 @@ describe PracticeMailer do
   end
 
   it 'sends practice scheduled email' do
-    email = PracticeMailer.practice_scheduled(@practice).deliver
+    email = PracticeMailer.practice_scheduled(@team.id, @practice.id).deliver
     
     last_email.should_not be_nil
     email.to.should =~ ['team-email@mail.breakpointapp.com']
@@ -23,7 +23,7 @@ describe PracticeMailer do
   end
 
   it 'sends practice updated email', :versioning => true do
-    email = PracticeMailer.practice_updated(@practice, @practice.recent_changes).deliver
+    email = PracticeMailer.practice_updated(@team.id, @practice.id, @practice.recent_changes).deliver
 
     last_email.should_not be_nil
     email.to.should =~ ['team-email@mail.breakpointapp.com']
