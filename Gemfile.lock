@@ -1,32 +1,8 @@
 GIT
-  remote: git://github.com/capistrano/bundler.git
-  revision: 9357686e9067a7412f67a6b87ec2c517a9884015
-  specs:
-    capistrano-bundler (0.0.1)
-      capistrano (>= 3.0.0.pre)
-
-GIT
-  remote: git://github.com/capistrano/capistrano.git
-  revision: a578e8dc410f2079d74fe32e11996715db907786
-  branch: v3
-  specs:
-    capistrano (3.0.0.pre14)
-      i18n
-      rake (>= 10.0.0)
-      sshkit (>= 0.0.23)
-
-GIT
   remote: git://github.com/capistrano/chruby.git
   revision: ac952211cf3e490fdc408197e2bfdd55b8c4f1e1
   specs:
     capistrano-chruby (0.0.1)
-      capistrano
-
-GIT
-  remote: git://github.com/capistrano/rails.git
-  revision: 892e527ad51e0d3f3c661c34531a7327a5d475d0
-  specs:
-    capistrano-rails (0.0.7)
       capistrano
 
 GEM
@@ -68,6 +44,14 @@ GEM
     bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
     builder (3.1.4)
+    capistrano (3.0.0)
+      i18n
+      rake (>= 10.0.0)
+      sshkit (>= 0.0.23)
+    capistrano-bundler (1.0.0)
+      capistrano (>= 3.0.0.pre)
+    capistrano-rails (1.0.0)
+      capistrano
     capybara (2.1.0)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -134,7 +118,7 @@ GEM
     multi_json (1.8.0)
     net-scp (1.1.2)
       net-ssh (>= 2.6.5)
-    net-ssh (2.6.8)
+    net-ssh (2.7.0)
     nokogiri (1.5.9)
     orm_adapter (0.4.0)
     paper_trail (3.0.0.beta1)
@@ -213,7 +197,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
-    sshkit (0.0.34)
+    sshkit (1.0.0)
       net-scp
       net-ssh
       term-ansicolor
@@ -224,7 +208,7 @@ GEM
       atomic
     tilt (1.4.1)
     timers (1.1.0)
-    tins (0.8.4)
+    tins (0.12.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
@@ -248,10 +232,10 @@ DEPENDENCIES
   acts_as_tenant (~> 0.3.1)
   annotate (~> 2.5.0)
   bootstrap-sass (~> 2.3.2.2)
-  capistrano!
-  capistrano-bundler!
+  capistrano (~> 3.0.0)
+  capistrano-bundler (~> 1.0.0)
   capistrano-chruby!
-  capistrano-rails!
+  capistrano-rails (~> 1.0.0)
   capybara (~> 2.1.0)
   chronic (~> 0.9.1)
   coffee-rails (~> 4.0.0)
