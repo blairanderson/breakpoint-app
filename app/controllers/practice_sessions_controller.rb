@@ -1,7 +1,8 @@
 class PracticeSessionsController < ApplicationController
+  before_action :load_practice
+
   def create
-    @practice = Practice.find(params[:practice_id])
-    @practice_session = @practice.practice_sessions.build
+    @practice_session = @practice.practice_sessions.build(permitted_params.practice_sessions)
     @practice_session.team = current_team
     @practice_session.user = current_user
     @practice_session.save
@@ -9,14 +10,20 @@ class PracticeSessionsController < ApplicationController
     redirect_to team_practices_url(@practice.team)
   end
 
-  def destroy
-    @practice = Practice.find(params[:practice_id])
+  def update
     @practice_session = PracticeSession.find(params[:id])
-    authorize @practice_session
 
-    @practice_session.destroy
+    if @practice_session.update_attributes(permitted_params.practice_sessions)
+      redirect_to team_practices_url(@practice.team)
+    else
+      flash[:error] = 'Availability was not updated. Try again or contact support'
+      redirect_to team_practices_url(@practice.team)
+    end
+  end
 
-    redirect_to team_practices_url(@practice.team)
+  private
+
+  def load_practice
+    @practice = Practice.find(params[:practice_id])
   end
 end
-

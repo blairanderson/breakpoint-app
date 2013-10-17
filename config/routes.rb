@@ -19,8 +19,9 @@ BreakpointApp::Application.routes.draw do
     resources :invites, :only => [:index, :create, :update]
   end
 
+
   resources :practices, :only => [] do
-    resources :practice_sessions, :only => [:create, :destroy]
+    resources :practice_sessions, :only => [:create, :update]
     member do
       post 'notify'
     end

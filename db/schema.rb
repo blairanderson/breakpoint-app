@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131004192202) do
+ActiveRecord::Schema.define(version: 20131007022028) do
 
   create_table "invites", force: true do |t|
     t.integer  "user_id"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20131004192202) do
     t.integer  "practice_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.boolean  "available"
     t.integer  "team_id"
   end
 
