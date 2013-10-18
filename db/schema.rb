@@ -93,8 +93,8 @@ ActiveRecord::Schema.define(version: 20131007022028) do
     t.integer  "practice_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.boolean  "available"
     t.integer  "team_id"
+    t.boolean  "available"
   end
 
   add_index "practice_sessions", ["practice_id"], name: "index_practice_sessions_on_practice_id", using: :btree

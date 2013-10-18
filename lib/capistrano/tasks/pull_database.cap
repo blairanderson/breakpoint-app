@@ -1,0 +1,13 @@
+desc "Pull a database dump file"
+task :pull_db do
+  on roles(:db) do |host|
+    execute :pg_dump, "-Fc", "breakpointapp_production",  ">", "latest.dump"
+  end
+
+  run_locally do
+    execute :scp, "breakpointapp:latest.dump", "."
+    execute :pg_restore, "--verbose", "--clean", "--no-acl", "--no-owner", "-h localhost", "-U postgres", "-d breakpoint_app_development", "latest.dump", "2>/dev/null"
+    rake ["db:migrate", "breakpointapp:reset_passwords"]
+  end
+end
+
