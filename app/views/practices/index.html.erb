@@ -13,8 +13,8 @@
         <th style="width: 182px;">Can play?</th>
         <th>Date</th>
         <th>Location</th>
+        <th>Available</th>
         <% if policy(current_team).captain? %>
-          <th>Available</th>
           <th style="width: 193px;">&nbsp;</th>
         <% end %>
       </tr>
@@ -50,11 +50,13 @@
               </div>
             </td>
             <td><%= l practice.date, :format => :long %></td>
-            <td><%= simple_format practice.location %></td>
+            <td>
+              <%= simple_format practice.location %>
+            </td>
+            <td>
+              <p><%= render :partial => 'practice_confirmations', :locals => { :practice => practice } %></p>
+            </td>
             <% if policy(current_team).captain? %>
-                <td>
-                  <p><%= render :partial => 'practice_confirmations', :locals => { :practice => practice } %></p>
-                </td>
                 <td>
                   <% if practice.notified_team? %>
                       <%= link_to 'Notify team', notify_practice_path(practice, team_id: current_team), :method => :post, :class => 'btn btn-small disabled' %>

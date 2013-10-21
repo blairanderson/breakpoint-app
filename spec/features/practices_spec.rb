@@ -19,7 +19,7 @@ describe 'practices' do
     page.should have_content 'Delete'
     @captain.team_members.where(:team => @practice.team).first.update_attributes(:role => 'member')
     visit team_practices_path(@practice.team)
-    page.should_not have_content 'Edit'
+    page.should_not have_button 'Edit'
     page.should_not have_content 'Delete'
   end
   it 'creates a practice' do

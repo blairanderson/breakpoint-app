@@ -23,7 +23,7 @@ describe 'matches' do
     visit team_matches_path(@match.team)
     page.should_not have_content 'Notification'
     page.should_not have_content 'Lineup'
-    page.should_not have_content 'Edit'
+    page.should_not have_button 'Edit'
     page.should_not have_content 'Delete'
   end
 
