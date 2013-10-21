@@ -11,9 +11,9 @@
       <thead>
       <tr>
         <th style="width: 182px;">Can play?</th>
+        <th>Team</th>
         <th>Date</th>
         <th>Location</th>
-        <th>Available</th>
         <% if policy(current_team).captain? %>
           <th style="width: 193px;">&nbsp;</th>
         <% end %>
@@ -49,12 +49,12 @@
                 <% end %>
               </div>
             </td>
+            <td>
+              <p><%= render :partial => 'practice_confirmations', :locals => { :practice => practice } %></p>
+            </td>
             <td><%= l practice.date, :format => :long %></td>
             <td>
               <%= simple_format practice.location %>
-            </td>
-            <td>
-              <p><%= render :partial => 'practice_confirmations', :locals => { :practice => practice } %></p>
             </td>
             <% if policy(current_team).captain? %>
                 <td>
