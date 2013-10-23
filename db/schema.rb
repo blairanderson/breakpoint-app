@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131007022028) do
+ActiveRecord::Schema.define(version: 20131023154918) do
 
   create_table "invites", force: true do |t|
     t.integer  "user_id"
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 20131007022028) do
     t.datetime "updated_at",                       null: false
     t.string   "role",          default: "member"
     t.boolean  "receive_email", default: true,     null: false
+    t.boolean  "active",        default: true,     null: false
   end
 
   add_index "team_members", ["team_id"], name: "index_players_on_team_id", using: :btree

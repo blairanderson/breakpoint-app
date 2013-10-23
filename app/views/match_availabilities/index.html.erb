@@ -8,8 +8,8 @@
     </tr>
   </thead>
   <tbody>
-    <% current_team.users.each do |user| %>
-      <tr>
+    <% current_team.users.order(:first_name).each do |user| %>
+      <tr<%= raw ' class="error"' unless current_team.team_member_for(user.id).active? %>>
         <td><%= user.name %></td>
         <% current_team.matches.each do |match| %>
           <% availablility = match.match_availability_for(user.id) %>

@@ -28,12 +28,20 @@ class Team < ActiveRecord::Base
     matches.where('date > ?', Time.now).order('date asc')
   end
 
+  def active_users
+    users.where('team_members.active = true')
+  end
+
   def team_emails
-    users.where('team_members.receive_email = true').pluck(:email)
+    active_users.where('team_members.receive_email = true').pluck(:email)
   end
 
   def not_accepted_user_ids
     invites.not_accepted.pluck(:user_id)
+  end
+
+  def team_member_for(user_id)
+    team_members.where(user_id: user_id).first
   end
 
   def accepted_team_members

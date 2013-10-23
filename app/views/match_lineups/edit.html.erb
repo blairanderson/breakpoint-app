@@ -7,7 +7,7 @@
     <hr>
     <%= match_lineup_form.simple_fields_for :match_players do |match_player_form| %>
       <%= match_player_form.input :user_id,
-        :collection   => current_team.users,
+        :collection   => current_team.active_users.order(:first_name),
         :label        => match_lineup_form.object.match_type,
         :label_method => :name,
         :value_method => :id %>

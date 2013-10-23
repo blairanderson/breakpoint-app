@@ -1,22 +1,15 @@
 <% subtitle 'Team' %>
 
-<% if current_team.team_members.empty? %>
-  <div class="alert alert-block alert-info">
-    <h4>No team members for this team yet.</h4>
-    <%= link_to 'Add team members', team_team_members_path(current_team) %> to get the team started.
+<% if @accepted_team_members.present? %>
+  <%= render :partial => "team_members_index", :object => @accepted_team_members %>
+<% end %>
+
+<% if @not_accepted_team_members.present? %>
+  <h4>Team members who have not accepted their invite</h4>
+  <div class="alert alert-info">
+    To set practice/match availability, members must accept their invitation
   </div>
-<% else %>
-  <% if @accepted_team_members.present? %>
-    <%= render :partial => "team_members_index", :object => @accepted_team_members %>
-  <% end %>
 
-  <% if @not_accepted_team_members.present? %>
-    <h4>Team members who have not accepted their invite</h4>
-    <div class="alert alert-info">
-      To set practice/match availability, members must accept their invitation
-    </div>
-
-    <%= render :partial => "team_members_index", :object => @not_accepted_team_members %>
-  <% end %>
+  <%= render :partial => "team_members_index", :object => @not_accepted_team_members %>
 <% end %>
 

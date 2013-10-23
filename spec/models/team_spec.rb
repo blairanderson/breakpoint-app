@@ -38,6 +38,15 @@ describe Team do
     ActsAsTenant.current_tenant = nil
   end
 
+  it 'returns active users for team members who are active' do
+    user = create(:user)
+    user2 = create(:user2)
+    team = create(:team, :users => [user, user2])
+    user2.team_members.first.update_attribute(:active, false)
+
+    team.active_users.should eq [user]
+  end
+
   it 'returns team emails for team members who receive emails' do
     user = create(:user)
     user2 = create(:user2)
