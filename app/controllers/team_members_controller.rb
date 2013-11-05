@@ -7,16 +7,18 @@ class TeamMembersController < ApplicationController
   end
 
   def edit
-    # TODO authorize team member - captain or owner
     @team_member = TeamMember.find(params[:id])
+    authorize @team_member
   end
 
   def update
     @team_member = TeamMember.find(params[:id])
+    authorize @team_member
 
     if @team_member.update_attributes(permitted_params.team_member)
       redirect_to team_team_members_url(@team_member.team), :notice => 'Team member updated'
     else
+      flash[:error] = "You are not authorized to perform this action."
       render :edit
     end
   end

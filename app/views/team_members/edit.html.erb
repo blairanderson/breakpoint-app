@@ -1,9 +1,12 @@
-<% subtitle "Edit settings for #{@team_member.user.name}" %>
+<% subtitle "Edit settings for #{@team_member.user.name} (#{@team_member.role})" %>
 
 <%= simple_form_for([current_team, @team_member], :html => { :class => 'form-horizontal' } ) do |f| %>
   <%= f.error_messages %>
 
-  <%= f.input :role, collection: TeamMember::ROLES, value_method: :to_s, label_method: :humanize, include_blank: false %>
+  <% if policy(current_team).captain?%>
+    <%= f.input :role, collection: TeamMember::ROLES, value_method: :to_s, label_method: :humanize, include_blank: false%>
+  <% end%>
+
   <%= f.input :status, collection: TeamMember::Statuses, hint: 'change status to "Active, no email" to stop receiving emails', include_blank: false %>
 
   <div class="form-actions">
