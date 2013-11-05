@@ -11,5 +11,23 @@ describe ReceivesInboundEmail do
     email.html_body.should  eq "[HTML(encoded)]"
     email.send(:team_email).should eq "451d9b70cf9364d23ff6f9d51d870251569e+ahoy"
   end
+
+  it 'validates team email' do
+    team = create(:team, :singles_matches => 1, :doubles_matches => 1, :email => "winsanity")
+    user = create(:user)
+    team.team_members.create(user: user, team: team, receive_email: false, active: false)
+    ActsAsTenant.current_tenant = team
+
+    email = ReceivesInboundEmail.receive(File.read(File.expand_path("../team_email.json", __FILE__)))
+    email.instance_variable_set(:@from, user.email)
+    email.instance_variable_set(:@to, "winsanity@example.com")
+
+    expect(email.valid?).to be_false
+
+    team.team_members.first.update_attribute(:active, true)
+    expect(email.valid?).to be_true
+
+    ActsAsTenant.current_tenant = nil
+  end
 end
 

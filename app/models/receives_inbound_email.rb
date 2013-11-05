@@ -52,7 +52,7 @@ class ReceivesInboundEmail
   end
 
   def user_on_team?
-    team.users.include?(user)
+    team.active_users.include?(user)
   end
 end
 
