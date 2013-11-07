@@ -17,7 +17,7 @@ class Match < ActiveRecord::Base
   delegate :lineup_created?, :lineup_updated?, :notified_team_lineup?, :to => :notified_team_lineup_state
 
   acts_as_tenant :team
-  has_paper_trail :ignore => [:notified_state, :notified_lineup_state]
+  has_paper_trail :ignore => [:notified_state, :notified_lineup_state, :updated_at]
 
   def team_location
     home_team? ? 'Home' : 'Away'

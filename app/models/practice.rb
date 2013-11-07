@@ -8,7 +8,7 @@ class Practice < ActiveRecord::Base
   validates :team, presence: true
 
   acts_as_tenant :team
-  has_paper_trail :ignore => [:notified_state]
+  has_paper_trail :ignore => [:notified_state, :updated_at]
 
   def practice_session_for(user_id)
     practice_sessions.where(user_id: user_id).first || practice_sessions.build(user_id: user_id)
