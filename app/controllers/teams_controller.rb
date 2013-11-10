@@ -10,7 +10,7 @@ class TeamsController < ApplicationController
 
   def edit
     @team = current_user.teams.find(params[:id])
-    # TODO authorize captain
+    authorize @team
   end
 
   def create
@@ -26,7 +26,7 @@ class TeamsController < ApplicationController
 
   def update
     @team = current_user.teams.find(params[:id])
-    # TODO authorize captain
+    authorize @team
 
     if @team.update_attributes(permitted_params.team)
       redirect_to teams_url, :notice => 'Team updated'
@@ -37,7 +37,7 @@ class TeamsController < ApplicationController
 
   def destroy
     @team = current_user.teams.find(params[:id])
-    # TODO authorize captain
+    authorize @team
     ActsAsTenant.with_tenant(@team) { @team.destroy }
 
     redirect_to teams_url, :notice => 'Team deleted'

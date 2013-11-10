@@ -45,15 +45,15 @@
           <%= team.doubles_matches %> doubles
         </td>
         <td>
-	  <% if policy(team).captain?%>
+          <% if policy(team).captain?%>
             <%= link_to 'Edit', edit_team_path(team), :class => 'btn btn-small' %>
             <%= link_to 'Delete',
               team,
               :data => { :confirm => 'Are you sure?' },
               :method => :delete,
               :class => 'btn btn-small btn-danger' %>
-	  <% end%>
-	</td>
+          <% end%>
+        </td>
       </tr>
       <% end %>
     </tbody>
