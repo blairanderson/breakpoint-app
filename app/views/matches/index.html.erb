@@ -7,7 +7,7 @@
   </div>
 <% else %>
   <p>
-    <%= link_to_if(policy(current_team).captain?, 'Add a match', new_team_match_path(current_team), :class => 'btn') %>
+    <%= link_to('Add a match', new_team_match_path(current_team), :class => 'btn') if policy(current_team).captain? %>
     <%= link_to 'See who can play when', team_match_availabilities_path(current_team), :class => 'btn' %>
   </p>
   <% if @upcoming_matches.present? %>
