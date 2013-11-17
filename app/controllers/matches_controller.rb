@@ -3,6 +3,8 @@ class MatchesController < ApplicationController
 
   def index
     @matches = current_team.matches
+    @upcoming_matches = current_team.upcoming_matches
+    @old_matches = current_team.old_matches
   end
 
   def new

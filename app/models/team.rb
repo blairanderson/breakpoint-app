@@ -51,6 +51,10 @@ class Team < ActiveRecord::Base
   def not_accepted_team_members
     team_members.includes(:user).select { |u| not_accepted_user_ids.include?(u.user_id) }
   end
+
+  def old_matches
+    matches.where('date < ?', Time.now).order('date asc')
+  end
 end
 
 # TODO

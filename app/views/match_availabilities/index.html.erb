@@ -1,8 +1,15 @@
+<p class="alert alert-info">
+  <% if current_team.upcoming_matches.empty? %>
+    No upcoming matches.
+  <% else %>
+    See who can play in upcoming matches.
+  <% end %>
+</p>
 <table class="table table-bordered table-striped">
   <thead>
     <tr>
       <th>Member</th>
-      <% current_team.matches.each do |match| %>
+      <% current_team.upcoming_matches.each do |match| %>
         <th><%= l match.date, :format => :short %></th>
       <% end %>
     </tr>
@@ -11,7 +18,7 @@
     <% current_team.users.order(:first_name).each do |user| %>
       <tr<%= raw ' class="error"' unless current_team.team_member_for(user.id).active? %>>
         <td><%= user.name %></td>
-        <% current_team.matches.each do |match| %>
+        <% current_team.upcoming_matches.each do |match| %>
           <% availablility = match.match_availability_for(user.id) %>
           <td>
             <% if availablility.new_record? %>
