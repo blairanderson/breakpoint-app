@@ -1,97 +1,26 @@
 <% subtitle 'Matches' %>
-<p>
-  <%= link_to 'Add a match', new_team_match_path(current_team), :class => 'btn' %>
-  <%= link_to 'See who can play when', team_match_availabilities_path(current_team), :class => 'btn' %>
-</p>
 
-<% if @matches.empty? %>
+<% if @upcoming_matches.empty? && @previous_matches.empty? %>
   <div class="alert alert-block alert-info">
-    <h4>No matches for this team yet.</h4>
+    <h4>No matches for this team yet</h4>
     <%= link_to 'Add a match', new_team_match_path(current_team) %> to get playing.
   </div>
 <% else %>
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr>
-        <th style="width: 182px;">Can play?</th>
-        <th>Date</th>
-        <th>Location</th>
-        <% if policy(current_team).captain? %>
-          <th>Lineup</th>
-          <th>Notification</th>
-          <th>&nbsp;</th>
-        <% end %>
-      </tr>
-    </thead>
-    <tbody>
-      <% @matches.each do |match| %>
-        <% match_availability = match.match_availability_for(current_user.id) %>
-        <% show_yes_form = match_availability.new_record? ? true : !match_availability.available? %>
-        <% show_no_form = match_availability.new_record? ? true : match_availability.available? %>
-        <tr class="<%= match_availability.new_record? ? '' : (match_availability.available? ? 'success' : 'error') %>">
-          <td>
-            <div class="pull-left">
-              <% if show_yes_form %>
-                <%= form_for [match, match_availability], html: { style: 'margin-bottom: 0px;' } do |f| %>
-                  <%= f.hidden_field :available, value: true %>
-                  <%= hidden_field_tag :team_id, current_team.id %>
-                  <%= submit_tag 'I can play', :class => 'btn btn-small' %>
-                <% end %>
-              <% else %>
-                <span class="label label-success">You can play</span>
-              <% end %>
-            </div>
-            <div class="pull-right">
-              <% if show_no_form %>
-                <%= form_for [match, match_availability], html: { style: 'margin-bottom: 0px;' } do |f| %>
-                  <%= f.hidden_field :available, value: false %>
-                  <%= hidden_field_tag :team_id, current_team.id %>
-                  <%= submit_tag "I can't play", :class => 'btn btn-small' %>
-                <% end %>
-              <% else %>
-                <span class="label label-important">You can't play</span>
-              <% end %>
-            </div>
-          </td>
-          <td>
-            <%= match.team_location %> on
-            <%= l match.date, :format => :long %>
-          </td>
-          <td><%= simple_format match.location %></td>
-          <% if policy(current_team).captain? %>
-            <td>
-              <p><%= render :partial => 'match_availabilities', :locals => { :match => match } %></p>
-              <p><%= link_to 'Set the lineup', edit_lineup_match_path(match, team_id: current_team.id) %></p>
-            </td>
-            <td>
-              <p>
-                <% if match.notified_team? %>
-                  <%= link_to 'Notify team', notify_match_path(match, team_id: current_team.id), :method => :post, :class => 'btn btn-small disabled' %>
-                <% else %>
-                  <%= link_to 'Notify team', notify_match_path(match, team_id: current_team.id), :method => :post, :class => 'btn btn-small' %>
-                <% end %>
-              </p>
-              <p>
-                <% if match.notified_team_lineup? %>
-                  <%= link_to 'Email lineup', notify_lineup_match_path(match, team_id: current_team.id), :method => :post, :class => 'btn btn-small disabled' %>
-                <% else %>
-                  <%= link_to 'Email lineup', notify_lineup_match_path(match, team_id: current_team.id), :method => :post, :class => 'btn btn-small' %>
-                <% end %>
-              </p>
-            </td>
-            <td>
-              <p><%= link_to 'Edit', edit_team_match_path(current_team, match), :class => 'btn btn-small' %></p>
-              <p>
-                <%= link_to 'Delete',
-                  team_match_path(current_team, match),
-                  :data => { :confirm => 'Are you sure?' },
-                  :method => :delete,
-                  :class => 'btn btn-small btn-danger' %>
-              </p>
-            </td>
-          <% end %>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <p>
+    <%= link_to_if(policy(current_team).captain?, 'Add a match', new_team_match_path(current_team), :class => 'btn') %>
+    <%= link_to 'See who can play when', team_match_availabilities_path(current_team), :class => 'btn' %>
+  </p>
+  <% if @upcoming_matches.present? %>
+    <%= render :partial => "matches", :object => @upcoming_matches %>
+  <% else %>
+    <div class="alert alert-info">
+      No upcoming matches
+    </div>
+  <% end %>
+
+  <% if @previous_matches.present? %>
+    <h3>Previous Matches</h3>
+    <%= render :partial => "matches", :object => @previous_matches %>
+  <% end %>
 <% end %>
+
