@@ -1,28 +1,26 @@
 <% subtitle 'Matches' %>
 
-<% if @matches.empty? %>
+<% if @upcoming_matches.empty? && @previous_matches.empty? %>
   <div class="alert alert-block alert-info">
-    <h4>No matches for this team yet.</h4>
+    <h4>No matches for this team yet</h4>
     <%= link_to 'Add a match', new_team_match_path(current_team) %> to get playing.
   </div>
 <% else %>
   <p>
-    <%= link_to_if(policy(current_team).captain?, 'Add a match', new_team_match_path(current_team), :class => 'btn') {} %>
+    <%= link_to_if(policy(current_team).captain?, 'Add a match', new_team_match_path(current_team), :class => 'btn') %>
     <%= link_to 'See who can play when', team_match_availabilities_path(current_team), :class => 'btn' %>
   </p>
-  <% if !@upcoming_matches.empty? %>
-    <%= render :partial => "matches_index", :object => @upcoming_matches, :locals => {:old => false} %>
+  <% if @upcoming_matches.present? %>
+    <%= render :partial => "matches", :object => @upcoming_matches %>
   <% else %>
     <div class="alert alert-info">
-        No upcoming matches.
+      No upcoming matches
     </div>
   <% end %>
 
-  <% if !@old_matches.empty? %>
-    <div class="alert">
-      <h2>Previous Matches</h2>
-      The following matches are already played.
-    </div>
-    <%= render :partial => "matches_index", :object => @old_matches, :locals => {:old => true} %>
+  <% if @previous_matches.present? %>
+    <h3>Previous Matches</h3>
+    <%= render :partial => "matches", :object => @previous_matches %>
   <% end %>
 <% end %>
+

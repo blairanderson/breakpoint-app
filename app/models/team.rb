@@ -21,11 +21,15 @@ class Team < ActiveRecord::Base
   end
 
   def upcoming_practices
-    practices.where('date > ?', Time.now).order('date asc')
+    practices.where('date > ?', Time.zone.now).order('date asc')
   end
 
   def upcoming_matches
-    matches.where('date > ?', Time.now).order('date asc')
+    matches.where('date > ?', Time.zone.now).order('date asc')
+  end
+
+  def previous_matches
+    matches.where('date < ?', Time.zone.now).order('date asc')
   end
 
   def active_users
@@ -50,10 +54,6 @@ class Team < ActiveRecord::Base
 
   def not_accepted_team_members
     team_members.includes(:user).select { |u| not_accepted_user_ids.include?(u.user_id) }
-  end
-
-  def old_matches
-    matches.where('date < ?', Time.now).order('date asc')
   end
 end
 
