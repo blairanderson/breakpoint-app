@@ -14,7 +14,7 @@ class TeamMailer
 
   def deliver
     client = Postmark::ApiClient.new(ENV['SIMPLE_POSTMARK_API_KEY'], secure: true)
-    team_emails.in_groups_of(20, false).each do |group|
+    team_emails.in_groups_of(15, false).each do |group|
       client.deliver(message(group))
     end
   end
