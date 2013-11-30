@@ -19,7 +19,7 @@ class MatchesController < ApplicationController
 
   def notify
     @match = Match.find(params[:id])
-    authorize current_team
+    authorize current_team, :update?
 
     if !@match.notified_team?
       if @match.created?
@@ -37,7 +37,7 @@ class MatchesController < ApplicationController
 
   def notify_lineup
     @match = Match.find(params[:id])
-    authorize current_team
+    authorize current_team, :update?
 
     if !@match.notified_team_lineup?
       if @match.lineup_created?
