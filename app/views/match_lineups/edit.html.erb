@@ -2,15 +2,17 @@
 
 <%= simple_form_for([current_team, @match], :html => { :class => 'form-horizontal' } ) do |f| %>
   <%= f.error_messages %>
-
   <%= f.simple_fields_for :match_lineups do |match_lineup_form| %>
     <hr>
     <%= match_lineup_form.simple_fields_for :match_players do |match_player_form| %>
       <%= match_player_form.input :user_id,
-        :collection   => current_team.active_users.order(:first_name),
+        :collection   => @match.players_status,
         :label        => match_lineup_form.object.match_type,
         :label_method => :name,
-        :value_method => :id %>
+        :value_method => :id,
+        :as           => :grouped_select,
+        :group_method => :last,
+        :group_label_mehod => :first %>
     <% end %>
   <% end %>
 

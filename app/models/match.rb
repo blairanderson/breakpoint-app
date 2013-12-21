@@ -31,6 +31,24 @@ class Match < ActiveRecord::Base
     match_availabilities.includes(:user).where(:available => true).collect(&:user)
   end
 
+  def unavailable_players
+    match_availabilities.includes(:user).where(:available => false).collect(&:user)
+  end
+
+  def players_status
+    available_player_list = available_players
+    unavailable_player_list = unavailable_players
+    noresponse_player_list = team.active_users - available_player_list - unavailable_player_list
+
+    players_status = {
+                      "Available" => available_player_list,
+                      "Unavailable" => unavailable_player_list,
+                      "No Response" => noresponse_player_list
+                      }
+
+    players_status
+  end
+
   def recent_changes
     versions.last.changeset
   end
