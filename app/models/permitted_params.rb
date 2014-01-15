@@ -13,6 +13,7 @@ class PermittedParams
   def match
     params.require(:match).permit(:date_string,
                                   :time_string,
+                                  :opponent,
                                   :location,
                                   :home_team,
                                   :comment,

@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131023154918) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20140104152705) do
 
   create_table "invites", force: true do |t|
     t.integer  "user_id"
@@ -87,6 +84,7 @@ ActiveRecord::Schema.define(version: 20131023154918) do
     t.boolean  "home_team",             default: true
     t.text     "comment"
     t.string   "notified_lineup_state"
+    t.string   "opponent",              default: ""
   end
 
   add_index "matches", ["team_id"], name: "index_matches_on_team_id", using: :btree
@@ -96,8 +94,8 @@ ActiveRecord::Schema.define(version: 20131023154918) do
     t.integer  "practice_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
-    t.integer  "team_id"
     t.boolean  "available"
+    t.integer  "team_id"
   end
 
   add_index "practice_sessions", ["practice_id"], name: "index_practice_sessions_on_practice_id", using: :btree

@@ -31,6 +31,7 @@ describe 'matches' do
     click_link 'Add a match'
     fill_in 'What day?', :with => '6/27/2014'
     fill_in 'What time?', :with => '07:00 PM'
+    fill_in 'Opponent',  :with => 'Paxton'
     fill_in 'Location',  :with => 'PaxtonBigClub'
     click_button 'Save match'
 
@@ -78,6 +79,7 @@ describe 'matches' do
     # a \n stored at the beginning of the comment field, which the "browser" should ignore.
     # If I manually fill in the comment field with the same value from factory_girl,
     # it works fine.
+    fill_in 'Opponent', :with => @match.opponent
     fill_in 'Location', :with => @match.location
     fill_in 'Comment', :with => @match.comment
     click_button 'Save match'
