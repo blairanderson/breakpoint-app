@@ -3,6 +3,7 @@ class MatchLineupsController < ApplicationController
 
   def edit
     @match = Match.find(params[:id])
+    authorize current_team, :update?
   end
 end
 
