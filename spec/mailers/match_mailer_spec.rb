@@ -19,7 +19,7 @@ describe MatchMailer do
     last_email.should_not be_nil
     email.to.should =~ ['team-email@mail.breakpointapp.com']
     email.subject.should eq "[#{@match.team.name}] New match scheduled"
-    email.encoded.should match /<h1>New match scheduled for/
+    email.encoded.should match /<h3>When:/
   end
 
   it 'sends match updated email', :versioning => true do
@@ -28,7 +28,7 @@ describe MatchMailer do
     last_email.should_not be_nil
     email.to.should =~ ['team-email@mail.breakpointapp.com']
     email.subject.should eq "[#{@match.team.name}] Match updated"
-    email.encoded.should match /<h1>Match scheduled for/
+    email.encoded.should match /<h3>When: /
   end
 end
 

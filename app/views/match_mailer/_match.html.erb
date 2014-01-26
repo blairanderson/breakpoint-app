@@ -1,9 +1,11 @@
+<h2>
+  Please <%= link_to 'set your availability', team_matches_url(@match.team) %>.
+</h2>
+
+<h3>When: <%= l @match.date, :format => :long %></h3>
+
 <%= render :partial => 'shared/match_location', :locals => { :match => @match } %>
 <%= render :partial => 'shared/commentable', :object => @match %>
-
-<p>
-  Please <%= link_to 'set your availability', team_matches_url(@match.team) %>.
-</p>
 
 <p>Thanks!</p>
 
