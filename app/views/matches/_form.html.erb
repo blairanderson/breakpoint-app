@@ -10,6 +10,13 @@
 
   <div class="form-actions">
     <%= f.submit 'Save match', :class => 'btn btn-primary' %>
+    <% if !@match.new_record?  %>
+      <%= link_to 'Delete match',
+                  team_match_path(current_team, @match),
+                  :data => { :confirm => 'Are you sure?' },
+                  :method => :delete,
+                  :class => 'btn btn-danger' %>
+    <% end %>
   </div>
 <% end %>
 

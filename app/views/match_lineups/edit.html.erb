@@ -1,5 +1,8 @@
 <% subtitle 'Set match lineup' %>
 
+<div class="alert alert-block alert-info">
+  When: <%= l @match.date, :format => :long %>
+</div>
 <%= simple_form_for([current_team, @match], :html => { :class => 'form-horizontal' } ) do |f| %>
   <%= f.error_messages %>
   <%= f.simple_fields_for :match_lineups do |match_lineup_form| %>

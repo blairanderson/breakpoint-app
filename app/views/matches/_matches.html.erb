@@ -2,13 +2,15 @@
   <thead>
     <tr>
       <th style="width: 182px;">Can play?</th>
-      <th>Date</th>
-      <th>Opponent</th>
-      <th>Location</th>
       <% if policy(current_team).captain? %>
-        <th>Lineup</th>
-        <th>Notification</th>
+        <th>Match Summary</th>
+        <th style="width: 100px;">Lineup</th>
+        <th style="width: 100px;">Notification</th>
         <th>&nbsp;</th>
+      <% else %>
+        <th>Date</th>
+        <th>Match Summary</th>
+        <th>Captain's Comments</th>
       <% end %>
     </tr>
   </thead>
@@ -42,13 +44,11 @@
             <% end %>
           </div>
         </td>
-        <td>
-          <%= match.team_location %> on
-          <%= l match.date, :format => :long %>
-        </td>
-        <td><%= match.opponent %></td>
-        <td><%= simple_format match.location %></td>
         <% if policy(current_team).captain? %>
+          <td>
+            <p>When: <%= l match.date, :format => :long %></p>
+            <%= render :partial => 'shared/match_location', :locals => { :match => match } %>
+          </td>
           <td>
             <p><%= render :partial => 'match_availabilities', :locals => { :match => match } %></p>
             <p><%= link_to 'Set the lineup', edit_lineup_match_path(match, team_id: current_team.id) %></p>
@@ -56,9 +56,17 @@
           <td>
             <p>
               <% if match.notified_team? %>
-                <%= link_to 'Notify team', notify_match_path(match, team_id: current_team.id), :method => :post, :class => 'btn btn-small disabled' %>
+                <%= link_to 'Re-Notify team', 
+                            notify_match_path(match, team_id: current_team.id), 
+                            :method => :post,
+                            :data => { :confirm => 'Do you want to re-notify team?' }, 
+                            :class => 'btn btn-small disabled' %>
               <% else %>
-                <%= link_to 'Notify team', notify_match_path(match, team_id: current_team.id), :method => :post, :class => 'btn btn-small' %>
+                <%= link_to 'Notify team', 
+                            notify_match_path(match, team_id: current_team.id), 
+                            :method => :post,
+                            :data => { :confirm => 'Do you want to notify team?' }, 
+                            :class => 'btn btn-small' %>
               <% end %>
             </p>
             <p>
@@ -70,14 +78,17 @@
             </p>
           </td>
           <td>
-            <p><%= link_to 'Edit', edit_team_match_path(current_team, match), :class => 'btn btn-small' %></p>
-            <p>
-              <%= link_to 'Delete',
-                team_match_path(current_team, match),
-                :data => { :confirm => 'Are you sure?' },
-                :method => :delete,
-                :class => 'btn btn-small btn-danger' %>
-            </p>
+            <p><%= link_to 'Edit match', edit_team_match_path(current_team, match), :class => 'btn btn-small' %></p>
+          </td>
+        <% else %>
+          <td>
+            <%= l match.date, :format => :long %>
+          </td>
+          <td>
+            <%= render :partial => 'shared/match_location', :locals => { :match => match } %>
+          </td>
+          <td>
+            <p><%= simple_format match.comment %></p>
           </td>
         <% end %>
       </tr>

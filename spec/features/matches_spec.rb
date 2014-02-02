@@ -17,8 +17,7 @@ describe 'matches' do
   it 'shows notification, lineup, and edit match only to captains' do
     page.should have_content 'Notification'
     page.should have_content 'Lineup'
-    page.should have_content 'Edit'
-    page.should have_content 'Delete'
+    page.should have_content 'Edit match'
     @captain.team_members.where(:team => @match.team).first.update_attributes(:role => 'member')
     visit team_matches_path(@match.team)
     page.should_not have_content 'Notification'
@@ -50,7 +49,7 @@ describe 'matches' do
   end
 
   it 'edits a match' do
-    click_link 'Edit'
+    click_link 'Edit match'
     fill_in 'What day?', :with => '6/28/2014'
     fill_in 'What time?', :with => '06:00 PM'
     click_button 'Save match'
@@ -60,8 +59,9 @@ describe 'matches' do
   end
 
   it 'deletes a match' do
-    click_link 'Delete'
+    click_link 'Edit match'
 
+    click_link 'Delete match'    
     page.should have_selector '.alert.alert-success', :text => 'Match deleted'
     page.should_not have_content 'June 27, 2014 at 7:00 pm'
   end
@@ -73,7 +73,7 @@ describe 'matches' do
     page.should have_selector '.disabled', :text => 'Notify team'
 
     # stays disabled if nothing in the match changed
-    click_link 'Edit'
+    click_link 'Edit match'
     # there is some weird thing going on here with capybara and the \n in text areas
     # https://github.com/jnicklas/capybara/issues/677 says it was fixed, but I'm getting
     # a \n stored at the beginning of the comment field, which the "browser" should ignore.
@@ -86,7 +86,7 @@ describe 'matches' do
     page.should have_selector '.disabled', :text => 'Notify team'
 
     # sends updated email after match is updated
-    click_link 'Edit'
+    click_link 'Edit match'
     fill_in 'What day?', :with => '6/25/2014'
     fill_in 'What time?', :with => '06:00 PM'
     click_button 'Save match'
