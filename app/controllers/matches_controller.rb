@@ -14,7 +14,7 @@ class MatchesController < ApplicationController
 
   def edit
     @match = Match.find(params[:id])
-    authorize current_team, :update?
+    authorize current_team
   end
 
   def notify
@@ -56,7 +56,7 @@ class MatchesController < ApplicationController
 
   def create
     @match = current_team.matches.build(permitted_params.match)
-    authorize current_team, :update?
+    authorize current_team
 
     if @match.save
       redirect_to team_matches_url(current_team), :notice => 'Match created'
@@ -67,7 +67,7 @@ class MatchesController < ApplicationController
 
   def update
     @match = Match.find(params[:id])
-    authorize current_team, :update?
+    authorize current_team
 
     if @match.update_attributes(permitted_params.match)
       @match.reset_notified! if @match.previous_changes.present?
@@ -85,7 +85,7 @@ class MatchesController < ApplicationController
 
   def destroy
     @match = Match.find(params[:id])
-    authorize current_team, :update?
+    authorize current_team
     @match.destroy
 
     redirect_to team_matches_url(@match.team), :notice => 'Match deleted'

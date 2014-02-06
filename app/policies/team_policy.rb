@@ -4,11 +4,11 @@ class TeamPolicy < ApplicationPolicy
   end
 
   def update?
-    create?
+    captain?
   end
 
   def destroy?
-    create?
+    captain?
   end
   
   def captain?
