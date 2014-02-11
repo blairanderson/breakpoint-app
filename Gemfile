@@ -26,7 +26,7 @@ end
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'bootstrap-sass',       '2.3.2.2'
+gem 'bootstrap-sass'
 gem 'simple_form'
 gem 'chronic'
 gem 'devise'
