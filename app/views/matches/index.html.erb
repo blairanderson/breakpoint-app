@@ -1,14 +1,14 @@
 <% subtitle 'Matches' %>
 
 <% if @upcoming_matches.empty? && @previous_matches.empty? %>
-  <div class="alert alert-block alert-info">
+  <div class="alert alert-info">
     <h4>No matches for this team yet</h4>
-    <%= link_to 'Add a match', new_team_match_path(current_team) %> to get playing.
+    <%= link_to 'Add a match', new_team_match_path(current_team), :class => "alert-link" %> to get playing.
   </div>
 <% else %>
   <p>
-    <%= link_to('Add a match', new_team_match_path(current_team), :class => 'btn') if policy(current_team).captain? %>
-    <%= link_to 'See who can play when', team_match_availabilities_path(current_team), :class => 'btn' %>
+    <%= link_to('Add a match', new_team_match_path(current_team), :class => 'btn btn-default') if policy(current_team).captain? %>
+    <%= link_to 'See who can play when', team_match_availabilities_path(current_team), :class => 'btn btn-default' %>
   </p>
   <% if @upcoming_matches.present? %>
     <%= render :partial => "matches", :object => @upcoming_matches %>
