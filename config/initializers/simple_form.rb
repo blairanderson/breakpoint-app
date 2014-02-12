@@ -7,6 +7,7 @@ SimpleForm.setup do |config|
     GroupedCollectionSelectInput
     NumericInput
     PasswordInput
+    PriorityInput
     RangeInput
     StringInput
     TextInput
