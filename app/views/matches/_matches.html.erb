@@ -1,7 +1,7 @@
 <table class="table table-bordered table-striped">
   <thead>
     <tr>
-      <th style="width: 155px;">Can play?</th>
+      <th style="width: 182px;">Can play?</th>
       <% if policy(current_team).captain? %>
         <th>Match Summary</th>
         <th style="width: 112px;">Lineup</th>
@@ -19,7 +19,7 @@
       <% match_availability = match.match_availability_for(current_user.id) %>
       <% show_yes_form = match_availability.new_record? ? true : !match_availability.available? %>
       <% show_no_form = match_availability.new_record? ? true : match_availability.available? %>
-      <tr class="<%= match_availability.new_record? ? '' : (match_availability.available? ? 'success' : 'error') %>">
+      <tr class="<%= match_availability.new_record? ? '' : (match_availability.available? ? 'success' : 'danger') %>">
         <td>
           <div class="pull-left">
             <% if show_yes_form %>
