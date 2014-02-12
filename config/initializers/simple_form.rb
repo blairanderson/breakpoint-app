@@ -1,5 +1,29 @@
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
+  inputs = %w[
+    CollectionSelectInput
+    DateTimeInput
+    FileInput
+    GroupedCollectionSelectInput
+    NumericInput
+    PasswordInput
+    RangeInput
+    StringInput
+    TextInput
+  ]
+
+  inputs.each do |input_type|
+    superclass = "SimpleForm::Inputs::#{input_type}".constantize
+
+    new_class = Class.new(superclass) do
+      def input_html_classes
+        super.push('form-control')
+      end
+    end
+
+    Object.const_set(input_type, new_class)
+  end
+
   # Wrappers are used by the form builder to generate a
   # complete input. You can remove any component from the
   # wrapper, change the order or even add your own to the
@@ -178,7 +202,6 @@ SimpleForm.setup do |config|
 
   # You can define the class to use on all labels. Default is nil.
   config.label_class = 'control-label'
-  config.input_class = 'form-control'
 
   # You can define the class to use on all forms. Default is simple_form.
   # config.form_class = :simple_form
