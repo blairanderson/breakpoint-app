@@ -13,14 +13,14 @@ describe 'match_lineups' do
   it 'sets the match lineup' do
     click_button 'I can play'
     click_link   'Set the lineup'
-    select 'captain captain', :from => '#1 Singles'
+    first("option[value='#{@captain.id}']").select_option
     click_button 'Save match lineup'
 
     page.should have_selector '.alert.alert-success', :text => 'Match updated'
     @match.match_lineups.first.match_players.where(:user_id => @captain.id).count.should eq(1)
 
     click_link 'Set the lineup'
-    select '', :from => '#1 Singles'
+    first("option[value='']").select_option
     click_button 'Save match lineup'
 
     page.should have_selector '.alert.alert-success', :text => 'Match updated'
@@ -30,7 +30,7 @@ describe 'match_lineups' do
   it 'sets the match lineup' do
     click_button 'I can play'
     click_link   'Set the lineup'
-    select 'captain captain', :from => '#1 Singles'
+    first("option[value='#{@captain.id}']").select_option
     click_button 'Save match lineup'
     click_link 'Email lineup'
 

@@ -17,7 +17,7 @@ describe 'match_availabilities' do
     visit team_matches_path(@match.team)
     click_button "I can't play"
     click_link 'See who can play when'
-    page.should have_selector '.label-important', :text => 'no'
+    page.should have_selector '.label-danger', :text => 'no'
 
     visit team_matches_path(@match.team)
     click_button 'I can play'

@@ -24,7 +24,7 @@ describe 'devise' do
     click_link 'Sign up'
     click_button 'Sign up'
 
-    page.should have_selector '.alert.alert-block.alert-error'
+    page.should have_selector '.alert.alert-danger'
     page.should have_content "Email can't be blank"
   end
 

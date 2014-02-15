@@ -44,7 +44,7 @@ describe 'matches' do
     fill_in 'What day?', :with => ''
     click_button 'Save match'
 
-    page.should have_selector '.alert.alert-block.alert-error'
+    page.should have_selector '.alert.alert-danger'
     page.should have_content "Date string can't be blank"
   end
 
