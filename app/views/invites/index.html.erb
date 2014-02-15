@@ -1,16 +1,24 @@
 <% subtitle 'Invite team members' %>
 
-<div class="alert alert-block alert-info">
+<div class="alert alert-info">
   <h4>Invite members to your team!</h4>
   Search for members by name or email address, or enter an email address to invite someone new.
 </div>
 
-<%= form_tag team_invites_path(@team), :method => :get do %>
-  <div class="input-append">
-    <input class="span3" name="search" type="text" value="<%= params[:search] %>">
-    <input class="btn" name="commit" type="submit" value="Search" />
+<div class="row">
+  <div class="col-md-5">
+    <%= form_tag team_invites_path(@team), :method => :get do %>
+      <div class="form-group">
+        <div class="input-group">
+          <input class="form-control" name="search" type="text" value="<%= params[:search] %>">
+          <span class="input-group-btn">
+            <input class="btn btn-default" name="commit" type="submit" value="Search" />
+          </span>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>
 
 <% if @users.present? %>
   <h3>Found users</h3>
@@ -33,7 +41,7 @@
             <% else %>
               <%= form_for [@team, @team.invites.build(:user_id => user.id)], :html => { :style => 'margin: 0px;' } do |f| %>
                 <%= f.hidden_field :user_id %>
-                <%= f.submit 'Invite', :class => 'btn btn-small btn-success' %>
+                <%= f.submit 'Invite', :class => 'btn btn-xs btn-success' %>
               <% end %>
             <% end %>
           </td>
@@ -42,22 +50,24 @@
     </tbody>
   </table>
 <% elsif @email.present? %>
-  <div class="alert alert-block alert-warning">
+  <div class="alert alert-warning">
     <h4><%= @email %> has no account yet</h4>
     Add their name and click "Invite" to send them an invititation email.
   </div>
-  <%= simple_form_for([@team, @team.invites.build(:email => @email)], :html => { :class => 'form-horizontal' }) do |f| %>
-    <%= f.error_messages %>
+  <div class="row">
+    <div class="col-md-3">
+      <%= simple_form_for([@team, @team.invites.build(:email => @email)]) do |f| %>
+        <%= f.error_messages %>
 
-    <%= f.input :name, :label => 'Full name' %>
-    <%= f.input :email, :as => :hidden %>
+        <%= f.input :name, :label => 'Full name' %>
+        <%= f.input :email, :as => :hidden %>
 
-    <div class="form-actions">
-      <%= f.submit "Invite #{@email}", :class => 'btn btn-success' %>
+        <%= f.submit "Invite #{@email}", :class => 'btn btn-success' %>
+      <% end %>
     </div>
-  <% end %>
+  </div>
 <% elsif params[:search].present? %>
-  <div class="alert alert-block alert-warning">
+  <div class="alert alert-warning">
     <h4>No results found for <%= params[:search] %></h4>
     Try entering an email address to invite someone new.
   </div>
@@ -80,7 +90,13 @@
         <td><%= invite.user.name %></td>
         <td><%= l invite.created_at %></td>
         <td><%= invite.invited_by.name %></td>
-        <td><%= l invite.accepted_at if invite.accepted? %></td>
+        <td>
+          <% if invite.accepted? %>
+            <%= l invite.accepted_at %>
+          <% else %>
+            <span class="label label-info">Pending</span>
+          <% end %>
+        </td>
       </tr>
       <% end %>
     </tbody>
