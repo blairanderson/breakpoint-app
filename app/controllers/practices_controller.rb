@@ -7,6 +7,7 @@ class PracticesController < ApplicationController
 
   def new
     @practice = current_team.practices.build
+    @practice.date = Time.zone.now.change(hour: 14, min: 30)
   end
 
   def edit

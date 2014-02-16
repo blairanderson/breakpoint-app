@@ -8,8 +8,7 @@ class MatchesController < ApplicationController
 
   def new
     @match = current_team.matches.build
-    Chronic.time_class = Time.zone
-    @match.date = Chronic.parse('this 02:30 PM')
+    @match.date = Time.zone.now.change(hour: 14, min: 30)
   end
 
   def edit

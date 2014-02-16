@@ -19,10 +19,6 @@
 $(function() {
   $("a.disabled").on("click", false);
   $(".datepicker").datetimepicker({ pickTime: false });
-  $(".timepicker").datetimepicker({
-    pickDate: false,
-    minuteStepping: 15,
-    defaultDate: moment().endOf('hour').add(1, "seconds")
-  });
+  $(".timepicker").datetimepicker({ pickDate: false, minuteStepping: 15 });
 });
 
