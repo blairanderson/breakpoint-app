@@ -9,15 +9,15 @@
   </thead>
   <tbody>
     <% current_team.users.order(:first_name).each do |user| %>
-      <tr<%= raw ' class="error"' unless current_team.team_member_for(user.id).active? %>>
+      <tr<%= raw ' class="danger"' unless current_team.team_member_for(user.id).active? %>>
         <td><%= user.name %></td>
         <% matches.each do |match| %>
           <% availablility = match.match_availability_for(user.id) %>
           <td>
             <% if availablility.new_record? %>
-              <span class="label">n/a</span>
+              <span class="label label-default">n/a</span>
             <% else %>
-              <span class="label label-<%= availablility.available? ? 'success' : 'important' %>">
+              <span class="label label-<%= availablility.available? ? 'success' : 'danger' %>">
                 <%= availablility.available? ? 'yes' : 'no' %>
               </span>
             <% end %>

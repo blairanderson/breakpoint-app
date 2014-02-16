@@ -34,7 +34,7 @@ describe 'teams' do
     click_link 'New team'
     click_button 'Save team'
 
-    page.should have_selector '.alert.alert-block.alert-error'
+    page.should have_selector '.alert.alert-danger'
     page.should have_content "Name can't be blank"
   end
 

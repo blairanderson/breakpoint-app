@@ -1,8 +1,8 @@
 <% content_for :team_nav do %>
   <% title current_team.name %>
   <div class="row">
-    <div class="span2">
-      <ul class="nav nav-tabs nav-stacked">
+    <div class="col-md-2">
+      <ul class="nav nav-pills nav-stacked">
         <%= active_tab 'practices' do %>
           <%= link_to 'Practices', team_practices_path(current_team) %>
         <% end %>
@@ -17,7 +17,7 @@
         <% end %>
       </ul>
     </div>
-    <div class="span10">
+    <div class="col-md-10">
       <%= yield %>
     </div>
   </div>

@@ -1,17 +1,12 @@
 /*
- *= require jquery.ui.datepicker
  *= require_self
 */
 
 @import "bootstrap";
-@import "bootstrap-responsive";
-@import "bootstrap-timepicker";
+@import "bootstrap-datetimepicker";
 
 body {
-  padding-top: 40px;
-}
-
-.flash {
-  margin-top: 18px;
+  padding-top: 70px;
+  padding-bottom: 30px;
 }
 

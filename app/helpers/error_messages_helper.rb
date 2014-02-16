@@ -6,9 +6,9 @@ module ErrorMessagesHelper
     options[:message] ||= I18n.t(:"activerecord.errors.message", :default => "Correct the following errors and try again.")
     messages = objects.compact.map { |o| o.errors.full_messages }.flatten
     unless messages.empty?
-      content_tag(:div, :class => "alert alert-block alert-error") do
+      content_tag(:div, :class => "alert alert-danger") do
         list_items = messages.map { |msg| content_tag(:li, msg.html_safe) }
-        content_tag(:h4, options[:header_message].html_safe, :class => 'alert-header') +
+        content_tag(:h4, options[:header_message].html_safe) +
         content_tag(:p, options[:message].html_safe) +
         content_tag(:ul, list_items.join.html_safe)
       end
