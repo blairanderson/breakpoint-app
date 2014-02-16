@@ -12,13 +12,17 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.datepicker
+//= require moment
 //= require bootstrap
-//= require bootstrap-timepicker
+//= require bootstrap-datetimepicker
 
 $(function() {
   $("a.disabled").on("click", false);
-  $(".datepicker").datepicker({ numberOfMonths: 2 });
-  $(".timepicker").timepicker();
+  $(".datepicker").datetimepicker({ pickTime: false });
+  $(".timepicker").datetimepicker({
+    pickDate: false,
+    minuteStepping: 15,
+    defaultDate: moment().endOf('hour').add(1, "seconds")
+  });
 });
 

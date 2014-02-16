@@ -1,10 +1,9 @@
 /*
- *= require jquery.ui.datepicker
  *= require_self
 */
 
 @import "bootstrap";
-@import "bootstrap-timepicker";
+@import "bootstrap-datetimepicker";
 
 body {
   padding-top: 70px;

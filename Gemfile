@@ -25,8 +25,9 @@ group :production do
 end
 
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
+gem 'momentjs-rails'
 gem 'bootstrap-sass'
+gem 'bootstrap3-datetimepicker-rails'
 gem 'simple_form'
 gem 'chronic'
 gem 'devise'
