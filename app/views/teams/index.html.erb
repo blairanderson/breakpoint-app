@@ -5,10 +5,10 @@
     <tbody>
       <% @invitations.each do |invite| %>
         <tr>
-          <td><%= invite.invited_by.name %> invited to the team <%= invite.team.name %>.</td>
           <td>
-            <%= simple_form_for([invite.team, invite]) do |f| %>
-              <%= f.submit 'Accept', :class => 'pull-right btn btn-success' %>
+            <%= invite.invited_by.name %> invited to the team <%= invite.team.name %>.
+            <%= simple_form_for([invite.team, invite], html: { class: "pull-right" }) do |f| %>
+              <%= f.submit 'Accept', :class => 'btn btn-xs btn-success' %>
             <% end %>
           </td>
         </tr>
