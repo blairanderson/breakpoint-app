@@ -57,8 +57,6 @@
   <div class="row">
     <div class="col-md-3">
       <%= simple_form_for([@team, @team.invites.build(:email => @email)]) do |f| %>
-        <%= f.error_messages %>
-
         <%= f.input :name, :label => 'Full name' %>
         <%= f.input :email, :as => :hidden %>
 

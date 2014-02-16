@@ -1,18 +1,18 @@
 <% subtitle "Edit settings for #{@team_member.user.name} (#{@team_member.role})" %>
 
-<div class="row">
-  <div class="col-md-3">
-    <%= simple_form_for([current_team, @team_member]) do |f| %>
-      <%= f.error_messages %>
+<%= simple_form_for([current_team, @team_member]) do |f| %>
+  <%= f.error_messages %>
 
+  <div class="row">
+    <div class="col-md-3">
       <% if policy(current_team).captain?%>
         <%= f.input :role, collection: TeamMember::ROLES, value_method: :to_s, label_method: :humanize, include_blank: false %>
       <% end%>
 
       <%= f.input :status, collection: TeamMember::Statuses, hint: 'change status to "Active, no email" to stop receiving emails', include_blank: false %>
-
-      <%= f.submit 'Save settings', :class => 'btn btn-primary' %>
-    <% end %>
+    </div>
   </div>
-</div>
+
+  <%= f.submit 'Save settings', :class => 'btn btn-primary' %>
+<% end %>
 

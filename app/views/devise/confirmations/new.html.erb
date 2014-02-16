@@ -1,15 +1,14 @@
 <% title 'Resend confirmation instructions' %>
 
-<div class="row">
-  <div class="col-md-3">
-    <%= simple_form_for(resource,
-      :as => resource_name,
-      :url => confirmation_path(resource_name)) do |f| %>
-      <%= f.error_messages %>
+<%= simple_form_for(resource, :as => resource_name, :url => confirmation_path(resource_name)) do |f| %>
+  <%= f.error_messages %>
 
+  <div class="row">
+    <div class="col-md-3">
       <%= f.input :email, :required => true %>
-
-      <%= f.button :submit, 'Resend confirmation instructions', :class => 'btn btn-primary' %>
-    <% end %>
+    </div>
   </div>
-</div>
+
+  <%= f.button :submit, 'Resend confirmation instructions', :class => 'btn btn-primary' %>
+<% end %>
+
