@@ -80,7 +80,7 @@ BreakpointApp::Application.configure do
 
   config.action_mailer.default_url_options = { host: 'www.breakpointapp.com' }
   config.action_mailer.delivery_method     = :postmark
-  config.action_mailer.postmark_settings   = { api_key: ENV['SIMPLE_POSTMARK_API_KEY'], secure: true }
+  config.action_mailer.postmark_settings   = { api_key: Rails.application.secrets.simple_postmark_api_key, secure: true }
 end
 
 ActionMailer::Base.default from: 'admin@breakpointapp.com'

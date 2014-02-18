@@ -13,7 +13,7 @@ class ReceivesBouncedEmail
 
   def notify
     if valid?
-      client = Postmark::ApiClient.new(ENV['SIMPLE_POSTMARK_API_KEY'], secure: true)
+      client = Postmark::ApiClient.new(Rails.application.secrets.simple_postmark_api_key, secure: true)
 
       captain_emails.each do |email|
         client.deliver(from:      "#{ActionMailer::Base.default[:from]}",
