@@ -3,4 +3,5 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-BreakpointApp::Application.load_tasks
+Rails.application.load_tasks
+

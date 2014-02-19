@@ -4,7 +4,7 @@ require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(:default, Rails.env)
+Bundler.require(*Rails.groups)
 
 module BreakpointApp
   class Application < Rails::Application
@@ -21,3 +21,4 @@ module BreakpointApp
     # config.i18n.default_locale = :de
   end
 end
+

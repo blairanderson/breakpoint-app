@@ -1,6 +1,6 @@
 require 'sidekiq/web'
 
-BreakpointApp::Application.routes.draw do
+Rails.application.routes.draw do
   root :to => 'home#index'
 
   devise_for :users, :controllers => { :registrations => 'users/registrations' }
@@ -18,7 +18,6 @@ BreakpointApp::Application.routes.draw do
     resources :team_members, :only => [:index, :edit, :update]
     resources :invites, :only => [:index, :create, :update]
   end
-
 
   resources :practices, :only => [] do
     resources :practice_sessions, :only => [:create, :update]

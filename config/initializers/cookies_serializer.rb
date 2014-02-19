@@ -1,0 +1,6 @@
+# Be sure to restart your server when you modify this file.
+
+# Eventually switch to...
+# Rails.application.config.action_dispatch.cookies_serializer = :json
+Rails.application.config.action_dispatch.cookies_serializer = :hybrid
+
