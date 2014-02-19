@@ -1,13 +1,13 @@
 module ApplicationHelper
   def flash_name_for_bootstrap(name)
     case name
-    when :alert
+    when "alert"
       { :class => 'warning', :icon => 'warning-sign' }
-    when :notice
+    when "notice"
       { :class => 'success', :icon => 'ok-sign' }
-    when :info
+    when "info"
       { :class => 'info', :icon => 'info-sign' }
-    when :error
+    when "error"
       { :class => 'error', :icon => 'exclamation-sign' }
     else
       { :class => name, :icon => 'info-sign' }
