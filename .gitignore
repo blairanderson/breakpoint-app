@@ -18,3 +18,5 @@ config/database.yml
 
 latest.dump
 
+.env
+
