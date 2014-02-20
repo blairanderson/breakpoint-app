@@ -22,23 +22,17 @@ class Match < ActiveRecord::Base
   def self.notify_scheduled(from, reply_to, match_id)
     match = Match.find(match_id)
 
-    messages = match.team.team_emails.map do |to|
-      MatchMailer.match_scheduled(to, from, reply_to, match)
+    match.team.team_emails.each do |to|
+      MatchMailer.match_scheduled(to, from, reply_to, match).deliver
     end
-
-    client = Postmark::ApiClient.new(Rails.application.secrets.simple_postmark_api_key, secure: true)
-    client.deliver_messages(messages)
   end
 
   def self.notify_updated(from, reply_to, match_id, recent_changes)
     match = Match.find(match_id)
 
-    messages = match.team.team_emails.map do |to|
-      MatchMailer.match_updated(to, from, reply_to, match, recent_changes)
+    match.team.team_emails.each do |to|
+      MatchMailer.match_updated(to, from, reply_to, match, recent_changes).deliver
     end
-
-    client = Postmark::ApiClient.new(Rails.application.secrets.simple_postmark_api_key, secure: true)
-    client.deliver_messages(messages)
   end
 
   def team_location
