@@ -39,5 +39,5 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :letter_opener
 end
 
-ActionMailer::Base.default from: 'dave@kroondyk.com'
+ActionMailer::Base.default from: 'admin@breakpointapp.com'
 

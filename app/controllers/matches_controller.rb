@@ -22,9 +22,9 @@ class MatchesController < ApplicationController
 
     if !@match.notified_team?
       if @match.created?
-        MatchMailer.delay.match_scheduled(current_team.id, @match.id)
+        Match.delay.notify_scheduled(current_user.name, current_user.email, @match.id)
       else
-        MatchMailer.delay.match_updated(current_team.id, @match.id, @match.recent_changes)
+        Match.delay.notify_updated(current_user.name, current_user.email, @match.id, @match.recent_changes)
       end
 
       @match.notified!

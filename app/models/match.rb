@@ -19,6 +19,28 @@ class Match < ActiveRecord::Base
   acts_as_tenant :team
   has_paper_trail :ignore => [:notified_state, :notified_lineup_state, :updated_at]
 
+  def self.notify_scheduled(from, reply_to, match_id)
+    match = Match.find(match_id)
+
+    messages = match.team.team_emails.map do |to|
+      MatchMailer.match_scheduled(to, from, reply_to, match)
+    end
+
+    client = Postmark::ApiClient.new(Rails.application.secrets.simple_postmark_api_key, secure: true)
+    client.deliver_messages(messages)
+  end
+
+  def self.notify_updated(from, reply_to, match_id, recent_changes)
+    match = Match.find(match_id)
+
+    messages = match.team.team_emails.map do |to|
+      MatchMailer.match_updated(to, from, reply_to, match, recent_changes)
+    end
+
+    client = Postmark::ApiClient.new(Rails.application.secrets.simple_postmark_api_key, secure: true)
+    client.deliver_messages(messages)
+  end
+
   def team_location
     home_team? ? 'Home' : 'Away'
   end
