@@ -86,5 +86,5 @@ Rails.application.configure do
   config.action_mailer.postmark_settings   = { api_key: Rails.application.secrets.simple_postmark_api_key, secure: true }
 end
 
-ActionMailer::Base.default from: 'admin@breakpointapp.com'
+ActionMailer::Base.default from: 'notifications@breakpointapp.com'
 
