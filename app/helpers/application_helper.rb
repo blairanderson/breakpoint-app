@@ -1,17 +1,14 @@
 module ApplicationHelper
   def flash_name_for_bootstrap(name)
-    case name
-    when "alert"
-      { :class => 'warning', :icon => 'warning-sign' }
-    when "notice"
-      { :class => 'success', :icon => 'ok-sign' }
-    when "info"
-      { :class => 'info', :icon => 'info-sign' }
-    when "error"
-      { :class => 'error', :icon => 'exclamation-sign' }
-    else
-      { :class => name, :icon => 'info-sign' }
-    end
+    name = name.to_s
+    mapping = {
+      "alert"  => { :class => 'warning', :icon => 'warning-sign' },
+      "notice" => { :class => 'success', :icon => 'ok-sign' },
+      "info"   => { :class => 'info',    :icon => 'info-sign' },
+      "error"  => { :class => 'error',   :icon => 'exclamation-sign' }
+    }
+
+    mapping.fetch(name, { :class => name, :icon => 'info-sign' })
   end
 
   def active_tab(kontroller_name, &block)
