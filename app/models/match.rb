@@ -22,9 +22,13 @@ class Match < ActiveRecord::Base
   def self.notify(name, options)
     match = find(options.fetch(:match_id))
 
-    match.team.team_emails.each do |to|
+    match.team_emails(options.fetch(:reply_to)).each do |to|
       MatchMailer.send("match_#{name}", match, to, options).deliver
     end
+  end
+
+  def team_emails(from = nil)
+    team.team_emails.reject { |e| from == e }
   end
 
   def team_location

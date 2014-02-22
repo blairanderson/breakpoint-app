@@ -3,8 +3,10 @@ require 'spec_helper'
 describe 'practices' do
   before :each do
     login_captain
-    ActsAsTenant.current_tenant = create(:team)
-    ActsAsTenant.current_tenant.team_members.create(:user => @captain, :role => 'captain')
+    team = create(:team)
+    ActsAsTenant.current_tenant = team
+    team.team_members.create(:user => @captain, :role => 'captain')
+    team.team_members.create(:user => create(:user2), :role => 'member')
     @practice = create(:practice)
     ActsAsTenant.current_tenant = nil
     visit team_practices_path(@practice.team)

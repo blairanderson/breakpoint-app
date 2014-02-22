@@ -13,9 +13,13 @@ class Practice < ActiveRecord::Base
   def self.notify(name, options)
     practice = find(options.fetch(:practice_id))
 
-    practice.team.team_emails.each do |to|
+    practice.team_emails(options.fetch(:reply_to)).each do |to|
       PracticeMailer.send("practice_#{name}", practice, to, options).deliver
     end
+  end
+
+  def team_emails(from = nil)
+    team.team_emails.reject { |e| from == e }
   end
 
   def practice_session_for(user_id)
