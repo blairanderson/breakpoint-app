@@ -10,6 +10,14 @@ class Practice < ActiveRecord::Base
   acts_as_tenant :team
   has_paper_trail :ignore => [:notified_state, :updated_at]
 
+  def self.notify(name, options)
+    practice = find(options.fetch(:practice_id))
+
+    practice.team.team_emails.each do |to|
+      PracticeMailer.send("practice_#{name}", practice, to, options).deliver
+    end
+  end
+
   def practice_session_for(user_id)
     practice_sessions.where(user_id: user_id).first || practice_sessions.build(user_id: user_id)
   end

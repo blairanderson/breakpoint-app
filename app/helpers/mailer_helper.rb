@@ -1,4 +1,10 @@
 module MailerHelper
+  def formatted_from(from_name, email = ActionMailer::Base.default[:from])
+    from = Mail::Address.new(email)
+    from.display_name = from_name
+    from.format
+  end
+
   def formatted_changes(changes)
     content_tag :ul do
       changes.map do |attribute, values|

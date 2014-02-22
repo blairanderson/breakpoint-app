@@ -1,20 +1,24 @@
 class PracticeMailer < ActionMailer::Base
+  include MailerHelper
+
   layout 'mailer'
   helper MailerHelper
 
-  def practice_scheduled(team_id, practice_id)
-    ActsAsTenant.with_tenant(Team.find(team_id)) do
-      @practice = Practice.find(practice_id)
-      mail :to => @practice.team.email_address, :subject => "[#{@practice.team.name}] New practice scheduled"
-    end
+  def practice_scheduled(practice, to, options)
+    @practice = practice
+    mail :to    => to,
+      :from     => formatted_from(options.fetch(:from)),
+      :reply_to => options.fetch(:reply_to),
+      :subject  => "[#{@practice.team.name}] New practice scheduled"
   end
 
-  def practice_updated(team_id, practice_id, recent_changes)
-    ActsAsTenant.with_tenant(Team.find(team_id)) do
-      @practice = Practice.find(practice_id)
-      @recent_changes = recent_changes
-      mail :to => @practice.team.email_address, :subject => "[#{@practice.team.name}] Practice updated"
-    end
+  def practice_updated(practice, to, options)
+    @practice = practice
+    @recent_changes = options.fetch(:recent_changes)
+    mail :to    => to,
+      :from     => formatted_from(options.fetch(:from)),
+      :reply_to => options.fetch(:reply_to),
+      :subject  => "[#{@practice.team.name}] Practice updated"
   end
 end
 
