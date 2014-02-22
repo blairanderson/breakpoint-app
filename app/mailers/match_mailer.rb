@@ -4,21 +4,37 @@ class MatchMailer < ActionMailer::Base
   layout 'mailer'
   helper MailerHelper
 
-  def match_scheduled(match, to, options)
+  def created(match, to, options)
     @match = match
     mail :to    => to,
       :from     => formatted_from(options.fetch(:from)),
       :reply_to => options.fetch(:reply_to),
-      :subject  => "[#{@match.team.name}] New match scheduled"
+      :subject  => options.fetch(:subject)
   end
 
-  def match_updated(match, to, options)
+  def updated(match, to, options)
     @match = match
     @recent_changes = options.fetch(:recent_changes)
     mail :to    => to,
       :from     => formatted_from(options.fetch(:from)),
       :reply_to => options.fetch(:reply_to),
-      :subject  => "[#{@match.team.name}] Match updated"
+      :subject  => options.fetch(:subject)
+  end
+
+  def match_scheduled(match, to, options)
+    created(match, to, options.merge(subject: "[#{match.team.name}] New match scheduled"))
+  end
+
+  def match_updated(match, to, options)
+    updated(match, to, options.merge(subject: "[#{match.team.name}] Match updated"))
+  end
+
+  def match_lineup_set(match, to, options)
+    created(match, to, options.merge(subject: "[#{match.team.name}] Lineup set for match on #{l match.date}"))
+  end
+
+  def match_lineup_updated(match, to, options)
+    updated(match, to, options.merge(subject: "[#{match.team.name}] Lineup updated for match on #{l match.date}"))
   end
 end
 

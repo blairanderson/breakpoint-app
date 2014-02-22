@@ -47,10 +47,17 @@ class MatchesController < ApplicationController
 
     if !@match.notified_team_lineup?
       if @match.lineup_created?
-        MatchLineupMailer.delay.lineup_set(current_team.id, @match.id)
+        Match.delay.notify(:lineup_set,
+                           from:     current_user.name,
+                           reply_to: current_user.email,
+                           match_id: @match.id)
       else
         # TODO gotta get the changes of the lineup
-        MatchLineupMailer.delay.lineup_updated(current_team.id, @match.id, [])
+        Match.delay.notify(:lineup_updated,
+                           from:           current_user.name,
+                           reply_to:       current_user.email,
+                           match_id:       @match.id,
+                           recent_changes: [])
       end
 
       @match.notified_lineup!
