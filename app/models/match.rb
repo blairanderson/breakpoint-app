@@ -19,19 +19,11 @@ class Match < ActiveRecord::Base
   acts_as_tenant :team
   has_paper_trail :ignore => [:notified_state, :notified_lineup_state, :updated_at]
 
-  def self.notify_scheduled(from, reply_to, match_id)
-    match = Match.find(match_id)
+  def self.notify(name, options)
+    match = find(options.fetch(:match_id))
 
     match.team.team_emails.each do |to|
-      MatchMailer.match_scheduled(to, from, reply_to, match).deliver
-    end
-  end
-
-  def self.notify_updated(from, reply_to, match_id, recent_changes)
-    match = Match.find(match_id)
-
-    match.team.team_emails.each do |to|
-      MatchMailer.match_updated(to, from, reply_to, match, recent_changes).deliver
+      MatchMailer.send("match_#{name}", match, to, options).deliver
     end
   end
 
