@@ -40,9 +40,13 @@ class InvitesController < ApplicationController
     end
 
     if is_new_user
-      InviteMailer.delay.new_user_invitation(@team.id, @invite.id)
+      InviteMailer.delay.new_user_invitation(from:      current_user.name,
+                                             reply_to:  current_user.email,
+                                             invite_id: @invite.id)
     else
-      InviteMailer.delay.invitation(@team.id, @invite.id)
+      InviteMailer.delay.invitation(from:      current_user.name,
+                                    reply_to:  current_user.email,
+                                    invite_id: @invite.id)
     end
 
     redirect_to team_invites_url(@team), :notice => 'Invite sent'

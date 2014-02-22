@@ -15,14 +15,14 @@ describe MatchMailer do
 
   it 'sends match scheduled email' do
     options = {
-      from: @user.name,
+      from:     @user.name,
       reply_to: @user.email
     }
 
     MatchMailer.match_scheduled(@match, @user2.email, options).deliver
 
     last_email.should_not be_nil
-    last_email.to.should =~ ['dave.kroondyk@example.com']
+    last_email.to.should eq ['dave.kroondyk@example.com']
     last_email[:from].formatted.should eq ['John Doe <notifications@breakpointapp.com>']
     last_email.subject.should eq "[#{@match.team.name}] New match scheduled"
     last_email.encoded.should match /<h3>When:/
@@ -30,8 +30,8 @@ describe MatchMailer do
 
   it 'sends match updated email', :versioning => true do
     options = {
-      from: @user.name,
-      reply_to: @user.email,
+      from:           @user.name,
+      reply_to:       @user.email,
       recent_changes: []
     }
 
