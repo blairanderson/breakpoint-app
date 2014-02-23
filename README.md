@@ -30,7 +30,7 @@ Email
 
 ## Contributing
 
-[![Build Status](https://travis-ci.org/davekaro/breakpoint-app.png)](https://travis-ci.org/davekaro/breakpoint-app)
+[![Build Status](https://travis-ci.org/davekaro/breakpoint-app.png?branch=master)](https://travis-ci.org/davekaro/breakpoint-app)
 [![Code Climate](https://codeclimate.com/github/davekaro/breakpoint-app.png)](https://codeclimate.com/github/davekaro/breakpoint-app)
 
 1. Fork it
