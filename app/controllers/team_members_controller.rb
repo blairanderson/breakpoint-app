@@ -17,7 +17,7 @@ class TeamMembersController < ApplicationController
   end
 
   def index
-    @team_members = current_team.team_members
+    @team_members = current_team.team_members.group(:state)
   end
 
   def edit

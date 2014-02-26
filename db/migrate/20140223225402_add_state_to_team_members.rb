@@ -1,15 +1,15 @@
 class AddStateToTeamMembers < ActiveRecord::Migration
   def up
-    add_column :team_members, :state, :string, default: "not-invited", null: false
+    add_column :team_members, :state, :string, default: "new", null: false
     TeamMember.all.each do |tm|
       invite = Invite.where(user_id: tm.user_id).first
-      state = "not_invited"
+      state = "new"
       if tm.read_attribute(:active)
         if invite.present?
           if invite.accepted?
             state = "active"
           else
-            state = "invited"
+            state = "pending"
           end
         else
           state = "active"
