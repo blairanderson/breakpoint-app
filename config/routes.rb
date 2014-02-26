@@ -15,7 +15,12 @@ Rails.application.routes.draw do
     resources :matches, :except => [:show]
     resources :match_availabilities, :only => [:index]
     resources :results, :only => [:index]
-    resources :team_members, :only => [:index, :edit, :update]
+    resources :team_members, :only => [:index, :edit, :update] do
+      collection do
+        get 'new', as: :new
+        post 'create', as: :create
+      end
+    end
     resources :invites, :only => [:index, :create, :update]
   end
 

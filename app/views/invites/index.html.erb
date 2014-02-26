@@ -1,25 +1,5 @@
 <% subtitle 'Invite team members' %>
 
-<div class="alert alert-info">
-  <h4>Invite members to your team!</h4>
-  Search for members by name or email address, or enter an email address to invite someone new.
-</div>
-
-<div class="row">
-  <div class="col-md-5">
-    <%= form_tag team_invites_path(@team), :method => :get do %>
-      <div class="form-group">
-        <div class="input-group">
-          <input class="form-control" name="search" type="text" value="<%= params[:search] %>">
-          <span class="input-group-btn">
-            <input class="btn btn-default" name="commit" type="submit" value="Search" />
-          </span>
-        </div>
-      </div>
-    <% end %>
-  </div>
-</div>
-
 <% if @users.present? %>
   <h3>Found users</h3>
   <table class="table table-bordered table-striped">

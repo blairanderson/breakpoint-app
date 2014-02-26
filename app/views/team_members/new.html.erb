@@ -1,0 +1,69 @@
+<h3>Add players</h3>
+<% if @add_team_members.new_users.size == 0 && @add_team_members.existing_users.size == 0 %>
+  <%= form_tag new_team_team_members_path(current_team), :method => :get do %>
+    <div class="form-group">
+      <label>Enter one or more email addresses to add players to your team.</label>
+      <div class="row">
+        <div class="col-md-8">
+          <textarea class="form-control" name="emails"></textarea>
+          <p class="help-block">Use comma-separated, space-separated, or one email address per line.</p>
+          <p class="help-block">You can review the new player(s) and set their names on the next step.</p>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-default">
+        Next <span class="glyphicon glyphicon-chevron-right"></span>
+      </button>
+    </div>
+  <% end %>
+<% else %>
+  <%= simple_form_for(@add_team_members, url: create_team_team_members_path) do |f| %>
+    <%= f.error_messages %>
+    <% if @add_team_members.new_users.size > 0 %>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td class="info" colspan="3">
+              Enter a first or last name (or both) to add these players to your team.
+            </td>
+          </tr>
+          <%= f.simple_fields_for :new_users do |user_form| %>
+            <tr>
+              <td><%= user_form.input :first_name, label: false %></td>
+              <td><%= user_form.input :last_name, label: false %></td>
+              <td><%= user_form.input :email, label: false %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+
+    <% if @add_team_members.existing_users.size > 0 %>
+      <div class="alert alert-info">
+        These users already have accounts with Breakpoint App and will be added to your team.
+      </div>
+
+      <ul class="list-group">
+        <%= f.simple_fields_for :existing_users do |user_form| %>
+          <li class="list-group-item">
+            <%= "#{user_form.object.first_name} #{user_form.object.last_name}" %>
+            <%= mail_to user_form.object.email %>
+            <%= user_form.hidden_field :email %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <%= f.submit "Add players to team", class: "btn btn-primary" %>
+  <% end %>
+<% end %>
+
