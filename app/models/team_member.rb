@@ -19,12 +19,17 @@ class TeamMember < ActiveRecord::Base
     !inactive?
   end
 
-  # TODO this is really "send welcome email" - need to update with team member info, not using an invite object
-  def invite!(current_user_id)
-    invite = Invite.create!(team_id: team_id, user_id: user_id, invited_by_id: current_user_id)
-    InviteMailer.delay.invitation(from:      invite.invited_by.name,
-                                  reply_to:  invite.invited_by.email,
-                                  invite_id: invite.id)
+  def send_welcome!(from_user_id)
+    from_user = User.find(from_user_id)
+    if user.never_signed_in?
+      WelcomeMailer.delay.new_user_welcome(from:           from_user.name,
+                                           reply_to:       from_user.email,
+                                           team_member_id: id)
+    else
+      WelcomeMailer.delay.welcome(from:           from_user.name,
+                                  reply_to:       from_user.email,
+                                  team_member_id: id)
+    end
     update!(state: "active")
   end
 

@@ -38,6 +38,10 @@ class User < ActiveRecord::Base
     write_attribute(:last_name, email_name.split(' ')[1..-1].try(:join, ' '))
   end
 
+  def never_signed_in?
+    sign_in_count == 0
+  end
+
   def accepted_teams
     excluded_team_ids = invitations.not_accepted.pluck(:team_id)
     teams.newest.reject { |t| excluded_team_ids.include?(t.id) }
