@@ -5,23 +5,18 @@
       <th>Email</th>
       <th>Phone Number</th>
       <th>Status</th>
-      <th>Receive Email</th>
       <th>Role</th>
       <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
-    <% team_members_index.sort_by { |tm| tm.user.first_name }.each do |team_member| %>
+    <% team_members_index.sort_by { |tm| tm.user.name }.each do |team_member| %>
     <tr class="<%= "danger" unless team_member.active? %>">
       <td><%= team_member.user.name %></td>
       <td><%= mail_to team_member.user.email %></td>
       <td><%= team_member.user.phone_number %></td>
+      <%# TODO add a "resend welcome email" if state is active %>
       <td><%= team_member.state %></td>
-      <td class="text-center">
-        <% if team_member.receive_email %>
-          <span class="glyphicon glyphicon-ok"></span>
-        <% end %>
-      </td>
       <td><%= team_member.role.humanize %></td>
       <td>
         <% if policy(team_member).update? %>

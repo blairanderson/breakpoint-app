@@ -55,33 +55,6 @@ class Team < ActiveRecord::Base
   def not_accepted_team_members
     team_members.includes(:user).select { |u| not_accepted_user_ids.include?(u.user_id) }
   end
-
-  def users_from_emails(emails)
-    # remove existing team_members
-    emails = emails - users.pluck(:email)
-    existing_users = User.where(email: emails)
-    new_emails = emails - existing_users.collect(&:email)
-    new_users = new_emails.map do |email|
-      name = name_from_email(email)
-      User.new(first_name: name[:first_name],
-               last_name:  name[:last_name],
-               email:      email,
-               password:   SecureRandom.uuid)
-    end
-    {
-      new_users: new_users,
-      existing_users: existing_users
-    }
-  end
-
-  def name_from_email(email)
-    email_name = email.split('@').first
-    email_name = email_name.scan(/[a-zA-Z]+/).map(&:capitalize).join(' ')
-    {
-      first_name: email_name.split(' ').first,
-      last_name: email_name.split(' ')[1..-1].join(' ')
-    }
-  end
 end
 
 # TODO

@@ -18,15 +18,8 @@ class User < ActiveRecord::Base
   has_many :match_availabilities, :dependent => :restrict_with_exception
   has_many :matches,              :through   => :match_availabilities
 
-  validate :first_name_or_last_name_present
   validates_inclusion_of :time_zone, in: ActiveSupport::TimeZone.all.map(&:name)
 
-  def first_name_or_last_name_present
-    if first_name.blank? && last_name.blank?
-      errors.add(:base, 'Please fill in first name or last name, preferably both.')
-    end
-  end
-  
   def name
     if first_name.present? && last_name.present?
       "#{first_name} #{last_name}"
@@ -34,7 +27,15 @@ class User < ActiveRecord::Base
       "#{last_name}"
     elsif first_name.present? && last_name.blank?
       "#{first_name}"
+    else
+      "#{email}"
     end
+  end
+
+  def name=(value)
+    email_name = value.scan(/[a-zA-Z]+/).map(&:capitalize).join(' ')
+    write_attribute(:first_name, email_name.split(' ').first)
+    write_attribute(:last_name, email_name.split(' ')[1..-1].try(:join, ' '))
   end
 
   def accepted_teams

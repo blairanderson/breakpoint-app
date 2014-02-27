@@ -27,6 +27,13 @@ describe User do
     user.name.should eq 'dkrow'
   end
 
+  it 'sets first and last name from name' do
+    user = build(:user)
+    user.name = 'dk.row'
+    user.first_name.should eq 'Dk'
+    user.last_name.should eq 'Row'
+  end
+
   it 'resets password token' do
     user = create(:user)
     token = user.reset_password_token!

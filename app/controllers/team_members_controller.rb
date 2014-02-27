@@ -3,8 +3,7 @@ class TeamMembersController < ApplicationController
 
   def new
     emails = SimpleTextAreaParser.parse(params[:emails] || "")
-    users = current_team.users_from_emails(emails)
-    @add_team_members = AddTeamMembers.new(new_users: users[:new_users], existing_users: users[:existing_users])
+    @add_team_members = AddTeamMembers.users_from_emails(current_team, emails)
   end
 
   def create
@@ -17,7 +16,7 @@ class TeamMembersController < ApplicationController
   end
 
   def index
-    @team_members = current_team.team_members.group(:state)
+    @team_members = current_team.team_members
   end
 
   def edit
@@ -30,8 +29,8 @@ class TeamMembersController < ApplicationController
     authorize @team_member
 
     if params[:commit] == 'Activate team membership'
-      @team_member.activate!(current_user.id)
-      redirect_to edit_team_team_member_url(@team_member.team, @team_member), :notice => 'Team member is now active'
+      @team_member.activate!
+      redirect_to team_team_members_url(@team_member.team), :notice => 'Team member is now active'
     elsif params[:commit] == 'Deactivate team membership'
       @team_member.deactivate!
       redirect_to team_team_members_url(@team_member.team), :notice => 'Team member is now inactive'

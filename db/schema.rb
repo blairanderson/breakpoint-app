@@ -118,13 +118,12 @@ ActiveRecord::Schema.define(version: 20140223225402) do
   add_index "practices", ["team_id"], name: "index_practices_on_team_id", using: :btree
 
   create_table "team_members", force: true do |t|
-    t.integer  "team_id",       default: 0,        null: false
-    t.integer  "user_id",       default: 0,        null: false
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.string   "role",          default: "member"
-    t.boolean  "receive_email", default: false,    null: false
-    t.string   "state",         default: "new",    null: false
+    t.integer  "team_id",    default: 0,        null: false
+    t.integer  "user_id",    default: 0,        null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+    t.string   "role",       default: "member"
+    t.string   "state",      default: "new",    null: false
   end
 
   add_index "team_members", ["team_id"], name: "index_players_on_team_id", using: :btree

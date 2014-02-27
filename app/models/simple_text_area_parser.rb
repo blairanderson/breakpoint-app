@@ -13,8 +13,9 @@ class SimpleTextAreaParser
 
   def parse
     extract_lines_and_spaces
-    remove_commas
     to_a
+    remove_commas
+    remove_quotes
     input.uniq
   end
 
@@ -22,12 +23,16 @@ class SimpleTextAreaParser
     @input = input.squish
   end
 
-  def remove_commas
-    @input = input.gsub(/,\s+/, " ").gsub(/,$/, "")
-  end
-
   def to_a
     @input = input.split(" ")
+  end
+
+  def remove_commas
+    @input = input.map { |email| email.gsub(/,/, "") }
+  end
+
+  def remove_quotes
+    @input = input.map { |email| email.gsub(/"/, "") }
   end
 end
 

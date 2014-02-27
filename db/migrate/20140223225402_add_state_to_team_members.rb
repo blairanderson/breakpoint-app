@@ -2,28 +2,17 @@ class AddStateToTeamMembers < ActiveRecord::Migration
   def up
     add_column :team_members, :state, :string, default: "new", null: false
     TeamMember.all.each do |tm|
-      invite = Invite.where(user_id: tm.user_id).first
-      state = "new"
-      if tm.read_attribute(:active)
-        if invite.present?
-          if invite.accepted?
-            state = "active"
-          else
-            state = "pending"
-          end
-        else
-          state = "active"
-        end
-      else
-        state = "inactive"
-      end
+      invite = Invite.where(user_id: tm.user_id, team_id: tm.team_id).first
+      state = tm.read_attribute(:active) ? "active" : "inactive"
+      state = "new" if invite.nil? && tm.role == 'member' #captains don't have an invite usually
       tm.update_attributes(state: state)
     end
     remove_column :team_members, :active
-    change_column_default :team_members, :receive_email, false
+    remove_column :team_members, :receive_email
   end
 
   def down
+    add_column :team_members, :receive_email, :boolean, :default => false, :null => false
     add_column :team_members, :active, :boolean, :default => true, :null => false
     TeamMember.all.each do |tm|
       tm.update_attributes(active: tm.state != "inactive")
