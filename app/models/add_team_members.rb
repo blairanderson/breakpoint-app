@@ -11,23 +11,12 @@ class AddTeamMembers
     existing_users = User.where(email: emails)
     new_emails = emails - existing_users.collect(&:email)
     new_users = new_emails.map do |email|
-      name = name_from_email(email)
-      User.new(first_name: name[:first_name],
-               last_name:  name[:last_name],
-               email:      email,
-               password:   SecureRandom.uuid)
+      User.new(name:     email.split('@').first,
+               email:    email,
+               password: SecureRandom.uuid)
     end
 
     new(users: new_users + existing_users)
-  end
-
-  def self.name_from_email(email)
-    email_name = email.split('@').first
-    email_name = email_name.scan(/[a-zA-Z]+/).map(&:capitalize).join(' ')
-    {
-      first_name: email_name.split(' ').first,
-      last_name: email_name.split(' ')[1..-1].try(:join, ' ')
-    }
   end
 
   def users_attributes=(attributes)
@@ -54,7 +43,6 @@ class AddTeamMembers
     if valid?
       @new_users.each do |user|
         user.password = SecureRandom.uuid
-        # TODO define a valid method to validate each user?
         user.save
       end
       team.users.push(@new_users + @existing_users)
