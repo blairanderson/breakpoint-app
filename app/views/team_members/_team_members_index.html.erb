@@ -5,7 +5,7 @@
       <th>Name</th>
       <th>Email</th>
       <th>Phone Number</th>
-      <th>Status</th>
+      <th>Notify</th>
       <th>Role</th>
       <th>&nbsp;</th>
     </tr>
@@ -17,7 +17,13 @@
       <td><%= mail_to team_member.user.email %></td>
       <td><%= team_member.user.phone_number %></td>
       <%# TODO add a "resend welcome email" if state is active %>
-      <td><%= team_member.state %></td>
+      <td>
+        <%= link_to 'Send welcome email',
+          send_welcome_email_team_team_member_path(current_team, team_member),
+          :method => :post,
+          :data   => { :confirm => "Send welcome email to #{team_member.user.email} now?" },
+          :class  => 'btn btn-xs btn-info' %>
+      </td>
       <td><%= team_member.role.humanize %></td>
       <td>
         <% if policy(team_member).update? %>

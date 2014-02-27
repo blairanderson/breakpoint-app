@@ -17,6 +17,7 @@ class TeamMembersController < ApplicationController
 
   def index
     @team_members = current_team.team_members
+    @team_members_by_state = current_team.team_members.group_by(&:state)
   end
 
   def edit
@@ -28,7 +29,7 @@ class TeamMembersController < ApplicationController
     @team_member = TeamMember.find(params[:id])
     authorize @team_member
 
-    if params[:commit] == 'Activate team membership'
+    if params[:commit] == 'Reactivate team membership'
       @team_member.activate!
       redirect_to team_team_members_url(@team_member.team), :notice => 'Team member is now active'
     elsif params[:commit] == 'Deactivate team membership'

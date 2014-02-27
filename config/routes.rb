@@ -20,6 +20,12 @@ Rails.application.routes.draw do
         get 'new', as: :new
         post 'create', as: :create
       end
+      member do
+        post 'send_welcome_email'
+      end
+    end
+    member do
+      post 'send_welcome_email'
     end
     resources :invites, :only => [:index, :create, :update]
   end

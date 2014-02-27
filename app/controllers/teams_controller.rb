@@ -4,6 +4,12 @@ class TeamsController < ApplicationController
     @invitations = current_user.invitations.not_accepted
   end
 
+  def send_welcome_email
+    @team = current_user.teams.find(params[:id])
+    @team.team_members.new_members.each { |member| member.send_welcome!(current_user.id) }
+    redirect_to team_team_members_url(@team), notice => 'Welcome email sent'
+  end
+
   def new
     @team = Team.new
   end

@@ -5,7 +5,19 @@ class TeamMember < ActiveRecord::Base
   belongs_to :user
   belongs_to :team
 
-  delegate :new?, :accepted?, :inactive?, :to => :current_state
+  delegate :new?, :active?, :inactive?, :to => :current_state
+
+  def self.new_members
+    where(state: "new")
+  end
+
+  def self.active
+    where(state: "active")
+  end
+
+  def self.inactive
+    where(state: "inactive")
+  end
 
   def captain?
     role == 'captain' || role == 'co-captain'
