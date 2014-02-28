@@ -42,11 +42,6 @@ class User < ActiveRecord::Base
     sign_in_count == 0
   end
 
-  def accepted_teams
-    excluded_team_ids = invitations.not_accepted.pluck(:team_id)
-    teams.newest.reject { |t| excluded_team_ids.include?(t.id) }
-  end
-
   # copied from https://github.com/plataformatec/devise/blob/354e5022bf2aa482aba7c13bddeb12535b9858ad/lib/devise/models/recoverable.rb#L47-L56
   # because no way to reset the reset_password_token without sending email since
   # they are stored in the DB encrypted

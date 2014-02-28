@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
 
   def current_team
     if params[:team_id]
-      current_user.teams.find(params[:team_id])
+      policy_scope(Team).find(params[:team_id])
     end
   end
   helper_method :current_team

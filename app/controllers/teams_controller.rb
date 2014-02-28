@@ -1,7 +1,6 @@
 class TeamsController < ApplicationController
   def index
-    @teams = current_user.accepted_teams
-    @invitations = current_user.invitations.not_accepted
+    @teams = policy_scope(Team)
   end
 
   def send_welcome_email

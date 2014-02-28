@@ -33,11 +33,11 @@ class Team < ActiveRecord::Base
   end
 
   def active_users
-    users.where("team_members.state != 'inactive'")
+    users.where(team_members: { state: 'active' })
   end
 
   def team_emails
-    active_users.where('team_members.receive_email = true').pluck(:email)
+    active_users.pluck(:email)
   end
 
   def not_accepted_user_ids
