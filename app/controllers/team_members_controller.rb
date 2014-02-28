@@ -1,6 +1,14 @@
 class TeamMembersController < ApplicationController
   layout 'team'
 
+  def send_welcome_email
+    @team_member = TeamMember.find(params[:id])
+    authorize @team_member
+
+    @team_member.send_welcome!(current_user.id)
+    redirect_to team_team_members_url(current_team), :notice => 'Welcome email sent'
+  end
+
   def new
     emails = SimpleTextAreaParser.parse(params[:emails] || "")
     @add_team_members = AddTeamMembers.users_from_emails(current_team, emails)
@@ -18,6 +26,7 @@ class TeamMembersController < ApplicationController
   def index
     @team_members = current_team.team_members
     @team_members_by_state = current_team.team_members.group_by(&:state)
+    @captain = TeamPolicy.new(current_user, current_team).captain?
   end
 
   def edit

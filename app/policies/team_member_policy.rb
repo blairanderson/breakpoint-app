@@ -1,4 +1,8 @@
 class TeamMemberPolicy < ApplicationPolicy
+  def send_welcome_email?
+    captain?
+  end
+
   def update?
     owner? || captain?
   end

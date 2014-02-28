@@ -5,7 +5,6 @@
       <th>Name</th>
       <th>Email</th>
       <th>Phone Number</th>
-      <th>Notify</th>
       <th>Role</th>
       <th>&nbsp;</th>
     </tr>
@@ -14,16 +13,17 @@
     <% team_members_index.sort_by { |tm| tm.user.name }.each do |team_member| %>
     <tr class="<%= "danger" unless team_member.active? %>">
       <td><%= team_member.user.name %></td>
-      <td><%= mail_to team_member.user.email %></td>
-      <td><%= team_member.user.phone_number %></td>
-      <%# TODO add a "resend welcome email" if state is active %>
       <td>
-        <%= link_to 'Send welcome email',
-          send_welcome_email_team_team_member_path(current_team, team_member),
-          :method => :post,
-          :data   => { :confirm => "Send welcome email to #{team_member.user.email} now?" },
-          :class  => 'btn btn-xs btn-info' %>
+        <% if policy(team_member).send_welcome_email? %>
+          <%= link_to 'Send welcome email',
+            send_welcome_email_team_team_member_path(current_team, team_member),
+            :method => :post,
+            :data   => { :confirm => "Send welcome email to #{team_member.user.email} now?" },
+            :class  => 'btn btn-xs btn-info' %>
+        <% end %>
+        <%= mail_to team_member.user.email %>
       </td>
+      <td><%= team_member.user.phone_number %></td>
       <td><%= team_member.role.humanize %></td>
       <td>
         <% if policy(team_member).update? %>

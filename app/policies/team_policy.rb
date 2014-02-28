@@ -1,4 +1,8 @@
 class TeamPolicy < ApplicationPolicy
+  def send_welcome_email?
+    captain?
+  end
+
   def create?
     captain?
   end

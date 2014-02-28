@@ -10,7 +10,7 @@
 
 <%= link_to('Add players', new_team_team_members_path(current_team), :class => 'btn btn-default') %>
 
-<% if @team_members_by_state["new"].present? %>
+<% if @team_members_by_state["new"].present? && @captain %>
   <h3>New team members</h3>
   <div class="alert alert-info">
     <p>New team members do not receive email from Breakpoint App, but are considered a member of the team.</p>
@@ -36,7 +36,7 @@
   <%= render :partial => "team_members_index", :object => @team_members_by_state["active"] %>
 <% end %>
 
-<% if @team_members_by_state["inactive"].present? %>
+<% if @team_members_by_state["inactive"].present? && @captain %>
   <h3>Inactive team members</h3>
   <div class="alert alert-info">
     <p>Inactive team members do not receive email from Breakpoint App.</p>

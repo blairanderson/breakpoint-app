@@ -6,8 +6,10 @@ class TeamsController < ApplicationController
 
   def send_welcome_email
     @team = current_user.teams.find(params[:id])
+    authorize @team
+
     @team.team_members.new_members.each { |member| member.send_welcome!(current_user.id) }
-    redirect_to team_team_members_url(@team), notice => 'Welcome email sent'
+    redirect_to team_team_members_url(@team), :notice => 'Welcome email sent'
   end
 
   def new
