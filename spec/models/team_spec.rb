@@ -38,33 +38,17 @@ describe Team do
     ActsAsTenant.current_tenant = nil
   end
 
-  it 'returns active users for team members who are active' do
+  it 'returns active users team emails for team members who are active' do
     user = create(:user)
     user2 = create(:user2)
-    team = create(:team, :users => [user, user2])
-    user2.team_members.first.update_attribute(:active, false)
+    user3 = create(:captain)
+    team = create(:team)
+    team.team_members.create(:user => user, :state => 'new')
+    team.team_members.create(:user => user2, :state => 'active')
+    team.team_members.create(:user => user3, :state => 'inactive')
 
-    team.active_users.should eq [user]
-  end
-
-  it 'returns team emails for team members who receive emails' do
-    user = create(:user)
-    user2 = create(:user2)
-    team = create(:team, :users => [user, user2])
-    user2.team_members.first.update_attribute(:receive_email, false)
-
-    team.team_emails.should eq ['john.doe@example.com']
-  end
-
-  it 'returns team members who accepted and not accepted their invite' do
-    user = create(:user)
-    user2 = create(:user2)
-    team = create(:team, :users => [user, user2])
-    invite = create(:invite, :user => user, :team => team, :invited_by => user, :accepted_at => Time.now)
-    invite = create(:invite, :user => user2, :team => team, :invited_by => user)
-
-    team.accepted_team_members.collect(&:user_id).should eq [user.id]
-    team.not_accepted_team_members.collect(&:user_id).should eq [user2.id]
+    team.active_users.should eq [user2]
+    team.team_emails.should eq ['dave.kroondyk@example.com']
   end
 end
 

@@ -40,6 +40,10 @@ class Team < ActiveRecord::Base
     active_users.pluck(:email)
   end
 
+  def captains
+    active_users.where("team_members.role = 'captain' OR team_members.role = 'co-captain'")
+  end
+
   def not_accepted_user_ids
     invites.not_accepted.pluck(:user_id)
   end

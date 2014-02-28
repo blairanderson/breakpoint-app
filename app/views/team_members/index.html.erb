@@ -13,7 +13,10 @@
 <% if @team_members_by_state["new"].present? && @captain %>
   <h3>New team members</h3>
   <div class="alert alert-info">
-    <p>New team members do not receive email from Breakpoint App, but are considered a member of the team.</p>
+    <p>
+      New team members do not have access to the team and do not receive email from Breakpoint App,
+      but are considered a member of the team.
+    </p>
     <p>This allows you to test out Breakpoint App before notifying the entire team.</p>
     <p>
       <%= link_to 'Send welcome email to all new members',

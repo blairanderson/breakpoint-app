@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'invites' do
+describe 'invites', pending: true do
   before :each do
     login_captain
     @user2 = create(:user2)

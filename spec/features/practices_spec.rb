@@ -5,8 +5,8 @@ describe 'practices' do
     login_captain
     team = create(:team)
     ActsAsTenant.current_tenant = team
-    team.team_members.create(:user => @captain, :role => 'captain')
-    team.team_members.create(:user => create(:user2), :role => 'member')
+    team.team_members.create(:user => @captain, :role => 'captain', :state => 'active')
+    team.team_members.create(:user => create(:user2), :role => 'member', :state => 'active')
     @practice = create(:practice)
     ActsAsTenant.current_tenant = nil
     visit team_practices_path(@practice.team)

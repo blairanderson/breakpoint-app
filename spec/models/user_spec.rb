@@ -16,10 +16,9 @@ describe User do
     user.name.should eq 'Row'
   end
 
-  it 'validation fails if first and last name are empty' do
-    user = build(:user, :first_name => '', :last_name => '', :email => 'dkrow@example.com')
-    user.valid?.should eq false
-    user.errors.full_messages.should eq ['Please fill in first name or last name, preferably both.']
+  it 'returns email when first and last are empty' do
+    user = build(:user, :first_name => '', :last_name => '')
+    user.name.should eq 'john.doe@example.com'
   end
 
   it 'nils work too' do

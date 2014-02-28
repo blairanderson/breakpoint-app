@@ -7,8 +7,6 @@ class TeamMemberPolicy < ApplicationPolicy
     owner? || captain?
   end
 
-  private
-
   def owner?
     user.id == record.user_id
   end

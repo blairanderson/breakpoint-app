@@ -42,8 +42,15 @@ class TeamMembersController < ApplicationController
       @team_member.activate!
       redirect_to team_team_members_url(@team_member.team), :notice => 'Team member is now active'
     elsif params[:commit] == 'Deactivate team membership'
-      @team_member.deactivate!
-      redirect_to team_team_members_url(@team_member.team), :notice => 'Team member is now inactive'
+      if @team_member.team.captains.size == 1 && TeamMemberPolicy.new(current_user, @team_member).captain?
+        message = 'You are the only captain on the team and cannot be deactivated. '
+        message << 'Make another player captain first before deactivating again.'
+        flash[:alert] = message
+        redirect_to team_team_members_url(@team_member.team)
+      else
+        @team_member.deactivate!
+        redirect_to team_team_members_url(@team_member.team), :notice => 'Team member is now inactive'
+      end
     else
       if @team_member.update(permitted_params.team_member)
         redirect_to team_team_members_url(@team_member.team), :notice => 'Team member updated'

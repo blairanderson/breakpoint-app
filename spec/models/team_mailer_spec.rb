@@ -5,7 +5,10 @@ describe TeamMailer do
     user  = create(:user)
     user2 = create(:user2)
     user3 = create(:captain)
-    team  = create(:team, users: [user, user2, user3])
+    team = create(:team)
+    team.team_members.create(:user => user, :state => 'active')
+    team.team_members.create(:user => user2, :state => 'active')
+    team.team_members.create(:user => user3, :role => 'captain', :state => 'active')
 
     email = {
       team_id:     team.id,

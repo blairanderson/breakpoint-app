@@ -3,7 +3,8 @@ require 'spec_helper'
 describe MatchLineup do
   it 'stores results in match_sets' do
     user = create(:user)
-    team = create(:team, :users => [user])
+    team = create(:team)
+    team.team_members.create(:user => user, :state => 'active')
     ActsAsTenant.current_tenant = team
     match = create(:match)
 

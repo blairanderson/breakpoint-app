@@ -15,7 +15,7 @@ describe ReceivesInboundEmail do
   it 'validates team email' do
     team = create(:team, :singles_matches => 1, :doubles_matches => 1, :email => "winsanity")
     user = create(:user)
-    team.team_members.create(user: user, team: team, receive_email: false, active: false)
+    team.team_members.create(user: user, team: team, state: 'new')
     ActsAsTenant.current_tenant = team
 
     email = ReceivesInboundEmail.receive(File.read(File.expand_path("../team_email.json", __FILE__)))
@@ -24,7 +24,7 @@ describe ReceivesInboundEmail do
 
     expect(email.valid?).to be_false
 
-    team.team_members.first.update_attribute(:active, true)
+    team.team_members.first.update_attribute(:state, 'active')
     expect(email.valid?).to be_true
 
     ActsAsTenant.current_tenant = nil
