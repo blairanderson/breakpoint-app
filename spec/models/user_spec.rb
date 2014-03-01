@@ -32,6 +32,18 @@ describe User do
     user.last_name.should eq 'Row'
   end
 
+  it 'parses name from and strips digits' do
+    user = build(:user, :name => '123dave_karo123')
+    user.first_name.should eq 'Dave'
+    user.last_name.should eq 'Karo'
+  end
+
+  it 'parses name from with multiple separators' do
+    user = build(:user, :name => 'dave_karo_the_great')
+    user.first_name.should eq 'Dave'
+    user.last_name.should eq 'Karo The Great'
+  end
+
   it 'resets password token' do
     user = create(:user)
     token = user.reset_password_token!
