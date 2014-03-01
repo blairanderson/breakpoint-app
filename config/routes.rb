@@ -27,7 +27,6 @@ Rails.application.routes.draw do
     member do
       post 'send_welcome_email'
     end
-    resources :invites, :only => [:index, :create, :update]
   end
 
   resources :practices, :only => [] do
