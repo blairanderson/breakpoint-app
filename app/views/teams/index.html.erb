@@ -20,7 +20,7 @@
     <tbody>
       <% @teams.each do |team| %>
       <tr>
-        <td><%= link_to team.name, team_practices_path(team) %></td>
+        <td><%= link_to team.name, team_matches_path(team) %></td>
         <td><%= mail_to team.email_address %></td>
         <td><%= l team.date %></td>
         <td>
