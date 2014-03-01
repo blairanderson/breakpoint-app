@@ -27,8 +27,7 @@ describe User do
   end
 
   it 'sets first and last name from name' do
-    user = build(:user)
-    user.name = 'dk.row'
+    user = build(:user, :name => 'dk.row')
     user.first_name.should eq 'Dk'
     user.last_name.should eq 'Row'
   end

@@ -6,10 +6,6 @@ class PermittedParams
     @user   = user
   end
 
-  def invite
-    params.require(:invite).permit(:email, :name, :user_id)
-  end
-
   def match
     params.require(:match).permit(:date_string,
                                   :time_string,

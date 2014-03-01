@@ -12,12 +12,6 @@ class AddStateToTeamMembers < ActiveRecord::Migration
   end
 
   def down
-    add_column :team_members, :receive_email, :boolean, :default => false, :null => false
-    add_column :team_members, :active, :boolean, :default => true, :null => false
-    TeamMember.all.each do |tm|
-      tm.update_attributes(active: tm.state != "inactive")
-    end
-    remove_column :team_members, :state
-    change_column_default :team_members, :receive_email, true
+    raise ActiveRecord::IrreversibleMigration
   end
 end

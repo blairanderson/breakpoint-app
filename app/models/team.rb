@@ -3,7 +3,6 @@ class Team < ActiveRecord::Base
 
   has_many :practices,    -> { order(:date => :asc) }, :dependent => :destroy
   has_many :matches,      -> { order(:date => :asc) }, :dependent => :destroy
-  has_many :invites,      :dependent => :destroy
   has_many :team_members, :dependent => :destroy
   has_many :active_team_members,         -> { where(state: 'active') }, :class_name => 'TeamMember'
   has_many :new_team_members,            -> { where(state: 'new') }, :class_name => 'TeamMember'
@@ -46,20 +45,8 @@ class Team < ActiveRecord::Base
     active_users.where("team_members.role = 'captain' OR team_members.role = 'co-captain'")
   end
 
-  def not_accepted_user_ids
-    invites.not_accepted.pluck(:user_id)
-  end
-
   def team_member_for(user_id)
     team_members.where(user_id: user_id).first
-  end
-
-  def accepted_team_members
-    team_members.includes(:user).reject { |u| not_accepted_user_ids.include?(u.user_id) }
-  end
-
-  def not_accepted_team_members
-    team_members.includes(:user).select { |u| not_accepted_user_ids.include?(u.user_id) }
   end
 end
 

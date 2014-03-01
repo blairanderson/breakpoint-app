@@ -10,7 +10,6 @@ class User < ActiveRecord::Base
     :trackable,
     :validatable
 
-  has_many :invitations,          :dependent => :restrict_with_exception, :class_name => 'Invite'
   has_many :team_members,         :dependent => :restrict_with_exception
   has_many :active_team_members,  -> { where(state: 'active') }, :class_name => 'TeamMember'
   has_many :teams,                :through   => :team_members
