@@ -1,7 +1,7 @@
 class TeamPolicy < ApplicationPolicy
   self::Scope = Struct.new(:user, :scope) do
     def resolve
-      user.teams.where(team_members: { state: 'active' }).newest
+      user.active_teams.newest
     end
   end
 

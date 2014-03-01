@@ -33,7 +33,10 @@ describe TeamMailer do
       attachments: [{name: "myimage.png", content: "[BASE64-ENCODED CONTENT]", content_type: "image/png"}]
     }
 
-    mailer.send(:message, mailer.send(:team_emails)).should eq message
+    sent = mailer.send(:message, mailer.send(:team_emails))
+    sent[:from].should eq "Dave <notifications@breakpointapp.com>"
+    sent[:to].should eq "team-email@mail.breakpointapp.com"
+    sent[:bcc].should =~ ["dave.kroondyk@example.com", "captain@example.com"]
   end
 end
 

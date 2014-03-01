@@ -5,7 +5,13 @@ class Team < ActiveRecord::Base
   has_many :matches,      -> { order(:date => :asc) }, :dependent => :destroy
   has_many :invites,      :dependent => :destroy
   has_many :team_members, :dependent => :destroy
-  has_many :users,        :through   => :team_members
+  has_many :active_team_members,         -> { where(state: 'active') }, :class_name => 'TeamMember'
+  has_many :new_team_members,            -> { where(state: 'new') }, :class_name => 'TeamMember'
+  has_many :new_and_active_team_members, -> { where('"team_members"."state" = ? OR "team_members"."state" = ?', 'new', 'active') }, :class_name => 'TeamMember'
+  has_many :users,                :through   => :team_members
+  has_many :active_users,         :through => :active_team_members, :source => :user
+  has_many :new_users,            :through => :new_team_members, :source => :user
+  has_many :new_and_active_users, :through => :new_and_active_team_members, :source => :user
 
   validates :name,            presence: true, uniqueness: true
   validates :email,           presence: true, uniqueness: true, format: { with: /\A[a-z0-9\-_]+\z/, message: "can only contain lowercase letters, numbers, - and _" }
@@ -30,10 +36,6 @@ class Team < ActiveRecord::Base
 
   def previous_matches
     matches.where('date < ?', Time.zone.now).order('date asc')
-  end
-
-  def active_users
-    users.where(team_members: { state: 'active' })
   end
 
   def team_emails

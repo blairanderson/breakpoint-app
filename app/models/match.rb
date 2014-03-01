@@ -4,9 +4,8 @@ class Match < ActiveRecord::Base
   include DateTimeParser
   include NotifyStateMachine
 
-  has_many :match_availabilities, :dependent => :destroy
+  has_many :match_availabilities, -> { joins(user: :active_teams).where('"teams"."id" = "match_availabilities"."team_id"') }, :dependent => :destroy
   has_many :match_lineups,        -> { order(:ordinal) }, :dependent => :destroy
-  has_many :players,              :through   => :match_availabilities, :source => :user
 
   validates :team, presence: true
 
@@ -36,7 +35,7 @@ class Match < ActiveRecord::Base
   end
 
   def match_availability_for(user_id)
-    match_availabilities.where(user_id: user_id).first || match_availabilities.build(user_id: user_id)
+    match_availabilities.where(user_id: user_id).first_or_initialize
   end
 
   def available_players
@@ -50,7 +49,7 @@ class Match < ActiveRecord::Base
   def players_status
     available_player_list = available_players
     unavailable_player_list = unavailable_players
-    noresponse_player_list = team.active_users - available_player_list - unavailable_player_list
+    noresponse_player_list = (team.new_and_active_users) - available_player_list - unavailable_player_list
 
     players_status = {
                       "Available" => available_player_list,

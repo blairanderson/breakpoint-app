@@ -4,11 +4,13 @@ describe MatchMailer do
   before :each do
     @user = create(:user)
     @user2 = create(:user2)
-    @team = create(:team, :users => [@user, @user2])
+    @team = create(:team)
+    @team.team_members.create(:user => @user, :state => 'active')
+    @team.team_members.create(:user => @user2, :state => 'active')
     ActsAsTenant.current_tenant = @team
     @match = create(:match)
     @match.match_lineups.each do |lineup|
-      lineup.match_players.create(:user => @user)
+      lineup.match_players.first.update_attributes(user_id: @user.id)
     end
   end
 
@@ -48,6 +50,7 @@ describe MatchMailer do
     last_email[:from].formatted.should eq ['John Doe <notifications@breakpointapp.com>']
     last_email.subject.should match /\[#{@match.team.name}\] Lineup set for match on/
     last_email.encoded.should match /<h1>The lineup has been set/
+    last_email.encoded.should match /John Doe/
   end
 
   it 'sends match lineup updated email', :versioning => true do
@@ -56,6 +59,7 @@ describe MatchMailer do
     last_email.to.should eq ['dave.kroondyk@example.com']
     last_email.subject.should match /\[#{@match.team.name}\] Lineup updated for match on/
     last_email.encoded.should match /<h1>The lineup was updated for/
+    last_email.encoded.should match /John Doe/
   end
 end
 

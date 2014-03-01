@@ -12,7 +12,9 @@ class User < ActiveRecord::Base
 
   has_many :invitations,          :dependent => :restrict_with_exception, :class_name => 'Invite'
   has_many :team_members,         :dependent => :restrict_with_exception
+  has_many :active_team_members,  -> { where(state: 'active') }, :class_name => 'TeamMember'
   has_many :teams,                :through   => :team_members
+  has_many :active_teams,         :through   => :active_team_members, :source => :team
   has_many :practice_sessions,    :dependent => :restrict_with_exception
   has_many :practices,            :through   => :practice_sessions
   has_many :match_availabilities, :dependent => :restrict_with_exception

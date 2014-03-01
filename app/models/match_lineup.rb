@@ -1,6 +1,7 @@
 class MatchLineup < ActiveRecord::Base
   belongs_to :match
   has_many   :match_players, :dependent => :destroy
+  has_many   :active_match_players, -> { joins(user: :active_teams).where('"teams"."id" = "match_players"."team_id"') }, :class_name => "MatchPlayer"
   has_many   :players,       :through => :match_players, :source => :user
   has_many   :match_sets,    -> { order(:ordinal) }, :dependent => :destroy
 

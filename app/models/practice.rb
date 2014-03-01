@@ -2,8 +2,7 @@ class Practice < ActiveRecord::Base
   include DateTimeParser
   include NotifyStateMachine
 
-  has_many   :practice_sessions, :dependent => :destroy
-  has_many   :players,           :through   => :practice_sessions, :source => :user
+  has_many :practice_sessions, -> { joins(user: :active_teams).where('"teams"."id" = "practice_sessions"."team_id"') }, :dependent => :destroy
 
   validates :team, presence: true
 
@@ -23,7 +22,7 @@ class Practice < ActiveRecord::Base
   end
 
   def practice_session_for(user_id)
-    practice_sessions.where(user_id: user_id).first || practice_sessions.build(user_id: user_id)
+    practice_sessions.where(user_id: user_id).first_or_initialize
   end
 
   def available_players
