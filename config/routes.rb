@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { :registrations => 'users/registrations' }
   get 'teams' => 'teams#index', as: :user_root
 
-  authenticate :user, lambda { |u| u.email == "davekaro@gmail.com" } do
+  authenticate :user, lambda { |u| u.email == "davekaro@gmail.com" || u.email == "bhandari.sudershan@gmail.com" } do
     mount Sidekiq::Web => '/sidekiq'
   end
 
