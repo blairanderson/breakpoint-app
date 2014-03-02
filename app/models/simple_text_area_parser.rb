@@ -24,7 +24,8 @@ class SimpleTextAreaParser
   end
 
   def to_a
-    @input = input.split(" ")
+    space_separated = input.split(" ")
+    @input = space_separated.map { |email| email.split(",") }.flatten
   end
 
   def remove_commas
