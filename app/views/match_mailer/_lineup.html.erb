@@ -12,5 +12,9 @@
 <%= render :partial => 'shared/match_location', :locals => { :match => @match } %>
 <%= render :partial => 'shared/commentable', :object => @match %>
 
+<% if @comments.present? %>
+  <p><%= simple_format @comments %></p>
+<% end %>
+
 <p>Thanks!</p>
 

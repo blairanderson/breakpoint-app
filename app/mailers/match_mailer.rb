@@ -6,6 +6,7 @@ class MatchMailer < ActionMailer::Base
 
   def created(match, to, options)
     @match = match
+    @comments = options[:comments]
     mail :to    => to,
       :from     => formatted_from(options.fetch(:from)),
       :reply_to => options.fetch(:reply_to),
@@ -14,7 +15,8 @@ class MatchMailer < ActionMailer::Base
 
   def updated(match, to, options)
     @match = match
-    @recent_changes = options.fetch(:recent_changes)
+    @comments = options[:comments]
+    @recent_changes = options[:recent_changes]
     mail :to    => to,
       :from     => formatted_from(options.fetch(:from)),
       :reply_to => options.fetch(:reply_to),

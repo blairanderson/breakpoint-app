@@ -1,0 +1,29 @@
+<% subtitle 'Preview and send availability request' %>
+
+<div class="alert alert-info">
+  Review the email below and click the Email team button
+</div>
+
+<% if @match.notified_team? %>
+  <div class="alert alert-warning">
+    Team has already been notified with this email
+  </div>
+<% end %>
+
+<% if @match_scheduled.present? %>
+  <div class="well">
+    <%= raw @match_scheduled.body %>
+  </div>
+<% end %>
+
+<% if @match_updated.present? %>
+  <div class="well">
+    <%= raw @match_updated.body %>
+  </div>
+<% end %>
+
+<%= link_to 'Email team',
+  notify_match_path(@match, team_id: current_team.id),
+  :method => :post,
+  :class => 'btn btn-primary' %>
+

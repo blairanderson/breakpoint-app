@@ -12,7 +12,14 @@ Rails.application.routes.draw do
 
   resources :teams, :except => [:show] do
     resources :practices, :except => [:show]
-    resources :matches, :except => [:show]
+    resources :matches, :except => [:show] do
+      member do
+        get :availability_email
+        get :lineup_email
+        post :send_availability_email
+        post :send_lineup_email
+      end
+    end
     resources :match_availabilities, :only => [:index]
     resources :results, :only => [:index]
     resources :team_members, :only => [:index, :edit, :update] do

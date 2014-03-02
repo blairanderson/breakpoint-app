@@ -17,12 +17,10 @@ describe 'matches' do
   end
 
   it 'shows notification, lineup, and edit match only to captains' do
-    page.should have_content 'Notification'
     page.should have_content 'Lineup'
     page.should have_content 'Edit match'
     @captain.team_members.where(:team => @match.team).first.update_attributes(:role => 'member')
     visit team_matches_path(@match.team)
-    page.should_not have_content 'Notification'
     page.should_not have_content 'Lineup'
     page.should_not have_button 'Edit'
     page.should_not have_content 'Delete'
@@ -69,12 +67,15 @@ describe 'matches' do
   end
 
   it 'notifies team members', :versioning => true do
-    click_link 'Notify team'
-    page.should have_selector '.alert.alert-success', :text => 'Notification email sent to team'
+    click_link 'Request availability email'
+    click_link 'Email team'
+    page.should have_selector '.alert.alert-success', :text => 'Availability request email sent to team'
     last_email.subject.should == "[#{@match.team.name}] New match scheduled"
-    page.should have_selector '.disabled', :text => 'Notify team'
+    click_link 'Request availability email'
+    page.should have_selector '.alert-warning'
 
     # stays disabled if nothing in the match changed
+    visit team_matches_path(@match.team)
     click_link 'Edit match'
     # there is some weird thing going on here with capybara and the \n in text areas
     # https://github.com/jnicklas/capybara/issues/677 says it was fixed, but I'm getting
@@ -85,17 +86,21 @@ describe 'matches' do
     fill_in 'Location', :with => @match.location
     fill_in 'Comment', :with => @match.comment
     click_button 'Save match'
-    page.should have_selector '.disabled', :text => 'Notify team'
+    click_link 'Request availability email'
+    page.should have_selector '.alert-warning'
 
     # sends updated email after match is updated
+    visit team_matches_path(@match.team)
     click_link 'Edit match'
     fill_in 'What day?', :with => '6/25/2014'
     fill_in 'What time?', :with => '06:00 PM'
     click_button 'Save match'
-    page.should_not have_selector '.disabled', :text => 'Notify team'
-    click_link 'Notify team'
+    click_link 'Request availability email'
+    page.should_not have_selector '.alert-warning'
+    click_link 'Email team'
     last_email.subject.should == "[#{@match.team.name}] Match updated"
-    page.should have_selector '.disabled', :text => 'Notify team'
+    click_link 'Request availability email'
+    page.should have_selector '.alert-warning'
   end
 end
 

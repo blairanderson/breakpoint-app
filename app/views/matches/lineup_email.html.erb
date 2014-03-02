@@ -1,0 +1,37 @@
+<% subtitle 'Preview and send lineup' %>
+
+<div class="alert alert-info">
+  Review the email below and click the Email team button
+</div>
+
+<% if @match.notified_team_lineup? %>
+  <div class="alert alert-warning">
+    Team has already been notified with this email
+  </div>
+<% end %>
+
+<% if @match_lineup_set.present? %>
+  <div class="well">
+    <%= raw @match_lineup_set.body %>
+  </div>
+<% end %>
+
+<% if @match_lineup_updated.present? %>
+  <div class="well">
+    <%= raw @match_lineup_updated.body %>
+  </div>
+<% end %>
+
+<%= form_tag notify_lineup_match_path(@match, team_id: current_team.id), method: :post do %>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-8">
+        <textarea class="form-control" name="comments"></textarea>
+        <p class="help-block">Extra comments will be included in the email above "Thanks!"</p>
+      </div>
+    </div>
+  </div>
+
+  <%= submit_tag 'Email team', :class => 'btn btn-primary' %>
+<% end %>
+

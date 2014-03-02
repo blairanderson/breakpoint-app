@@ -4,8 +4,7 @@
       <th style="width: 182px;">Can play?</th>
       <% if policy(current_team).captain? %>
         <th>Match Summary</th>
-        <th style="width: 112px;">Lineup</th>
-        <th style="width: 110px;">Notification</th>
+        <th style="width: 222px;">Lineup and emails</th>
         <th>&nbsp;</th>
       <% else %>
         <th>Date</th>
@@ -50,30 +49,18 @@
             <%= render :partial => 'shared/match_location', :locals => { :match => match } %>
           </td>
           <td>
-            <p><%= render :partial => 'match_availabilities', :locals => { :match => match } %></p>
-            <p><%= link_to 'Set the lineup', edit_lineup_match_path(match, team_id: current_team.id) %></p>
-          </td>
-          <td>
             <p>
-              <% if match.notified_team? %>
-                <%= link_to 'Re-Notify team', 
-                            notify_match_path(match, team_id: current_team.id), 
-                            :method => :post,
-                            :data => { :confirm => 'Do you want to re-notify team?' }, 
-                            :class => 'btn btn-xs btn-default disabled' %>
-              <% else %>
-                <%= link_to 'Notify team', 
-                            notify_match_path(match, team_id: current_team.id), 
-                            :method => :post,
-                            :data => { :confirm => 'Do you want to notify team?' }, 
-                            :class => 'btn btn-xs btn-default' %>
+              <%= link_to availability_email_team_match_path(current_team, match) do %>
+                <span class="glyphicon glyphicon-envelope"></span>
+                Request availability email
               <% end %>
             </p>
+            <p><%= render :partial => 'match_availabilities', :locals => { :match => match } %></p>
+            <p><%= link_to 'Set the lineup', edit_lineup_match_path(match, team_id: current_team.id) %></p>
             <p>
-              <% if match.notified_team_lineup? %>
-                <%= link_to 'Email lineup', notify_lineup_match_path(match, team_id: current_team.id), :method => :post, :class => 'btn btn-xs btn-default disabled' %>
-              <% else %>
-                <%= link_to 'Email lineup', notify_lineup_match_path(match, team_id: current_team.id), :method => :post, :class => 'btn btn-xs btn-default' %>
+              <%= link_to lineup_email_team_match_path(current_team, match) do %>
+                <span class="glyphicon glyphicon-envelope"></span>
+                Lineup email
               <% end %>
             </p>
           </td>
