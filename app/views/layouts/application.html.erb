@@ -87,8 +87,12 @@
       <% end %>
 
       <%= content_for?(:team_nav) ? yield(:team_nav) : yield %>
-    </div>
 
+      <footer>
+        <hr>
+        Need help? <%= mail_to "support@breakpointapp.com", "Email support" %>
+      </footer>
+    </div>
   </body>
 </html>
 

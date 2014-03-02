@@ -1,13 +1,16 @@
 <h3>Add players</h3>
 <% if @add_team_members.users.size == 0 %>
+  <div class="alert alert-info">
+    <p>Enter one or more email addresses to add players to your team.</p>
+    <p>You can review the new player(s) and set their names on the next step.</p>
+  </div>
+
   <%= form_tag new_team_team_members_path(current_team), :method => :get do %>
     <div class="form-group">
-      <label>Enter one or more email addresses to add players to your team.</label>
       <div class="row">
         <div class="col-md-8">
           <textarea class="form-control" name="emails"></textarea>
           <p class="help-block">Use comma-separated, space-separated, or one email address per line.</p>
-          <p class="help-block">You can review the new player(s) and set their names on the next step.</p>
         </div>
       </div>
     </div>
@@ -21,7 +24,7 @@
   <%= simple_form_for(@add_team_members, url: create_team_team_members_path, html: { class: "form-inline" }) do |f| %>
     <%= f.error_messages %>
       <div class="alert alert-info">
-        <p>Add a name for each player (optional).</p>
+        <p>Add or modify a name for each player (optional).</p>
         <p>Players with a Breakpoint App account are not editable and will be marked with an <span class="label label-info">existing account</span> label.</p>
       </div>
       <ul class="list-group">
