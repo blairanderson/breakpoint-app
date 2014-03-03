@@ -1,11 +1,26 @@
-<h2>
-  Please <%= link_to 'set your availability', team_matches_url(@match.team) %>.
-</h2>
+<h2>When: <%= l @match.date, :format => :long %></h2>
 
-<h3>When: <%= l @match.date, :format => :long %></h3>
+<h2>
+  Click
+  <%= link_to "yes",
+    set_availability_team_match_availabilities_url(
+      @match.team,
+      available: 'yes',
+      token: @match.match_availability_token_for(@user_id)) %>
+  if you are available.
+
+  Otherwise, click
+  <%= link_to "no",
+    set_availability_team_match_availabilities_url(
+      @match.team,
+      available: 'no',
+      token: @match.match_availability_token_for(@user_id)) %>
+</h2>
 
 <%= render :partial => 'shared/match_location', :locals => { :match => @match } %>
 <%= render :partial => 'shared/commentable', :object => @match %>
 
 <p>Thanks!</p>
+
+<%= link_to 'Sign in', team_matches_url(@match.team) %> to access Breakpoint App anytime.
 

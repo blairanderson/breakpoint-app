@@ -1,4 +1,6 @@
 class Match < ActiveRecord::Base
+  class MatchAvailabilityTokenExpired < StandardError; end
+
   NOTIFIED_LINEUP_STATES = %w[lineup_created lineup_updated notified_team_lineup]
 
   include DateTimeParser
@@ -21,13 +23,27 @@ class Match < ActiveRecord::Base
   def self.notify(name, options)
     match = find(options.fetch(:match_id))
 
-    match.team_emails(options.fetch(:reply_to)).each do |to|
-      MatchMailer.send("match_#{name}", match, to, options).deliver
+    match.team_users(options.fetch(:reply_to)).each do |to|
+      MatchMailer.send("match_#{name}", match, to.email, options.merge(user_id: to.id)).deliver
     end
+  end
+
+  def self.match_availability_from_token(token)
+    match_id, user_id, timestamp = Rails.application.message_verifier("match-email-response").verify(token)
+
+    if timestamp < 7.days.ago
+      raise MatchAvailabilityTokenExpired
+    end
+
+    find(match_id).match_availability_for(user_id)
   end
 
   def team_emails(from = nil)
     team.team_emails.reject { |e| from == e }
+  end
+
+  def team_users(from = nil)
+    team.active_users.reject { |user| from == user.email }
   end
 
   def team_location
@@ -36,6 +52,10 @@ class Match < ActiveRecord::Base
 
   def match_availability_for(user_id)
     match_availabilities.where(user_id: user_id).first_or_initialize
+  end
+
+  def match_availability_token_for(user_id)
+    Rails.application.message_verifier("match-email-response").generate([id, user_id, Time.now])
   end
 
   def available_players

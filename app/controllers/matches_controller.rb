@@ -24,12 +24,14 @@ class MatchesController < ApplicationController
       @match_scheduled = MatchMailer.match_scheduled(@match,
                                                      current_user.email,
                                                      from:     current_user.name,
-                                                     reply_to: current_user.email)
+                                                     reply_to: current_user.email,
+                                                     user_id:  current_user.id)
     else
       @match_updated = MatchMailer.match_updated(@match,
                                                  current_user.email,
                                                  from:           current_user.name,
                                                  reply_to:       current_user.email,
+                                                 user_id:        current_user.id,
                                                  recent_changes: @match.recent_changes)
     end
   end

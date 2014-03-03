@@ -42,5 +42,21 @@ describe 'match_availabilities' do
     click_button "I can't play"
     page.should have_content "You can't play"
   end
+
+  it 'accepts availability from email' do
+    click_link 'Sign out'
+    visit set_availability_team_match_availabilities_url(
+      @match.team,
+      available: 'yes',
+      token: @match.match_availability_token_for(@captain.id))
+    page.should have_selector '.alert-success', :text => 'yes response'
+
+    click_link 'Sign out'
+    visit set_availability_team_match_availabilities_url(
+      @match.team,
+      available: 'no',
+      token: @match.match_availability_token_for(@captain.id))
+    page.should have_selector '.alert-success', :text => 'no response'
+  end
 end
 

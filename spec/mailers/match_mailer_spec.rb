@@ -19,11 +19,11 @@ describe MatchMailer do
   end
 
   let(:created_options) {
-    { from: @user.name, reply_to: @user.email }
+    { from: @user.name, reply_to: @user.email, user_id: @user2.id }
   }
 
   let(:updated_options) {
-    { from: @user.name, reply_to: @user.email, recent_changes: [] }
+    { from: @user.name, reply_to: @user.email, user_id: @user2.id, recent_changes: [] }
   }
 
   it 'sends match scheduled email' do
@@ -32,7 +32,7 @@ describe MatchMailer do
     last_email.to.should eq ['dave.kroondyk@example.com']
     last_email[:from].formatted.should eq ['John Doe <notifications@breakpointapp.com>']
     last_email.subject.should eq "[#{@match.team.name}] New match scheduled"
-    last_email.encoded.should match /<h3>When:/
+    last_email.encoded.should match /<h2>When:/
   end
 
   it 'sends match updated email', :versioning => true do
@@ -40,7 +40,7 @@ describe MatchMailer do
 
     last_email.to.should =~ ['dave.kroondyk@example.com']
     last_email.subject.should eq "[#{@match.team.name}] Match updated"
-    last_email.encoded.should match /<h3>When: /
+    last_email.encoded.should match /<h2>When: /
   end
 
   it 'sends match lineup set email' do

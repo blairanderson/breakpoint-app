@@ -23,13 +23,14 @@ class ApplicationController < ActionController::Base
   private
 
   def set_current_team
-    set_current_tenant(current_team)
+    if params[:team_id]
+      team = policy_scope(Team).find(params[:team_id])
+      set_current_tenant(team)
+    end
   end
 
   def current_team
-    if params[:team_id]
-      policy_scope(Team).find(params[:team_id])
-    end
+    current_tenant
   end
   helper_method :current_team
 
