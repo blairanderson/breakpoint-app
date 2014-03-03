@@ -21,6 +21,14 @@ class User < ActiveRecord::Base
 
   validates_inclusion_of :time_zone, in: ActiveSupport::TimeZone.all.map(&:name)
 
+  def self.current_user=(user)
+    RequestStore.store[:current_user] = user
+  end
+
+  def self.current_user
+    RequestStore.store[:current_user]
+  end
+
   def name
     if first_name.present? && last_name.present?
       "#{first_name} #{last_name}"
