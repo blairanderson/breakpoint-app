@@ -6,11 +6,11 @@
     <%= link_to 'Add a practice', new_team_practice_path(current_team), :class => "alert-link" %> to get playing.
   </div>
   <p>
-    <p><%= link_to 'Add a practice', new_team_practice_path(current_team), :class => 'btn btn-default' %></p>
+    <%= link_to 'Add a practice', new_team_practice_path(current_team), :class => 'btn btn-default' %>
   </p>
 <% else %>
   <p>
-    <p><%= link_to 'Add a practice', new_team_practice_path(current_team), :class => 'btn btn-default' %></p>
+    <%= link_to 'Add a practice', new_team_practice_path(current_team), :class => 'btn btn-default' %>
   </p>
   <% if @upcoming_practices.present? %>
     <%= render :partial => "practices", :object => @upcoming_practices %>
@@ -24,3 +24,4 @@
     <%= render :partial => "practices", :object => @previous_practices %>
   <% end %>
 <% end %>
+
