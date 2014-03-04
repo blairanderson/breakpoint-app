@@ -15,5 +15,12 @@
   </div>
 
   <%= f.submit 'Save practice', :class => 'btn btn-primary' %>
+  <% if !@practice.new_record?  %>
+    <%= link_to 'Delete practice',
+                  team_practice_path(current_team, @practice),
+                  :data => { :confirm => 'Are you sure?' },
+                  :method => :delete,
+                  :class => 'btn btn-danger' %>
+  <% end %>
 <% end %>
 

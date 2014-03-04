@@ -65,11 +65,6 @@
                 <%= link_to 'Notify team', notify_practice_path(practice, team_id: current_team), :method => :post, :class => 'btn btn-xs btn-default' %>
               <% end %>
               <%= link_to 'Edit', edit_team_practice_path(current_team, practice), :class => 'btn btn-xs btn-default' %>
-              <%= link_to 'Delete',
-                team_practice_path(current_team, practice),
-                :data => { :confirm => 'Are you sure?' },
-                :method => :delete,
-                :class => 'btn btn-xs btn-danger' %>
           <% end %>
         </tr>
       <% end %>

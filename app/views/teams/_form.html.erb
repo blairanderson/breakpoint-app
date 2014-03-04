@@ -10,6 +10,13 @@
       <%= f.input :doubles_matches, :collection => 0..9, :input_html => { :class => 'span1' } %>
 
       <%= f.submit 'Save team', :class => 'btn btn-primary' %>
+      <% if policy(@team).captain?%>
+          <%= link_to 'Delete team',
+            @team,
+            :data => { :confirm => 'Are you sure?' },
+            :method => :delete,
+            :class => 'btn btn-danger' %>
+      <% end%>
     </div>
   </div>
 <% end %>

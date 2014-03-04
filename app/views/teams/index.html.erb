@@ -30,11 +30,6 @@
         <td>
           <% if policy(team).captain?%>
             <%= link_to 'Edit', edit_team_path(team), :class => 'btn btn-xs btn-default' %>
-            <%= link_to 'Delete',
-              team,
-              :data => { :confirm => 'Are you sure?' },
-              :method => :delete,
-              :class => 'btn btn-xs btn-danger' %>
           <% end%>
         </td>
       </tr>
