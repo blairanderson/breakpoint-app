@@ -48,7 +48,8 @@ describe 'teams' do
   end
 
   it 'deletes a team' do
-    click_link 'Delete'
+    click_link 'Edit'
+    click_link 'Delete team'
 
     page.should have_selector '.alert.alert-success', :text => 'Team deleted'
     page.should_not have_content '2012 Summer'

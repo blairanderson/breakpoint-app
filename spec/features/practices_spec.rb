@@ -18,11 +18,11 @@ describe 'practices' do
 
   it 'shows edit practice only to captains' do
     page.should have_content 'Edit'
-    page.should have_content 'Delete'
+    page.should_not have_content 'Delete practice'
     @captain.team_members.where(:team => @practice.team).first.update_attributes(:role => 'member')
     visit team_practices_path(@practice.team)
     page.should_not have_button 'Edit'
-    page.should_not have_content 'Delete'
+    page.should_not have_content 'Delete practice'
   end
   it 'creates a practice' do
     click_link 'Add a practice'
@@ -59,7 +59,8 @@ describe 'practices' do
   end
 
   it 'deletes a practice' do
-    click_link 'Delete'
+    click_link 'Edit'
+    click_link 'Delete practice'
 
     page.should have_selector '.alert.alert-success', :text => 'Practice deleted'
     page.should_not have_content 'June 24, 2014 at 7:00 pm'
