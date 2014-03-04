@@ -11,7 +11,11 @@ Rails.application.routes.draw do
   end
 
   resources :teams, :except => [:show] do
-    resources :practices, :except => [:show]
+    resources :practices, :except => [:show] do
+      member do
+        get :availability_email
+      end
+    end
     resources :matches, :except => [:show] do
       member do
         get :availability_email

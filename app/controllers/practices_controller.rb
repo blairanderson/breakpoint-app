@@ -2,7 +2,8 @@ class PracticesController < ApplicationController
   layout 'team'
 
   def index
-    @practices = current_team.practices
+    @upcoming_practices = current_team.upcoming_practices
+    @previous_practices = current_team.previous_practices
   end
 
   def new
@@ -14,26 +15,42 @@ class PracticesController < ApplicationController
     @practice = Practice.find(params[:id])
   end
 
+  def availability_email
+    @practice = Practice.find(params[:id])
+    if !@practice.updated?
+      @practice_scheduled = PracticeMailer.practice_scheduled(@practice,
+                                                     current_user.email,
+                                                     from:     current_user.name,
+                                                     reply_to: current_user.email,
+                                                     user_id:  current_user.id)
+    else
+      @practice_updated = PracticeMailer.practice_updated(@practice,
+                                                 current_user.email,
+                                                 from:           current_user.name,
+                                                 reply_to:       current_user.email,
+                                                 user_id:        current_user.id,
+                                                 recent_changes: @practice.recent_changes)
+    end
+  end
+
   def notify
     @practice = Practice.find(params[:id])
-    if !@practice.notified_team?
-      if @practice.created?
-        Practice.delay.notify(:scheduled,
-                              from:        current_user.name,
-                              reply_to:    current_user.email,
-                              practice_id: @practice.id)
-      else
-        Practice.delay.notify(:updated,
-                              from:           current_user.name,
-                              reply_to:       current_user.email,
-                              practice_id:    @practice.id,
-                              recent_changes: @practice.recent_changes)
-      end
-      @practice.notified!
-      redirect_to team_practices_url(@practice.team), :notice => 'Notification email sent to team'
+    
+    if @practice.created?
+      Practice.delay.notify(:scheduled,
+                            from:        current_user.name,
+                            reply_to:    current_user.email,
+                            practice_id: @practice.id)
     else
-      redirect_to team_practices_url(@practice.team), :notice => 'Team has already been notified'
+      Practice.delay.notify(:updated,
+                            from:           current_user.name,
+                            reply_to:       current_user.email,
+                            practice_id:    @practice.id,
+                            recent_changes: @practice.recent_changes)
     end
+
+    @practice.notified!
+    redirect_to team_practices_url(@practice.team), :notice => 'Availability request email sent to team'
   end
 
   def create

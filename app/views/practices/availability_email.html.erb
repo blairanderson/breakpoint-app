@@ -1,0 +1,29 @@
+<% subtitle 'Preview and send availability request' %>
+
+<div class="alert alert-info">
+  Review the email below and click the Email team button
+</div>
+
+<% if @practice.notified_team? %>
+  <div class="alert alert-warning">
+    Team has already been notified with this email
+  </div>
+<% end %>
+
+<% if @practice_scheduled.present? %>
+  <div class="well">
+    <%= raw @practice_scheduled.body %>
+  </div>
+<% end %>
+
+<% if @practice_updated.present? %>
+  <div class="well">
+    <%= raw @practice_updated.body %>
+  </div>
+<% end %>
+
+<%= link_to 'Email team',
+  notify_practice_path(@practice, team_id: current_team.id),
+  :method => :post,
+  :class => 'btn btn-primary' %>
+

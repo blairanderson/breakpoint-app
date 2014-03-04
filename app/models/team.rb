@@ -29,6 +29,10 @@ class Team < ActiveRecord::Base
     practices.where('date > ?', Time.zone.now).order('date asc')
   end
 
+  def previous_practices
+    practices.where('date < ?', Time.zone.now).order('date asc')
+  end
+
   def upcoming_matches
     matches.where('date > ?', Time.zone.now).order('date asc')
   end

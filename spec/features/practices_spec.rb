@@ -48,7 +48,7 @@ describe 'practices' do
   end
 
   it 'edits a practice' do
-    click_link 'Edit'
+    click_link 'Edit practice'
     fill_in 'What day?', :with => '6/25/2014'
     fill_in 'What time?', :with => '06:00 PM'
     click_button 'Save practice'
@@ -59,7 +59,7 @@ describe 'practices' do
   end
 
   it 'deletes a practice' do
-    click_link 'Edit'
+    click_link 'Edit practice'
     click_link 'Delete practice'
 
     page.should have_selector '.alert.alert-success', :text => 'Practice deleted'
@@ -67,13 +67,16 @@ describe 'practices' do
   end
 
   it 'notifies team members', :versioning => true do
-    click_link 'Notify team'
-    page.should have_selector '.alert.alert-success', :text => 'Notification email sent to team'
+    click_link 'Request availability email'
+    click_link 'Email team'
+    page.should have_selector '.alert.alert-success', :text => 'Availability request email sent to team'
     last_email.subject.should == "[#{@practice.team.name}] New practice scheduled"
-    page.should have_selector '.disabled', :text => 'Notify team'
+    click_link 'Request availability email'
+    page.should have_selector '.alert-warning'
 
     # stays disabled if nothing in the practice changed
-    click_link 'Edit'
+    visit team_practices_path(@practice.team)
+    click_link 'Edit practice'
     # there is some weird thing going on here with capybara and the \n in text areas
     # https://github.com/jnicklas/capybara/issues/677 says it was fixed, but I'm getting
     # a \n stored at the beginning of the comment field, which the "browser" should ignore.
@@ -82,17 +85,21 @@ describe 'practices' do
     fill_in 'Location', :with => @practice.location
     fill_in 'Comment', :with => @practice.comment
     click_button 'Save practice'
-    page.should have_selector '.disabled', :text => 'Notify team'
+    click_link 'Request availability email'
+    page.should have_selector '.alert-warning'
 
     # sends updated email after practice is updated
-    click_link 'Edit'
+    visit team_practices_path(@practice.team)
+    click_link 'Edit practice'
     fill_in 'What day?', :with => '6/25/2014'
     fill_in 'What time?', :with => '06:00 PM'
     click_button 'Save practice'
-    page.should_not have_selector '.disabled', :text => 'Notify team'
-    click_link 'Notify team'
+    click_link 'Request availability email'
+    page.should_not have_selector '.alert-warning'
+    click_link 'Email team'
     last_email.subject.should == "[#{@practice.team.name}] Practice updated"
-    page.should have_selector '.disabled', :text => 'Notify team'
+    click_link 'Request availability email'
+    page.should have_selector '.alert-warning'
   end
 end
 
