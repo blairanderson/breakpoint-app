@@ -39,7 +39,7 @@ describe 'teams' do
   end
 
   it 'edits a team' do
-    click_link 'Edit'
+    click_link 'Edit team'
     fill_in 'Name', :with => '2010 Summer'
     click_button 'Save team'
 
@@ -48,7 +48,7 @@ describe 'teams' do
   end
 
   it 'deletes a team' do
-    click_link 'Edit'
+    click_link 'Edit team'
     click_link 'Delete team'
 
     page.should have_selector '.alert.alert-success', :text => 'Team deleted'

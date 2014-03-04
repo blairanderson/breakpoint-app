@@ -22,8 +22,8 @@ describe 'practices' do
     @captain.team_members.where(:team => @practice.team).first.update_attributes(:role => 'member')
     visit team_practices_path(@practice.team)
     page.should_not have_button 'Edit'
-    page.should_not have_content 'Delete practice'
   end
+
   it 'creates a practice' do
     click_link 'Add a practice'
     fill_in 'What day?',  :with => '6/24/2014'
