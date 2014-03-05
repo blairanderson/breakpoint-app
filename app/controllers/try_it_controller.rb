@@ -3,9 +3,9 @@ class TryItController < ApplicationController
 
   def auto_sign_in
     if params[:user] == 'captain'
-      sign_in :user, User.joins(:team_members).where("team_members.role = 'captain'").first
+      sign_in :user, TryItSeeds.new.captain
     elsif params[:user] == 'member'
-      sign_in :user, User.joins(:team_members).where("team_members.role = 'member'").first
+      sign_in :user, TryItSeeds.new.member
     end
 
     redirect_to teams_url
