@@ -33,5 +33,20 @@ describe 'practice_sessions' do
     page.should have_content "You can't play"
   end
 
+  it 'accepts availability from email' do
+    click_link 'Sign out'
+    visit set_availability_team_practice_sessions_url(
+      @practice.team,
+      available: 'yes',
+      token: @practice.practice_session_token_for(@captain.id))
+    page.should have_selector '.alert-success', :text => 'yes response'
+
+    click_link 'Sign out'
+    visit set_availability_team_practice_sessions_url(
+      @practice.team,
+      available: 'no',
+      token: @practice.practice_session_token_for(@captain.id))
+    page.should have_selector '.alert-success', :text => 'no response'
+  end
 end
 

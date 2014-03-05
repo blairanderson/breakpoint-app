@@ -1,3 +1,20 @@
+<h2>
+  Click
+  <%= link_to "yes",
+    set_availability_team_practice_sessions_url(
+      @practice.team,
+      available: 'yes',
+      token: @practice.practice_session_token_for(@user_id)) %>
+  if you are available.
+
+  Otherwise, click
+  <%= link_to "no",
+    set_availability_team_practice_sessions_url(
+      @practice.team,
+      available: 'no',
+      token: @practice.practice_session_token_for(@user_id)) %>
+</h2>
+
 <p>
   The practice will be played at
   <address><%= simple_format @practice.location %></address>
@@ -5,9 +22,7 @@
 
 <%= render :partial => 'shared/commentable', :object => @practice %>
 
-<p>
-  Please <%= link_to 'set your availability', team_practices_url(@practice.team) %>.
-</p>
-
 <p>Thanks!</p>
+
+<%= link_to 'Sign in', team_practices_url(@practice.team) %> to access Breakpoint App anytime.
 

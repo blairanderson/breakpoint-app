@@ -16,7 +16,8 @@ describe PracticeMailer do
   it 'sends practice scheduled email' do
     options = {
       from: @user.name,
-      reply_to: @user.email
+      reply_to: @user.email,
+      user_id: @user2.id
     }
 
     PracticeMailer.practice_scheduled(@practice, @user2.email, options).deliver
@@ -32,6 +33,7 @@ describe PracticeMailer do
     options = {
       from: @user.name,
       reply_to: @user.email,
+      user_id: @user2.id,
       recent_changes: []
     }
 

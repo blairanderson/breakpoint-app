@@ -1,4 +1,6 @@
 class Practice < ActiveRecord::Base
+  class PracticeSessionTokenExpired < StandardError; end
+
   include DateTimeParser
   include NotifyStateMachine
 
@@ -12,17 +14,35 @@ class Practice < ActiveRecord::Base
   def self.notify(name, options)
     practice = find(options.fetch(:practice_id))
 
-    practice.team_emails(options.fetch(:reply_to)).each do |to|
-      PracticeMailer.send("practice_#{name}", practice, to, options).deliver
+    practice.team_users(options.fetch(:reply_to)).each do |to|
+      PracticeMailer.send("practice_#{name}", practice, to.email, options.merge(user_id: to.id)).deliver
     end
+  end
+
+  def self.practice_session_from_token(token)
+    practice_id, user_id, timestamp = Rails.application.message_verifier("practice-email-response").verify(token)
+
+    if timestamp < 7.days.ago
+      raise PracticeSessionTokenExpired
+    end
+
+    find(practice_id).practice_session_for(user_id)
   end
 
   def team_emails(from = nil)
     team.team_emails.reject { |e| from == e }
   end
 
+  def team_users(from = nil)
+    team.active_users.reject { |user| from == user.email }
+  end
+
   def practice_session_for(user_id)
     practice_sessions.where(user_id: user_id).first_or_initialize
+  end
+
+  def practice_session_token_for(user_id)
+    Rails.application.message_verifier("practice-email-response").generate([id, user_id, Time.now])
   end
 
   def available_players

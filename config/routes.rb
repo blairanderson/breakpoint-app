@@ -27,6 +27,11 @@ Rails.application.routes.draw do
         get :set_availability
       end
     end
+    resources :practice_sessions, :only => [] do
+      collection do
+        get :set_availability
+      end
+    end
     resources :results, :only => [:index]
     resources :team_members, :only => [:index, :edit, :update] do
       collection do
