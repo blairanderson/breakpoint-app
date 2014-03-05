@@ -11,7 +11,12 @@ class TryItSeeds
   end
 
   def captain
-    find_captain || create_captain
+    if find_captain.nil?
+      seed!
+      find_captain
+    else
+      find_captain
+    end
   end
 
   def find_member
