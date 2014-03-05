@@ -1,6 +1,9 @@
+<br>
 <% if Rails.env.try_it? %>
   <div class="jumbotron">
     <h1>Try Breakpoint App</h1>
+    <p>This is a preloaded version of Breakpoint App available for you to play around with.</p>
+    <p>EVERYTHING CREATED HERE will be <strong>RESET DAILY</strong></p>
     <p>
       <%= link_to "Sign in as a captain", try_it_sign_in_path(user: 'captain'), class: "btn btn-primary btn-lg" %>
       or
@@ -8,7 +11,6 @@
     </p>
   </div>
 <% else %>
-  <br>
   <div class="jumbotron">
     <h1>Tennis team management</h1>
     <p>Get all these features for free</p>
@@ -20,6 +22,7 @@
     </ul>
     <p>
       <%= link_to "Sign up for free", new_user_registration_path, class: "btn btn-primary btn-lg" %>
+      <%= link_to "Try Breakpoint App!", "http://try.breakpointapp.com", class: "btn btn-success btn-lg pull-right" %>
     </p>
   </div>
 <% end %>
