@@ -4,13 +4,14 @@ ruby   '2.1.0'
 gem 'rails',                '4.1.0.rc1'
 gem 'pg',                   '0.17.1'
 
-group :development do
+group :development, :try_it do
   gem 'quiet_assets'
-  gem 'letter_opener'
+  gem 'letter_opener_web', github: 'davekaro/letter_opener_web'
   gem 'spring'
+  gem 'faker'
 end
 
-group :development, :test do
+group :development, :try_it, :test do
   gem 'debugger'
   gem 'rspec-rails'
   gem 'capybara'

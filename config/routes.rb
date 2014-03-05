@@ -10,6 +10,11 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  if Rails.env.development? || Rails.env.try_it?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
+    get 'try_it_sign_in' => 'try_it#auto_sign_in'
+  end
+
   resources :teams, :except => [:show] do
     resources :practices, :except => [:show] do
       member do
