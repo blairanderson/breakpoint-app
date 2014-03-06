@@ -9,6 +9,16 @@
 body {
   padding-top: 70px;
   padding-bottom: 30px;
+  background: image_url('roger.jpg') no-repeat;
+  background-size: cover;
+}
+
+.roger {
+  color: #eee;
+  background-color: rgba(0,0,0,0.2);
+  h1 {
+    text-shadow: 2px 2px 10px black;
+  }
 }
 
 footer {
