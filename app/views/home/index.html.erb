@@ -11,7 +11,8 @@
     </p>
   </div>
 <% else %>
-  <div class="jumbotron roger">
+  <div class="jumbotron">
+    <%= link_to "Try Breakpoint App!", "http://try.breakpointapp.com", class: "btn btn-success btn-lg try-it" %>
     <h1>Tennis team management</h1>
     <p>Get all these features for free</p>
     <ul>
@@ -22,7 +23,6 @@
     </ul>
     <p>
       <%= link_to "Sign up for free", new_user_registration_path, class: "btn btn-primary btn-lg" %>
-      <%= link_to "Try Breakpoint App!", "http://try.breakpointapp.com", class: "btn btn-success btn-lg pull-right" %>
     </p>
   </div>
 <% end %>
