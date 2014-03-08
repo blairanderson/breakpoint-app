@@ -5,22 +5,26 @@ class MatchMailer < ActionMailer::Base
   helper MailerHelper
 
   def created(match, to, options)
-    @match    = match
-    @user_id  = options[:user_id]
-    @comments = options[:comments]
+    @team_name = match.team.name
+    @match     = match
+    @user_id   = options[:user_id]
+    @comments  = options[:comments]
+    @from      = options.fetch(:from)
     mail :to    => to,
-      :from     => formatted_from(options.fetch(:from)),
+      :from     => formatted_from(@from),
       :reply_to => options.fetch(:reply_to),
       :subject  => options.fetch(:subject)
   end
 
   def updated(match, to, options)
-    @match    = match
-    @user_id  = options[:user_id]
-    @comments = options[:comments]
+    @team_name = match.team.name
+    @match     = match
+    @user_id   = options[:user_id]
+    @comments  = options[:comments]
+    @from      = options.fetch(:from)
     @recent_changes = options[:recent_changes]
     mail :to    => to,
-      :from     => formatted_from(options.fetch(:from)),
+      :from     => formatted_from(@from),
       :reply_to => options.fetch(:reply_to),
       :subject  => options.fetch(:subject)
   end

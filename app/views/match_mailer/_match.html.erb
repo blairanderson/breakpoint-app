@@ -1,26 +1,54 @@
-<h2>When: <%= l @match.date, :format => :long %></h2>
+<%= render 'shared/mailer_header' %>
 
-<h2>
-  Click
-  <%= link_to "yes",
+<p>Can you play?</p>
+<p>
+  <%= link_to "YES",
     set_availability_team_match_availabilities_url(
       @match.team,
       available: 'yes',
-      token: @match.match_availability_token_for(@user_id)) %>
-  if you are available.
-
-  Otherwise, click
-  <%= link_to "no",
+      token: @match.match_availability_token_for(@user_id)),
+    style: "margin: 0px 10px 0px 0px; font-size: 24px;" %>
+  or
+  <%= link_to "NO",
     set_availability_team_match_availabilities_url(
       @match.team,
       available: 'no',
-      token: @match.match_availability_token_for(@user_id)) %>
-</h2>
+      token: @match.match_availability_token_for(@user_id)),
+    style: "margin: 0px 10px; font-size: 24px;" %>
+</p>
 
-<%= render :partial => 'shared/match_location', :locals => { :match => @match } %>
-<%= render :partial => 'shared/commentable', :object => @match %>
+<table>
+  <tr>
+    <td style="vertical-align: top;">When:</td>
+    <td style="width: 20px">&nbsp;</td>
+    <td><%= l @match.date, :format => :long %></td>
+  </tr>
+  <tr><td colspan="3"><br></td></tr>
+  <tr>
+    <td style="vertical-align: top;">Where:</td>
+    <td style="width: 20px">&nbsp;</td>
+    <td>
+      <strong><%= @match.team_location %></strong>
+      <%= simple_format(@match.location) %>
+    </td>
+  </tr>
+  <% if @match.opponent.present? %>
+    <tr><td colspan="3"><br></td></tr>
+    <tr>
+      <td style="vertical-align: top;">Opponent:</td>
+      <td style="width: 20px">&nbsp;</td>
+      <td><%= @match.opponent %></td>
+    </tr>
+  <% end %>
+  <% if @match.comment.present? %>
+    <tr><td colspan="3"><br></td></tr>
+    <tr>
+      <td style="vertical-align: top;">Comments:</td>
+      <td style="width: 20px">&nbsp;</td>
+      <td><%= simple_format(@match.comment) %></td>
+    </tr>
+  <% end %>
+</table>
 
-<p>Thanks!</p>
-
-<%= link_to 'Sign in', team_matches_url(@match.team) %> to access Breakpoint App anytime.
+<%= render 'shared/mailer_footer' %>
 

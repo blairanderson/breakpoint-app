@@ -37,6 +37,8 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
   config.action_mailer.delivery_method = :letter_opener_web
+  #config.action_mailer.delivery_method     = :postmark
+  #config.action_mailer.postmark_settings   = { api_key: Rails.application.secrets.simple_postmark_api_key, secure: true }
 end
 
 ActionMailer::Base.default from: 'notifications@breakpointapp.com'
