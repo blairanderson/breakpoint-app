@@ -4,7 +4,7 @@
       <th style="width: 182px;">Can play?</th>
       <% if policy(current_team).captain? %>
         <th>Match Summary</th>
-        <th style="width: 222px;">Lineup and emails</th>
+        <th style="width: 260px;">Lineup and emails</th>
         <th>&nbsp;</th>
       <% else %>
         <th>Match Summary</th>
@@ -49,7 +49,7 @@
             <p>
               <%= link_to availability_email_team_match_path(current_team, match) do %>
                 <span class="glyphicon glyphicon-envelope"></span>
-                Request availability email
+                Preview and send availability email
               <% end %>
             </p>
             <p><%= render :partial => 'match_availabilities', :locals => { :match => match } %></p>
@@ -57,7 +57,7 @@
             <p>
               <%= link_to lineup_email_team_match_path(current_team, match) do %>
                 <span class="glyphicon glyphicon-envelope"></span>
-                Lineup email
+                Preview and send lineup email
               <% end %>
             </p>
           </td>
