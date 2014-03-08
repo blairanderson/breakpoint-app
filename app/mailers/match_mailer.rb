@@ -1,11 +1,12 @@
 class MatchMailer < ActionMailer::Base
   include MailerHelper
 
-  layout 'mailer'
+  layout 'team_mailer'
   helper MailerHelper
 
   def created(match, to, options)
     @team_name = match.team.name
+    @mail_type = "Match"
     @match     = match
     @user_id   = options[:user_id]
     @comments  = options[:comments]
@@ -18,6 +19,7 @@ class MatchMailer < ActionMailer::Base
 
   def updated(match, to, options)
     @team_name = match.team.name
+    @mail_type = "Match"
     @match     = match
     @user_id   = options[:user_id]
     @comments  = options[:comments]

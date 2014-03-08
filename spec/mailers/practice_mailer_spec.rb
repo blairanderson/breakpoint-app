@@ -26,7 +26,7 @@ describe PracticeMailer do
     last_email.to.should =~ ['dave.kroondyk@example.com']
     last_email[:from].formatted.should eq ['John Doe <notifications@breakpointapp.com>']
     last_email.subject.should eq "[#{@practice.team.name}] New practice scheduled"
-    last_email.encoded.should match /<h1>New practice scheduled for/
+    last_email.encoded.should match /When:/
   end
 
   it 'sends practice updated email', :versioning => true do
@@ -42,7 +42,7 @@ describe PracticeMailer do
     last_email.should_not be_nil
     last_email.to.should =~ ['dave.kroondyk@example.com']
     last_email.subject.should eq "[#{@practice.team.name}] Practice updated"
-    last_email.encoded.should match /<h1>Practice scheduled for/
+    last_email.encoded.should match /When:/
   end
 end
 
