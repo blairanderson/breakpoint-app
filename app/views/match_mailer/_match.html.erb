@@ -1,18 +1,18 @@
-<p>Can you play?</p>
-<p>
+<p style="text-align: center;">Can you play?</p>
+<p style="text-align: center;">
   <%= link_to "YES",
     set_availability_team_match_availabilities_url(
       @match.team,
       available: 'yes',
       token: @match.match_availability_token_for(@user_id)),
-    style: "margin: 0px 10px 0px 0px; font-size: 24px;" %>
+    style: "margin-right: 10px; font-size: 24px;" %>
   or
   <%= link_to "NO",
     set_availability_team_match_availabilities_url(
       @match.team,
       available: 'no',
       token: @match.match_availability_token_for(@user_id)),
-    style: "margin: 0px 10px; font-size: 24px;" %>
+    style: "margin-left: 10px; font-size: 24px;" %>
 </p>
 
 <%= render 'shared/match_mailer' %>
