@@ -32,7 +32,7 @@ describe 'match_lineups' do
     click_link   'Set the lineup'
     first("option[value='#{@captain.id}']").select_option
     click_button 'Save match lineup'
-    click_link 'Lineup email'
+    click_link 'Preview and send lineup email'
     click_button 'Email team'
 
     page.should have_selector '.alert.alert-success', :text => 'Lineup email sent to team'
