@@ -15,11 +15,13 @@ class WelcomeMailer < ActionMailer::Base
   end
 
   def welcome_email(options)
-    @welcome_title = "[#{@team_member.team.name}] #{options.fetch(:from)} added you to the team"
+    @team_name     = @team_member.team.name
+    @mail_type     = "Welcome"
+    @from          = options.fetch(:from)
     mail :to    => @team_member.user.email,
       :from     => formatted_from(options.fetch(:from)),
       :reply_to => options.fetch(:reply_to),
-      :subject  => @welcome_title
+      :subject  => "[#{@team_name}] #{@from} added you to the team"
   end
 end
 

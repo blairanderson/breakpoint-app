@@ -1,7 +1,7 @@
 class MatchMailer < ActionMailer::Base
   include MailerHelper
 
-  layout 'team_mailer'
+  layout 'mailer'
   helper MailerHelper
 
   def created(match, to, options)

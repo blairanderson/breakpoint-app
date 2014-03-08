@@ -20,7 +20,7 @@ describe WelcomeMailer do
     last_email.to.should eq ['dave.kroondyk@example.com']
     last_email[:from].formatted.should eq ['John Doe <notifications@breakpointapp.com>']
     last_email.subject.should eq "[#{@team.name}] #{@user.name} added you to the team"
-    last_email.encoded.should match /<h1>Please join your team on Breakpoint App/
+    last_email.encoded.should match /Please join your team on Breakpoint App/
   end
 
   it 'sends welcome email' do
@@ -35,7 +35,7 @@ describe WelcomeMailer do
     last_email.should_not be_nil
     last_email.to.should eq ['dave.kroondyk@example.com']
     last_email.subject.should eq "[#{@team.name}] #{@user.name} added you to the team"
-    last_email.encoded.should match /<h1>You've been added to a team/
+    last_email.encoded.should match /I added you to a team/
   end
 end
 

@@ -1,7 +1,7 @@
 class PracticeMailer < ActionMailer::Base
   include MailerHelper
 
-  layout 'team_mailer'
+  layout 'mailer'
   helper MailerHelper
 
   def practice_scheduled(practice, to, options)
