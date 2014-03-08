@@ -32,7 +32,7 @@ describe MatchMailer do
     last_email.to.should eq ['dave.kroondyk@example.com']
     last_email[:from].formatted.should eq ['John Doe <notifications@breakpointapp.com>']
     last_email.subject.should eq "[#{@match.team.name}] New match scheduled"
-    last_email.encoded.should match /<h2>When:/
+    last_email.encoded.should match /When:/
   end
 
   it 'sends match updated email', :versioning => true do
@@ -40,7 +40,7 @@ describe MatchMailer do
 
     last_email.to.should =~ ['dave.kroondyk@example.com']
     last_email.subject.should eq "[#{@match.team.name}] Match updated"
-    last_email.encoded.should match /<h2>When: /
+    last_email.encoded.should match /When:/
   end
 
   it 'sends match lineup set email' do
