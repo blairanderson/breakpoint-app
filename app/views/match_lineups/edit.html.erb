@@ -1,7 +1,7 @@
 <% subtitle 'Set match lineup' %>
 
 <div class="alert alert-info">
-  <%= render :partial => 'shared/match_summary', :locals => { :match => @match } %>
+  <%= render partial: 'shared/match', object: @match %>
 </div>
 <%= simple_form_for([current_team, @match]) do |f| %>
   <%= f.error_messages %>

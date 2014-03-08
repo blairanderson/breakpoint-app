@@ -3,7 +3,6 @@
   <tr>
     <th style="width: 182px;">Can play?</th>
     <th>Practice Summary</th>
-    <th>Organizer's Comments</th>
     <th>Availability and email</th>
     <th>&nbsp;</th>
   </tr>
@@ -39,14 +38,7 @@
           </div>
         </td>
         <td>
-          <p>When: <%= l practice.date, :format => :long %></p>
-          <p>
-            The practice will be played at
-            <address><%= simple_format practice.location %></address>
-          </p>
-        </td>
-        <td>
-          <p><%= simple_format practice.comment %></p>
+          <%= render partial: 'shared/practice', object: practice %>
         </td>
         <td>
           <p>
