@@ -1,20 +1,25 @@
-<ul>
-  <% @match.match_lineups.each do |lineup| %>
-    <li>
-      <strong><%= lineup.match_type %></strong>
-      <% lineup.active_match_players.includes(:user).each do |player| %>
-        <%= player.user.name %>
-      <% end %>
-    </li>
-  <% end %>
-</ul>
+<table>
+  <tr>
+    <td style="vertical-align: top;">Lineup:</td>
+    <td style="width: 20px">&nbsp;</td>
+    <td>
+      <ul style="list-style-type: none;">
+        <% @match.match_lineups.each do |lineup| %>
+          <li>
+            <strong><%= lineup.match_type %></strong>
+            <%= lineup.active_match_players.includes(:user).map do |player| %>
+              <% player.user.name %>
+            <% end.join(', ') %>
+          </li>
+        <% end %>
+      </ul>
+    </td>
+  </tr>
+</table>
 
-<%= render :partial => 'shared/match_location', :locals => { :match => @match } %>
-<%= render :partial => 'shared/commentable', :object => @match %>
+<%= render 'shared/match_mailer' %>
 
 <% if @comments.present? %>
   <p><%= simple_format @comments %></p>
 <% end %>
-
-<p>Thanks!</p>
 
