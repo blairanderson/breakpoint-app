@@ -7,9 +7,7 @@
         <th style="width: 222px;">Lineup and emails</th>
         <th>&nbsp;</th>
       <% else %>
-        <th>Date</th>
         <th>Match Summary</th>
-        <th>Captain's Comments</th>
       <% end %>
     </tr>
   </thead>
@@ -45,8 +43,7 @@
         </td>
         <% if policy(current_team).captain? %>
           <td>
-            <p>When: <%= l match.date, :format => :long %></p>
-            <%= render :partial => 'shared/match_location', :locals => { :match => match } %>
+            <%= render :partial => 'shared/match_summary', :locals => { :match => match } %>
           </td>
           <td>
             <p>
@@ -69,13 +66,7 @@
           </td>
         <% else %>
           <td>
-            <%= l match.date, :format => :long %>
-          </td>
-          <td>
-            <%= render :partial => 'shared/match_location', :locals => { :match => match } %>
-          </td>
-          <td>
-            <p><%= simple_format match.comment %></p>
+            <%= render :partial => 'shared/match_summary', :locals => { :match => match } %>
           </td>
         <% end %>
       </tr>

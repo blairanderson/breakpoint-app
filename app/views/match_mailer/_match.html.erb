@@ -15,5 +15,5 @@
     style: "margin-left: 10px; font-size: 24px;" %>
 </p>
 
-<%= render 'shared/match_mailer' %>
+<%= render :partial => 'shared/match_summary', :locals => { :match => @match } %>
 

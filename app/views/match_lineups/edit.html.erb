@@ -1,8 +1,7 @@
 <% subtitle 'Set match lineup' %>
 
 <div class="alert alert-info">
-  When: <%= l @match.date, :format => :long %>
-  <%= render :partial => 'shared/match_location', :locals => { :match => @match } %>
+  <%= render :partial => 'shared/match_summary', :locals => { :match => @match } %>
 </div>
 <%= simple_form_for([current_team, @match]) do |f| %>
   <%= f.error_messages %>
