@@ -31,22 +31,22 @@ class MatchMailer < ActionMailer::Base
 
   def match_scheduled(match, to, options)
     @mail_type = "Match"
-    created(match, to, options.merge(subject: "[#{match.team.name}] New match scheduled"))
+    created(match, to, options.merge(subject: "[#{match.team.name}] Match on #{l match.date, :format => :long}"))
   end
 
   def match_updated(match, to, options)
     @mail_type = "Match"
-    updated(match, to, options.merge(subject: "[#{match.team.name}] Match updated"))
+    updated(match, to, options.merge(subject: "[#{match.team.name}] Match on #{l match.date, :format => :long} updated"))
   end
 
   def match_lineup_set(match, to, options)
     @mail_type = "Lineup"
-    created(match, to, options.merge(subject: "[#{match.team.name}] Lineup set for match on #{l match.date}"))
+    created(match, to, options.merge(subject: "[#{match.team.name}] Lineup for match on #{l match.date, :format => :long}"))
   end
 
   def match_lineup_updated(match, to, options)
     @mail_type = "Lineup"
-    updated(match, to, options.merge(subject: "[#{match.team.name}] Lineup updated for match on #{l match.date}"))
+    updated(match, to, options.merge(subject: "[#{match.team.name}] Lineup for match on #{l match.date, :format => :long} updated"))
   end
 end
 

@@ -25,7 +25,7 @@ describe PracticeMailer do
     last_email.should_not be_nil
     last_email.to.should =~ ['dave.kroondyk@example.com']
     last_email[:from].formatted.should eq ['John Doe <notifications@breakpointapp.com>']
-    last_email.subject.should eq "[#{@practice.team.name}] New practice scheduled"
+    last_email.subject.should == "[2012 Summer] Practice on #{I18n.l @practice.date, :format => :long}"
     last_email.encoded.should match /When:/
   end
 
@@ -41,7 +41,7 @@ describe PracticeMailer do
 
     last_email.should_not be_nil
     last_email.to.should =~ ['dave.kroondyk@example.com']
-    last_email.subject.should eq "[#{@practice.team.name}] Practice updated"
+    last_email.subject.should == "[2012 Summer] Practice on #{I18n.l @practice.date, :format => :long} updated"
     last_email.encoded.should match /When:/
   end
 end

@@ -67,11 +67,11 @@ describe 'practices' do
   end
 
   it 'notifies team members', :versioning => true do
-    click_link 'Request availability email'
+    click_link 'Preview and send availability email'
     click_link 'Email team'
     page.should have_selector '.alert.alert-success', :text => 'Availability request email sent to team'
-    last_email.subject.should == "[#{@practice.team.name}] New practice scheduled"
-    click_link 'Request availability email'
+    last_email.subject.should == "[2012 Summer] Practice on #{I18n.l @practice.date, :format => :long}"
+    click_link 'Preview and send availability email'
     page.should have_selector '.alert-warning'
 
     # stays disabled if nothing in the practice changed
@@ -85,7 +85,7 @@ describe 'practices' do
     fill_in 'Location', :with => @practice.location
     fill_in 'Comment', :with => @practice.comment
     click_button 'Save practice'
-    click_link 'Request availability email'
+    click_link 'Preview and send availability email'
     page.should have_selector '.alert-warning'
 
     # sends updated email after practice is updated
@@ -94,11 +94,12 @@ describe 'practices' do
     fill_in 'What day?', :with => '6/25/2014'
     fill_in 'What time?', :with => '06:00 PM'
     click_button 'Save practice'
-    click_link 'Request availability email'
+    click_link 'Preview and send availability email'
     page.should_not have_selector '.alert-warning'
     click_link 'Email team'
-    last_email.subject.should == "[#{@practice.team.name}] Practice updated"
-    click_link 'Request availability email'
+    @practice.reload
+    last_email.subject.should == "[2012 Summer] Practice on #{I18n.l @practice.date, :format => :long} updated"
+    click_link 'Preview and send availability email'
     page.should have_selector '.alert-warning'
   end
 end

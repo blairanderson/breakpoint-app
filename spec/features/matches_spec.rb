@@ -70,7 +70,7 @@ describe 'matches' do
     click_link 'Preview and send availability email'
     click_link 'Email team'
     page.should have_selector '.alert.alert-success', :text => 'Availability request email sent to team'
-    last_email.subject.should == "[#{@match.team.name}] New match scheduled"
+    last_email.subject.should == "[2012 Summer] Match on #{I18n.l @match.date, :format => :long}"
     click_link 'Preview and send availability email'
     page.should have_selector '.alert-warning'
 
@@ -98,7 +98,8 @@ describe 'matches' do
     click_link 'Preview and send availability email'
     page.should_not have_selector '.alert-warning'
     click_link 'Email team'
-    last_email.subject.should == "[#{@match.team.name}] Match updated"
+    @match.reload
+    last_email.subject.should == "[2012 Summer] Match on #{I18n.l @match.date, :format => :long} updated"
     click_link 'Preview and send availability email'
     page.should have_selector '.alert-warning'
   end
