@@ -1,8 +1,14 @@
 <% subtitle 'Set match lineup' %>
 
-<div class="alert alert-info">
-  <%= render partial: 'shared/match', object: @match %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Match details</h3>
+  </div>
+  <div class="panel-body">
+    <%= render partial: 'shared/match_details', locals: { match: @match } %>
+  </div>
 </div>
+
 <%= simple_form_for([current_team, @match]) do |f| %>
   <%= f.error_messages %>
     <%= f.simple_fields_for :match_lineups do |match_lineup_form| %>

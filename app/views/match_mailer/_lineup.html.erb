@@ -17,7 +17,7 @@
   </tr>
 </table>
 
-<%= render partial: 'shared/match', object: @match %>
+<%= render partial: 'shared/match_mailer', locals: { match: @match } %>
 
 <% if @comments.present? %>
   <p><%= simple_format @comments %></p>
