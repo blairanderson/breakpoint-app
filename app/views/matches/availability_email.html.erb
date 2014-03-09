@@ -10,17 +10,14 @@
   </div>
 <% end %>
 
-<% if @match_scheduled.present? %>
-  <div class="well">
-    <%= raw @match_scheduled.body %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Subject: <%= @match_email.subject %></h3>
   </div>
-<% end %>
-
-<% if @match_updated.present? %>
-  <div class="well">
-    <%= raw @match_updated.body %>
+  <div class="panel-body">
+    <%= raw @match_email.body %>
   </div>
-<% end %>
+</div>
 
 <%= link_to 'Email team',
   notify_match_path(@match, team_id: current_team.id),

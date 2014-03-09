@@ -17,26 +17,27 @@ class PracticesController < ApplicationController
 
   def availability_email
     @practice = Practice.find(params[:id])
+
     if !@practice.updated?
-      @practice_scheduled = PracticeMailer.practice_scheduled(@practice,
-                                                              current_user.email,
-                                                              from:     current_user.name,
-                                                              reply_to: current_user.email,
-                                                              user_id:  current_user.id)
-    else
-      @practice_updated = PracticeMailer.practice_updated(@practice,
+      @practice_email = PracticeMailer.practice_scheduled(@practice,
                                                           current_user.email,
-                                                          from:           current_user.name,
-                                                          reply_to:       current_user.email,
-                                                          user_id:        current_user.id,
-                                                          recent_changes: @practice.recent_changes)
+                                                          from:     current_user.name,
+                                                          reply_to: current_user.email,
+                                                          user_id:  current_user.id)
+    else
+      @practice_email = PracticeMailer.practice_updated(@practice,
+                                                        current_user.email,
+                                                        from:           current_user.name,
+                                                        reply_to:       current_user.email,
+                                                        user_id:        current_user.id,
+                                                        recent_changes: @practice.recent_changes)
     end
   end
 
   def notify
     @practice = Practice.find(params[:id])
 
-    if @practice.created?
+    if !@practice.updated?
       Practice.delay.notify(:scheduled,
                             from:        current_user.name,
                             reply_to:    current_user.email,

@@ -10,17 +10,14 @@
   </div>
 <% end %>
 
-<% if @practice_scheduled.present? %>
-  <div class="well">
-    <%= raw @practice_scheduled.body %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Subject: <%= @practice_email.subject %></h3>
   </div>
-<% end %>
-
-<% if @practice_updated.present? %>
-  <div class="well">
-    <%= raw @practice_updated.body %>
+  <div class="panel-body">
+    <%= raw @practice_email.body %>
   </div>
-<% end %>
+</div>
 
 <%= link_to 'Email team',
   notify_practice_path(@practice, team_id: current_team.id),

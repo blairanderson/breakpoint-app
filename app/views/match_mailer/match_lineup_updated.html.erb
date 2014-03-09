@@ -1,2 +1,10 @@
 <%= render :partial => 'lineup' %>
 
+<% if @recent_changes.present? %>
+  <h4>Match Updates:</h4>
+
+  <p>
+    <%= formatted_changes(@recent_changes) %>
+  </p>
+<% end %>
+

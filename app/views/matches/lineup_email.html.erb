@@ -10,17 +10,14 @@
   </div>
 <% end %>
 
-<% if @match_lineup_set.present? %>
-  <div class="well">
-    <%= raw @match_lineup_set.body %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Subject: <%= @match_lineup_email.subject %></h3>
   </div>
-<% end %>
-
-<% if @match_lineup_updated.present? %>
-  <div class="well">
-    <%= raw @match_lineup_updated.body %>
+  <div class="panel-body">
+    <%= raw @match_lineup_email.body %>
   </div>
-<% end %>
+</div>
 
 <%= form_tag notify_lineup_match_path(@match, team_id: current_team.id), method: :post do %>
   <div class="form-group">

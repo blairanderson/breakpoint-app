@@ -84,6 +84,10 @@ class Match < ActiveRecord::Base
     versions.last.changeset
   end
 
+  def lineup_changed?
+    match_lineups.flat_map(&:match_players).map(&:previous_changes).reject { |change| change.blank? }.present?
+  end
+
   def notified_team_lineup_state
     (notified_lineup_state || NOTIFIED_LINEUP_STATES.first).inquiry
   end
