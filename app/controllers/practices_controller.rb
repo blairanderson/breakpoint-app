@@ -68,8 +68,20 @@ class PracticesController < ApplicationController
     @practice = Practice.find(params[:id])
 
     if @practice.update_attributes(permitted_params.practice)
-      @practice.reset_notified! if @practice.previous_changes.present?
-      redirect_to team_practices_url(@practice.team), :notice => 'Practice updated'
+      if @practice.previous_changes.present?
+        if @practice.notified_team? || @practice.updated?
+          flash[:notice] = "Practice updated. Send updated email now, or go #{view_context.link_to("back to practices", team_practices_url(@practice.team), :class => "alert-link")}"
+          next_url = availability_email_team_practice_url(current_team, @practice)
+        end
+
+        @practice.reset_notified!
+      end
+
+      if next_url.present?
+        redirect_to next_url
+      else
+        redirect_to team_practices_url(@practice.team), :notice => 'Practice updated'
+      end
     else
       render :edit
     end
