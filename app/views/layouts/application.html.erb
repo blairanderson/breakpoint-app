@@ -73,7 +73,7 @@
         <div class="flash">
           <div class="alert alert-<%= flash_name_for_bootstrap(name)[:class] %>">
             <span class="glyphicon glyphicon-<%= flash_name_for_bootstrap(name)[:icon] %>"></span>
-            <%= msg %>
+            <%= msg.html_safe %>
           </div>
         </div>
       <% end %>

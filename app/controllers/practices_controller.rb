@@ -18,7 +18,7 @@ class PracticesController < ApplicationController
   def availability_email
     @practice = Practice.find(params[:id])
 
-    if !@practice.updated?
+    if @practice.created? || @practice.notified_team?
       @practice_email = PracticeMailer.practice_scheduled(@practice,
                                                           current_user.email,
                                                           from:     current_user.name,
@@ -37,7 +37,7 @@ class PracticesController < ApplicationController
   def notify
     @practice = Practice.find(params[:id])
 
-    if !@practice.updated?
+    if @practice.created? || @practice.notified_team?
       Practice.delay.notify(:scheduled,
                             from:        current_user.name,
                             reply_to:    current_user.email,

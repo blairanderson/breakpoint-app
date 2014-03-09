@@ -95,6 +95,8 @@ describe 'matches' do
     fill_in 'What day?', :with => '6/25/2014'
     fill_in 'What time?', :with => '06:00 PM'
     click_button 'Save match'
+    page.should have_content 'Review the email below'
+    click_link 'back to matches'
     click_link 'Preview and send availability email'
     page.should_not have_selector '.alert-warning'
     click_link 'Email team'

@@ -20,7 +20,7 @@ class MatchesController < ApplicationController
     @match = Match.find(params[:id])
     authorize current_team, :update?
 
-    if !@match.updated?
+    if @match.created? || @match.notified_team?
       @match_email = MatchMailer.match_scheduled(@match,
                                                  current_user.email,
                                                  from:     current_user.name,
@@ -40,7 +40,7 @@ class MatchesController < ApplicationController
     @match = Match.find(params[:id])
     authorize current_team, :update?
 
-    if !@match.lineup_updated?
+    if @match.lineup_created? || @match.notified_team_lineup?
       @match_lineup_email = MatchMailer.match_lineup_set(@match,
                                                          current_user.email,
                                                          from:     current_user.name,
@@ -49,8 +49,7 @@ class MatchesController < ApplicationController
       @match_lineup_email = MatchMailer.match_lineup_updated(@match,
                                                              current_user.email,
                                                              from:           current_user.name,
-                                                             reply_to:       current_user.email,
-                                                             recent_changes: @match.recent_changes)
+                                                             reply_to:       current_user.email)
     end
   end
 
@@ -58,7 +57,7 @@ class MatchesController < ApplicationController
     @match = Match.find(params[:id])
     authorize current_team, :update?
 
-    if !@match.updated?
+    if @match.created? || @match.notified_team?
       Match.delay.notify(:scheduled,
                          from:     current_user.name,
                          reply_to: current_user.email,
@@ -79,7 +78,7 @@ class MatchesController < ApplicationController
     @match = Match.find(params[:id])
     authorize current_team, :update?
 
-    if !@match.lineup_updated?
+    if @match.lineup_created? || @match.notified_team_lineup?
       Match.delay.notify(:lineup_set,
                          from:     current_user.name,
                          reply_to: current_user.email,
@@ -90,8 +89,7 @@ class MatchesController < ApplicationController
                          from:           current_user.name,
                          reply_to:       current_user.email,
                          comments:       params[:comments],
-                         match_id:       @match.id,
-                         recent_changes: @match.recent_changes)
+                         match_id:       @match.id)
     end
 
     @match.notified_lineup!
@@ -115,14 +113,23 @@ class MatchesController < ApplicationController
 
     if @match.update_attributes(permitted_params.match)
       if @match.previous_changes.present?
+        if @match.notified_team? || @match.updated?
+          flash[:notice] = "Match updated. Send updated email now, or go #{view_context.link_to("back to matches", team_matches_url(@match.team), :class => "alert-link")}"
+          next_url = availability_email_team_match_url(current_team, @match)
+        end
+
         @match.reset_notified!
-        @match.reset_notified_lineup!
       elsif @match.lineup_changed?
+        if @match.notified_team_lineup? || @match.lineup_updated?
+          flash[:notice] = "Lineup updated. Send updated email now, or go #{view_context.link_to("back to matches", team_matches_url(@match.team), :class => "alert-link")}"
+          next_url = lineup_email_team_match_url(current_team, @match)
+        end
+
         @match.reset_notified_lineup!
       end
 
-      if params[:commit] == 'Save results'
-        redirect_to team_results_url(@match.team), :notice => 'Results updated'
+      if next_url.present?
+        redirect_to next_url
       else
         redirect_to team_matches_url(@match.team), :notice => 'Match updated'
       end
