@@ -41,11 +41,13 @@ class PracticesController < ApplicationController
       Practice.delay.notify(:scheduled,
                             from:        current_user.name,
                             reply_to:    current_user.email,
+                            comments:    params[:comments],
                             practice_id: @practice.id)
     else
       Practice.delay.notify(:updated,
                             from:           current_user.name,
                             reply_to:       current_user.email,
+                            comments:       params[:comments],
                             practice_id:    @practice.id,
                             recent_changes: @practice.recent_changes)
     end

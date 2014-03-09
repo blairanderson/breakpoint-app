@@ -9,6 +9,7 @@ class PracticeMailer < ActionMailer::Base
     @mail_type = "Practice"
     @practice  = practice
     @user_id   = options.fetch(:user_id)
+    @comments  = options[:comments]
     @from      = options.fetch(:from)
     mail :to    => to,
       :from     => formatted_from(@from),
@@ -21,6 +22,7 @@ class PracticeMailer < ActionMailer::Base
     @mail_type = "Practice"
     @practice       = practice
     @user_id        = options[:user_id]
+    @comments       = options[:comments]
     @from           = options.fetch(:from)
     @recent_changes = options.fetch(:recent_changes)
     mail :to    => to,

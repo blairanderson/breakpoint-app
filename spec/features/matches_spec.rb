@@ -68,8 +68,10 @@ describe 'matches' do
 
   it 'notifies team members', :versioning => true do
     click_link 'Preview and send availability email'
-    click_link 'Email team'
+    fill_in 'comments', :with => 'testing extra comments'
+    click_button 'Email team'
     page.should have_selector '.alert.alert-success', :text => 'Availability request email sent to team'
+    last_email.encoded.should match /testing extra comments/
     last_email.subject.should == "[2012 Summer] Match on #{I18n.l @match.date, :format => :long}"
     click_link 'Preview and send availability email'
     page.should have_selector '.alert-warning'
@@ -99,8 +101,9 @@ describe 'matches' do
     click_link 'back to matches'
     click_link 'Preview and send availability email'
     page.should_not have_selector '.alert-warning'
-    click_link 'Email team'
+    click_button 'Email team'
     @match.reload
+    last_email.encoded.should_not match /testing extra comments/
     last_email.subject.should == "[2012 Summer] Match on #{I18n.l @match.date, :format => :long} updated"
     click_link 'Preview and send availability email'
     page.should have_selector '.alert-warning'

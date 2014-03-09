@@ -17,3 +17,7 @@
 
 <%= render partial: 'shared/practice', object: @practice %>
 
+<% if @comments.present? %>
+  <p><%= simple_format @comments %></p>
+<% end %>
+

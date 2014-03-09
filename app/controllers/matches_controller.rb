@@ -61,11 +61,13 @@ class MatchesController < ApplicationController
       Match.delay.notify(:scheduled,
                          from:     current_user.name,
                          reply_to: current_user.email,
+                         comments: params[:comments],
                          match_id: @match.id)
     else
       Match.delay.notify(:updated,
                          from:           current_user.name,
                          reply_to:       current_user.email,
+                         comments:       params[:comments],
                          match_id:       @match.id,
                          recent_changes: @match.recent_changes)
     end

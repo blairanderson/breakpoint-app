@@ -68,8 +68,10 @@ describe 'practices' do
 
   it 'notifies team members', :versioning => true do
     click_link 'Preview and send availability email'
-    click_link 'Email team'
+    fill_in 'comments', :with => 'testing extra comments'
+    click_button 'Email team'
     page.should have_selector '.alert.alert-success', :text => 'Availability request email sent to team'
+    last_email.encoded.should match /testing extra comments/
     last_email.subject.should == "[2012 Summer] Practice on #{I18n.l @practice.date, :format => :long}"
     click_link 'Preview and send availability email'
     page.should have_selector '.alert-warning'
@@ -98,8 +100,9 @@ describe 'practices' do
     click_link 'back to practices'
     click_link 'Preview and send availability email'
     page.should_not have_selector '.alert-warning'
-    click_link 'Email team'
+    click_button 'Email team'
     @practice.reload
+    last_email.encoded.should_not match /testing extra comments/
     last_email.subject.should == "[2012 Summer] Practice on #{I18n.l @practice.date, :format => :long} updated"
     click_link 'Preview and send availability email'
     page.should have_selector '.alert-warning'

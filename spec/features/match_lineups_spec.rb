@@ -6,6 +6,7 @@ describe 'match_lineups' do
     ActsAsTenant.current_tenant = create(:team)
     @match = create(:match, team: ActsAsTenant.current_tenant)
     @match.team.team_members.create(:user => @captain, :role => 'captain', :state => 'active')
+    @match.team.team_members.create(:user => create(:user2), :role => 'member', :state => 'active')
     ActsAsTenant.current_tenant = nil
     visit team_matches_path(@match.team)
   end
@@ -33,8 +34,10 @@ describe 'match_lineups' do
     first("option[value='#{@captain.id}']").select_option
     click_button 'Save match lineup'
     click_link 'Preview and send lineup email'
+    fill_in 'comments', :with => 'testing extra comments'
     click_button 'Email team'
 
+    last_email.encoded.should match /testing extra comments/
     page.should have_selector '.alert.alert-success', :text => 'Lineup email sent to team'
   end
 end
