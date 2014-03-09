@@ -15,7 +15,7 @@
     style: "margin: 0px 10px; font-size: 24px;" %>
 </p>
 
-<%= render partial: 'shared/practice', object: @practice %>
+<%= render partial: 'shared/practice_mailer', locals: { practice: @practice } %>
 
 <% if @comments.present? %>
   <p><%= simple_format @comments %></p>

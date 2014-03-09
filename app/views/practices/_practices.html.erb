@@ -1,61 +1,62 @@
-<table class="table table-bordered table-striped">
-  <thead>
-  <tr>
-    <th style="width: 182px;">Can play?</th>
-    <th>Practice Summary</th>
-    <th style="width: 260px;">Availability and email</th>
-    <th>&nbsp;</th>
-  </tr>
-  </thead>
-  <tbody>
-    <% practices.each do |practice| %>
-      <% practice_session = practice.practice_session_for(current_user.id) %>
-      <% show_yes_form = practice_session.new_record? ? true : !practice_session.available? %>
-      <% show_no_form = practice_session.new_record? ? true : practice_session.available? %>
-      <tr class="<%= practice_session.new_record? ? '' : (practice_session.available? ? 'success' : 'danger') %>">
-        <td>
-          <div class="pull-left">
-            <% if show_yes_form %>
-              <%= form_for [practice, practice_session], html: { style: 'margin-bottom: 0px;' } do |f| %>
-                <%= f.hidden_field :available, value: true %>
-                <%= hidden_field_tag :team_id, current_team.id %>
-                <%= submit_tag 'I can play', :class => 'btn btn-xs btn-default' %>
-              <% end %>
-            <% else %>
-              <span class="label label-success">You can play</span>
+<% practices.each do |practice| %>
+  <% practice_session = practice.practice_session_for(current_user.id) %>
+  <% show_yes_form = practice_session.new_record? ? true : !practice_session.available? %>
+  <% show_no_form = practice_session.new_record? ? true : practice_session.available? %>
+  <div class="panel panel-<%= practice_session.new_record? ? 'default' : (practice_session.available? ? 'success' : 'danger') %>">
+    <div class="panel-heading">
+      <h3 class="panel-title clearfix">
+        <div class="pull-left">
+          <% if show_yes_form %>
+            <%= form_for [practice, practice_session], html: { style: 'margin-bottom: 0px;' } do |f| %>
+              <%= f.hidden_field :available, value: true %>
+              <%= hidden_field_tag :team_id, current_team.id %>
+              <%= submit_tag 'I can play', :class => 'btn btn-sm btn-default' %>
             <% end %>
+          <% else %>
+            <button class="btn btn-sm btn-success" disabled="disabled">You can play</button>
+          <% end %>
+        </div>
+
+        <div class="pull-left" style="margin-left: 15px;">
+          <% if show_no_form %>
+            <%= form_for [practice, practice_session], html: { style: 'margin-bottom: 0px;' } do |f| %>
+              <%= f.hidden_field :available, value: false %>
+              <%= hidden_field_tag :team_id, current_team.id %>
+              <%= submit_tag "I can't play", :class => 'btn btn-sm btn-default' %>
+            <% end %>
+          <% else %>
+            <button class="btn btn-sm btn-danger" disabled="disabled">You can't play</button>
+          <% end %>
+        </div>
+
+        <div class="pull-right">
+          <%= link_to 'Edit practice', edit_team_practice_path(current_team, practice), :class => 'btn btn-sm btn-default' %>
+        </div>
+      </h3>
+    </div>
+    <div class="panel-body">
+      <%= render partial: 'shared/practice_details', locals: { practice: practice } %>
+      <div class="row">
+        <div class="col-md-5">
+          <div class="row">
+            <div class="col-md-3">
+              <label>Availability:</label>
+            </div>
+            <div class="col-md-9">
+              <p>
+                <%= link_to availability_email_team_practice_path(current_team, practice) do %>
+                  <span class="glyphicon glyphicon-envelope"></span>
+                  Preview and send availability email
+                <% end %>
+              </p>
+              <p>
+                <%= render :partial => 'practice_confirmations', :locals => { :practice => practice } %>
+              </p>
+            </div>
           </div>
-          <div class="pull-right">
-            <% if show_no_form %>
-              <%= form_for [practice, practice_session], html: { style: 'margin-bottom: 0px;' } do |f| %>
-                <%= f.hidden_field :available, value: false %>
-                <%= hidden_field_tag :team_id, current_team.id %>
-                <%= submit_tag "I can't play", :class => 'btn btn-xs btn-default' %>
-              <% end %>
-            <% else %>
-              <span class="label label-danger">You can't play</span>
-            <% end %>
-          </div>
-        </td>
-        <td>
-          <%= render partial: 'shared/practice', object: practice %>
-        </td>
-        <td>
-          <p>
-            <%= link_to availability_email_team_practice_path(current_team, practice) do %>
-              <span class="glyphicon glyphicon-envelope"></span>
-              Preview and send availability email
-            <% end %>
-          </p>
-          <p>
-            <%= render :partial => 'practice_confirmations', :locals => { :practice => practice } %>
-          </p>
-        </td>
-        <td>
-          <%= link_to 'Edit practice', edit_team_practice_path(current_team, practice), :class => 'btn btn-xs btn-default' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
 
