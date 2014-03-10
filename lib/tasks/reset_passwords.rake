@@ -1,7 +1,8 @@
 namespace :breakpointapp do  
   task :reset_passwords => :environment do
     if Rails.env.development?
-      User.all.each { |u| u.reset_password!("password", "password") }
+      password = ::BCrypt::Password.create("password", cost: User.stretches)
+      ActiveRecord::Base.connection.execute("UPDATE users SET encrypted_password = '#{password}'")
     end
   end
 end
