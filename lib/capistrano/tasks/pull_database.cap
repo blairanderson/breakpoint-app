@@ -6,8 +6,17 @@ task :pull_db do
 
   run_locally do
     execute :scp, "breakpointapp:latest.dump", "."
-    execute :pg_restore, "--verbose", "--clean", "--no-acl", "--no-owner", "-h localhost", "-U postgres", "-d breakpoint_app_development", "latest.dump", "2>/dev/null"
-    rake ["db:migrate", "breakpointapp:reset_passwords"]
+    execute :pg_restore,
+      "--verbose",
+      "--clean",
+      "--no-acl",
+      "--no-owner",
+      "-h #{YAML.load(File.read('config/database.yml'))['development']['host'] || 'localhost'}",
+      "-U #{YAML.load(File.read('config/database.yml'))['development']['username']}",
+      "-d #{YAML.load(File.read('config/database.yml'))['development']['database']}",
+      "latest.dump",
+      "2>/dev/null"
+    execute "bin/rake", "db:migrate", "breakpointapp:reset_passwords"
   end
 end
 
