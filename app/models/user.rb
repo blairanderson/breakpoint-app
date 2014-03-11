@@ -19,16 +19,6 @@ class User < ActiveRecord::Base
   has_many :match_availabilities, :dependent => :restrict_with_exception
   has_many :matches,              :through   => :match_availabilities
 
-  validates_inclusion_of :time_zone, in: ActiveSupport::TimeZone.all.map(&:name)
-
-  def self.current_user=(user)
-    RequestStore.store[:current_user] = user
-  end
-
-  def self.current_user
-    RequestStore.store[:current_user]
-  end
-
   def name
     if first_name.present? && last_name.present?
       "#{first_name} #{last_name}"

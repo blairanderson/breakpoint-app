@@ -16,6 +16,7 @@ class Team < ActiveRecord::Base
   validates :email,           presence: true, uniqueness: true, format: { with: /\A[a-z0-9\-_]+\z/, message: "can only contain lowercase letters, numbers, - and _" }
   validates :singles_matches, presence: true
   validates :doubles_matches, presence: true
+  validates :time_zone,       inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) }
 
   def self.newest
     order('date desc')

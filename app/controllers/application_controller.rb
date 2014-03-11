@@ -5,8 +5,8 @@ class ApplicationController < ActionController::Base
   set_current_tenant_through_filter
 
   before_action :authenticate_user!
-  before_action :set_current_user_and_team, if: :user_signed_in?
-  around_action :user_time_zone, if: :user_signed_in?
+  before_action :set_team, if: :user_signed_in?
+  around_action :set_time_zone, if: :team_selected?
 
   rescue_from Pundit::NotAuthorizedError do |exception|
     if current_user
@@ -22,13 +22,15 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def set_current_user_and_team
-    if params[:team_id]
+  def team_selected?
+    user_signed_in? && params[:team_id].present?
+  end
+
+  def set_team
+    if team_selected?
       team = policy_scope(Team).find(params[:team_id])
       set_current_tenant(team)
     end
-
-    User.current_user = current_user
   end
 
   def current_team
@@ -36,8 +38,8 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_team
 
-  def user_time_zone(&block)
-    Time.use_zone(current_user.time_zone, &block)
+  def set_time_zone(&block)
+    Time.use_zone(current_team.time_zone, &block)
   end
 end
 

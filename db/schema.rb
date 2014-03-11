@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140311015531) do
+ActiveRecord::Schema.define(version: 20140311113301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,20 +118,21 @@ ActiveRecord::Schema.define(version: 20140311015531) do
   add_index "team_members", ["user_id"], name: "index_players_on_user_id", using: :btree
 
   create_table "teams", force: true do |t|
-    t.string   "name",            default: "", null: false
-    t.datetime "date",                         null: false
-    t.integer  "singles_matches",              null: false
-    t.integer  "doubles_matches",              null: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
-    t.string   "email",           default: "", null: false
+    t.string   "name",            default: "",                           null: false
+    t.datetime "date",                                                   null: false
+    t.integer  "singles_matches",                                        null: false
+    t.integer  "doubles_matches",                                        null: false
+    t.datetime "created_at",                                             null: false
+    t.datetime "updated_at",                                             null: false
+    t.string   "email",           default: "",                           null: false
+    t.string   "time_zone",       default: "Eastern Time (US & Canada)"
   end
 
   create_table "users", force: true do |t|
     t.string   "first_name",             default: ""
     t.string   "last_name",              default: ""
     t.string   "phone_number"
-    t.string   "email",                  default: "",                           null: false
+    t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -141,9 +142,8 @@ ActiveRecord::Schema.define(version: 20140311015531) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
     t.string   "last_sign_in_ip"
-    t.datetime "created_at",                                                    null: false
-    t.datetime "updated_at",                                                    null: false
-    t.string   "time_zone",              default: "Eastern Time (US & Canada)"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.boolean  "admin",                  default: false
   end
 
