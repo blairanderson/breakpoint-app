@@ -12,11 +12,14 @@ class SimpleTextAreaParser
   end
 
   def parse
+    replace_punctuation
     extract_lines_and_spaces
     to_a
-    remove_commas
-    remove_quotes
     input.uniq
+  end
+
+  def replace_punctuation
+    @input = input.gsub(/[,";:()]/, " ")
   end
 
   def extract_lines_and_spaces
@@ -24,16 +27,7 @@ class SimpleTextAreaParser
   end
 
   def to_a
-    space_separated = input.split(" ")
-    @input = space_separated.map { |email| email.split(",") }.flatten
-  end
-
-  def remove_commas
-    @input = input.map { |email| email.gsub(/,/, "") }
-  end
-
-  def remove_quotes
-    @input = input.map { |email| email.gsub(/"/, "") }
+    @input = input.split(" ")
   end
 end
 
