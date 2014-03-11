@@ -15,6 +15,14 @@ Rails.application.routes.draw do
     get 'try_it_sign_in' => 'try_it#auto_sign_in'
   end
 
+  namespace :admin do
+    resources :users, :only => [:index] do
+      member do
+        get :become
+      end
+    end
+  end
+
   resources :teams, :except => [:show] do
     resources :practices, :except => [:show] do
       member do
