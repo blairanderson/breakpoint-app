@@ -18,7 +18,7 @@ describe 'teams' do
   it 'creates a team' do
     click_link 'New team'
     fill_in 'Name',           :with => '2013 Summer'
-    fill_in 'Email',          :with => 'woop-woop'
+    fill_in 'Team distribution email address', :with => 'woop-woop'
     fill_in 'Starting when?', :with => 'June 2013'
     select '2',               :from => 'Singles matches'
     select '3',               :from => 'Doubles matches'

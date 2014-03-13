@@ -13,7 +13,7 @@ class Team < ActiveRecord::Base
   has_many :new_and_active_users, :through => :new_and_active_team_members, :source => :user
 
   validates :name,            presence: true, uniqueness: true
-  validates :email,           presence: true, uniqueness: true, format: { with: /\A[a-z0-9\-_]+\z/, message: "can only contain lowercase letters, numbers, - and _" }
+  validates :email,           uniqueness: true, format: { with: /\A[a-z0-9\-_]+\z/, message: "can only contain lowercase letters, numbers, - and _", allow_blank: true }
   validates :singles_matches, presence: true
   validates :doubles_matches, presence: true
   validates :time_zone,       inclusion: { in: ActiveSupport::TimeZone.all.map(&:name) }
