@@ -73,6 +73,15 @@
     </div>
 
     <div class="container">
+      <% if Rails.env.try_it? %>
+        <div class="flash">
+          <div class="alert alert-warning">
+            <span class="glyphicon glyphicon-warning-sign"></span>
+            This is for demonstration only. All data will be RESET DAILY.
+            Go to <%= link_to "www.breakpointapp.com", "https://www.breakpointapp.com", class: "alert-link" %> when you are ready to create your own account.
+          </div>
+        </div>
+      <% end %>
       <% flash.each do |name, msg| %>
         <div class="flash">
           <div class="alert alert-<%= flash_name_for_bootstrap(name)[:class] %>">
