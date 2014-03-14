@@ -23,7 +23,7 @@ class Match < ActiveRecord::Base
   def self.notify(name, options)
     match = find(options.fetch(:match_id))
 
-    match.team_users(options.fetch(:reply_to)).each do |to|
+    match.team.active_users.each do |to|
       MatchMailer.send("match_#{name}", match, to.email, options.merge(user_id: to.id)).deliver
     end
   end
@@ -36,14 +36,6 @@ class Match < ActiveRecord::Base
     end
 
     find(match_id).match_availability_for(user_id)
-  end
-
-  def team_emails(from = nil)
-    team.team_emails.reject { |e| from == e }
-  end
-
-  def team_users(from = nil)
-    team.active_users.reject { |user| from == user.email }
   end
 
   def team_location

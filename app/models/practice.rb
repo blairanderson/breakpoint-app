@@ -14,7 +14,7 @@ class Practice < ActiveRecord::Base
   def self.notify(name, options)
     practice = find(options.fetch(:practice_id))
 
-    practice.team_users(options.fetch(:reply_to)).each do |to|
+    practice.team.active_users.each do |to|
       PracticeMailer.send("practice_#{name}", practice, to.email, options.merge(user_id: to.id)).deliver
     end
   end
@@ -27,14 +27,6 @@ class Practice < ActiveRecord::Base
     end
 
     find(practice_id).practice_session_for(user_id)
-  end
-
-  def team_emails(from = nil)
-    team.team_emails.reject { |e| from == e }
-  end
-
-  def team_users(from = nil)
-    team.active_users.reject { |user| from == user.email }
   end
 
   def practice_session_for(user_id)
