@@ -1,3 +1,5 @@
+<% subtitle 'Review team availability' %>
+
 <div class="alert alert-info">
   <h4>Need more players?</h4>
   <p>
@@ -6,7 +8,9 @@
       Preview and send player request email
     <% end %>
   </p>
-  Select players or groups below to send a player request email
+
+  Players that have not repsonded are selected by default.<br>
+  Select more players or groups below to send a player request email to those players.
 </div>
 
 <% @match.players_status.keys.in_groups_of(2, false).each do |groups| %>

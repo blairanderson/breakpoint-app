@@ -100,7 +100,7 @@ describe 'matches' do
     page.should have_content 'Review the email below'
     click_link 'back to matches'
     click_link 'Preview and send availability email'
-    page.should_not have_selector '.alert-warning'
+    page.should_not have_content 'The match has not changed'
     click_button 'Email team'
     @match.reload
     last_email.encoded.should_not match /testing extra comments/

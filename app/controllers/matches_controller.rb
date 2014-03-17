@@ -44,7 +44,7 @@ class MatchesController < ApplicationController
     @match = Match.find(params[:id])
     authorize current_team, :update?
 
-    @users = current_team.users.where(id: params[:user_ids].split(",").map(&:to_i))
+    @users = current_team.active_users.where(id: params[:user_ids].split(",").map(&:to_i))
     @player_request_email = MatchMailer.match_player_request(@match,
                                                              current_user.email,
                                                              from:     current_user.name,
@@ -96,7 +96,7 @@ class MatchesController < ApplicationController
     @match = Match.find(params[:id])
     authorize current_team, :update?
 
-    @users = current_team.users.where(id: params[:user_ids].map(&:to_i))
+    @users = current_team.active_users.where(id: params[:user_ids].map(&:to_i))
     Match.delay.notify(:player_request,
                        from:     current_user.name,
                        reply_to: current_user.email,

@@ -2,7 +2,13 @@
 
 <div class="alert alert-info">
   Review the email below and click the Email player request button.<br>
-  The email will be sent to <%= @users.collect(&:name).to_sentence %>.
+  The email will be sent to <%= @users.collect(&:name).to_sentence %>.<br>
+  To send an email to the entire team, use the
+  <%= link_to "preview and send availability email", availability_email_team_match_path(current_team, @match) %> page.
+</div>
+
+<div class="alert alert-warning">
+  <strong>NOTE:</strong> This preview is specific to you. The links in the email will be different depending on each players availability.
 </div>
 
 <div class="panel panel-default">
