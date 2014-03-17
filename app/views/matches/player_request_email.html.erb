@@ -24,7 +24,10 @@
     </div>
   </div>
 
-  <%= hidden_field_tag :user_ids, @users.collect(&:id) %>
+  <% @users.each do |user| %>
+    <%= hidden_field_tag 'user_ids[]', user.id %>
+  <% end %>
+
   <%= submit_tag 'Email player request', :class => 'btn btn-primary' %>
 <% end %>
 
