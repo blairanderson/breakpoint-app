@@ -1,0 +1,37 @@
+<div class="col-md-6">
+  <div class="panel panel-<%= availability_label(availability_group) %>">
+    <div class="panel-heading clearfix">
+      <h3 class="panel-title pull-left">
+        <%= availability_group %>
+        <span class="badge"><%= @match.players_status[availability_group].size %></span>
+      </h3>
+      <div class="pull-right">
+        <a href="#" class="select-all btn btn-xs btn-<%= availability_label(availability_group) %>">
+          <span class="glyphicon glyphicon-check"></span>
+          All
+        </a>
+        <a href="#" class="select-none btn btn-xs btn-<%= availability_label(availability_group) %>">
+          <span class="glyphicon glyphicon-unchecked"></span>
+          None
+        </a>
+      </div>
+    </div>
+    <% if @match.players_status[availability_group].size > 0 %>
+      <div class="list-group <%= availability_group.parameterize %>">
+        <% @match.players_status[availability_group].each do |player| %>
+          <a href="#" class="list-group-item" data-user-id="<%= player.id %>">
+            <span class="glyphicon glyphicon-unchecked"></span>
+            <%= player.name %>
+            (<%= player.email %>)
+            <%= "- #{player.phone_number}" if player.phone_number.present? %>
+          </a>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="panel-body">
+        No players in this group
+      </div>
+    <% end %>
+  </div>
+</div>
+

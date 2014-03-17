@@ -1,19 +1,41 @@
-<p style="text-align: center;">Can you play?</p>
-<p style="text-align: center;">
-  <%= link_to "YES",
-    set_availability_team_match_availabilities_url(
-      @match.team,
-      available: 'yes',
-      token: @match.match_availability_token_for(@user_id)),
-    style: "margin-right: 10px; font-size: 24px;" %>
-  or
-  <%= link_to "NO",
-    set_availability_team_match_availabilities_url(
-      @match.team,
-      available: 'no',
-      token: @match.match_availability_token_for(@user_id)),
-    style: "margin-left: 10px; font-size: 24px;" %>
-</p>
+<% if @availability.blank? %>
+  <p style="text-align: center;">Can you play?</p>
+  <p style="text-align: center;">
+    <%= link_to "YES",
+      set_availability_team_match_availabilities_url(
+        @match.team,
+        available: 'yes',
+        token: @token),
+      style: "margin-right: 10px; font-size: 24px;" %>
+    or
+    <%= link_to "NO",
+      set_availability_team_match_availabilities_url(
+        @match.team,
+        available: 'no',
+        token: @token),
+      style: "margin-left: 10px; font-size: 24px;" %>
+  </p>
+<% else %>
+  <% if @availability.available? %>
+    <p style="text-align: center;">You already replied yes.</p>
+    <p style="text-align: center;">
+      <%= link_to "Change to NO",
+        set_availability_team_match_availabilities_url(
+          @match.team,
+          available: 'no',
+          token: @token),
+        style: "margin-left: 10px; font-size: 24px;" %>
+  <% else %>
+    <p style="text-align: center;">You already replied no.</p>
+    <p style="text-align: center;">
+      <%= link_to "Change to YES",
+        set_availability_team_match_availabilities_url(
+          @match.team,
+          available: 'yes',
+          token: @token),
+        style: "margin-left: 10px; font-size: 24px;" %>
+  <% end %>
+<% end %>
 
 <%= render partial: 'shared/match_mailer', locals: { match: @match } %>
 

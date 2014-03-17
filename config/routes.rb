@@ -31,7 +31,9 @@ Rails.application.routes.draw do
     end
     resources :matches, :except => [:show] do
       member do
+        get :availabilities
         get :availability_email
+        get :player_request_email
         get :lineup_email
       end
     end
@@ -71,6 +73,7 @@ Rails.application.routes.draw do
     resources :match_availabilities, :only => [:create, :update]
     member do
       post 'notify'
+      post 'notify_player_request'
       post 'notify_lineup'
       get 'edit_lineup' => 'match_lineups#edit'
       get 'edit_results' => 'results#edit'

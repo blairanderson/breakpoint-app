@@ -76,7 +76,7 @@ describe 'matches' do
     click_link 'Preview and send availability email'
     page.should have_selector '.alert-warning'
 
-    # stays disabled if nothing in the match changed
+    # shows warning still if nothing in the match changed
     visit team_matches_path(@match.team)
     click_link 'Edit match'
     # there is some weird thing going on here with capybara and the \n in text areas
@@ -104,9 +104,17 @@ describe 'matches' do
     click_button 'Email team'
     @match.reload
     last_email.encoded.should_not match /testing extra comments/
-    last_email.subject.should == "[2012 Summer] Match on #{I18n.l @match.date, :format => :long} updated"
+    last_email.subject.should == "[2012 Summer] Update for match on #{I18n.l @match.date, :format => :long}"
     click_link 'Preview and send availability email'
     page.should have_selector '.alert-warning'
+  end
+
+  it 'notifies player request email' do
+    visit player_request_email_team_match_path(ActsAsTenant.current_tenant, @match, user_ids: ActsAsTenant.current_tenant.users.pluck(:id).join(','))
+    page.should have_content 'Need players'
+    click_button 'Email player request'
+    last_email.subject.should == "[2012 Summer] Need players for match on #{I18n.l @match.date, :format => :long}"
+    page.should have_selector '.alert.alert-success', :text => 'Player request email sent'
   end
 end
 

@@ -23,7 +23,13 @@ class Match < ActiveRecord::Base
   def self.notify(name, options)
     match = find(options.fetch(:match_id))
 
-    match.team.active_users.each do |to|
+    if options[:user_ids]
+      send_to = match.team.active_users.select { |u| options[:user_ids].include?(u.id) }
+    else
+      send_to = match.team.active_users
+    end
+
+    send_to.each do |to|
       MatchMailer.send("match_#{name}", match, to.email, options.merge(user_id: to.id)).deliver
     end
   end

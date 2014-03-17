@@ -41,7 +41,7 @@ describe PracticeMailer do
 
     last_email.should_not be_nil
     last_email.to.should =~ ['dave.kroondyk@example.com']
-    last_email.subject.should == "[2012 Summer] Practice on #{I18n.l @practice.date, :format => :long} updated"
+    last_email.subject.should == "[2012 Summer] Update for practice on #{I18n.l @practice.date, :format => :long}"
     last_email.encoded.should match /When:/
   end
 end

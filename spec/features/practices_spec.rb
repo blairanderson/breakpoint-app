@@ -103,7 +103,7 @@ describe 'practices' do
     click_button 'Email team'
     @practice.reload
     last_email.encoded.should_not match /testing extra comments/
-    last_email.subject.should == "[2012 Summer] Practice on #{I18n.l @practice.date, :format => :long} updated"
+    last_email.subject.should == "[2012 Summer] Update for practice on #{I18n.l @practice.date, :format => :long}"
     click_link 'Preview and send availability email'
     page.should have_selector '.alert-warning'
   end

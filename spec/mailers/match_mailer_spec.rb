@@ -39,7 +39,16 @@ describe MatchMailer do
     MatchMailer.match_updated(@match, @user2.email, updated_options).deliver
 
     last_email.to.should =~ ['dave.kroondyk@example.com']
-    last_email.subject.should == "[2012 Summer] Match on #{I18n.l @match.date, :format => :long} updated"
+    last_email.subject.should == "[2012 Summer] Update for match on #{I18n.l @match.date, :format => :long}"
+    last_email.encoded.should match /When:/
+  end
+
+  it 'sends match player request email' do
+    MatchMailer.match_player_request(@match, @user2.email, created_options).deliver
+
+    last_email.to.should eq ['dave.kroondyk@example.com']
+    last_email[:from].formatted.should eq ['John Doe <notifications@breakpointapp.com>']
+    last_email.subject.should == "[2012 Summer] Need players for match on #{I18n.l @match.date, :format => :long}"
     last_email.encoded.should match /When:/
   end
 
@@ -57,7 +66,7 @@ describe MatchMailer do
     MatchMailer.match_lineup_updated(@match, @user2.email, updated_options).deliver
 
     last_email.to.should eq ['dave.kroondyk@example.com']
-    last_email.subject.should == "[2012 Summer] Lineup for match on #{I18n.l @match.date, :format => :long} updated"
+    last_email.subject.should == "[2012 Summer] Lineup updated for match on #{I18n.l @match.date, :format => :long}"
     last_email.encoded.should match /Lineup/
     last_email.encoded.should match /John Doe/
   end

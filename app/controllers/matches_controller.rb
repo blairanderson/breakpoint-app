@@ -36,6 +36,22 @@ class MatchesController < ApplicationController
     end
   end
 
+  def availabilities
+    @match = Match.find(params[:id])
+  end
+
+  def player_request_email
+    @match = Match.find(params[:id])
+    authorize current_team, :update?
+
+    @users = current_team.users.where(id: params[:user_ids].split(",").map(&:to_i))
+    @player_request_email = MatchMailer.match_player_request(@match,
+                                                             current_user.email,
+                                                             from:     current_user.name,
+                                                             reply_to: current_user.email,
+                                                             user_id:  current_user.id)
+  end
+
   def lineup_email
     @match = Match.find(params[:id])
     authorize current_team, :update?
@@ -74,6 +90,21 @@ class MatchesController < ApplicationController
 
     @match.notified!
     redirect_to team_matches_url(@match.team), :notice => 'Availability request email sent to team'
+  end
+
+  def notify_player_request
+    @match = Match.find(params[:id])
+    authorize current_team, :update?
+
+    @users = current_team.users.where(id: params[:user_ids].split(",").map(&:to_i))
+    Match.delay.notify(:player_request,
+                       from:     current_user.name,
+                       reply_to: current_user.email,
+                       comments: params[:comments],
+                       match_id: @match.id,
+                       user_ids: @users.pluck(:id))
+
+    redirect_to team_matches_url(@match.team), :notice => 'Player request email sent'
   end
 
   def notify_lineup

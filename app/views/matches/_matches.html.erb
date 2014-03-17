@@ -52,7 +52,10 @@
                     Preview and send availability email
                   <% end %>
                 </p>
-                <p><%= render :partial => 'match_availabilities', :locals => { :match => match } %></p>
+                <p>
+                  <span class="label label-primary">new!</span>
+                  <%= link_to "Who can play?", availabilities_team_match_path(current_team, match) %>
+                </p>
               </div>
             </div>
           </div>

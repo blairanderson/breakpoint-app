@@ -28,7 +28,7 @@ class PracticeMailer < ActionMailer::Base
     mail :to    => to,
       :from     => formatted_from(@from),
       :reply_to => options.fetch(:reply_to),
-      :subject  => "[#{@practice.team.name}] Practice on #{l @practice.date, :format => :long} updated"
+      :subject  => "[#{@practice.team.name}] Update for practice on #{l @practice.date, :format => :long}"
   end
 end
 

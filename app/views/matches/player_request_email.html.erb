@@ -1,0 +1,30 @@
+<% subtitle 'Preview and send player request email' %>
+
+<div class="alert alert-info">
+  Review the email below and click the Email player request button.<br>
+  The email will be sent to <%= @users.collect(&:name).to_sentence %>.
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Subject: <%= @player_request_email.subject %></h3>
+  </div>
+  <div class="panel-body">
+    <%= raw @player_request_email.body %>
+  </div>
+</div>
+
+<%= form_tag notify_player_request_match_path(@match, team_id: current_team.id), method: :post do %>
+  <div class="form-group">
+    <div class="row">
+      <div class="col-md-8">
+        <textarea placeholder="add extra comments" class="form-control" name="comments"></textarea>
+        <p class="help-block">Extra comments will be included in the email above "Thanks!"</p>
+      </div>
+    </div>
+  </div>
+
+  <%= hidden_field_tag :user_ids, @users.collect(&:id) %>
+  <%= submit_tag 'Email player request', :class => 'btn btn-primary' %>
+<% end %>
+

@@ -22,5 +22,16 @@ module ApplicationHelper
     return 'alert-info' unless match.has_results?
     match.won? ? 'alert-success' : 'alert-error'
   end
+
+  def availability_label(status)
+    case status
+    when "Available"
+      "success"
+    when "Unavailable"
+      "danger"
+    when "No Response"
+      "default"
+    end
+  end
 end
 
