@@ -53,11 +53,22 @@ class MatchMailer < ActionMailer::Base
   def match_lineup_set(match, to, options)
     @mail_type = "Lineup"
     created(match, to, options.merge(subject: "[#{match.team.name}] Lineup for match on #{l match.date, :format => :long}"))
+    attachement(match, options)
   end
 
   def match_lineup_updated(match, to, options)
     @mail_type = "Lineup"
     updated(match, to, options.merge(subject: "[#{match.team.name}] Lineup updated for match on #{l match.date, :format => :long}"))
+    attachement(match, options)
+  end
+
+  def attachement(match, options)
+    @from = options.fetch(:from)
+    attachments["Match.ics"] = 
+    {
+      mime_type: "text/calendar",
+      content:   build_ics(match, @from) 
+    }
   end
 end
 

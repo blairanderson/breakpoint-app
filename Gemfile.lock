@@ -14,6 +14,13 @@ GIT
       letter_opener (~> 1.0)
       rails (>= 3.2)
 
+GIT
+  remote: git://github.com/icalendar/icalendar.git
+  revision: e30196a72a47a2c0bf6c9781f08879f0bf5f674d
+  branch: 2.0beta
+  specs:
+    icalendar (2.0.0.beta.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -270,6 +277,7 @@ DEPENDENCIES
   dotenv-rails
   factory_girl_rails
   faker
+  icalendar!
   jquery-rails
   letter_opener_web!
   momentjs-rails

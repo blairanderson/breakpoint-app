@@ -22,5 +22,22 @@ module MailerHelper
       end.join.html_safe
     end
   end
+
+  def build_ics(match, from_name)
+    cal = Icalendar::Calendar.new
+    event = Icalendar::Event.new
+    event.dtstart = match.date
+    event.dtend = match.date.advance(:hours => 3)
+    event.summary = "Tennis Match"
+    puts from_name
+    event.location = match.location
+    if match.comment.present?
+      event.description = "Hi - \n Match comments: \n\n" + 
+                          match.comment + "\n\nThanks, \n" + from_name
+    end
+    cal.add_event(event)
+    
+    cal.to_ical
+  end
 end
 
