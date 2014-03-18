@@ -29,7 +29,6 @@ module MailerHelper
     event.dtstart = match.date
     event.dtend = match.date.advance(:hours => 3)
     event.summary = "Tennis Match"
-    puts from_name
     event.location = match.location
     if match.comment.present?
       event.description = "Hi - \n Match comments: \n\n" + 
