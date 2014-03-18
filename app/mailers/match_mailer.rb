@@ -63,7 +63,7 @@ class MatchMailer < ActionMailer::Base
   end
 
   def attachement(match, from_name)
-    attachments["Match.ics"] = 
+    attachments["match.ics"] = 
     {
       mime_type: "text/calendar",
       content:   build_ics(match, from_name) 
