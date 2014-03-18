@@ -46,5 +46,5 @@ gem 'dotenv-rails'
 gem 'postmark-rails'
 gem 'sidekiq'
 gem 'sinatra',              require: false
-gem 'icalendar',												github: 'icalendar/icalendar', branch: '2.0beta'
+gem 'icalendar',            github: 'icalendar/icalendar', branch: '2.0beta'
 
