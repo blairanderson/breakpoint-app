@@ -46,8 +46,18 @@ class TryItSeeds
     @team ||= Team.first
   end
 
+  def team_names
+    [
+      "Pebble Beach Men's 3.0",
+      "Indian Wells Women's 3.0",
+      "Napa Mixed 7.0",
+      "Key Biscayne Men's 4.0",
+      "Sun Valley Women's 3.5",
+    ]
+  end
+
   def team
-    find_team || Team.create!(name: Faker::Company.name,
+    find_team || Team.create!(name: team_names.sample,
                               email: Faker::Internet.domain_word,
                               singles_matches: 2,
                               doubles_matches: 3,
