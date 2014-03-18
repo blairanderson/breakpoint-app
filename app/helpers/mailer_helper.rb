@@ -24,18 +24,22 @@ module MailerHelper
   end
 
   def build_ics(match, from_name)
-    cal = Icalendar::Calendar.new
-    event = Icalendar::Event.new
-    event.dtstart = match.date
-    event.dtend = match.date.advance(:hours => 3)
-    event.summary = "Tennis Match"
+    event          = Icalendar::Event.new
+    event.dtstart  = match.date
+    event.dtend    = match.date.advance(:hours => 3)
+    event.summary  = "Tennis Match"
     event.location = match.location
     if match.comment.present?
-      event.description = "Hi - \n Match comments: \n\n" + 
-                          match.comment + "\n\nThanks, \n" + from_name
+      event.description = %Q{Match comments:
+
+#{match.comment}
+
+Thanks,
+#{from_name}}
     end
+
+    cal = Icalendar::Calendar.new
     cal.add_event(event)
-    
     cal.to_ical
   end
 end
