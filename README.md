@@ -18,8 +18,10 @@ Breakpoint App is a free tennis league scheduling web application
 1. Bundle install
 * cp config/database.yml.example config/database.yml
 * createuser -s -r breakpoint_app
-* rake db:create db:migrate
+* rake db:setup breakpointapp:reset_passwords breakpointapp:user_info
+* Note: the reset_passwords task will set the sample user passwords to 'password' and the user_info task will output a list of valid email addresses to the console
 * rails s
+* login using a valid email address and password
 
 ## Contacts
 
