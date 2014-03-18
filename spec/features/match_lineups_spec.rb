@@ -37,7 +37,9 @@ describe 'match_lineups' do
     fill_in 'comments', :with => 'testing extra comments'
     click_button 'Email team'
 
-    last_email.encoded.should match /testing extra comments/
+    last_email.body.should match /testing extra comments/
+    last_email.attachments.should have(1).attachment
+    last_email.attachments.first.content_type.should eq 'text/calendar; charset=UTF-8'
     page.should have_selector '.alert.alert-success', :text => 'Lineup email sent to team'
   end
 end
