@@ -38,13 +38,13 @@
         <% end %>
       </div>
     <% end %>
-    <div class="panel panel-info">
+    <div class="panel panel-default">
       <div class="panel-heading">
         Email selected players
         <span class="badge selected-players">0</span>
       </div>
       <div class="panel-body">
-        <%= link_to player_request_email_team_match_path(current_team, @match), class: "player-request-email btn btn-primary" do %>
+        <%= link_to player_request_email_team_match_path(current_team, @match), class: "player-request-email player-request-email-right btn btn-primary" do %>
           <span class="glyphicon glyphicon-envelope"></span>
           Preview and send player request email
         <% end %>
@@ -54,7 +54,22 @@
   <div class="col-md-4">
     <div class="alert alert-info">
       <h4>Need more players?</h4>
-      <%= render partial: 'availability_help' %>
+      Use the
+      <a href="#" class="btn btn-xs btn-info disabled">
+        <span class="glyphicon glyphicon-check"></span>
+        All
+      </a>
+      <a href="#" class="btn btn-xs btn-info disabled">
+        <span class="glyphicon glyphicon-unchecked"></span>
+        None
+      </a>
+      buttons to select players to email. Uncheck players you don't want to email.
+      <hr>
+      Once players are selected,
+      <%= link_to player_request_email_team_match_path(current_team, @match), class: "player-request-email player-request-email-bottom" do %>
+        <span class="glyphicon glyphicon-envelope"></span>
+        Preview and send player request email
+      <% end %>
     </div>
   </div>
 </div>
@@ -83,12 +98,22 @@
   }
 
   $(function() {
-    $('.player-request-email').popover({
+    $('.player-request-email-right').popover({
       html: true,
       trigger: 'manual',
-      title: 'Select players first',
+      placement: 'right',
+      title: 'No players are selected',
       content: "<%= j render partial: 'availability_help' %>"
     });
+
+    $('.player-request-email-bottom').popover({
+      html: true,
+      trigger: 'manual',
+      placement: 'bottom',
+      title: 'No players are selected',
+      content: "<%= j render partial: 'availability_help' %>"
+    });
+
     $('.player-request-email').on('click', function(e) {
       e.preventDefault();
 

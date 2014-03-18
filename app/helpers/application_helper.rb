@@ -30,7 +30,7 @@ module ApplicationHelper
     when "Unavailable"
       "danger"
     when "No Response"
-      "default"
+      "warning"
     end
   end
 end
