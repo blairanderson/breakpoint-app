@@ -1,18 +1,8 @@
 <% subtitle 'Preview and send availability request' %>
 
-<div class="alert alert-info">
-  Review the email below and click the Email team button
-</div>
-
-<% if @practice.notified_team? %>
-  <div class="alert alert-warning">
-    The practice has not changed since this email was last sent
-  </div>
-<% end %>
-
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">Subject: <%= @practice_email.subject %></h3>
+    <%= render partial: 'shared/mailer_preview_details', locals: { subject: @practice_email.subject } %>
   </div>
   <div class="panel-body">
     <%= raw @practice_email.body %>
@@ -30,5 +20,10 @@
   </div>
 
   <%= submit_tag 'Email team', :class => 'btn btn-primary' %>
+  <% if @practice.notified_team? %>
+    <span class="text-warning">
+      The practice has not changed since this email was last sent
+    </div>
+  <% end %>
 <% end %>
 

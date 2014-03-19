@@ -74,7 +74,7 @@ describe 'practices' do
     last_email.encoded.should match /testing extra comments/
     last_email.subject.should == "[2012 Summer] Practice on #{I18n.l @practice.date, :format => :long}"
     click_link 'Preview and send availability email'
-    page.should have_selector '.alert-warning'
+    page.should have_selector '.text-warning'
 
     # stays disabled if nothing in the practice changed
     visit team_practices_path(@practice.team)
@@ -88,7 +88,7 @@ describe 'practices' do
     fill_in 'Comment', :with => @practice.comment
     click_button 'Save practice'
     click_link 'Preview and send availability email'
-    page.should have_selector '.alert-warning'
+    page.should have_selector '.text-warning'
 
     # sends updated email after practice is updated
     visit team_practices_path(@practice.team)
@@ -96,16 +96,16 @@ describe 'practices' do
     fill_in 'What day?', :with => '6/25/2014'
     fill_in 'What time?', :with => '06:00 PM'
     click_button 'Save practice'
-    page.should have_content 'Review the email below'
+    page.should have_content 'custom for each player'
     click_link 'back to practices'
     click_link 'Preview and send availability email'
-    page.should_not have_selector '.alert-warning'
+    page.should_not have_content 'The practice has not changed'
     click_button 'Email team'
     @practice.reload
     last_email.encoded.should_not match /testing extra comments/
     last_email.subject.should == "[2012 Summer] Update for practice on #{I18n.l @practice.date, :format => :long}"
     click_link 'Preview and send availability email'
-    page.should have_selector '.alert-warning'
+    page.should have_selector '.text-warning'
   end
 end
 

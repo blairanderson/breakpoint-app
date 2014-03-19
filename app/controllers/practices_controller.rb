@@ -23,14 +23,14 @@ class PracticesController < ApplicationController
                                                           current_user.email,
                                                           from:     current_user.name,
                                                           reply_to: current_user.email,
-                                                          user_id:  current_user.id)
+                                                          preview:  true)
     else
       @practice_email = PracticeMailer.practice_updated(@practice,
                                                         current_user.email,
                                                         from:           current_user.name,
                                                         reply_to:       current_user.email,
-                                                        user_id:        current_user.id,
-                                                        recent_changes: @practice.recent_changes)
+                                                        recent_changes: @practice.recent_changes,
+                                                        preview:        true)
     end
   end
 

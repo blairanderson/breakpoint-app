@@ -13,14 +13,21 @@ describe PracticeMailer do
     ActsAsTenant.current_tenant = nil
   end
 
-  it 'sends practice scheduled email' do
-    options = {
-      from: @user.name,
-      reply_to: @user.email,
-      user_id: @user2.id
-    }
+  let(:created_options) {
+    { from: @user.name, reply_to: @user.email, user_id: @user2.id }
+  }
 
-    PracticeMailer.practice_scheduled(@practice, @user2.email, options).deliver
+  let(:updated_options) {
+   { from: @user.name, reply_to: @user.email, user_id: @user2.id, recent_changes: [] }
+  }
+
+  it 'renders practice scheduled preview' do
+    mail = PracticeMailer.practice_scheduled(@practice, @user2.email, created_options.merge(preview: true))
+    mail.body.should match /custom for each player/
+  end
+
+  it 'sends practice scheduled email' do
+    PracticeMailer.practice_scheduled(@practice, @user2.email, created_options).deliver
 
     last_email.should_not be_nil
     last_email.to.should =~ ['dave.kroondyk@example.com']
@@ -29,15 +36,13 @@ describe PracticeMailer do
     last_email.encoded.should match /When:/
   end
 
-  it 'sends practice updated email', :versioning => true do
-    options = {
-      from: @user.name,
-      reply_to: @user.email,
-      user_id: @user2.id,
-      recent_changes: []
-    }
+  it 'renders practice updated preview' do
+    mail = PracticeMailer.practice_updated(@practice, @user2.email, updated_options.merge(preview: true))
+    mail.body.should match /custom for each player/
+  end
 
-    PracticeMailer.practice_updated(@practice, @user2.email, options).deliver
+  it 'sends practice updated email', :versioning => true do
+    PracticeMailer.practice_updated(@practice, @user2.email, updated_options).deliver
 
     last_email.should_not be_nil
     last_email.to.should =~ ['dave.kroondyk@example.com']

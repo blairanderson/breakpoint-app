@@ -2,16 +2,7 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <table class="table borderless">
-      <tr>
-        <td class="text-right"><strong>To:</strong></td>
-        <td>Entire team</td>
-      </tr>
-      <tr>
-        <td class="text-right"><strong>Subject:</strong></td>
-        <td><%= @match_email.subject %></td>
-      </tr>
-    </table>
+    <%= render partial: 'shared/mailer_preview_details', locals: { subject: @match_email.subject } %>
   </div>
   <div class="panel-body">
     <%= raw @match_email.body %>

@@ -8,9 +8,10 @@ class PracticeMailer < ActionMailer::Base
     @team_name = practice.team.name
     @mail_type = "Practice"
     @practice  = practice
-    @user_id   = options.fetch(:user_id)
+    @user_id   = options[:user_id]
     @comments  = options[:comments]
     @from      = options.fetch(:from)
+    @preview   = options.fetch(:preview, false)
     mail :to    => to,
       :from     => formatted_from(@from),
       :reply_to => options.fetch(:reply_to),
@@ -19,12 +20,13 @@ class PracticeMailer < ActionMailer::Base
 
   def practice_updated(practice, to, options)
     @team_name      = practice.team.name
-    @mail_type = "Practice"
+    @mail_type      = "Practice"
     @practice       = practice
     @user_id        = options[:user_id]
     @comments       = options[:comments]
     @from           = options.fetch(:from)
     @recent_changes = options.fetch(:recent_changes)
+    @preview        = options.fetch(:preview, false)
     mail :to    => to,
       :from     => formatted_from(@from),
       :reply_to => options.fetch(:reply_to),
