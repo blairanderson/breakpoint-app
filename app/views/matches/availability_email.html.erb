@@ -1,22 +1,17 @@
 <% subtitle 'Preview and send availability request' %>
 
-<div class="alert alert-info">
-  Review the email below and click the Email team button
-</div>
-
-<div class="alert alert-warning">
-  <strong>NOTE:</strong> This preview is specific to you. The links in the email will be different depending on each players availability.
-</div>
-
-<% if @match.notified_team? %>
-  <div class="alert alert-warning">
-    The match has not changed since this email was last sent
-  </div>
-<% end %>
-
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">Subject: <%= @match_email.subject %></h3>
+    <table class="table borderless">
+      <tr>
+        <td class="text-right"><strong>To:</strong></td>
+        <td>Entire team</td>
+      </tr>
+      <tr>
+        <td class="text-right"><strong>Subject:</strong></td>
+        <td><%= @match_email.subject %></td>
+      </tr>
+    </table>
   </div>
   <div class="panel-body">
     <%= raw @match_email.body %>
@@ -34,5 +29,10 @@
   </div>
 
   <%= submit_tag 'Email team', :class => 'btn btn-primary' %>
+  <% if @match.notified_team? %>
+    <span class="text-warning">
+      The match has not changed since this email was last sent
+    </span>
+  <% end %>
 <% end %>
 

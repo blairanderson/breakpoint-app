@@ -13,6 +13,7 @@ class MatchMailer < ActionMailer::Base
     @token        = match.match_availability_token_for(@user_id)
     @comments     = options[:comments]
     @from         = options.fetch(:from)
+    @preview      = options.fetch(:preview, false)
     mail :to    => to,
       :from     => formatted_from(@from),
       :reply_to => options.fetch(:reply_to),
@@ -29,6 +30,7 @@ class MatchMailer < ActionMailer::Base
     @comments       = options[:comments]
     @from           = options.fetch(:from)
     @recent_changes = options[:recent_changes]
+    @preview        = options.fetch(:preview, false)
     mail :to    => to,
       :from     => formatted_from(@from),
       :reply_to => options.fetch(:reply_to),

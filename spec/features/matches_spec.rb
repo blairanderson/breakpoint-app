@@ -74,7 +74,7 @@ describe 'matches' do
     last_email.encoded.should match /testing extra comments/
     last_email.subject.should == "[2012 Summer] Match on #{I18n.l @match.date, :format => :long}"
     click_link 'Preview and send availability email'
-    page.should have_selector '.alert-warning'
+    page.should have_selector '.text-warning'
 
     # shows warning still if nothing in the match changed
     visit team_matches_path(@match.team)
@@ -89,7 +89,7 @@ describe 'matches' do
     fill_in 'Comment', :with => @match.comment
     click_button 'Save match'
     click_link 'Preview and send availability email'
-    page.should have_selector '.alert-warning'
+    page.should have_selector '.text-warning'
 
     # sends updated email after match is updated
     visit team_matches_path(@match.team)
@@ -97,7 +97,7 @@ describe 'matches' do
     fill_in 'What day?', :with => '6/25/2014'
     fill_in 'What time?', :with => '06:00 PM'
     click_button 'Save match'
-    page.should have_content 'Review the email below'
+    page.should have_content 'custom for each player'
     click_link 'back to matches'
     click_link 'Preview and send availability email'
     page.should_not have_content 'The match has not changed'
@@ -106,7 +106,7 @@ describe 'matches' do
     last_email.encoded.should_not match /testing extra comments/
     last_email.subject.should == "[2012 Summer] Update for match on #{I18n.l @match.date, :format => :long}"
     click_link 'Preview and send availability email'
-    page.should have_selector '.alert-warning'
+    page.should have_selector '.text-warning'
   end
 
   it 'notifies player request email' do

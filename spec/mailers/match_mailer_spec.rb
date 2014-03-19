@@ -26,6 +26,11 @@ describe MatchMailer do
     { from: @user.name, reply_to: @user.email, user_id: @user2.id, recent_changes: [] }
   }
 
+  it 'renders match scheduled preview' do
+    mail = MatchMailer.match_scheduled(@match, @user2.email, created_options.merge(preview: true))
+    mail.body.should match /custom for each player/
+  end
+
   it 'sends match scheduled email' do
     MatchMailer.match_scheduled(@match, @user2.email, created_options).deliver
 
@@ -33,6 +38,12 @@ describe MatchMailer do
     last_email[:from].formatted.should eq ['John Doe <notifications@breakpointapp.com>']
     last_email.subject.should == "[2012 Summer] Match on #{I18n.l @match.date, :format => :long}"
     last_email.encoded.should match /When:/
+    last_email.encoded.should_not match /custom for each player/
+  end
+
+  it 'renders match updated preview' do
+    mail = MatchMailer.match_updated(@match, @user2.email, updated_options.merge(preview: true))
+    mail.body.should match /custom for each player/
   end
 
   it 'sends match updated email', :versioning => true do
@@ -41,6 +52,12 @@ describe MatchMailer do
     last_email.to.should =~ ['dave.kroondyk@example.com']
     last_email.subject.should == "[2012 Summer] Update for match on #{I18n.l @match.date, :format => :long}"
     last_email.encoded.should match /When:/
+    last_email.encoded.should_not match /custom for each player/
+  end
+
+  it 'renders match player request preview' do
+    mail = MatchMailer.match_player_request(@match, @user2.email, created_options.merge(preview: true))
+    mail.body.should match /custom for each player/
   end
 
   it 'sends match player request email' do
@@ -50,6 +67,7 @@ describe MatchMailer do
     last_email[:from].formatted.should eq ['John Doe <notifications@breakpointapp.com>']
     last_email.subject.should == "[2012 Summer] Need players for match on #{I18n.l @match.date, :format => :long}"
     last_email.encoded.should match /When:/
+    last_email.encoded.should_not match /custom for each player/
   end
 
   it 'sends match lineup set email' do

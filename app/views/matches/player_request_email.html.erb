@@ -1,19 +1,17 @@
 <% subtitle 'Preview and send player request email' %>
 
-<div class="alert alert-info">
-  Review the email below and click the Email player request button.<br>
-  The email will be sent to <%= @users.collect(&:name).to_sentence %>.<br>
-  To send an email to the entire team, use the
-  <%= link_to "preview and send availability email", availability_email_team_match_path(current_team, @match) %> page.
-</div>
-
-<div class="alert alert-warning">
-  <strong>NOTE:</strong> This preview is specific to you. The links in the email will be different depending on each players availability.
-</div>
-
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">Subject: <%= @player_request_email.subject %></h3>
+    <table class="table borderless">
+      <tr>
+        <td class="text-right"><strong>To:</strong></td>
+        <td><%= @users.collect(&:name).join(", ") %></td>
+      </tr>
+      <tr>
+        <td class="text-right"><strong>Subject:</strong></td>
+        <td><%= @player_request_email.subject %></td>
+      </tr>
+    </table>
   </div>
   <div class="panel-body">
     <%= raw @player_request_email.body %>

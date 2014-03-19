@@ -25,14 +25,14 @@ class MatchesController < ApplicationController
                                                  current_user.email,
                                                  from:     current_user.name,
                                                  reply_to: current_user.email,
-                                                 user_id:  current_user.id)
+                                                 preview:  true)
     else
       @match_email = MatchMailer.match_updated(@match,
                                                current_user.email,
                                                from:           current_user.name,
                                                reply_to:       current_user.email,
-                                               user_id:        current_user.id,
-                                               recent_changes: @match.recent_changes)
+                                               recent_changes: @match.recent_changes,
+                                               preview:        true)
     end
   end
 
@@ -49,7 +49,7 @@ class MatchesController < ApplicationController
                                                              current_user.email,
                                                              from:     current_user.name,
                                                              reply_to: current_user.email,
-                                                             user_id:  current_user.id)
+                                                             preview:  true)
   end
 
   def lineup_email

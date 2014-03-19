@@ -1,18 +1,17 @@
 <% subtitle 'Preview and send lineup' %>
 
-<div class="alert alert-info">
-  Review the email below and click the Email team button
-</div>
-
-<% if @match.notified_team_lineup? %>
-  <div class="alert alert-warning">
-    The lineup has not changed since this email was last sent
-  </div>
-<% end %>
-
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">Subject: <%= @match_lineup_email.subject %></h3>
+    <table class="table borderless">
+      <tr>
+        <td class="text-right"><strong>To:</strong></td>
+        <td>Entire team</td>
+      </tr>
+      <tr>
+        <td class="text-right"><strong>Subject:</strong></td>
+        <td><%= @match_lineup_email.subject %></td>
+      </tr>
+    </table>
   </div>
   <div class="panel-body">
     <%= raw @match_lineup_email.body %>
@@ -30,5 +29,10 @@
   </div>
 
   <%= submit_tag 'Email team', :class => 'btn btn-primary' %>
+  <% if @match.notified_team_lineup? %>
+    <span class="text-warning">
+      The lineup has not changed since this email was last sent
+    </span>
+  <% end %>
 <% end %>
 
