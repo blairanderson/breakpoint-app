@@ -11,11 +11,6 @@ describe 'team members' do
     visit team_team_members_path(@team)
   end
 
-  it 'shows team members in a team' do
-    page.should have_content 'captain captain'
-    page.should_not have_content 'Dave Kroondyk'
-  end
-
   it 'edit team members role' do
     page.should have_content 'Captain'
     click_link 'Edit'
