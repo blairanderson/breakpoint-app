@@ -19,7 +19,7 @@ class PermittedParams
   end
 
   def match_availabilities
-    params.require(:match_availability).permit(:available)
+    params.require(:match_availability).permit(:state)
   end
 
   def practice_sessions

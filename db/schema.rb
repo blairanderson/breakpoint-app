@@ -19,14 +19,15 @@ ActiveRecord::Schema.define(version: 20140323154011) do
   create_table "match_availabilities", force: true do |t|
     t.integer  "user_id"
     t.integer  "match_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.boolean  "available"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.integer  "team_id"
+    t.string   "state",        default: "no_response"
     t.datetime "destroyed_at"
   end
 
   add_index "match_availabilities", ["match_id"], name: "index_match_availabilities_on_match_id", using: :btree
+  add_index "match_availabilities", ["state"], name: "index_match_availabilities_on_state", using: :btree
   add_index "match_availabilities", ["team_id"], name: "index_match_availabilities_on_team_id", using: :btree
   add_index "match_availabilities", ["user_id"], name: "index_match_availabilities_on_user_id", using: :btree
 

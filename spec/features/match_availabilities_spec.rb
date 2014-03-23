@@ -10,37 +10,38 @@ describe 'match_availabilities' do
     visit team_matches_path(@match.team)
   end
 
-  it 'lists all match_availabilities' do
+  it 'lists all match_availabilities', js: true do
     click_link 'See who can play when'
     page.should have_selector '.label', :text => 'n/a'
 
     visit team_matches_path(@match.team)
-    click_button "I can't play"
+    click_link "No"
     click_link 'See who can play when'
     page.should have_selector '.label-danger', :text => 'no'
+    page.should_not have_selector '.label-success', :text => 'yes'
 
     visit team_matches_path(@match.team)
-    click_button 'I can play'
+    click_link 'Yes'
     click_link 'See who can play when'
     page.should have_selector '.label-success', :text => 'yes'
+    page.should_not have_selector '.label-danger', :text => 'no'
+
+    visit team_matches_path(@match.team)
+    click_link 'Maybe'
+    click_link 'See who can play when'
+    page.should have_selector '.label-info', :text => 'maybe'
+    page.should_not have_selector '.label-success', :text => 'yes'
   end
 
-  it 'creates a match_availability as available' do
-    click_button 'I can play'
-    page.should have_content 'You can play'
-  end
+  it 'toggles match_availability', js: true do
+    click_link 'Yes'
+    page.should have_selector '.btn-success.disabled', :text => 'Yes'
 
-  it 'creates a match_availability as not available' do
-    click_button "I can't play"
-    page.should have_content "You can't play"
-  end
+    click_link "Maybe"
+    page.should have_selector '.btn-info.disabled', :text => 'Maybe'
 
-  it 'toggles match_availability' do
-    click_button 'I can play'
-    page.should have_content 'You can play'
-
-    click_button "I can't play"
-    page.should have_content "You can't play"
+    click_link "No"
+    page.should have_selector '.btn-danger.disabled', :text => 'No'
   end
 
   it 'accepts availability from email' do

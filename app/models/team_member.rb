@@ -9,6 +9,8 @@ class TeamMember < ActiveRecord::Base
 
   delegate :new?, :active?, :inactive?, :to => :current_state
 
+  after_create :setup_match_availabilities
+
   def self.new_members
     where(state: "new")
   end
@@ -53,6 +55,14 @@ class TeamMember < ActiveRecord::Base
 
   def deactivate!
     update!(state: 'inactive')
+  end
+
+  def setup_match_availabilities
+    ActsAsTenant.with_tenant(team) do
+      team.matches.each do |match|
+        match.match_availabilities.create!(user_id: user_id)
+      end
+    end
   end
 end
 

@@ -54,7 +54,7 @@ describe Match do
     user = create(:user)
     @team.team_members.create(:user => user, :state => 'active')
     match = create(:match)
-    match_availability = create(:match_availability, :match => match, :user => user)
+    match_availability = match.match_availabilities.first
 
     match.match_availability_for(user.id).should eq match_availability
   end

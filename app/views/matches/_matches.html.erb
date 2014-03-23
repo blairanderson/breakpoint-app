@@ -1,40 +1,35 @@
 <% matches.each do |match| %>
   <% match_availability = match.match_availability_for(current_user.id) %>
-  <% show_yes_form = match_availability.new_record? ? true : !match_availability.available? %>
-  <% show_no_form = match_availability.new_record? ? true : match_availability.available? %>
-  <div class="panel panel-<%= match_availability.new_record? ? 'default' : (match_availability.available? ? 'success' : 'danger') %>">
+  <div class="panel panel-<%= availability_label(match_availability.state) %>">
     <div class="panel-heading">
-      <h3 class="panel-title clearfix">
-        <div class="pull-left">
-          <% if show_yes_form %>
-            <%= form_for [match, match_availability], html: { style: 'margin-bottom: 0px;' } do |f| %>
-              <%= f.hidden_field :available, value: true %>
-              <%= hidden_field_tag :team_id, current_team.id %>
-              <%= submit_tag 'I can play', :class => 'btn btn-sm btn-default' %>
-            <% end %>
-          <% else %>
-            <button class="btn btn-sm btn-success" disabled="disabled">You can play</button>
-          <% end %>
-        </div>
+      <div class="btn-group btn-group-sm">
+        <%= link_to "Yes",
+          match_match_availability_path(match, match_availability, team_id: current_team.id, state: 'yes'),
+          data: { label: 'success' },
+          remote: true,
+          method: :patch,
+          class: "availability btn btn-#{match_availability.yes? ? 'success disabled' : 'default'}" %>
 
-        <div class="pull-left" style="margin-left: 15px;">
-          <% if show_no_form %>
-            <%= form_for [match, match_availability], html: { style: 'margin-bottom: 0px;' } do |f| %>
-              <%= f.hidden_field :available, value: false %>
-              <%= hidden_field_tag :team_id, current_team.id %>
-              <%= submit_tag "I can't play", :class => 'btn btn-sm btn-default' %>
-            <% end %>
-          <% else %>
-            <button class="btn btn-sm btn-danger" disabled="disabled">You can't play</button>
-          <% end %>
-        </div>
+        <%= link_to "Maybe",
+          match_match_availability_path(match, match_availability, team_id: current_team.id, state: 'maybe'),
+          data: { label: 'info' },
+          remote: true,
+          method: :patch,
+          class: "availability btn btn-#{match_availability.maybe? ? 'info disabled' : 'default'}" %>
 
-        <% if policy(current_team).captain? %>
-          <div class="pull-right">
-            <%= link_to 'Edit match', edit_team_match_path(current_team, match), :class => 'btn btn-sm btn-default' %>
-          </div>
-        <% end %>
-      </h3>
+        <%= link_to "No",
+          match_match_availability_path(match, match_availability, team_id: current_team.id, state: 'no'),
+          data: { label: 'danger' },
+          remote: true,
+          method: :patch,
+          class: "availability btn btn-#{match_availability.no? ? 'danger disabled' : 'default'}" %>
+      </div>
+
+      <% if policy(current_team).captain? %>
+        <div class="pull-right">
+          <%= link_to 'Edit match', edit_team_match_path(current_team, match), :class => 'btn btn-sm btn-default' %>
+        </div>
+      <% end %>
     </div>
     <div class="panel-body">
       <% if policy(current_team).captain? %>
@@ -81,4 +76,16 @@
     </div>
   </div>
 <% end %>
+
+<script>
+  $(function() {
+    $('.panel').on('ajax:success', '.availability', function(e, data, status, xhr) {
+      var availability = $(this);
+      var match = availability.closest('.panel');
+      match.find('.availability').removeClass('disabled btn-success btn-info btn-danger btn-warning').addClass('btn-default').off('click');
+      availability.removeClass('btn-default').addClass('disabled btn-' + availability.data('label'));
+      match.removeClass('panel-success panel-info panel-danger panel-warning').addClass('panel-' + availability.data('label'));
+    });
+  });
+</script>
 

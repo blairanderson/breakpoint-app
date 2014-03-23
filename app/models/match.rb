@@ -15,6 +15,7 @@ class Match < ActiveRecord::Base
   accepts_nested_attributes_for :match_lineups
 
   after_create :setup_match_lineups
+  after_create :setup_match_availabilities
 
   delegate :lineup_created?, :lineup_updated?, :notified_team_lineup?, :to => :notified_team_lineup_state
 
@@ -58,25 +59,35 @@ class Match < ActiveRecord::Base
   end
 
   def available_players
-    match_availabilities.includes(:user).where(:available => true).collect(&:user)
+    match_availabilities.includes(:user).available.collect(&:user)
   end
 
-  def unavailable_players
-    match_availabilities.includes(:user).where(:available => false).collect(&:user)
+  def maybe_available_players
+    match_availabilities.includes(:user).maybe_available.collect(&:user)
+  end
+
+  def not_available_players
+    match_availabilities.includes(:user).not_available.collect(&:user)
+  end
+
+  def no_response_players
+    match_availabilities.includes(:user).no_response.collect(&:user)
   end
 
   def players_status
-    available_player_list = available_players
-    unavailable_player_list = unavailable_players
-    noresponse_player_list = (team.new_and_active_users) - available_player_list - unavailable_player_list
+    # TODO
+    # screwed... need to re-work the "new and active users" idea for match availabilities
+    # do all new players have match availabilities? how do we query/show them?
+    # Previously, no response was new and active ... but now they have existing
+    # match availabilities with "no_reponse" state
+    #noresponse_player_list = (team.new_and_active_users) - available_player_list - unavailable_player_list
 
-    players_status = {
-                      "Available" => available_player_list,
-                      "Unavailable" => unavailable_player_list,
-                      "No Response" => noresponse_player_list
-                      }
-
-    players_status
+    {
+      "Yes"         => available_players,
+      "Maybe"       => maybe_available_players,
+      "No"          => not_available_players,
+      "No Response" => no_response_players
+    }
   end
 
   def recent_changes
@@ -116,6 +127,7 @@ class Match < ActiveRecord::Base
   end
 
   private
+
   def setup_match_lineups
     ordinal = 0
     1.upto(team.singles_matches) do |singles_match|
@@ -130,6 +142,14 @@ class Match < ActiveRecord::Base
       2.times { lineup.match_players.create }
       1.upto(3) { |i| lineup.match_sets.create(:ordinal => i) }
       ordinal += 1
+    end
+  end
+
+  def setup_match_availabilities
+    ActsAsTenant.with_tenant(team) do
+      team.team_members.each do |team_member|
+        match_availabilities.create!(user_id: team_member.user_id)
+      end
     end
   end
 

@@ -15,6 +15,8 @@ group :development, :try_it, :test do
   gem 'debugger'
   gem 'rspec-rails'
   gem 'capybara'
+  gem 'poltergeist'
+  gem 'database_cleaner'
   gem 'factory_girl_rails'
 end
 

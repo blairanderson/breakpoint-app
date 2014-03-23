@@ -70,7 +70,7 @@ Rails.application.routes.draw do
   end
 
   resources :matches, :only => [] do
-    resources :match_availabilities, :only => [:create, :update]
+    resources :match_availabilities, :only => [:update]
     member do
       post 'notify'
       post 'notify_player_request'

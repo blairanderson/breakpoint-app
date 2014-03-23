@@ -13,15 +13,14 @@
         <td><%= user.name %></td>
         <% matches.each do |match| %>
           <% availablility = match.match_availability_for(user.id) %>
-          <% if availablility.new_record? %>
+          <% if availablility.no_response? %>
             <td class="text-center">
               <span class="label label-default">n/a</span>
             </td>
           <% else %>
-            <% label = availablility.available? ? 'success' : 'danger' %>
-            <td class="text-center <%= label %>">
-              <span class="label label-<%= label %>">
-                <%= availablility.available? ? 'yes' : 'no' %>
+            <td class="text-center <%= availability_label(availablility.state) %>">
+              <span class="label label-<%= availability_label(availablility.state) %>">
+                <%= availablility.state %>
               </span>
             </td>
           <% end %>

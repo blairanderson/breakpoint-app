@@ -1,5 +1,6 @@
 class MatchAvailability < ActiveRecord::Base
   include DestroyedAt
+  STATES = %w[no_response yes maybe no]
 
   belongs_to :user
   belongs_to :match
@@ -7,6 +8,40 @@ class MatchAvailability < ActiveRecord::Base
   validates :team, presence: true
 
   acts_as_tenant :team
+
+  delegate :yes?, :maybe?, :no?, :no_response?, :to => :current_state
+
+  def self.no_response
+    where(state: 'no_response')
+  end
+
+  def self.available
+    where(state: 'yes')
+  end
+
+  def self.maybe_available
+    where(state: 'maybe')
+  end
+
+  def self.not_available
+    where(state: 'no')
+  end
+
+  def current_state
+    state.inquiry
+  end
+
+  def available!
+    update_attributes!(:state => 'yes')
+  end
+
+  def maybe_available!
+    update_attributes!(:state => 'maybe')
+  end
+
+  def not_available!
+    update_attributes!(:state => 'no')
+  end
 end
 
 # == Schema Information

@@ -8,8 +8,7 @@ class MatchMailer < ActionMailer::Base
     @team_name    = match.team.name
     @match        = match
     @user_id      = options[:user_id]
-    availability  = match.match_availability_for(@user_id)
-    @availability = availability.new_record? ? nil : availability
+    @availability = match.match_availability_for(@user_id)
     @token        = match.match_availability_token_for(@user_id)
     @comments     = options[:comments]
     @from         = options.fetch(:from)
@@ -24,8 +23,7 @@ class MatchMailer < ActionMailer::Base
     @team_name      = match.team.name
     @match          = match
     @user_id        = options[:user_id]
-    availability    = match.match_availability_for(@user_id)
-    @availability   = availability.new_record? ? nil : availability
+    @availability   = match.match_availability_for(@user_id)
     @token          = match.match_availability_token_for(@user_id)
     @comments       = options[:comments]
     @from           = options.fetch(:from)

@@ -24,12 +24,15 @@ module ApplicationHelper
   end
 
   def availability_label(status)
+    status = status.downcase.gsub(" ", "_")
     case status
-    when "Available"
+    when "yes"
       "success"
-    when "Unavailable"
+    when "maybe"
+      "info"
+    when "no"
       "danger"
-    when "No Response"
+    when "no_response"
       "warning"
     end
   end
