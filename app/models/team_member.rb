@@ -1,4 +1,6 @@
 class TeamMember < ActiveRecord::Base
+  include DestroyedAt
+
   ROLES = %w[captain co-captain member]
   STATES = %w[new, active, inactive]
 

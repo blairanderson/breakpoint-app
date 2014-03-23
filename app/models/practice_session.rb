@@ -1,4 +1,6 @@
 class PracticeSession < ActiveRecord::Base
+  include DestroyedAt
+
   belongs_to :user
   belongs_to :practice
 

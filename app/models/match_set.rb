@@ -1,4 +1,6 @@
 class MatchSet < ActiveRecord::Base
+  include DestroyedAt
+
   belongs_to :match_lineup
 
   validates :ordinal,      presence: true

@@ -1,4 +1,5 @@
 class Team < ActiveRecord::Base
+  include DestroyedAt
   include DateParser
 
   has_many :practices,    -> { order(:date => :asc) }, :dependent => :destroy

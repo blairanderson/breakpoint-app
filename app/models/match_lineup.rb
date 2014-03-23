@@ -1,4 +1,6 @@
 class MatchLineup < ActiveRecord::Base
+  include DestroyedAt
+
   belongs_to :match
   has_many   :match_players, :dependent => :destroy
   has_many   :active_match_players, -> { joins(user: :active_teams).where('"teams"."id" = "match_players"."team_id"') }, :class_name => "MatchPlayer"

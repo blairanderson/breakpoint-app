@@ -58,5 +58,21 @@ describe 'devise' do
 
     page.should have_selector '.alert.alert-success', :text => 'Your password was changed successfully'
   end
+
+  it 'allows user to delete account with associated objects' do
+    @team = create(:team)
+    ActsAsTenant.with_tenant(@team) do
+      @team.team_members.create(:user => @user, :role => 'captain', :state => 'active')
+      @match = create(:match)
+    end
+    login(@user)
+    visit team_matches_path(@match.team)
+    click_button 'I can play'
+
+    click_link 'John Doe'
+    click_link 'Cancel my account'
+
+    page.should have_selector '.alert.alert-success', :text => 'Bye! Your account was successfully cancelled. We hope to see you again soon.'
+  end
 end
 

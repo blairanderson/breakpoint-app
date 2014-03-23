@@ -3,6 +3,7 @@ class Match < ActiveRecord::Base
 
   NOTIFIED_LINEUP_STATES = %w[lineup_created lineup_updated notified_team_lineup]
 
+  include DestroyedAt
   include DateTimeParser
   include NotifyStateMachine
 

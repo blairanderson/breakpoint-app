@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140311113301) do
+ActiveRecord::Schema.define(version: 20140323154011) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,10 +19,11 @@ ActiveRecord::Schema.define(version: 20140311113301) do
   create_table "match_availabilities", force: true do |t|
     t.integer  "user_id"
     t.integer  "match_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.boolean  "available"
     t.integer  "team_id"
+    t.datetime "destroyed_at"
   end
 
   add_index "match_availabilities", ["match_id"], name: "index_match_availabilities_on_match_id", using: :btree
@@ -30,12 +31,13 @@ ActiveRecord::Schema.define(version: 20140311113301) do
   add_index "match_availabilities", ["user_id"], name: "index_match_availabilities_on_user_id", using: :btree
 
   create_table "match_lineups", force: true do |t|
-    t.string   "match_type", default: "", null: false
-    t.integer  "ordinal",                 null: false
+    t.string   "match_type",   default: "", null: false
+    t.integer  "ordinal",                   null: false
     t.integer  "match_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.integer  "team_id"
+    t.datetime "destroyed_at"
   end
 
   add_index "match_lineups", ["match_id"], name: "index_match_lineups_on_match_id", using: :btree
@@ -47,6 +49,7 @@ ActiveRecord::Schema.define(version: 20140311113301) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "team_id"
+    t.datetime "destroyed_at"
   end
 
   add_index "match_players", ["match_lineup_id"], name: "index_match_players_on_match_lineup_id", using: :btree
@@ -61,6 +64,7 @@ ActiveRecord::Schema.define(version: 20140311113301) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.integer  "team_id"
+    t.datetime "destroyed_at"
   end
 
   add_index "match_sets", ["team_id"], name: "index_match_sets_on_team_id", using: :btree
@@ -76,6 +80,7 @@ ActiveRecord::Schema.define(version: 20140311113301) do
     t.text     "comment"
     t.string   "notified_lineup_state"
     t.string   "opponent",              default: ""
+    t.datetime "destroyed_at"
   end
 
   add_index "matches", ["team_id"], name: "index_matches_on_team_id", using: :btree
@@ -83,10 +88,11 @@ ActiveRecord::Schema.define(version: 20140311113301) do
   create_table "practice_sessions", force: true do |t|
     t.integer  "user_id"
     t.integer  "practice_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.integer  "team_id"
     t.boolean  "available"
+    t.datetime "destroyed_at"
   end
 
   add_index "practice_sessions", ["practice_id"], name: "index_practice_sessions_on_practice_id", using: :btree
@@ -101,17 +107,19 @@ ActiveRecord::Schema.define(version: 20140311113301) do
     t.datetime "updated_at",                 null: false
     t.string   "notified_state"
     t.text     "location"
+    t.datetime "destroyed_at"
   end
 
   add_index "practices", ["team_id"], name: "index_practices_on_team_id", using: :btree
 
   create_table "team_members", force: true do |t|
-    t.integer  "team_id",    default: 0,        null: false
-    t.integer  "user_id",    default: 0,        null: false
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
-    t.string   "role",       default: "member"
-    t.string   "state",      default: "new",    null: false
+    t.integer  "team_id",      default: 0,        null: false
+    t.integer  "user_id",      default: 0,        null: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.string   "role",         default: "member"
+    t.string   "state",        default: "new",    null: false
+    t.datetime "destroyed_at"
   end
 
   add_index "team_members", ["team_id"], name: "index_players_on_team_id", using: :btree
@@ -126,6 +134,7 @@ ActiveRecord::Schema.define(version: 20140311113301) do
     t.datetime "updated_at",                                             null: false
     t.string   "email",           default: "",                           null: false
     t.string   "time_zone",       default: "Eastern Time (US & Canada)"
+    t.datetime "destroyed_at"
   end
 
   create_table "users", force: true do |t|
@@ -145,9 +154,10 @@ ActiveRecord::Schema.define(version: 20140311113301) do
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.boolean  "admin",                  default: false
+    t.datetime "destroyed_at"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, where: "(destroyed_at IS NULL)", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "versions", force: true do |t|

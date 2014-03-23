@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include DestroyedAt
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -7,17 +9,25 @@ class User < ActiveRecord::Base
     :registerable,
     :recoverable,
     :rememberable,
-    :trackable,
-    :validatable
+    :trackable
 
-  has_many :team_members,         :dependent => :restrict_with_exception
+  has_many :team_members,         :dependent => :destroy
   has_many :active_team_members,  -> { where(state: 'active') }, :class_name => 'TeamMember'
   has_many :teams,                :through   => :team_members
   has_many :active_teams,         :through   => :active_team_members, :source => :team
-  has_many :practice_sessions,    :dependent => :restrict_with_exception
+  has_many :practice_sessions,    :dependent => :destroy
   has_many :practices,            :through   => :practice_sessions
-  has_many :match_availabilities, :dependent => :restrict_with_exception
+  has_many :match_availabilities, :dependent => :destroy
   has_many :matches,              :through   => :match_availabilities
+  has_many :match_players,        :dependent => :nullify
+
+  validates_presence_of   :email
+  validates_uniqueness_of :email, conditions: -> { where(destroyed_at: nil) }, allow_blank: true, if: :email_changed?
+  validates_format_of     :email, with: Devise.email_regexp, allow_blank: true, if: :email_changed?
+
+  validates_presence_of     :password, if: :password_required?
+  validates_confirmation_of :password, if: :password_required?
+  validates_length_of       :password, within: Devise.password_length, allow_blank: true
 
   def name
     if first_name.present? && last_name.present?
@@ -50,6 +60,15 @@ class User < ActiveRecord::Base
     self.reset_password_sent_at = Time.now.utc
     save(validate: false)
     raw
+  end
+
+  protected
+
+  # Checks whether a password is needed or not. For validations only.
+  # Passwords are always required if it's a new record, or if the password
+  # or confirmation are being set somewhere.
+  def password_required?
+    !persisted? || !password.nil? || !password_confirmation.nil?
   end
 end
 

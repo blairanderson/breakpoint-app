@@ -1,6 +1,7 @@
 class Practice < ActiveRecord::Base
   class PracticeSessionTokenExpired < StandardError; end
 
+  include DestroyedAt
   include DateTimeParser
   include NotifyStateMachine
 

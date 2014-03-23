@@ -1,4 +1,6 @@
 class MatchAvailability < ActiveRecord::Base
+  include DestroyedAt
+
   belongs_to :user
   belongs_to :match
 
