@@ -49,7 +49,12 @@ class TeamMembersController < ApplicationController
         redirect_to team_team_members_url(@team_member.team)
       else
         @team_member.deactivate!
-        redirect_to team_team_members_url(@team_member.team), :notice => 'Team member is now inactive'
+        if current_user.id == @team_member.user_id
+          redirect_to teams_url, :notice => 'You have been just removed yourself from the team.'
+        else
+          redirect_to team_team_members_url(@team_member.team), :notice => 'Team member is now inactive'
+        end
+
       end
     else
       if @team_member.update(permitted_params.team_member)
