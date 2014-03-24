@@ -93,8 +93,8 @@ class TryItSeeds
     ActsAsTenant.with_tenant(team) do
       team.users.each do |user|
         Match.all.each do |match|
-          next if [1,2,3,4].sample == 3
-          match.match_availabilities.create!(team: team, user: user, available: [true, false].sample)
+          state = [:available!, :maybe_available!, :not_available!, "no_response"].sample
+          match.match_availability_for(user.id).send(state) unless state == "no_response"
         end
 
         Practice.all.each do |practice|
