@@ -6,6 +6,7 @@ set :linked_files, %w{.env config/unicorn.rb}
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets}
 
 namespace :deploy do
+  after :publishing, :restart
 
   desc 'Restart application'
   task :restart do
