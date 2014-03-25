@@ -20,7 +20,7 @@ group :development, :try_it, :test do
   gem 'factory_girl_rails'
 end
 
-gem 'sass-rails'
+gem 'sass-rails', '4.0.2'
 gem 'coffee-rails'
 gem 'uglifier'
 
