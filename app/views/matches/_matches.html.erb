@@ -2,6 +2,7 @@
   <% match_availability = match.match_availability_for(current_user.id) %>
   <div class="panel panel-<%= availability_label(match_availability.state) %>">
     <div class="panel-heading">
+      Can you play?
       <div class="btn-group btn-group-sm">
         <%= link_to "Yes",
           match_match_availability_path(match, match_availability, team_id: current_team.id, state: 'yes'),
