@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-  - rvm use .
+  - 2.1.1
 before_script:
   - cp config/database.yml.travis config/database.yml
   - psql -c 'create database breakpoint_app_test;' -U postgres
