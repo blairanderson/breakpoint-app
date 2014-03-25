@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby   '2.1.0'
+ruby   '2.1.1'
 
 gem 'rails',                '4.1.0.rc1'
 gem 'pg',                   '0.17.1'
@@ -49,5 +49,5 @@ gem 'postmark-rails'
 gem 'sidekiq'
 gem 'sinatra',              require: false
 gem 'icalendar',            github: 'icalendar/icalendar', branch: '2.0beta'
-gem 'destroyed_at'
+gem 'destroyed_at',         github: 'davekaro/destroyed_at'
 
