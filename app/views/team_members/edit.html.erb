@@ -20,10 +20,10 @@
   <div class="col-md-12">
     <div class="alert alert-danger">
       <h4>Remove from team</h4>
-      <p>This removes you from the team.</p>
-      <p>The captain can add you back anytime.</p>
+      <p>This will delete all match and practice availabilities for <%= @team_member.user.name %>.</p>
+      <p>You can <strong>NOT</strong> undo this action</p>
       <p>
-        <%= link_to 'Remove from team',
+        <%= link_to 'Delete team member data and remove from team',
           team_team_member_path(current_team, @team_member),
           :data => { :confirm => 'Are you sure?' },
           :method => :delete,

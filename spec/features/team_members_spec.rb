@@ -22,14 +22,14 @@ describe 'team members' do
     login @user2
     visit team_team_members_path(@team)
     click_link 'Edit'
-    click_link 'Remove from team'
+    click_link 'Delete team member data and remove from team'
     page.should have_selector '.alert.alert-success', :text => 'You have removed yourself from the team'
   end
 
   it 'captain can deactive team member' do
     visit team_team_members_path(@team)
     find("a[href='#{edit_team_team_member_path(@team, @member)}']").click
-    click_link 'Remove from team'
+    click_link 'Delete team member data and remove from team'
     page.should have_selector '.alert.alert-success', :text => 'Team member is now removed from the team'
   end
 end
