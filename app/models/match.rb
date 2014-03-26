@@ -75,14 +75,7 @@ class Match < ActiveRecord::Base
   end
 
   def players_status
-    # TODO
-    # screwed... need to re-work the "new and active users" idea for match availabilities
-    # do all new players have match availabilities? how do we query/show them?
-    # Previously, no response was new and active ... but now they have existing
-    # match availabilities with "no_reponse" state
-    #noresponse_player_list = (team.new_and_active_users) - available_player_list - unavailable_player_list
-
-    {
+    @players_status ||= {
       "Yes"         => available_players,
       "Maybe"       => maybe_available_players,
       "No"          => not_available_players,
