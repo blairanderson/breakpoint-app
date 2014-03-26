@@ -7,8 +7,6 @@ class Match < ActiveRecord::Base
   include DateTimeParser
   include NotifyStateMachine
 
-  # TODO
-  # can we remove or simplify this?
   has_many :match_availabilities, :dependent => :destroy
   has_many :match_lineups,        -> { order(:ordinal) }, :dependent => :destroy
 

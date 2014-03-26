@@ -15,6 +15,7 @@ class DestroysTeamMember
   # wouldn't rely on the current_team tenant being set to properly destroy records.
   def destroy
     TeamMember.transaction do
+      PracticeSession.where(user_id: team_member.user_id).each(&:destroy)
       MatchAvailability.where(user_id: team_member.user_id).each(&:destroy)
       MatchPlayer.where(user_id: team_member.user_id).each do |player|
         player.update_attributes(user_id: nil)

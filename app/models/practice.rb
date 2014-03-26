@@ -5,7 +5,7 @@ class Practice < ActiveRecord::Base
   include DateTimeParser
   include NotifyStateMachine
 
-  has_many :practice_sessions, -> { joins(user: :teams).where('"teams"."id" = "practice_sessions"."team_id"') }, :dependent => :destroy
+  has_many :practice_sessions, :dependent => :destroy
 
   validates :team, presence: true
 
