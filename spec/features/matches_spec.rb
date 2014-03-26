@@ -5,8 +5,8 @@ describe 'matches' do
     login_captain
     team = create(:team)
     ActsAsTenant.current_tenant = team
-    team.team_members.create(:user => @captain, :role => 'captain', :state => 'active')
-    team.team_members.create(:user => create(:user2), :role => 'member', :state => 'active')
+    team.team_members.create(:user => @captain, :role => 'captain')
+    team.team_members.create(:user => create(:user2), :role => 'member')
     @match = create(:match)
     ActsAsTenant.current_tenant = nil
     visit team_matches_path(@match.team)

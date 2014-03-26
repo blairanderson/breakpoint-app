@@ -10,11 +10,11 @@
   </thead>
   <tbody>
     <% team_members_index.sort_by { |tm| tm.user.name }.each do |team_member| %>
-    <tr class="<%= "danger" unless team_member.active? %>">
+    <tr>
       <td><%= team_member.user.name %></td>
       <td>
-        <% if policy(team_member).send_welcome_email? && !team_member.inactive? %>
-          <% link_text = team_member.new? ? 'Send welcome email' : 'Resend welcome email' %>
+        <% if policy(team_member).send_welcome_email? %>
+          <% link_text = team_member.welcome_email_sent? ? 'Resend welcome email' : 'Send welcome email' %>
           <%= link_to link_text,
             send_welcome_email_team_team_member_path(current_team, team_member),
             :method => :post,

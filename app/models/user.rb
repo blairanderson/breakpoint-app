@@ -11,10 +11,8 @@ class User < ActiveRecord::Base
     :rememberable,
     :trackable
 
-  has_many :team_members,         :dependent => :destroy
-  has_many :active_team_members,  -> { where(state: 'active') }, :class_name => 'TeamMember'
+  has_many :team_members
   has_many :teams,                :through   => :team_members
-  has_many :active_teams,         :through   => :active_team_members, :source => :team
   has_many :practice_sessions,    :dependent => :destroy
   has_many :practices,            :through   => :practice_sessions
   has_many :match_availabilities, :dependent => :destroy

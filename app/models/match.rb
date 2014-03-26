@@ -7,7 +7,9 @@ class Match < ActiveRecord::Base
   include DateTimeParser
   include NotifyStateMachine
 
-  has_many :match_availabilities, -> { joins(user: :active_teams).where('"teams"."id" = "match_availabilities"."team_id"') }, :dependent => :destroy
+  # TODO
+  # can we remove or simplify this?
+  has_many :match_availabilities, :dependent => :destroy
   has_many :match_lineups,        -> { order(:ordinal) }, :dependent => :destroy
 
   validates :team, presence: true
@@ -26,9 +28,9 @@ class Match < ActiveRecord::Base
     match = find(options.fetch(:match_id))
 
     if options[:user_ids]
-      send_to = match.team.active_users.select { |u| options[:user_ids].include?(u.id) }
+      send_to = match.team.users.select { |u| options[:user_ids].include?(u.id) }
     else
-      send_to = match.team.active_users
+      send_to = match.team.users
     end
 
     send_to.each do |to|

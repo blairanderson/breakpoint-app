@@ -22,7 +22,7 @@ class TeamsController < ApplicationController
 
   def create
     @team = Team.new(permitted_params.team)
-    @team.team_members.build(user: current_user, role: TeamMember::ROLES.first, state: "active")
+    @team.team_members.build(user: current_user, role: TeamMember::ROLES.first)
 
     if @team.save
       redirect_to team_team_members_url(@team), :notice => 'Team created'

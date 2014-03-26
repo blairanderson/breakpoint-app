@@ -48,7 +48,7 @@ Rails.application.routes.draw do
       end
     end
     resources :results, :only => [:index]
-    resources :team_members, :only => [:index, :edit, :update] do
+    resources :team_members, :only => [:index, :edit, :update, :destroy] do
       collection do
         get 'new', as: :new
         post 'create', as: :create

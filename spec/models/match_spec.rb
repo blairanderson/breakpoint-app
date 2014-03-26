@@ -52,7 +52,7 @@ describe Match do
 
   it 'returns the match availability for a specified user id' do
     user = create(:user)
-    @team.team_members.create(:user => user, :state => 'active')
+    @team.team_members.create(:user => user)
     match = create(:match)
     match_availability = match.match_availabilities.first
 

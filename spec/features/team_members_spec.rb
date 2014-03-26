@@ -17,29 +17,29 @@ describe 'team members' do
     page.should_not have_content 'Captain'
   end
 
-  it 'team member deactivates self' do
+  it 'team member removes self' do
     click_link 'Sign out'
     login @user2
     visit team_team_members_path(@team)
     click_link 'Edit'
-    click_button 'Deactivate team membership'
-    page.should have_selector '.alert.alert-success', :text => 'You have been just removed yourself from the team.'
+    click_link 'Remove from team'
+    page.should have_selector '.alert.alert-success', :text => 'You have removed yourself from the team'
   end
 
   it 'captain can deactive team member' do
     visit team_team_members_path(@team)
     find("a[href='#{edit_team_team_member_path(@team, @member)}']").click
-    click_button 'Deactivate team membership'
-    page.should have_selector '.alert.alert-success', :text => 'Team member is now inactive'
+    click_link 'Remove from team'
+    page.should have_selector '.alert.alert-success', :text => 'Team member is now removed from the team'
   end
 end
 
 def create_team_with_captain_and_member
   @team = create(:team)
   ActsAsTenant.current_tenant = @team
-  @captain_member = @team.team_members.create(:user => @captain, :role => 'captain', :state => 'active')
+  @captain_member = @team.team_members.create(:user => @captain, :role => 'captain')
   @user2 = create(:user2)
-  @member = @team.team_members.create(:user => @user2, :role => 'member', :state => 'active')
+  @member = @team.team_members.create(:user => @user2, :role => 'member')
   ActsAsTenant.current_tenant = nil
 end
 

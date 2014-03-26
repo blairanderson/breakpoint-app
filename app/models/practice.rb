@@ -5,7 +5,7 @@ class Practice < ActiveRecord::Base
   include DateTimeParser
   include NotifyStateMachine
 
-  has_many :practice_sessions, -> { joins(user: :active_teams).where('"teams"."id" = "practice_sessions"."team_id"') }, :dependent => :destroy
+  has_many :practice_sessions, -> { joins(user: :teams).where('"teams"."id" = "practice_sessions"."team_id"') }, :dependent => :destroy
 
   validates :team, presence: true
 
@@ -15,7 +15,7 @@ class Practice < ActiveRecord::Base
   def self.notify(name, options)
     practice = find(options.fetch(:practice_id))
 
-    practice.team.active_users.each do |to|
+    practice.team.users.each do |to|
       PracticeMailer.send("practice_#{name}", practice, to.email, options.merge(user_id: to.id)).deliver
     end
   end

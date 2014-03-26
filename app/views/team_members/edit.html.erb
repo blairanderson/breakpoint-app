@@ -3,44 +3,33 @@
 <%= simple_form_for([current_team, @team_member]) do |f| %>
   <%= f.error_messages %>
 
-  <% if @team_member.active? %>
-    <div class="row">
-      <div class="col-md-3">
-        <% if policy(current_team).captain?%>
-          <%= f.input :role, collection: TeamMember::ROLES, value_method: :to_s, label_method: :humanize, include_blank: false %>
-        <% end%>
+  <div class="row">
+    <div class="col-md-3">
+      <% if policy(current_team).captain?%>
+        <%= f.input :role, collection: TeamMember::ROLES, value_method: :to_s, label_method: :humanize, include_blank: false %>
+      <% end%>
 
-        <%= f.submit 'Save settings', :class => 'btn btn-primary' %>
-      </div>
+      <%= f.submit 'Save settings', :class => 'btn btn-primary' %>
     </div>
-
-    <hr>
-
-    <div class="row">
-      <div class="col-md-12">
-        <div class="alert alert-warning">
-          <h4>Deactivate team membership</h4>
-          <p>Deactivating team membership takes you off the team. You won't receive email from Breakpoint App about this team.</p>
-          <p>Come back anytime to reactivate.</p>
-          <p>
-            <%= f.submit 'Deactivate team membership', :class => 'btn btn-warning' %>
-          </p>
-        </div>
-      </div>
-    </div>
-  <% else %>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="alert alert-info">
-          <h4>Reactivate team membership</h4>
-          <p>Reactivating team membership makes you part of the team again. You will receive email from Breakpoint App.</p>
-          <p>You can deactivate anytime.</p>
-          <p>
-            <%= f.submit 'Reactivate team membership', :class => 'btn btn-info' %>
-          </p>
-        </div>
-      </div>
-    </div>
-  <% end %>
+  </div>
 <% end %>
+
+<hr>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="alert alert-danger">
+      <h4>Remove from team</h4>
+      <p>This removes you from the team.</p>
+      <p>The captain can add you back anytime.</p>
+      <p>
+        <%= link_to 'Remove from team',
+          team_team_member_path(current_team, @team_member),
+          :data => { :confirm => 'Are you sure?' },
+          :method => :delete,
+          :class => 'btn btn-danger' %>
+      </p>
+    </div>
+  </div>
+</div>
 

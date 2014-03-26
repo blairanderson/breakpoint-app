@@ -62,7 +62,7 @@ describe 'devise' do
   it 'allows user to delete account with associated objects' do
     @team = create(:team)
     ActsAsTenant.with_tenant(@team) do
-      @team.team_members.create(:user => @user, :role => 'captain', :state => 'active')
+      @team.team_members.create(:user => @user, :role => 'captain')
       @match = create(:match)
     end
     login(@user)

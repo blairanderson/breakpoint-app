@@ -5,7 +5,7 @@ describe 'teams' do
     login_captain
     @team = create(:team)
     ActsAsTenant.current_tenant = @team
-    @team.team_members.create(:user => @captain, :role => 'captain', :state => 'active')
+    @team.team_members.create(:user => @captain, :role => 'captain')
     ActsAsTenant.current_tenant = nil
     visit teams_path
   end

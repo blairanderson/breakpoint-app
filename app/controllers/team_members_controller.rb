@@ -25,7 +25,6 @@ class TeamMembersController < ApplicationController
 
   def index
     @team_members = current_team.team_members
-    @team_members_by_state = current_team.team_members.group_by(&:state)
     @captain = TeamPolicy.new(current_user, current_team).captain?
   end
 
@@ -38,31 +37,23 @@ class TeamMembersController < ApplicationController
     @team_member = TeamMember.find(params[:id])
     authorize @team_member
 
-    if params[:commit] == 'Reactivate team membership'
-      @team_member.activate!
-      redirect_to team_team_members_url(@team_member.team), :notice => 'Team member is now active'
-    elsif params[:commit] == 'Deactivate team membership'
-      if @team_member.team.captains.size == 1 && @team_member.captain?
-        message = 'You are the only captain on the team and cannot be deactivated. '
-        message << 'Make another player captain first before deactivating again.'
-        flash[:alert] = message
-        redirect_to team_team_members_url(@team_member.team)
-      else
-        @team_member.deactivate!
-        if current_user.id == @team_member.user_id
-          redirect_to teams_url, :notice => 'You have been just removed yourself from the team.'
-        else
-          redirect_to team_team_members_url(@team_member.team), :notice => 'Team member is now inactive'
-        end
-
-      end
+    if @team_member.update(permitted_params.team_member)
+      redirect_to team_team_members_url(@team_member.team), :notice => 'Team member updated'
     else
-      if @team_member.update(permitted_params.team_member)
-        redirect_to team_team_members_url(@team_member.team), :notice => 'Team member updated'
-      else
-        flash[:error] = "You are not authorized to perform this action."
-        render :edit
-      end
+      render :edit
+    end
+  end
+
+  def destroy
+    @team_member = TeamMember.find(params[:id])
+    authorize @team_member
+
+    DestroysTeamMember.new(@team_member).destroy
+
+    if current_user.id == @team_member.user_id
+      redirect_to teams_url, :notice => 'You have removed yourself from the team'
+    else
+      redirect_to team_team_members_url(@team_member.team), :notice => 'Team member is now removed from the team'
     end
   end
 end

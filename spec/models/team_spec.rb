@@ -18,36 +18,37 @@ describe Team do
 
   it 'returns upcoming practices' do
     team = create(:team)
-    ActsAsTenant.current_tenant = team
-    practice = create(:practice)
-    practice2 = create(:practice_in_past)
+    ActsAsTenant.with_tenant(team) do
+      practice = create(:practice)
+      practice2 = create(:practice_in_past)
 
-    team.practices.count.should eq(2)
-    team.upcoming_practices.count.should eq(1)
-    ActsAsTenant.current_tenant = nil
+      team.practices.count.should eq(2)
+      team.upcoming_practices.count.should eq(1)
+    end
   end
 
   it 'returns upcoming matches' do
     team = create(:team)
-    ActsAsTenant.current_tenant = team
-    match = create(:match)
-    match2 = create(:match_in_past)
+    ActsAsTenant.with_tenant(team) do
+      match = create(:match)
+      match2 = create(:match_in_past)
 
-    team.matches.count.should eq(2)
-    team.upcoming_matches.count.should eq(1)
-    ActsAsTenant.current_tenant = nil
+      team.matches.count.should eq(2)
+      team.upcoming_matches.count.should eq(1)
+    end
   end
 
-  it 'returns active users team emails for team members who are active' do
+  it 'returns users team emails for team members not removed' do
     user = create(:user)
     user2 = create(:user2)
-    user3 = create(:captain)
     team = create(:team)
-    team.team_members.create(:user => user, :state => 'new')
-    team.team_members.create(:user => user2, :state => 'active')
-    team.team_members.create(:user => user3, :state => 'inactive')
+    member = team.team_members.create(:user => user)
+    member2 = team.team_members.create(:user => user2)
+    ActsAsTenant.with_tenant(team) do
+      member.destroy
+    end
 
-    team.active_users.should eq [user2]
+    team.users.should eq [user2]
     team.team_emails.should eq ['dave.kroondyk@example.com']
   end
 end

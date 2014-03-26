@@ -10,41 +10,28 @@
 
 <%= link_to('Add players', new_team_team_members_path(current_team), :class => 'btn btn-default') %>
 
-<% if @team_members_by_state["new"].present? && @captain %>
-  <h3>New team members</h3>
+<% if @team_members.present? %>
+  <h3>Team members</h3>
   <div class="alert alert-info">
+    <p>Click Edit to change settings or remove from team.</p>
     <p>
-      New team members do not have access to the team and do not receive email from Breakpoint App,
-      but are considered a member of the team.
-    </p>
-    <p>This allows you to test out Breakpoint App before notifying the entire team.</p>
-    <p>
-      <%= link_to 'Send welcome email to all new members',
+      <%= link_to 'Send welcome email to all members',
         send_welcome_email_team_path(current_team),
         :method => :post,
-        :data   => { :confirm => "Send welcome email to #{pluralize(@team_members_by_state["new"].size, "member")} now?" },
-        :class  => 'btn btn-xs btn-info' %>
-      to make them active and start receiving email.
+        :data   => { :confirm => "Send welcome email to #{pluralize(@team_members.size, "member")} now?" },
+        :class  => 'btn btn-xs btn-info' %>.
     </p>
   </div>
-  <%= render :partial => "team_members_index", :object => @team_members_by_state["new"] %>
+  <%= render :partial => "team_members_index", :object => @team_members %>
 <% end %>
 
-<% if @team_members_by_state["active"].present? %>
-  <h3>Active team members</h3>
+<% if @removed_team_members.present? && @captain %>
+  <h3>Removed team members</h3>
   <div class="alert alert-info">
-    <p>Active team members receive email from Breakpoint App.</p>
-    <p>Click Edit to change settings or deactivate membership.</p>
-  </div>
-  <%= render :partial => "team_members_index", :object => @team_members_by_state["active"] %>
-<% end %>
-
-<% if @team_members_by_state["inactive"].present? && @captain %>
-  <h3>Inactive team members</h3>
-  <div class="alert alert-info">
-    <p>Inactive team members do not receive email from Breakpoint App.</p>
+    <p>Removed team members do not receive email from Breakpoint App.</p>
     <p>They are not considered a member of the team.</p>
+    <p>Click Edit to add them back to the team.</p>
   </div>
-  <%= render :partial => "team_members_index", :object => @team_members_by_state["inactive"] %>
+  <%= render :partial => "team_members_index", :object => @removed_team_members %>
 <% end %>
 

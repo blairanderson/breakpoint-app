@@ -4,7 +4,7 @@ describe MatchLineup do
   it 'stores results in match_sets' do
     user = create(:user)
     team = create(:team)
-    team.team_members.create(:user => user, :state => 'active')
+    team.team_members.create(:user => user)
     ActsAsTenant.current_tenant = team
     match = create(:match)
 

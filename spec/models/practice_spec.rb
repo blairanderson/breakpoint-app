@@ -17,7 +17,7 @@ describe Practice do
 
   it 'returns the practice session for a specified user id' do
     user = create(:user)
-    @team.team_members.create(:user => user, :state => 'active')
+    @team.team_members.create(:user => user)
     practice = create(:practice)
     practice_session = create(:practice_session, :practice => practice, :user => user)
 

@@ -2,37 +2,18 @@ class TeamMember < ActiveRecord::Base
   include DestroyedAt
 
   ROLES = %w[captain co-captain member]
-  STATES = %w[new, active, inactive]
 
   belongs_to :user
   belongs_to :team
 
-  delegate :new?, :active?, :inactive?, :to => :current_state
-
   after_create :setup_match_availabilities
-
-  def self.new_members
-    where(state: "new")
-  end
-
-  def self.active
-    where(state: "active")
-  end
-
-  def self.inactive
-    where(state: "inactive")
-  end
 
   def captain?
     role == 'captain' || role == 'co-captain'
   end
 
-  def current_state
-    (state || STATES.first).inquiry
-  end
-
-  def active?
-    !inactive?
+  def welcome_email_sent?
+    !!welcome_email_sent_at
   end
 
   def send_welcome!(from_user_id)
@@ -49,12 +30,8 @@ class TeamMember < ActiveRecord::Base
     update!(state: "active")
   end
 
-  def activate!
-    update!(state: 'active')
-  end
-
-  def deactivate!
-    update!(state: 'inactive')
+  def welcome_email_sent!
+    update!(welcome_email_sent_at: Time.zone.now)
   end
 
   def setup_match_availabilities

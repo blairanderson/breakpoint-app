@@ -6,8 +6,8 @@ describe 'match_lineups' do
     @team = create(:team)
     ActsAsTenant.with_tenant(@team) do
       @match = create(:match, team: ActsAsTenant.current_tenant)
-      @match.team.team_members.create(:user => @captain, :role => 'captain', :state => 'active')
-      @match.team.team_members.create(:user => create(:user2), :role => 'member', :state => 'active')
+      @match.team.team_members.create(:user => @captain, :role => 'captain')
+      @match.team.team_members.create(:user => create(:user2), :role => 'member')
     end
     visit team_matches_path(@match.team)
   end
