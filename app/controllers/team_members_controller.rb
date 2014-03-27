@@ -11,11 +11,14 @@ class TeamMembersController < ApplicationController
 
   def new
     authorize current_team
+
     emails = SimpleTextAreaParser.parse(params[:emails] || "")
     @add_team_members = AddTeamMembers.users_from_emails(current_team, emails)
   end
 
   def create
+    authorize current_team
+
     @add_team_members = AddTeamMembers.new(params[:add_team_members])
     if @add_team_members.save(current_team)
       redirect_to team_team_members_url(current_team), notice: "Team members added"
