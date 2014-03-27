@@ -70,12 +70,12 @@ class TryItSeeds
                            last_name: Faker::Name.last_name,
                            phone_number: Faker::PhoneNumber.phone_number,
                            password: SecureRandom.uuid)
-    team.team_members.create!(user: captain, role: TeamMember::ROLES.first, state: "active")
+    team.team_members.create!(user: captain, role: TeamMember::ROLES.first, welcome_email_sent_at: Time.now)
     captain
   end
 
   def create_team_members
-    members.each { |m| team.team_members.create!(user: m, role: TeamMember::ROLES.last, state: "active") }
+    members.each { |m| team.team_members.create!(user: m, role: TeamMember::ROLES.last) }
   end
 
   def create_practices_and_matches

@@ -1,6 +1,6 @@
 <% subtitle "Edit settings for #{@team_member.user.name} (#{@team_member.role})" %>
 
-<% if policy(current_team).captain?%>
+<% if policy(current_team).captain? %>
   <%= simple_form_for([current_team, @team_member]) do |f| %>
     <%= f.error_messages %>
 

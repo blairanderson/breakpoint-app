@@ -10,6 +10,7 @@ class TeamMembersController < ApplicationController
   end
 
   def new
+    authorize current_team
     emails = SimpleTextAreaParser.parse(params[:emails] || "")
     @add_team_members = AddTeamMembers.users_from_emails(current_team, emails)
   end

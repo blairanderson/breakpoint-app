@@ -37,7 +37,7 @@ end
 def create_team_with_captain_and_member
   @team = create(:team)
   ActsAsTenant.current_tenant = @team
-  @captain_member = @team.team_members.create(:user => @captain, :role => 'captain')
+  @captain_member = @team.team_members.create(:user => @captain, :role => 'captain', :welcome_email_sent_at => Time.now)
   @user2 = create(:user2)
   @member = @team.team_members.create(:user => @user2, :role => 'member')
   ActsAsTenant.current_tenant = nil

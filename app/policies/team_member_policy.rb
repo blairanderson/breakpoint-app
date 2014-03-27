@@ -3,6 +3,10 @@ class TeamMemberPolicy < ApplicationPolicy
     captain?
   end
 
+  def create?
+    captain?
+  end
+
   def update?
     owner? || captain?
   end
