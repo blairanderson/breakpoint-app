@@ -24,7 +24,8 @@ class TeamMembersController < ApplicationController
   end
 
   def index
-    @team_members = current_team.team_members
+    @team_members_welcome_email_unsent = current_team.team_members.welcome_email_unsent
+    @team_members = current_team.team_members.welcome_email_sent
     @captain = TeamPolicy.new(current_user, current_team).captain?
   end
 

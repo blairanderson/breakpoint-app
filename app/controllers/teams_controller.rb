@@ -7,7 +7,7 @@ class TeamsController < ApplicationController
     @team = current_user.teams.find(params[:id])
     authorize @team
 
-    @team.new_team_members.each { |member| member.send_welcome!(current_user.id) }
+    @team.team_members.welcome_email_unsent.each { |member| member.send_welcome!(current_user.id) }
     redirect_to team_team_members_url(@team), :notice => 'Welcome email sent'
   end
 
@@ -22,10 +22,11 @@ class TeamsController < ApplicationController
 
   def create
     @team = Team.new(permitted_params.team)
-    @team.team_members.build(user: current_user, role: TeamMember::ROLES.first)
+    @team.team_members.build(user: current_user, role: TeamMember::ROLES.first, welcome_email_sent_at: Time.zone.now)
 
     if @team.save
-      redirect_to team_team_members_url(@team), :notice => 'Team created'
+      flash[:notice] = "Team created. #{view_context.link_to("Add more players", new_team_team_members_path(@team), :class => "alert-link")} to complete your team."
+      redirect_to team_team_members_url(@team)
     else
       render :new
     end

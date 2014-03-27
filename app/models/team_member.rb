@@ -8,8 +8,20 @@ class TeamMember < ActiveRecord::Base
 
   after_create :setup_match_availabilities
 
+  def self.welcome_email_unsent
+    where(welcome_email_sent_at: nil)
+  end
+
+  def self.welcome_email_sent
+    where.not(welcome_email_sent_at: nil)
+  end
+
   def captain?
     role == 'captain' || role == 'co-captain'
+  end
+
+  def welcome_email_unsent?
+    welcome_email_sent_at.nil?
   end
 
   def welcome_email_sent?
@@ -27,7 +39,7 @@ class TeamMember < ActiveRecord::Base
                                   reply_to:       from_user.email,
                                   team_member_id: id)
     end
-    update!(state: "active")
+    welcome_email_sent!
   end
 
   def welcome_email_sent!

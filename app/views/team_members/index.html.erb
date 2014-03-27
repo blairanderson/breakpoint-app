@@ -1,37 +1,26 @@
 <% subtitle 'Team' %>
 
-<% if @team_members.size == 1 && @team_members.first.user.email == current_user.email %>
-  <div class="alert alert-info">
-    You're the only one on the team so far.
-    <%= link_to "Add more players", new_team_team_members_path(current_team), :class => "alert-link" %>
-    to complete your team.
-  </div>
-<% end %>
-
 <%= link_to('Add players', new_team_team_members_path(current_team), :class => 'btn btn-default') %>
 
-<% if @team_members.present? %>
+<% if @team_members.present? || @team_members_welcome_email_unsent.present? %>
   <h3>Team members</h3>
-  <div class="alert alert-info">
-    <p>Click Edit to change settings or remove from team.</p>
-    <p>
-      <%= link_to 'Send welcome email to all members',
-        send_welcome_email_team_path(current_team),
-        :method => :post,
-        :data   => { :confirm => "Send welcome email to #{pluralize(@team_members.size, "member")} now?" },
-        :class  => 'btn btn-xs btn-info' %>.
-    </p>
-  </div>
-  <%= render :partial => "team_members_index", :object => @team_members %>
 <% end %>
 
-<% if @removed_team_members.present? && @captain %>
-  <h3>Removed team members</h3>
-  <div class="alert alert-info">
-    <p>Removed team members do not receive email from Breakpoint App.</p>
-    <p>They are not considered a member of the team.</p>
-    <p>Click Edit to add them back to the team.</p>
+<% if @team_members_welcome_email_unsent.present? %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      These members have never been sent a welcome email
+      <%= link_to 'Send welcome email to all of these members',
+        send_welcome_email_team_path(current_team),
+        :method => :post,
+        :data   => { :confirm => "Send welcome email to #{pluralize(@team_members_welcome_email_unsent.size, "member")} now?" },
+        :class  => 'btn btn-xs btn-info' %>
+    </div>
+    <%= render :partial => "team_members_index", :object => @team_members_welcome_email_unsent %>
   </div>
-  <%= render :partial => "team_members_index", :object => @removed_team_members %>
+<% end %>
+
+<% if @team_members.present? %>
+  <%= render :partial => "team_members_index", :object => @team_members %>
 <% end %>
 

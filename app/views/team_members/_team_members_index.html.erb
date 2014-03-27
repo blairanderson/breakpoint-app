@@ -13,9 +13,8 @@
     <tr>
       <td><%= team_member.user.name %></td>
       <td>
-        <% if policy(team_member).send_welcome_email? %>
-          <% link_text = team_member.welcome_email_sent? ? 'Resend welcome email' : 'Send welcome email' %>
-          <%= link_to link_text,
+        <% if policy(team_member).send_welcome_email? && team_member.welcome_email_unsent? %>
+          <%= link_to 'Send welcome email',
             send_welcome_email_team_team_member_path(current_team, team_member),
             :method => :post,
             :data   => { :confirm => "Send welcome email to #{team_member.user.email} now?" },

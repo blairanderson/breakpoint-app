@@ -11,7 +11,7 @@
       <div class="form-group email optional team_email">
         <label class="email optional control-label" for="team_email">Team distribution email address</label>
         <div class="input-group">
-          <input class="string email optional form-control form-control" id="team_email" name="team[email]" type="email" value="" />
+          <%= f.text_field :email, class: "string email optional form-control form-control" %>
           <span class="input-group-addon">@mail.breakpointapp.com</span>
         </div>
         <p class="help-block">Create an email address to use to send email to the team</p>
