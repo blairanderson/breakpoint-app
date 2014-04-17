@@ -300,6 +300,7 @@ DEPENDENCIES
   jquery-rails
   letter_opener_web!
   momentjs-rails
+  nokogiri
   paper_trail
   pg (= 0.17.1)
   poltergeist
