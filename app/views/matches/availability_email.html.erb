@@ -5,7 +5,7 @@
     <%= render partial: 'shared/mailer_preview_details', locals: { subject: @match_email.subject } %>
   </div>
   <div class="panel-body">
-    <%= raw @match_email.body %>
+    <%= raw Nokogiri.parse(@match_email.body.decoded).css('body').inner_html %>
   </div>
 </div>
 
