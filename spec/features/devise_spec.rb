@@ -67,7 +67,8 @@ describe 'devise' do
     end
     login(@user)
     visit team_matches_path(@match.team)
-    @match.match_availabilities.first.available!
+    @match.match_availabilities.first.set_availability("yes")
+    @match.match_availabilities.first.save
 
     click_link 'John Doe'
     click_link 'Cancel my account'

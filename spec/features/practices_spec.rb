@@ -13,7 +13,7 @@ describe 'practices' do
   end
 
   it 'displays the practices' do
-    page.should have_content 'June 23, 2014 at 11:00 am'
+    page.should have_content 'Mon Jun 23, 2014 11:00am'
   end
 
   it 'shows edit practice only to captains' do
@@ -34,7 +34,7 @@ describe 'practices' do
 
     last_email.should be_nil
     page.should have_selector '.alert.alert-success', :text => 'Practice created'
-    page.should have_content 'June 24, 2014 at 7:00 pm'
+    page.should have_content 'Tue Jun 24, 2014 7:00pm'
     page.should have_content 'Paxton'
   end
 
@@ -55,7 +55,7 @@ describe 'practices' do
 
     last_email.should be_nil
     page.should have_selector '.alert.alert-success', :text => 'Practice updated'
-    page.should have_content 'June 25, 2014 at 6:00 pm'
+    page.should have_content 'Wed Jun 25, 2014 6:00pm'
   end
 
   it 'deletes a practice' do
@@ -63,7 +63,7 @@ describe 'practices' do
     click_link 'Delete practice'
 
     page.should have_selector '.alert.alert-success', :text => 'Practice deleted'
-    page.should_not have_content 'June 24, 2014 at 7:00 pm'
+    page.should_not have_content 'Tue Jun 24, 2014 7:00pm'
   end
 
   it 'notifies team members', :versioning => true do

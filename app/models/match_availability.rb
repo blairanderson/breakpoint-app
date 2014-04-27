@@ -31,16 +31,14 @@ class MatchAvailability < ActiveRecord::Base
     state.inquiry
   end
 
-  def available!
-    update_attributes!(:state => 'yes')
-  end
-
-  def maybe_available!
-    update_attributes!(:state => 'maybe')
-  end
-
-  def not_available!
-    update_attributes!(:state => 'no')
+  def set_availability(availability)
+    if availability == 'yes'
+      self.state = 'yes'
+    elsif availability == 'maybe'
+      self.state = 'maybe'
+    elsif availability == 'no'
+      self.state = 'no'
+    end
   end
 end
 

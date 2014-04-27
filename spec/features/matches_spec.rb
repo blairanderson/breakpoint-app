@@ -13,7 +13,7 @@ describe 'matches' do
   end
 
   it 'displays the matches' do
-    page.should have_content 'June 26, 2014 at 11:00 am'
+    page.should have_content 'Thu Jun 26, 2014 11:00am'
   end
 
   it 'shows notification, lineup, and edit match only to captains' do
@@ -35,7 +35,7 @@ describe 'matches' do
     click_button 'Save match'
 
     page.should have_selector '.alert.alert-success', :text => 'Match created'
-    page.should have_content 'June 27, 2014 at 7:00 pm'
+    page.should have_content 'Fri Jun 27, 2014 7:00pm'
     page.should have_content 'PaxtonBigClub'
   end
 
@@ -55,7 +55,7 @@ describe 'matches' do
     click_button 'Save match'
 
     page.should have_selector '.alert.alert-success', :text => 'Match updated'
-    page.should have_content 'June 28, 2014 at 6:00 pm'
+    page.should have_content 'Sat Jun 28, 2014 6:00pm'
   end
 
   it 'deletes a match' do
@@ -63,7 +63,7 @@ describe 'matches' do
 
     click_link 'Delete match'    
     page.should have_selector '.alert.alert-success', :text => 'Match deleted'
-    page.should_not have_content 'June 27, 2014 at 7:00 pm'
+    page.should_not have_content 'Fri Jun 27, 2014 7:00pm'
   end
 
   it 'notifies team members', :versioning => true do
