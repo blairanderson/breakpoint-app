@@ -24,4 +24,4 @@ en:
     formats:
       default: "%m/%d/%Y"
       short: "%b %d"
-      long: "%B %d, %Y at %l:%M %P"
+      long: "%a %b %d, %Y %l:%M%P"
