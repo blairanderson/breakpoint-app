@@ -1,6 +1,6 @@
 <a href="#practice-<%= practice.id %>" data-toggle="modal">Who can play?</a>
 <div class="modal fade" id="practice-<%= practice.id %>">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <% if practice.available_players.empty? %>
         <div class="modal-header">
@@ -13,7 +13,9 @@
           <h4 class="modal-title">Confirmed players</h4>
         </div>
         <div class="modal-body">
-          <%= render :partial => 'team_members/team_members', :object => practice.available_players %>
+          <%= render :partial => 'team_members/team_members', 
+                :locals => { :practice => practice },
+                :object => practice.available_players %>
         </div>
       <% end %>
     </div>

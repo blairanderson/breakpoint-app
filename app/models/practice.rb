@@ -39,7 +39,7 @@ class Practice < ActiveRecord::Base
   end
 
   def available_players
-    practice_sessions.includes(:user).where(:available => true).collect(&:user)
+    practice_sessions.includes(:user).where(:available => true).order(:updated_at).collect(&:user)
   end
 
   def recent_changes

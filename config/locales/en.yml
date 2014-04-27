@@ -25,3 +25,4 @@ en:
       default: "%m/%d/%Y"
       short: "%b %d"
       long: "%a %b %d, %Y %l:%M%P"
+      simple: "%m/%d %l:%M%P" 
