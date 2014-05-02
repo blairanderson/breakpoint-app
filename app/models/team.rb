@@ -4,7 +4,7 @@ class Team < ActiveRecord::Base
 
   has_many :practices,    -> { order(:date => :asc) }, :dependent => :destroy
   has_many :matches,      -> { order(:date => :asc) }, :dependent => :destroy
-  has_many :team_members
+  has_many :team_members, :dependent => :destroy
   has_many :users,                :through => :team_members, :source => :user
 
   validates :name,            presence: true, uniqueness: true
