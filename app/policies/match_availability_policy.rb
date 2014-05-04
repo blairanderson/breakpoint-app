@@ -5,7 +5,11 @@ class MatchAvailabilityPolicy < ApplicationPolicy
     end
   end
 
-  def update?
+  def save_availability?
+    owner?
+  end
+
+  def save_note?
     owner?
   end
 

@@ -24,7 +24,7 @@ class MatchAvailabilitiesController < ApplicationController
     redirect_to new_user_session_url, :alert => "The link you tried has expired. Please sign in to set your availability."
   end
 
-  def update
+  def save_availability
     @match_availability = MatchAvailability.find(params[:id])
     authorize @match_availability
 
@@ -33,6 +33,17 @@ class MatchAvailabilitiesController < ApplicationController
 
     respond_to do |format|
       format.js { render nothing: true }
+    end
+  end
+
+  def save_note
+    @match_availability = MatchAvailability.find(params[:id])
+    authorize @match_availability
+
+    if @match_availability.update_attributes(note: params[:note])
+      render json: { note: @match_availability.note }
+    else
+      render json: { errors: @match_availability.errors.full_messages.to_sentence }, status: 422
     end
   end
 end

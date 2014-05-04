@@ -1,29 +1,40 @@
 <% matches.each do |match| %>
   <% match_availability = match.match_availability_for(current_user.id) %>
   <div class="panel panel-<%= availability_label(match_availability.state) %>">
-    <div class="panel-heading">
-      Can you play?
-      <div class="btn-group btn-group-sm">
-        <%= link_to "Yes",
-          match_match_availability_path(match, match_availability, team_id: current_team.id, state: 'yes'),
-          data: { label: 'success' },
-          remote: true,
-          method: :patch,
-          class: "availability btn btn-#{match_availability.yes? ? 'success disabled' : 'default'}" %>
+    <div class="panel-heading clearfix">
+      <div class="pull-left">
+        <div class="btn-group">
+        Can you play?
+        </div>
+        <div class="btn-group btn-group-sm">
+          <%= link_to "Yes",
+            save_availability_match_match_availability_path(match, match_availability, team_id: current_team.id, state: 'yes'),
+            data: { label: 'success' },
+            remote: true,
+            method: :post,
+            class: "availability btn btn-#{match_availability.yes? ? 'success disabled' : 'default'}" %>
 
-        <%= link_to "Maybe",
-          match_match_availability_path(match, match_availability, team_id: current_team.id, state: 'maybe'),
-          data: { label: 'info' },
-          remote: true,
-          method: :patch,
-          class: "availability btn btn-#{match_availability.maybe? ? 'info disabled' : 'default'}" %>
+          <%= link_to "Maybe",
+            save_availability_match_match_availability_path(match, match_availability, team_id: current_team.id, state: 'maybe'),
+            data: { label: 'info' },
+            remote: true,
+            method: :post,
+            class: "availability btn btn-#{match_availability.maybe? ? 'info disabled' : 'default'}" %>
 
-        <%= link_to "No",
-          match_match_availability_path(match, match_availability, team_id: current_team.id, state: 'no'),
-          data: { label: 'danger' },
-          remote: true,
-          method: :patch,
-          class: "availability btn btn-#{match_availability.no? ? 'danger disabled' : 'default'}" %>
+          <%= link_to "No",
+            save_availability_match_match_availability_path(match, match_availability, team_id: current_team.id, state: 'no'),
+            data: { label: 'danger' },
+            remote: true,
+            method: :post,
+            class: "availability btn btn-#{match_availability.no? ? 'danger disabled' : 'default'}" %>
+        </div>
+        <%= link_to "Add a note", "#", class: "add-note btn-group panel-link" %>
+        <div class="hidden note-form form-inline btn-group">
+          <div class="form-group">
+            <%= text_field_tag :note, '', class: "note form-control input-sm", style: "width: 250px;" %>
+          </div>
+          <%= link_to "Save", save_note_match_match_availability_path(match, match_availability, team_id: current_team.id), class: "save-note" %>
+        </div>
       </div>
 
       <% if policy(current_team).captain? %>
@@ -86,6 +97,28 @@
       match.find('.availability').removeClass('disabled btn-success btn-info btn-danger btn-warning').addClass('btn-default').off('click');
       availability.removeClass('btn-default').addClass('disabled btn-' + availability.data('label'));
       match.removeClass('panel-success panel-info panel-danger panel-warning').addClass('panel-' + availability.data('label'));
+    });
+
+    $('.add-note').on('click', function(e) {
+      e.preventDefault();
+      $(this).closest('.panel-heading').find('.note-form').removeClass('hidden');
+      $(this).addClass('hidden');
+    });
+
+    $('.save-note').on('click', function(e) {
+      e.preventDefault();
+      var saveNote = $(this);
+      var data = { note: $(this).closest('.note-form').find('.note').val() };
+      $.post(saveNote.attr('href'), data).done(function(data, textStatus, jqXHR) {
+        var addNote = saveNote.closest('.panel-heading').find('.add-note');
+        addNote.removeClass('hidden');
+        addNote.before(data.note);
+        saveNote.closest('.note-form').addClass('hidden');
+      }).fail(function(jqXHR, textStatus, errorThrown) {
+        var noteForm = saveNote.closest('.note-form');
+        noteForm.append('<span class="glyphicon glyphicon-exclamation-sign"></span> ');
+        noteForm.append($.parseJSON(jqXHR.responseText).errors);
+      });
     });
   });
 </script>

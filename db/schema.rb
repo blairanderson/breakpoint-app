@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20140511155147) do
     t.integer  "team_id"
     t.string   "state",        default: "no_response"
     t.datetime "destroyed_at"
+    t.text     "note"
   end
 
   add_index "match_availabilities", ["match_id"], name: "index_match_availabilities_on_match_id", using: :btree
