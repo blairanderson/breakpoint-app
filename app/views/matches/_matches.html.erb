@@ -28,10 +28,15 @@
             method: :post,
             class: "availability btn btn-#{match_availability.no? ? 'danger disabled' : 'default'}" %>
         </div>
-        <%= link_to "Add a note", "#", class: "add-note btn-group panel-link" %>
+        <% if match_availability.note.blank? %>
+          <%= link_to "Add a note", "#", class: "note-action btn-group panel-link" %>
+        <% else %>
+          <span><%= match_availability.note %></span>
+          <%= link_to "Edit note", "#", class: "note-action btn-group panel-link" %>
+        <% end %>
         <div class="hidden note-form form-inline btn-group">
           <div class="form-group">
-            <%= text_field_tag :note, '', class: "note form-control input-sm", style: "width: 250px;" %>
+            <%= text_field_tag :note, match_availability.note, class: "note form-control input-sm", style: "width: 250px;" %>
           </div>
           <%= link_to "Save", save_note_match_match_availability_path(match, match_availability, team_id: current_team.id), class: "save-note" %>
         </div>
@@ -99,10 +104,12 @@
       match.removeClass('panel-success panel-info panel-danger panel-warning').addClass('panel-' + availability.data('label'));
     });
 
-    $('.add-note').on('click', function(e) {
+    $('.note-action').on('click', function(e) {
       e.preventDefault();
       $(this).closest('.panel-heading').find('.note-form').removeClass('hidden');
+      $(this).next('.note-form').find('.note').focus();
       $(this).addClass('hidden');
+      $(this).prev('span').remove();
     });
 
     $('.save-note').on('click', function(e) {
@@ -110,9 +117,10 @@
       var saveNote = $(this);
       var data = { note: $(this).closest('.note-form').find('.note').val() };
       $.post(saveNote.attr('href'), data).done(function(data, textStatus, jqXHR) {
-        var addNote = saveNote.closest('.panel-heading').find('.add-note');
-        addNote.removeClass('hidden');
-        addNote.before(data.note);
+        var noteAction = saveNote.closest('.panel-heading').find('.note-action');
+        noteAction.removeClass('hidden');
+        noteAction.before('<span>' + data.note + '</span> ');
+        noteAction.text('Edit note');
         saveNote.closest('.note-form').addClass('hidden');
       }).fail(function(jqXHR, textStatus, errorThrown) {
         var noteForm = saveNote.closest('.note-form');
