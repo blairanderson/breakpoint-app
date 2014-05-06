@@ -59,19 +59,29 @@ class Match < ActiveRecord::Base
   end
 
   def available_players
-    match_availabilities.includes(:user).available.collect(&:user)
+    player_status(match_availabilities.includes(:user).available)
   end
 
   def maybe_available_players
-    match_availabilities.includes(:user).maybe_available.collect(&:user)
+    player_status(match_availabilities.includes(:user).maybe_available)
   end
 
   def not_available_players
-    match_availabilities.includes(:user).not_available.collect(&:user)
+    player_status(match_availabilities.includes(:user).not_available)
   end
 
   def no_response_players
-    match_availabilities.includes(:user).no_response.collect(&:user)
+    player_status(match_availabilities.includes(:user).no_response)
+  end
+
+  def player_status(availabilities)
+    availabilities.map do |availability|
+      if availability.note.blank?
+        [availability.user.name, availability.id]
+      else
+        ["#{availability.user.name} - #{availability.note}", availability.id]
+      end
+    end
   end
 
   def players_status
