@@ -30,16 +30,6 @@ class MatchAvailability < ActiveRecord::Base
   def current_state
     state.inquiry
   end
-
-  def set_availability(availability)
-    if availability == 'yes'
-      self.state = 'yes'
-    elsif availability == 'maybe'
-      self.state = 'maybe'
-    elsif availability == 'no'
-      self.state = 'no'
-    end
-  end
 end
 
 # == Schema Information

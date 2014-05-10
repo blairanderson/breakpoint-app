@@ -10,7 +10,7 @@ class MatchAvailabilitiesController < ApplicationController
 
   def set_availability
     @match_availability = Match.match_availability_from_token(params[:token])
-    @match_availability.set_availability(params[:available])
+    @match_availability.state = params[:available]
     @match_availability.team = current_team if @match_availability.new_record?
     @match_availability.save
 
@@ -28,7 +28,7 @@ class MatchAvailabilitiesController < ApplicationController
     @match_availability = MatchAvailability.find(params[:id])
     authorize @match_availability
 
-    @match_availability.set_availability(params[:state])
+    @match_availability.state = params[:state]
     @match_availability.save
 
     respond_to do |format|
