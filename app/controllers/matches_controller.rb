@@ -129,6 +129,13 @@ class MatchesController < ApplicationController
     redirect_to team_matches_url(@match.team), :notice => 'Lineup email sent to team'
   end
 
+  def import
+    scraper = UstaScraper.new(params[:team_number], params[:year])
+    importer = UstaImporter.new(current_team.id, scraper.matches)
+    importer.import
+    redirect_to team_matches_url(current_team), :notice => 'Matches imported from USTA'
+  end
+
   def create
     @match = current_team.matches.build(permitted_params.match)
     authorize current_team

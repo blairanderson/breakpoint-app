@@ -10,6 +10,7 @@ class UstaImporter
     ActsAsTenant.with_tenant(team) do
       Match.transaction do
         matches.each do |match|
+          next if match[:match_date].past?
           m               = team.matches.build
           m.usta_match_id = match[:match_id]
           m.date          = match[:match_date]

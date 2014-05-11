@@ -36,6 +36,9 @@ Rails.application.routes.draw do
         get :player_request_email
         get :lineup_email
       end
+      collection do
+        get :import
+      end
     end
     resources :match_availabilities, :only => [:index] do
       collection do
