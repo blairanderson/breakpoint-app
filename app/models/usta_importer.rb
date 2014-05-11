@@ -16,7 +16,7 @@ class UstaImporter
           m.date          = match[:match_date]
           m.home_team     = match[:home]
           m.opponent      = match[:opponent]
-          m.location      = "#{match[:location][:name]}\n#{match[:location][:address]}"
+          m.location      = "#{match[:location][:name]}\n#{match[:location][:address]}" if match[:location].present?
           m.save!
         end
       end

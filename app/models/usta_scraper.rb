@@ -3,6 +3,7 @@ class UstaScraper
   attr_accessor :locations, :team_names
 
   def initialize(team_number, year)
+    Chronic.time_class = Time.zone
     @agent = Mechanize.new
 
     @team_number = team_number
@@ -44,10 +45,12 @@ class UstaScraper
   end
 
   def extract_location
-    row_with_location = @current_page.search('.TeamSummaryTable tr')[3]
+    row_with_location    = @current_page.search('.TeamSummaryTable tr')[3]
     column_with_location = row_with_location.search('td')[2]
-    name_and_address = column_with_location.inner_html.split('<br>')
-    { name: Nokogiri::HTML(name_and_address[0].squish).text, address: Nokogiri::HTML(name_and_address[1].squish).text }
+    name_and_address     = column_with_location.inner_html.split('<br>')
+    name                 = name_and_address[0].try(:squish)
+    address              = name_and_address[1].try(:squish)
+    { name: Nokogiri::HTML(name).text, address: Nokogiri::HTML(address).text }
   end
 
   def find_location(location)
