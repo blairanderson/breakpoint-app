@@ -47,11 +47,11 @@ class UstaScraper
     row_with_location = @current_page.search('.TeamSummaryTable tr')[3]
     column_with_location = row_with_location.search('td')[2]
     name_and_address = column_with_location.inner_html.split('<br>')
-    { name: name_and_address[0].squish, address: name_and_address[1].squish }
+    { name: Nokogiri::HTML(name_and_address[0].squish).text, address: Nokogiri::HTML(name_and_address[1].squish).text }
   end
 
   def find_location(location)
-    locations.select { |l| l[:name] == location }
+    locations.select { |l| l[:name] == location }.first
   end
 
   def find_opponent(home_team, visiting_team)
@@ -74,13 +74,14 @@ class UstaScraper
       match_id       = columns[0].search('a').text
       scheduled_date = columns[1].text
       scheduled_time = columns[2].text
+      match_date     = Chronic.parse("#{scheduled_date} #{scheduled_time}")
       home_team      = columns[3].text.squish.split(";").first
       visiting_team  = columns[5].text.squish.split(";").first
       location       = find_location(columns[7].text.squish)
       next if home_team == "Bye" || visiting_team == "Bye"
       {
         match_id: match_id,
-        match_date: Chronic.parse("#{scheduled_date} #{scheduled_time})"),
+        match_date: match_date,
         home: home_team == team_name[:name],
         opponent: find_opponent(home_team, visiting_team),
         location: location
