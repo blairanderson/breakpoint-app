@@ -6,6 +6,7 @@ class MatchAvailability < ActiveRecord::Base
   belongs_to :match
 
   validates :team, presence: true
+  validates :note, length: { maximum: 140 }
 
   acts_as_tenant :team
 

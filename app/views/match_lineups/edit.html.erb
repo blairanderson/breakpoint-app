@@ -21,6 +21,8 @@
                 :collection   => @match.players_status,
                 :label        => false,
                 :as           => :grouped_select,
+                :value_mehod  => :last,
+                :label_method => :first,
                 :group_method => :last,
                 :group_label_mehod => :first %>
             </div>

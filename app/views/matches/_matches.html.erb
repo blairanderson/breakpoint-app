@@ -29,7 +29,7 @@
             class: "availability btn btn-#{match_availability.no? ? 'danger disabled' : 'default'}" %>
         </div>
         <% if match_availability.note.blank? %>
-          <%= link_to "Add a note", "#", class: "note-action btn-group panel-link" %>
+          <%= link_to "Add note (for captain)", "#", class: "note-action btn-group panel-link" %>
         <% else %>
           <span><%= match_availability.note %></span>
           <%= link_to "Edit note", "#", class: "note-action btn-group panel-link" %>
@@ -115,17 +115,24 @@
     $('.save-note').on('click', function(e) {
       e.preventDefault();
       var saveNote = $(this);
-      var data = { note: $(this).closest('.note-form').find('.note').val() };
+      var noteForm = saveNote.closest('.note-form');
+      noteForm.find('.errors').remove();
+      var data = { note: noteForm.find('.note').val() };
       $.post(saveNote.attr('href'), data).done(function(data, textStatus, jqXHR) {
         var noteAction = saveNote.closest('.panel-heading').find('.note-action');
         noteAction.removeClass('hidden');
         noteAction.before('<span>' + data.note + '</span> ');
-        noteAction.text('Edit note');
+        if (data.note !== '') {
+          noteAction.text('Edit note');
+        } else {
+          noteAction.text('Add note (for captain)');
+        }
         saveNote.closest('.note-form').addClass('hidden');
       }).fail(function(jqXHR, textStatus, errorThrown) {
-        var noteForm = saveNote.closest('.note-form');
-        noteForm.append('<span class="glyphicon glyphicon-exclamation-sign"></span> ');
-        noteForm.append($.parseJSON(jqXHR.responseText).errors);
+        var errors = $('<span>').addClass('errors');
+        errors.append('<span class="glyphicon glyphicon-exclamation-sign"></span> ');
+        errors.append($.parseJSON(jqXHR.responseText).errors);
+        noteForm.append(errors);
       });
     });
   });
