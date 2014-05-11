@@ -6,6 +6,10 @@ class MatchesController < ApplicationController
     @previous_matches = current_team.previous_matches
   end
 
+  def show
+    @match = Match.find(params[:id])
+  end
+
   def new
     @match = current_team.matches.build
     @match.date = Time.zone.now.change(hour: 14, min: 30)

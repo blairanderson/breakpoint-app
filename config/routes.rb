@@ -29,7 +29,7 @@ Rails.application.routes.draw do
         get :availability_email
       end
     end
-    resources :matches, :except => [:show] do
+    resources :matches do
       member do
         get :availabilities
         get :availability_email

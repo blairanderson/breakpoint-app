@@ -1,0 +1,44 @@
+<script>
+  $(function() {
+    $('.panel').on('ajax:success', '.availability', function(e, data, status, xhr) {
+      var availability = $(this);
+      var match = availability.closest('.panel');
+      match.find('.availability').removeClass('disabled btn-success btn-info btn-danger btn-warning').addClass('btn-default').off('click');
+      availability.removeClass('btn-default').addClass('disabled btn-' + availability.data('label'));
+      match.removeClass('panel-success panel-info panel-danger panel-warning').addClass('panel-' + availability.data('label'));
+    });
+
+    $('.note-action').on('click', function(e) {
+      e.preventDefault();
+      $(this).closest('.panel-heading').find('.note-form').removeClass('hidden');
+      $(this).next('.note-form').find('.note').focus();
+      $(this).addClass('hidden');
+      $(this).prev('span').remove();
+    });
+
+    $('.save-note').on('click', function(e) {
+      e.preventDefault();
+      var saveNote = $(this);
+      var noteForm = saveNote.closest('.note-form');
+      noteForm.find('.errors').remove();
+      var data = { note: noteForm.find('.note').val() };
+      $.post(saveNote.attr('href'), data).done(function(data, textStatus, jqXHR) {
+        var noteAction = saveNote.closest('.panel-heading').find('.note-action');
+        noteAction.removeClass('hidden');
+        noteAction.before('<span>' + data.note + '</span> ');
+        if (data.note !== '') {
+          noteAction.text('Edit note');
+        } else {
+          noteAction.text('Add note (for captain)');
+        }
+        saveNote.closest('.note-form').addClass('hidden');
+      }).fail(function(jqXHR, textStatus, errorThrown) {
+        var errors = $('<span>').addClass('errors');
+        errors.append('<span class="glyphicon glyphicon-exclamation-sign"></span> ');
+        errors.append($.parseJSON(jqXHR.responseText).errors);
+        noteForm.append(errors);
+      });
+    });
+  });
+</script>
+

@@ -1,0 +1,93 @@
+<% match_availability = match.match_availability_for(current_user.id) %>
+<div class="panel panel-<%= availability_label(match_availability.state) %>">
+  <div class="panel-heading clearfix">
+    <div class="pull-left">
+      <div class="btn-group">
+      Can you play?
+      </div>
+      <div class="btn-group btn-group-sm">
+        <%= link_to "Yes",
+          save_availability_match_match_availability_path(match, match_availability, team_id: current_team.id, state: 'yes'),
+          data: { label: 'success' },
+          remote: true,
+          method: :post,
+          class: "availability btn btn-#{match_availability.yes? ? 'success disabled' : 'default'}" %>
+
+        <%= link_to "Maybe",
+          save_availability_match_match_availability_path(match, match_availability, team_id: current_team.id, state: 'maybe'),
+          data: { label: 'info' },
+          remote: true,
+          method: :post,
+          class: "availability btn btn-#{match_availability.maybe? ? 'info disabled' : 'default'}" %>
+
+        <%= link_to "No",
+          save_availability_match_match_availability_path(match, match_availability, team_id: current_team.id, state: 'no'),
+          data: { label: 'danger' },
+          remote: true,
+          method: :post,
+          class: "availability btn btn-#{match_availability.no? ? 'danger disabled' : 'default'}" %>
+      </div>
+      <% if match_availability.note.blank? %>
+        <%= link_to "Add note (for captain)", "#", class: "note-action btn-group panel-link" %>
+      <% else %>
+        <span><%= match_availability.note %></span>
+        <%= link_to "Edit note", "#", class: "note-action btn-group panel-link" %>
+      <% end %>
+      <div class="hidden note-form form-inline btn-group">
+        <div class="form-group">
+          <%= text_field_tag :note, match_availability.note, class: "note form-control input-sm", style: "width: 250px;" %>
+        </div>
+        <%= link_to "Save", save_note_match_match_availability_path(match, match_availability, team_id: current_team.id), class: "save-note" %>
+      </div>
+    </div>
+
+    <% if policy(current_team).captain? %>
+      <div class="pull-right">
+        <%= link_to 'Edit match', edit_team_match_path(current_team, match), :class => 'btn btn-sm btn-default' %>
+      </div>
+    <% end %>
+  </div>
+  <div class="panel-body">
+    <% if policy(current_team).captain? %>
+      <%= render partial: 'shared/match_details', locals: { match: match } %>
+      <div class="row">
+        <div class="col-md-5">
+          <div class="row">
+            <div class="col-md-3">
+              <label>Availability:</label>
+            </div>
+            <div class="col-md-9">
+              <p>
+                <%= link_to availability_email_team_match_path(current_team, match) do %>
+                  <span class="glyphicon glyphicon-envelope"></span>
+                  Preview and send availability email
+                <% end %>
+              </p>
+              <p>
+                <%= link_to "Who can play?", availabilities_team_match_path(current_team, match) %>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-7">
+          <div class="row">
+            <div class="col-md-3 col-lg-2">
+              <label>Lineup:</label>
+            </div>
+            <div class="col-md-9 col-lg-10">
+              <p><%= link_to 'Set the lineup', edit_lineup_match_path(match, team_id: current_team.id) %></p>
+              <p>
+                <%= link_to lineup_email_team_match_path(current_team, match) do %>
+                  <span class="glyphicon glyphicon-envelope"></span>
+                  Preview and send lineup email
+                <% end %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% else %>
+      <%= render partial: 'shared/match_details', locals: { match: match } %>
+    <% end %>
+  </div>
+</div>

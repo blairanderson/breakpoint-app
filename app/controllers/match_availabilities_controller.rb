@@ -17,8 +17,8 @@ class MatchAvailabilitiesController < ApplicationController
     sign_in :user, @match_availability.user
     response = @match_availability.state
     date = l(@match_availability.match.date, :format => :long)
-    message = "Your #{response} response has been recorded for the match on #{date}"
-    redirect_to team_matches_url(current_team), notice: message
+    message = "Your #{response} response has been recorded. Add additional availability notes for your captain below."
+    redirect_to team_match_url(current_team, @match_availability.match), notice: message
   rescue Match::MatchAvailabilityTokenExpired
     session['user_return_to'] = team_matches_url(current_team)
     redirect_to new_user_session_url, :alert => "The link you tried has expired. Please sign in to set your availability."
