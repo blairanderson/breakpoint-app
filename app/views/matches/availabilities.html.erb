@@ -23,11 +23,9 @@
         <% if players.size > 0 %>
           <div class="list-group <%= status.parameterize %>">
             <% players.each do |player| %>
-              <a href="#" class="list-group-item" data-user-id="<%= player.id %>">
+              <a href="#" class="list-group-item" data-user-id="<%= player.last %>">
                 <span class="glyphicon glyphicon-unchecked"></span>
-                <%= player.name %>
-                (<%= player.email %>)
-                <%= "- #{player.phone_number}" if player.phone_number.present? %>
+                <%= player.first %>
               </a>
             <% end %>
           </div>
