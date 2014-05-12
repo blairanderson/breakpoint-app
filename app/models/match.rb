@@ -77,9 +77,9 @@ class Match < ActiveRecord::Base
   def player_status(availabilities)
     availabilities.map do |availability|
       if availability.note.blank?
-        [availability.user.name, availability.id]
+        [availability.user.name, availability.user.id]
       else
-        ["#{availability.user.name} - #{availability.note}", availability.id]
+        ["#{availability.user.name} - #{availability.note}", availability.user.id]
       end
     end
   end
