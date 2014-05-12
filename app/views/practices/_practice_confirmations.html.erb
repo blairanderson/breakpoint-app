@@ -1,24 +1,23 @@
-<a href="#practice-<%= practice.id %>" data-toggle="modal">Who can play?</a>
-<div class="modal fade" id="practice-<%= practice.id %>">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <% if practice.available_players.empty? %>
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">There are no confirmed players yet.</h4>
-        </div>
-      <% else %>
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Confirmed players</h4>
-        </div>
-        <div class="modal-body">
-          <%= render :partial => 'team_members/team_members', 
-                :locals => { :practice => practice },
-                :object => practice.available_players %>
+<div class="panel panel-<%= availability_label(status) %>">
+  <div class="panel-heading clearfix">
+      <h3 class="panel-title pull-left">
+        <%= status %>
+        <span class="badge"><%= players.size %></span>
+      </h3>
+  </div>
+  <% if players.size > 0 %>
+    <div class="list-group <%= status.parameterize %>">
+      <% players.each do |player| %>
+        <div class="list-group-item">
+          <%= player.name %>
+          (<%= player.email %>)
+          <%= "- #{player.phone_number}" if player.phone_number.present? %>
         </div>
       <% end %>
     </div>
-  </div>
+  <% else %>
+    <div class="panel-body">
+      No players in this group
+    </div>
+  <% end %>
 </div>
-

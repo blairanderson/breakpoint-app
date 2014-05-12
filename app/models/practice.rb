@@ -42,6 +42,10 @@ class Practice < ActiveRecord::Base
     practice_sessions.includes(:user).where(:available => true).order(:updated_at).collect(&:user)
   end
 
+  def not_available_players
+    practice_sessions.includes(:user).where(:available => false).order(:updated_at).collect(&:user)
+  end
+
   def recent_changes
     versions.last.changeset
   end

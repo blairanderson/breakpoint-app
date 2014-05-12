@@ -11,10 +11,6 @@ describe 'practice_sessions' do
     visit team_practices_path(@practice.team)
   end
 
-  it 'checks empty practice_session' do
-    page.should have_content 'There are no confirmed players yet'
-  end
-
   it 'creates a practice_session as available' do
     first(:button, "I can play").click
     page.should have_content 'You can play'

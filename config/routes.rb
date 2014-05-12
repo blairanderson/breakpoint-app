@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     resources :practices, :except => [:show] do
       member do
         get :availability_email
+        get :availabilities
       end
     end
     resources :matches do

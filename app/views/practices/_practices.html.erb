@@ -50,7 +50,7 @@
                 <% end %>
               </p>
               <p>
-                <%= render :partial => 'practice_confirmations', :locals => { :practice => practice } %>
+                <%= link_to "Who can play?", availabilities_team_practice_path(current_team, practice) %>
               </p>
             </div>
           </div>

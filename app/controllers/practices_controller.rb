@@ -95,5 +95,9 @@ class PracticesController < ApplicationController
 
     redirect_to team_practices_url(@practice.team), :notice => 'Practice deleted'
   end
+
+  def availabilities
+    @practice = Practice.find(params[:id])
+  end
 end
 
