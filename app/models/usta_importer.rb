@@ -9,8 +9,10 @@ class UstaImporter
   def import
     ActsAsTenant.with_tenant(team) do
       Match.transaction do
+        existing_matche_dates = Match.pluck(:date).map(&:beginning_of_day)
         matches.each do |match|
           next if match[:match_date].past?
+          next if existing_matche_dates.include?(match[:match_date].beginning_of_day)
           m               = team.matches.build
           m.usta_match_id = match[:match_id]
           m.date          = match[:match_date]

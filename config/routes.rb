@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       end
       collection do
         get :import
+        post :perform_import
       end
     end
     resources :match_availabilities, :only => [:index] do

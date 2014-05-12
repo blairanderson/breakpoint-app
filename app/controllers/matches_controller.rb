@@ -134,10 +134,20 @@ class MatchesController < ApplicationController
   end
 
   def import
+    authorize current_team
+  end
+
+  def perform_import
+    authorize current_team, :import?
+
     scraper = UstaScraper.new(params[:team_number], params[:year])
     importer = UstaImporter.new(current_team.id, scraper.matches)
     importer.import
+
     redirect_to team_matches_url(current_team), :notice => 'Matches imported from USTA'
+  rescue => e
+    # TODO notify!
+    redirect_to team_matches_url(current_team), flash: { error: "Sorry, an error occurred during import. We have been notified and will let you know once it's fixed" }
   end
 
   def create
