@@ -8,6 +8,10 @@ class TeamPolicy < ApplicationPolicy
   def send_welcome_email?
     captain?
   end
+  
+  def import?
+    captain?
+  end
 
   def create?
     captain?

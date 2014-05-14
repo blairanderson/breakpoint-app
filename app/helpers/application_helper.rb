@@ -5,7 +5,7 @@ module ApplicationHelper
       "alert"  => { :class => 'warning', :icon => 'warning-sign' },
       "notice" => { :class => 'success', :icon => 'ok-sign' },
       "info"   => { :class => 'info',    :icon => 'info-sign' },
-      "error"  => { :class => 'error',   :icon => 'exclamation-sign' }
+      "error"  => { :class => 'danger',  :icon => 'exclamation-sign' }
     }
 
     mapping.fetch(name, { :class => name, :icon => 'info-sign' })
