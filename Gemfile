@@ -51,4 +51,6 @@ gem 'sinatra',              require: false
 gem 'icalendar',            github: 'icalendar/icalendar', branch: '2.0beta'
 gem 'destroyed_at'
 gem 'mechanize'
+gem 'skylight'
+gem 'rollbar'
 

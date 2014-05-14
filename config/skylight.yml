@@ -1,0 +1,6 @@
+---
+# The Skylight ID for the application.
+application: <%= Rails.application.secrets.skylight_application %>
+
+# The authentication token for the application.
+authentication: <%= Rails.application.secrets.skylight_authentication %>
