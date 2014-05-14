@@ -146,7 +146,7 @@ class MatchesController < ApplicationController
 
     redirect_to team_matches_url(current_team), :notice => 'Matches imported from USTA'
   rescue => e
-    # TODO notify!
+    Rollbar.report_exception(e, rollbar_request_data, rollbar_person_data)
     redirect_to team_matches_url(current_team), flash: { error: "Sorry, an error occurred during import. We have been notified and will let you know once it's fixed" }
   end
 
