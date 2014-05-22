@@ -7,10 +7,12 @@
     <div class="row">
       <div class="col-md-3">
         <%= f.input :role, collection: TeamMember::ROLES, value_method: :to_s, label_method: :humanize, include_blank: false %>
-
-        <%= f.submit 'Save settings', :class => 'btn btn-primary' %>
       </div>
     </div>
+    <p class="help-block">
+      Captain and Co-captain both have full access to everything. Members can't set lineups or edit matches.
+    </p>
+    <%= f.submit 'Save settings', :class => 'btn btn-primary' %>
   <% end %>
 
   <hr>
