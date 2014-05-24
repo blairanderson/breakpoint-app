@@ -60,6 +60,10 @@ class User < ActiveRecord::Base
     raw
   end
 
+  def captain?
+    team_members.where(%Q["team_members"."role" = 'captain' OR "team_members"."role" = 'co-captain']).present?
+  end
+
   protected
 
   # Checks whether a password is needed or not. For validations only.
