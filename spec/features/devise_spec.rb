@@ -29,10 +29,10 @@ describe 'devise' do
   end
 
   it 'changes a user profile' do
-    click_link 'Sign in'
+    click_button 'Sign in'
     fill_in 'Email',    :with => 'john.doe@example.com'
     fill_in 'Password', :with => 'password'
-    click_button 'Sign in'
+    within('.new_user') { click_button 'Sign in' }
 
     click_link 'John Doe'
     fill_in 'Phone number',     :with => '111-111-1111'
@@ -43,7 +43,7 @@ describe 'devise' do
   end
 
   it 'allows forgot password' do
-    click_link 'Sign in'
+    click_button 'Sign in'
     click_link 'Forgot your password?'
     fill_in 'Email', :with => 'john.doe@example.com'
     click_button 'Send me reset password instructions'
