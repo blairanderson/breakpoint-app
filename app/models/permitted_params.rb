@@ -40,14 +40,15 @@ class PermittedParams
 
   def user
     params.require(:user).permit(:email,
-                                 :current_password,
-                                 :password,
-                                 :password_confirmation,
                                  :remember_me,
                                  :first_name,
                                  :last_name,
                                  :phone_number,
                                  :reset_password_token)
+  end
+
+  def password
+    params.require(:user).permit(:current_password, :password, :password_confirmation)
   end
 end
 

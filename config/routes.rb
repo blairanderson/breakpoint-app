@@ -3,7 +3,11 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   root :to => 'home#index'
 
-  devise_for :users, :controllers => { :registrations => 'users/registrations' }
+  devise_for :users, :controllers => {
+    :registrations => 'users/registrations',
+    :passwords     => 'users/passwords'
+  }
+
   get 'teams' => 'teams#index', as: :user_root
 
   authenticate :user, lambda { |u| u.email == "davekaro@gmail.com" || u.email == "bhandari.sudershan@gmail.com" } do
@@ -87,6 +91,12 @@ Rails.application.routes.draw do
       post 'notify_lineup'
       get 'edit_lineup' => 'match_lineups#edit'
       get 'edit_results' => 'results#edit'
+    end
+  end
+
+  resource :change_password, :only => [:edit, :update] do
+    member do
+      get 'send_reset'
     end
   end
 
