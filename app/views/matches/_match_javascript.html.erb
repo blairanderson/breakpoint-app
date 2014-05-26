@@ -1,16 +1,36 @@
 <script>
   $(function() {
-    $('.panel').on('ajax:success', '.availability', function(e, data, status, xhr) {
+    $('.panel-body').on('hidden.bs.collapse', function(e) {
+      var $clicked = $(e.target);
+      $clicked.closest('.panel').find('.panel-title a span').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right');
+    });
+    $('.panel-body').on('show.bs.collapse', function(e) {
+      var $clicked = $(e.target);
+      $clicked.closest('.panel').find('.panel-title a span').removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down');
+    });
+
+    $('.panel-body').collapse({ toggle: false });
+    $('.expand-all').on('click', function(e) {
+      e.preventDefault();
+      $('.panel-body').collapse('show');
+    });
+    $('.collapse-all').on('click', function(e) {
+      e.preventDefault();
+      $('.panel-body').collapse('hide');
+    });
+
+
+    $('.alert').on('ajax:success', '.availability', function(e, data, status, xhr) {
       var availability = $(this);
-      var match = availability.closest('.panel');
+      var match = availability.closest('.alert');
       match.find('.availability').removeClass('disabled btn-success btn-info btn-danger btn-warning').addClass('btn-default').off('click');
       availability.removeClass('btn-default').addClass('disabled btn-' + availability.data('label'));
-      match.removeClass('panel-success panel-info panel-danger panel-warning').addClass('panel-' + availability.data('label'));
+      match.removeClass('alert-success alert-info alert-danger alert-warning').addClass('alert-' + availability.data('label'));
     });
 
     $('.note-action').on('click', function(e) {
       e.preventDefault();
-      $(this).closest('.panel-heading').find('.note-form').removeClass('hidden');
+      $(this).closest('.alert').find('.note-form').removeClass('hidden');
       $(this).next('.note-form').find('.note').focus();
       $(this).addClass('hidden');
       $(this).prev('span').remove();
@@ -23,7 +43,7 @@
       noteForm.find('.errors').remove();
       var data = { note: noteForm.find('.note').val() };
       $.post(saveNote.attr('href'), data).done(function(data, textStatus, jqXHR) {
-        var noteAction = saveNote.closest('.panel-heading').find('.note-action');
+        var noteAction = saveNote.closest('.alert').find('.note-action');
         noteAction.removeClass('hidden');
         noteAction.before('<span>' + data.note + '</span> ');
         if (data.note !== '') {

@@ -2,8 +2,7 @@ class MatchesController < ApplicationController
   layout 'team'
 
   def index
-    @upcoming_matches = current_team.upcoming_matches
-    @previous_matches = current_team.previous_matches
+    @matches = current_team.matches
   end
 
   def show

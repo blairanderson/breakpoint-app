@@ -1,21 +1,6 @@
 <% subtitle 'Matches' %>
 
-<% if @upcoming_matches.empty? && @previous_matches.empty? %>
-  <div class="alert alert-info">
-    <h4>No matches for this team yet</h4>
-    <% if policy(current_team).captain? %>
-      <%= link_to 'Add a match', new_team_match_path(current_team), :class => "alert-link" %>
-      or
-      <%= link_to 'import matches (USTA only)', import_team_matches_path(current_team), :class => "alert-link" %> to get playing.
-    <% end %>
-  </div>
-  <% if policy(current_team).captain? %>
-    <p>
-      <%= link_to 'Add a match', new_team_match_path(current_team), :class => 'btn btn-default' %>
-      <%= link_to 'Import matches', import_team_matches_path(current_team), :class => "btn btn-default" %>
-    </p>
-  <% end %>
-<% else %>
+<% if @matches.present? %>
   <p>
     <% if policy(current_team).captain? %>
       <%= link_to 'Add a match', new_team_match_path(current_team), :class => 'btn btn-default' %>
@@ -23,17 +8,23 @@
     <% end %>
     <%= link_to 'See who can play when', team_match_availabilities_path(current_team), :class => 'btn btn-default' %>
   </p>
-  <% if @upcoming_matches.present? %>
-    <%= render :partial => "matches", :object => @upcoming_matches %>
+  <%= render :partial => "matches", :object => @matches %>
+<% else %>
+  <% if policy(current_team).captain? %>
+    <div class="alert alert-info">
+      <h4>No matches for this team yet</h4>
+      <%= link_to 'Add a match', new_team_match_path(current_team), :class => "alert-link" %>
+      or
+      <%= link_to 'import matches (USTA only)', import_team_matches_path(current_team), :class => "alert-link" %> to get playing.
+    </div>
+    <p>
+      <%= link_to 'Add a match', new_team_match_path(current_team), :class => 'btn btn-default' %>
+      <%= link_to 'Import matches', import_team_matches_path(current_team), :class => "btn btn-default" %>
+    </p>
   <% else %>
     <div class="alert alert-info">
-      No upcoming matches
+      <h4>The captain has not added any matches yet</h4>
     </div>
-  <% end %>
-
-  <% if @previous_matches.present? %>
-    <h3>Previous Matches</h3>
-    <%= render :partial => "matches", :object => @previous_matches %>
   <% end %>
 <% end %>
 

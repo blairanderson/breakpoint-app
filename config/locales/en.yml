@@ -25,4 +25,5 @@ en:
       default: "%m/%d/%Y"
       short: "%b %d"
       long: "%a %b %d, %Y %l:%M%P"
+      long_date: "%a %b %d, %Y"
       simple: "%m/%d %l:%M%P" 

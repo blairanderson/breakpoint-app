@@ -1,10 +1,26 @@
 <% match_availability = match.match_availability_for(current_user.id) %>
-<div class="panel panel-<%= availability_label(match_availability.state) %>">
+<div class="panel panel-default">
   <div class="panel-heading clearfix">
-    <div class="pull-left">
-      <div class="btn-group">
-      Can you play?
+    <h4 class="panel-title pull-left">
+      <a data-toggle="collapse" href="#match-<%= match.id %>">
+        <span class="glyphicon glyphicon-chevron-<%= match.date.future? ? "down" : "right"%>"></span>
+        <%= l match.date, :format => :long_date %>
+        - <%= match.team_location %>
+        <% if match.opponent.present? %>
+          against <%= match.opponent %>
+        <% end %>
+      </a>
+    </h4>
+
+    <% if policy(current_team).captain? %>
+      <div class="pull-right">
+        <%= link_to 'Edit match', edit_team_match_path(current_team, match), :class => 'btn btn-sm btn-default' %>
       </div>
+    <% end %>
+  </div>
+  <div class="panel-body collapse<%= " in" if match.date.future? %>" id="match-<%= match.id %>">
+    <div class="alert alert-<%= availability_label(match_availability.state) %>">
+      Can you play?
       <div class="btn-group btn-group-sm">
         <%= link_to "Yes",
           save_availability_match_match_availability_path(match, match_availability, team_id: current_team.id, state: 'yes'),
@@ -28,10 +44,10 @@
           class: "availability btn btn-#{match_availability.no? ? 'danger disabled' : 'default'}" %>
       </div>
       <% if match_availability.note.blank? %>
-        <%= link_to "Add note (for captain)", "#", class: "note-action btn-group panel-link" %>
+        <%= link_to "Add note (for captain)", "#", class: "note-action" %>
       <% else %>
         <span><%= match_availability.note %></span>
-        <%= link_to "Edit note", "#", class: "note-action btn-group panel-link" %>
+        <%= link_to "Edit note", "#", class: "note-action" %>
       <% end %>
       <div class="hidden note-form form-inline btn-group">
         <div class="form-group">
@@ -40,14 +56,6 @@
         <%= link_to "Save", save_note_match_match_availability_path(match, match_availability, team_id: current_team.id), class: "save-note" %>
       </div>
     </div>
-
-    <% if policy(current_team).captain? %>
-      <div class="pull-right">
-        <%= link_to 'Edit match', edit_team_match_path(current_team, match), :class => 'btn btn-sm btn-default' %>
-      </div>
-    <% end %>
-  </div>
-  <div class="panel-body">
     <% if policy(current_team).captain? %>
       <%= render partial: 'shared/match_details', locals: { match: match } %>
       <div class="row">
@@ -91,3 +99,4 @@
     <% end %>
   </div>
 </div>
+
