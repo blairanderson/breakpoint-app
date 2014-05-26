@@ -11,6 +11,14 @@
       <%= f.input :password, :required => true %>
       <%= f.input :password_confirmation, :required => true %>
     </div>
+    <div class="col-md-4">
+      <div class="alert alert-info">
+        <h4>Not a team captain?</h4>
+        If you're not a team captain, it is likely that your team captain already created an account for you.
+        <br>
+        Please verify with them what email they used and try to <%= link_to 'sign in', new_user_session_path, class: 'alert-link' %>.
+      </div>
+    </div>
   </div>
 
   <%= f.button :submit, 'Sign up', :class => 'btn btn-primary' %>

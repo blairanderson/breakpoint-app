@@ -30,9 +30,11 @@ describe 'devise' do
 
   it 'changes a user profile' do
     click_button 'Sign in'
-    fill_in 'Email',    :with => 'john.doe@example.com'
-    fill_in 'Password', :with => 'password'
-    within('.new_user') { click_button 'Sign in' }
+    within('.sign-in') do
+      fill_in 'Email',    :with => 'john.doe@example.com'
+      fill_in 'Password', :with => 'password'
+      click_button 'Sign in'
+    end
 
     click_link 'John Doe'
     fill_in 'Phone number',     :with => '111-111-1111'
