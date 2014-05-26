@@ -10,7 +10,9 @@
 </div>
 <div class="row">
   <div class="col-md-12">
-    <%= render matches %>
+    <div class="panel-group" id="match-list">
+      <%= render matches %>
+    </div>
   </div>
 </div>
 <%= render partial: "match_javascript" %>
