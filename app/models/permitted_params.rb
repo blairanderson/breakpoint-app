@@ -44,7 +44,9 @@ class PermittedParams
                                  :first_name,
                                  :last_name,
                                  :phone_number,
-                                 :reset_password_token)
+                                 :reset_password_token,
+                                 :password,
+                                 :password_confirmation)
   end
 
   def password

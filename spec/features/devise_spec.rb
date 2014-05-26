@@ -36,10 +36,21 @@ describe 'devise' do
 
     click_link 'John Doe'
     fill_in 'Phone number',     :with => '111-111-1111'
-    fill_in 'Current password', :with => 'password'
     click_button 'Update'
 
     page.should have_selector '.alert.alert-success', :text => 'You updated your account successfully.'
+
+    click_link 'Change password'
+    fill_in 'Old password', with: 'password'
+    fill_in 'user_password', with: 'password1'
+    fill_in 'user_password_confirmation', with: 'password1'
+    click_button 'Change password'
+
+    click_link 'Change password'
+    click_link 'Reset your password using email'
+    last_email.should_not be_nil
+    last_email.to.should == ['john.doe@example.com']
+    page.should have_button 'Sign in'
   end
 
   it 'allows forgot password' do
