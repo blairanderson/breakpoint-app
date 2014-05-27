@@ -11,26 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140511155147) do
+ActiveRecord::Schema.define(version: 20140527020332) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "match_availabilities", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "match_id"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
-    t.integer  "team_id"
-    t.string   "state",        default: "no_response"
-    t.datetime "destroyed_at"
-    t.text     "note"
-  end
-
-  add_index "match_availabilities", ["match_id"], name: "index_match_availabilities_on_match_id", using: :btree
-  add_index "match_availabilities", ["state"], name: "index_match_availabilities_on_state", using: :btree
-  add_index "match_availabilities", ["team_id"], name: "index_match_availabilities_on_team_id", using: :btree
-  add_index "match_availabilities", ["user_id"], name: "index_match_availabilities_on_user_id", using: :btree
 
   create_table "match_lineups", force: true do |t|
     t.string   "match_type",   default: "", null: false
@@ -88,20 +72,6 @@ ActiveRecord::Schema.define(version: 20140511155147) do
 
   add_index "matches", ["team_id"], name: "index_matches_on_team_id", using: :btree
 
-  create_table "practice_sessions", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "practice_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.integer  "team_id"
-    t.boolean  "available"
-    t.datetime "destroyed_at"
-  end
-
-  add_index "practice_sessions", ["practice_id"], name: "index_practice_sessions_on_practice_id", using: :btree
-  add_index "practice_sessions", ["team_id"], name: "index_practice_sessions_on_team_id", using: :btree
-  add_index "practice_sessions", ["user_id"], name: "index_practice_sessions_on_user_id", using: :btree
-
   create_table "practices", force: true do |t|
     t.datetime "date",                       null: false
     t.text     "comment"
@@ -114,6 +84,24 @@ ActiveRecord::Schema.define(version: 20140511155147) do
   end
 
   add_index "practices", ["team_id"], name: "index_practices_on_team_id", using: :btree
+
+  create_table "responses", force: true do |t|
+    t.integer  "user_id"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.integer  "team_id"
+    t.string   "state",            default: "no_response"
+    t.datetime "destroyed_at"
+    t.text     "note"
+    t.integer  "respondable_id"
+    t.string   "respondable_type"
+  end
+
+  add_index "responses", ["respondable_id"], name: "index_responses_on_respondable_id", using: :btree
+  add_index "responses", ["respondable_type"], name: "index_responses_on_respondable_type", using: :btree
+  add_index "responses", ["state"], name: "index_responses_on_state", using: :btree
+  add_index "responses", ["team_id"], name: "index_responses_on_team_id", using: :btree
+  add_index "responses", ["user_id"], name: "index_responses_on_user_id", using: :btree
 
   create_table "team_members", force: true do |t|
     t.integer  "team_id",               default: 0,        null: false
