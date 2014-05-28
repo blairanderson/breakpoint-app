@@ -6,9 +6,10 @@ task :pull_db do
 
   run_locally do
     execute :scp, "breakpointapp:latest.dump", "."
+    execute :dropdb, "#{YAML.load(File.read('config/database.yml'))['development']['database']}"
+    execute :createdb, "#{YAML.load(File.read('config/database.yml'))['development']['database']}"
     execute :pg_restore,
       "--verbose",
-      "--clean",
       "--no-acl",
       "--no-owner",
       "-h #{YAML.load(File.read('config/database.yml'))['development']['host'] || 'localhost'}",

@@ -12,7 +12,7 @@ group :development, :try_it do
 end
 
 group :development, :try_it, :test do
-  #gem 'debugger'
+  gem 'byebug'
   gem 'rspec-rails'
   gem 'capybara'
   gem 'poltergeist'
