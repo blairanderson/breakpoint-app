@@ -13,7 +13,7 @@
     <%= link_to 'Add a practice', new_team_practice_path(current_team), :class => 'btn btn-default' %>
   </p>
   <% if @upcoming_practices.present? %>
-    <%= render :partial => "practices", :object => @upcoming_practices %>
+    <%= render @upcoming_practices %>
   <% else %>
     <div class="alert alert-info">
       No upcoming practices
@@ -21,7 +21,7 @@
   <% end %>
   <% if @previous_practices.present? %>
     <h3>Previous Practices</h3>
-    <%= render :partial => "practices", :object => @previous_practices %>
+    <%= render @previous_practices %>
   <% end %>
 <% end %>
 

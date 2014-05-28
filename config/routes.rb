@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   end
 
   resources :teams, :except => [:show] do
-    resources :practices, :except => [:show] do
+    resources :practices do
       member do
         get :availability_email
         get :availabilities
@@ -46,12 +46,19 @@ Rails.application.routes.draw do
         post :perform_import
       end
     end
-    resources :match_availabilities, :only => [:index] do
+    # TODO Delete these routes 7 days later
+    resources :match_availabilities, :only => [] do
       collection do
         get :set_availability
       end
     end
+    # TODO Delete these routes 7 days later
     resources :practice_sessions, :only => [] do
+      collection do
+        get :set_availability
+      end
+    end
+    resources :responses, :only => [:index] do
       collection do
         get :set_availability
       end
@@ -72,14 +79,14 @@ Rails.application.routes.draw do
   end
 
   resources :practices, :only => [] do
-    resources :practice_sessions, :only => [:create, :update]
+    resources :responses, :only => [:create, :update]
     member do
       post 'notify'
     end
   end
 
   resources :matches, :only => [] do
-    resources :match_availabilities, :only => [] do
+    resources :responses, :only => [] do
       member do
         post :save_availability
         post :save_note

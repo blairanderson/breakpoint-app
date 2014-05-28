@@ -94,7 +94,7 @@ class TryItSeeds
       team.users.each do |user|
         Match.all.each do |match|
           state = ["yes", "maybe", "no", "no_response"].sample
-          match_availability = match.match_availability_for(user.id)
+          match_availability = match.response_for(user.id)
           match_availability.state = state
           match_availability.save
         end

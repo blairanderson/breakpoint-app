@@ -1,4 +1,4 @@
-class MatchAvailabilityPolicy < ApplicationPolicy
+class ResponsePolicy < ApplicationPolicy
   class Scope < Struct.new(:user, :scope)
     def resolve
       scope
@@ -10,6 +10,10 @@ class MatchAvailabilityPolicy < ApplicationPolicy
   end
 
   def save_note?
+    owner?
+  end
+
+  def update
     owner?
   end
 

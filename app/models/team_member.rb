@@ -6,7 +6,7 @@ class TeamMember < ActiveRecord::Base
   belongs_to :user
   belongs_to :team
 
-  after_create :setup_match_availabilities
+  after_create :setup_responses
 
   def self.welcome_email_unsent
     where(welcome_email_sent_at: nil)
@@ -46,10 +46,10 @@ class TeamMember < ActiveRecord::Base
     update!(welcome_email_sent_at: Time.zone.now)
   end
 
-  def setup_match_availabilities
+  def setup_responses
     ActsAsTenant.with_tenant(team) do
       team.matches.each do |match|
-        match.match_availabilities.create!(user_id: user_id)
+        match.responses.create!(user_id: user_id)
       end
     end
   end

@@ -19,14 +19,18 @@ describe 'match_lineups' do
     click_button 'Save match lineup'
 
     page.should have_selector '.alert.alert-success', :text => 'Match updated'
-    @match.match_lineups.first.match_players.where(:user_id => @captain.id).count.should eq(1)
+    ActsAsTenant.with_tenant(@team) do
+      @match.match_lineups.first.match_players.where(:user_id => @captain.id).count.should eq(1)
+    end
 
     click_link 'Set the lineup'
     first("option[value='']").select_option
     click_button 'Save match lineup'
 
     page.should have_selector '.alert.alert-success', :text => 'Match updated'
-    @match.match_lineups.first.match_players.where(:user_id => @captain.id).count.should eq(0)
+    ActsAsTenant.with_tenant(@team) do
+      @match.match_lineups.first.match_players.where(:user_id => @captain.id).count.should eq(0)
+    end
   end
 
   it 'sets the match lineup', js: true do

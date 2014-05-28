@@ -13,7 +13,7 @@
       <td><%= user.name %></td>
       <td><%= mail_to user.email %></td>
       <td><%= user.phone_number %></td>
-      <td><%= l practice.practice_session_for(user.id).updated_at, :format => :simple %></td>
+      <td><%= l practice.response_for(user.id).updated_at, :format => :simple %></td>
     </tr>
     <% end %>
   </tbody>

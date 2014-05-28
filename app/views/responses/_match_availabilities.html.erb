@@ -12,7 +12,7 @@
       <tr>
         <td><%= user.name %></td>
         <% matches.each do |match| %>
-          <% availablility = match.match_availability_for(user.id) %>
+          <% availablility = match.response_for(user.id) %>
           <% if availablility.no_response? %>
             <td class="text-center">
               <span class="label label-default">n/a</span>

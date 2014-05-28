@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :match_availability do
+  factory :response do
     user nil
     match nil
   end

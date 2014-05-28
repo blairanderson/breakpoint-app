@@ -1,21 +1,19 @@
 class Match < ActiveRecord::Base
-  class MatchAvailabilityTokenExpired < StandardError; end
-
   NOTIFIED_LINEUP_STATES = %w[lineup_created lineup_updated notified_team_lineup]
 
   include DestroyedAt
   include DateTimeParser
   include NotifyStateMachine
+  include Respondable
 
-  has_many :match_availabilities, :dependent => :destroy
-  has_many :match_lineups,        -> { order(:ordinal) }, :dependent => :destroy
+  has_many :match_lineups, -> { order(:ordinal) }, :dependent => :destroy
 
   validates :team, presence: true
 
   accepts_nested_attributes_for :match_lineups
 
   after_create :setup_match_lineups
-  after_create :setup_match_availabilities
+  after_create :setup_match_responses
 
   delegate :lineup_created?, :lineup_updated?, :notified_team_lineup?, :to => :notified_team_lineup_state
 
@@ -36,50 +34,43 @@ class Match < ActiveRecord::Base
     end
   end
 
+  # TODO This should be deleted 7 days after deploy. It is no longer used except if people click links in email after the deploy
   def self.match_availability_from_token(token)
     match_id, user_id, timestamp = Rails.application.message_verifier("match-email-response").verify(token)
 
     if timestamp < 7.days.ago
-      raise MatchAvailabilityTokenExpired
+      raise Response::ResponseTokenExpired
     end
 
-    find(match_id).match_availability_for(user_id)
+    find(match_id).response_for(user_id)
   end
 
   def team_location
     home_team? ? 'Home' : 'Away'
   end
 
-  def match_availability_for(user_id)
-    match_availabilities.where(user_id: user_id).first_or_initialize
-  end
-
-  def match_availability_token_for(user_id)
-    Rails.application.message_verifier("match-email-response").generate([id, user_id, Time.now])
-  end
-
   def available_players
-    player_status(match_availabilities.includes(:user).available)
+    player_status(responses.includes(:user).available)
   end
 
   def maybe_available_players
-    player_status(match_availabilities.includes(:user).maybe_available)
+    player_status(responses.includes(:user).maybe_available)
   end
 
   def not_available_players
-    player_status(match_availabilities.includes(:user).not_available)
+    player_status(responses.includes(:user).not_available)
   end
 
   def no_response_players
-    player_status(match_availabilities.includes(:user).no_response)
+    player_status(responses.includes(:user).no_response)
   end
 
-  def player_status(availabilities)
-    availabilities.map do |availability|
-      if availability.note.blank?
-        [availability.user.name, availability.user.id]
+  def player_status(responses)
+    responses.map do |response|
+      if response.note.blank?
+        [response.user.name, response.user.id]
       else
-        ["#{availability.user.name} - #{availability.note}", availability.user.id]
+        ["#{response.user.name} - #{response.note}", response.user.id]
       end
     end
   end
@@ -148,10 +139,10 @@ class Match < ActiveRecord::Base
     end
   end
 
-  def setup_match_availabilities
+  def setup_match_responses
     ActsAsTenant.with_tenant(team) do
       team.team_members.each do |team_member|
-        match_availabilities.create!(user_id: team_member.user_id)
+        responses.create!(user_id: team_member.user_id)
       end
     end
   end

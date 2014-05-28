@@ -13,10 +13,9 @@ class User < ActiveRecord::Base
 
   has_many :team_members
   has_many :teams,                :through   => :team_members
-  has_many :practice_sessions,    :dependent => :destroy
   has_many :practices,            :through   => :practice_sessions
-  has_many :match_availabilities, :dependent => :destroy
   has_many :matches,              :through   => :match_availabilities
+  has_many :responses,            :dependent => :destroy
   has_many :match_players,        :dependent => :nullify
 
   validates_presence_of   :email

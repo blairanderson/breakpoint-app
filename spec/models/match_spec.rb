@@ -54,9 +54,9 @@ describe Match do
     user = create(:user)
     @team.team_members.create(:user => user)
     match = create(:match)
-    match_availability = match.match_availabilities.first
+    response = match.responses.first
 
-    match.match_availability_for(user.id).should eq match_availability
+    match.response_for(user.id).should eq response
   end
 end
 

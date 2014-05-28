@@ -6,6 +6,10 @@ class PracticesController < ApplicationController
     @previous_practices = current_team.previous_practices
   end
 
+  def show
+    @practice = Practice.find(params[:id])
+  end
+
   def new
     @practice = current_team.practices.build
     @practice.date = Time.zone.now.change(hour: 14, min: 30)

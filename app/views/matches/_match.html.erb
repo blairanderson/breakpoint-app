@@ -1,4 +1,4 @@
-<% match_availability = match.match_availability_for(current_user.id) %>
+<% response = match.response_for(current_user.id) %>
 <div class="panel panel-default">
   <div class="panel-heading clearfix">
     <h4 class="panel-title" style="display: inline-block; vertical-align: middle;">
@@ -18,41 +18,41 @@
   </div>
   <div class="panel-collapse collapse<%= " in" if match.date.future? %>" id="match-<%= match.id %>">
     <div class="panel-body">
-      <div class="alert alert-<%= availability_label(match_availability.state) %>">
+      <div class="alert alert-<%= availability_label(response.state) %>">
         Can you play?
         <div class="btn-group btn-group-sm">
           <%= link_to "Yes",
-            save_availability_match_match_availability_path(match, match_availability, team_id: current_team.id, state: 'yes'),
+            save_availability_match_response_path(match, response, team_id: current_team.id, state: 'yes'),
             data: { label: 'success' },
             remote: true,
             method: :post,
-            class: "availability btn btn-#{match_availability.yes? ? 'success disabled' : 'default'}" %>
+            class: "availability btn btn-#{response.yes? ? 'success disabled' : 'default'}" %>
 
           <%= link_to "Maybe",
-            save_availability_match_match_availability_path(match, match_availability, team_id: current_team.id, state: 'maybe'),
+            save_availability_match_response_path(match, response, team_id: current_team.id, state: 'maybe'),
             data: { label: 'info' },
             remote: true,
             method: :post,
-            class: "availability btn btn-#{match_availability.maybe? ? 'info disabled' : 'default'}" %>
+            class: "availability btn btn-#{response.maybe? ? 'info disabled' : 'default'}" %>
 
           <%= link_to "No",
-            save_availability_match_match_availability_path(match, match_availability, team_id: current_team.id, state: 'no'),
+            save_availability_match_response_path(match, response, team_id: current_team.id, state: 'no'),
             data: { label: 'danger' },
             remote: true,
             method: :post,
-            class: "availability btn btn-#{match_availability.no? ? 'danger disabled' : 'default'}" %>
+            class: "availability btn btn-#{response.no? ? 'danger disabled' : 'default'}" %>
         </div>
-        <% if match_availability.note.blank? %>
+        <% if response.note.blank? %>
           <%= link_to "Add note (for captain)", "#", class: "note-action" %>
         <% else %>
-          <span><%= match_availability.note %></span>
+          <span><%= response.note %></span>
           <%= link_to "Edit note", "#", class: "note-action" %>
         <% end %>
         <div class="hidden note-form form-inline btn-group">
           <div class="form-group">
-            <%= text_field_tag :note, match_availability.note, class: "note form-control input-sm", style: "width: 250px;" %>
+            <%= text_field_tag :note, response.note, class: "note form-control input-sm", style: "width: 250px;" %>
           </div>
-          <%= link_to "Save", save_note_match_match_availability_path(match, match_availability, team_id: current_team.id), class: "save-note" %>
+          <%= link_to "Save", save_note_match_response_path(match, response, team_id: current_team.id), class: "save-note" %>
         </div>
       </div>
       <% if policy(current_team).captain? %>

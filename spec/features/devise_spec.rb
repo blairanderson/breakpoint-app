@@ -80,9 +80,9 @@ describe 'devise' do
     end
     login(@user)
     visit team_matches_path(@match.team)
-    match_availability = @match.match_availabilities.first
-    match_availability.state = "yes"
-    match_availability.save
+    response = @match.responses.first
+    response.state = "yes"
+    response.save
 
     click_link 'John Doe'
     click_link 'Cancel my account'

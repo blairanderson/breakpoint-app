@@ -7,21 +7,21 @@
     <p style="text-align: center;">Can you play?</p>
     <p style="text-align: center;">
       <%= link_to "YES",
-        set_availability_team_match_availabilities_url(
+        set_availability_team_responses_url(
           @match.team,
           available: 'yes',
           token: @token),
         style: "margin-right: 10px; font-size: 24px;" %>
       |
       <%= link_to "MAYBE",
-        set_availability_team_match_availabilities_url(
+        set_availability_team_responses_url(
           @match.team,
           available: 'maybe',
           token: @token),
         style: "margin-right: 10px; margin-left: 10px; font-size: 24px;" %>
       |
       <%= link_to "NO",
-        set_availability_team_match_availabilities_url(
+        set_availability_team_responses_url(
           @match.team,
           available: 'no',
           token: @token),
@@ -32,14 +32,14 @@
     <p style="text-align: center;">
       <span style="margin-right: 10px;">Change to:</span>
       <%= link_to "MAYBE",
-        set_availability_team_match_availabilities_url(
+        set_availability_team_responses_url(
           @match.team,
           available: 'maybe',
           token: @token),
         style: "margin-right: 10px; font-size: 24px;" %>
       |
       <%= link_to "NO",
-        set_availability_team_match_availabilities_url(
+        set_availability_team_responses_url(
           @match.team,
           available: 'no',
           token: @token),
@@ -50,14 +50,14 @@
     <p style="text-align: center;">
       <span style="margin-right: 10px;">Change to:</span>
       <%= link_to "YES",
-        set_availability_team_match_availabilities_url(
+        set_availability_team_responses_url(
           @match.team,
           available: 'yes',
           token: @token),
         style: "margin-right: 10px; font-size: 24px;" %>
       or
       <%= link_to "NO",
-        set_availability_team_match_availabilities_url(
+        set_availability_team_responses_url(
           @match.team,
           available: 'no',
           token: @token),
@@ -68,14 +68,14 @@
     <p style="text-align: center;">
       <span style="margin-right: 10px;">Change to:</span>
       <%= link_to "YES",
-        set_availability_team_match_availabilities_url(
+        set_availability_team_responses_url(
           @match.team,
           available: 'yes',
           token: @token),
         style: "margin-right: 10px; font-size: 24px;" %>
       or
       <%= link_to "MAYBE",
-        set_availability_team_match_availabilities_url(
+        set_availability_team_responses_url(
           @match.team,
           available: 'maybe',
           token: @token),

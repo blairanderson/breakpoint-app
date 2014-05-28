@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'match_availabilities' do
+describe 'match responses' do
   before :each do
     login_captain
     ActsAsTenant.current_tenant = create(:team)
@@ -10,7 +10,7 @@ describe 'match_availabilities' do
     visit team_matches_path(@match.team)
   end
 
-  it 'lists all match_availabilities', js: true do
+  it 'lists all match responses', js: true do
     click_link 'See who can play when'
     page.should have_selector '.label', :text => 'n/a'
 
@@ -33,7 +33,7 @@ describe 'match_availabilities' do
     page.should_not have_selector '.label-success', :text => 'yes'
   end
 
-  it 'toggles match_availability', js: true do
+  it 'toggles match response', js: true do
     click_link 'Yes'
     page.should have_selector '.btn-success.disabled', :text => 'Yes'
 
@@ -46,17 +46,17 @@ describe 'match_availabilities' do
 
   it 'accepts availability from email' do
     click_link 'Sign out'
-    visit set_availability_team_match_availabilities_url(
+    visit set_availability_team_responses_url(
       @match.team,
       available: 'yes',
-      token: @match.match_availability_token_for(@captain.id))
+      token: @match.response_token_for(@captain.id))
     page.should have_selector '.alert-success', :text => 'yes response'
 
     click_link 'Sign out'
-    visit set_availability_team_match_availabilities_url(
+    visit set_availability_team_responses_url(
       @match.team,
       available: 'no',
-      token: @match.match_availability_token_for(@captain.id))
+      token: @match.response_token_for(@captain.id))
     page.should have_selector '.alert-success', :text => 'no response'
   end
 end

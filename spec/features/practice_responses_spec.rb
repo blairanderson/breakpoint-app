@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'practice_sessions' do
+describe 'practice responses' do
   before :each do
     login_captain
     ActsAsTenant.current_tenant = create(:team)
@@ -11,17 +11,17 @@ describe 'practice_sessions' do
     visit team_practices_path(@practice.team)
   end
 
-  it 'creates a practice_session as available' do
+  it 'creates a response as available' do
     first(:button, "I can play").click
     page.should have_content 'You can play'
   end
 
-  it 'creates a practice_session as not available' do
+  it 'creates a response as not available' do
     first(:button, "I can't play").click
     page.should have_content "You can't play"
   end
 
-  it 'toggles practice_session' do
+  it 'toggles response' do
     first(:button, "I can play").click
     page.should have_content 'You can play'
 
@@ -31,17 +31,17 @@ describe 'practice_sessions' do
 
   it 'accepts availability from email' do
     click_link 'Sign out'
-    visit set_availability_team_practice_sessions_url(
+    visit set_availability_team_responses_url(
       @practice.team,
       available: 'yes',
-      token: @practice.practice_session_token_for(@captain.id))
+      token: @practice.response_token_for(@captain.id))
     page.should have_selector '.alert-success', :text => 'yes response'
 
     click_link 'Sign out'
-    visit set_availability_team_practice_sessions_url(
+    visit set_availability_team_responses_url(
       @practice.team,
       available: 'no',
-      token: @practice.practice_session_token_for(@captain.id))
+      token: @practice.response_token_for(@captain.id))
     page.should have_selector '.alert-success', :text => 'no response'
   end
 end

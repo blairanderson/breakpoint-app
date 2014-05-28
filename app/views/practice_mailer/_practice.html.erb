@@ -6,17 +6,17 @@
   <p style="text-align: center;">Will you attend?</p>
   <p style="text-align: center;">
     <%= link_to "YES",
-      set_availability_team_practice_sessions_url(
+      set_availability_team_responses_url(
         @practice.team,
         available: 'yes',
-        token: @practice.practice_session_token_for(@user_id)),
+        token: @practice.response_token_for(@user_id)),
       style: "margin: 0px 10px 0px 0px; font-size: 24px;" %>
     or
     <%= link_to "NO",
-      set_availability_team_practice_sessions_url(
+      set_availability_team_responses_url(
         @practice.team,
         available: 'no',
-        token: @practice.practice_session_token_for(@user_id)),
+        token: @practice.response_token_for(@user_id)),
       style: "margin: 0px 10px; font-size: 24px;" %>
   </p>
 <% end %>

@@ -1,11 +1,8 @@
 class Practice < ActiveRecord::Base
-  class PracticeSessionTokenExpired < StandardError; end
-
   include DestroyedAt
   include DateTimeParser
   include NotifyStateMachine
-
-  has_many :practice_sessions, :dependent => :destroy
+  include Respondable
 
   validates :team, presence: true
 
@@ -20,30 +17,23 @@ class Practice < ActiveRecord::Base
     end
   end
 
+  # TODO This should be deleted 7 days after deploy. It is no longer used except if people click links in email after the deploy
   def self.practice_session_from_token(token)
     practice_id, user_id, timestamp = Rails.application.message_verifier("practice-email-response").verify(token)
 
     if timestamp < 7.days.ago
-      raise PracticeSessionTokenExpired
+      raise Response::ResponseTokenExpired
     end
 
-    find(practice_id).practice_session_for(user_id)
-  end
-
-  def practice_session_for(user_id)
-    practice_sessions.where(user_id: user_id).first_or_initialize
-  end
-
-  def practice_session_token_for(user_id)
-    Rails.application.message_verifier("practice-email-response").generate([id, user_id, Time.now])
+    find(practice_id).response_for(user_id)
   end
 
   def available_players
-    practice_sessions.includes(:user).where(:available => true).order(:updated_at).collect(&:user)
+    responses.includes(:user).available.order(:updated_at).collect(&:user)
   end
 
   def not_available_players
-    practice_sessions.includes(:user).where(:available => false).order(:updated_at).collect(&:user)
+    responses.includes(:user).not_available.order(:updated_at).collect(&:user)
   end
 
   def recent_changes

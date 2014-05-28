@@ -18,12 +18,8 @@ class PermittedParams
                                     :match_sets_attributes => [:id, :games_won, :games_lost]])
   end
 
-  def match_availabilities
-    params.require(:match_availability).permit(:state)
-  end
-
-  def practice_sessions
-    params.require(:practice_session).permit(:available)
+  def responses
+    params.require(:response).permit(:state)
   end
 
   def practice

@@ -6,7 +6,7 @@
       <%= link_to 'Add a match', new_team_match_path(current_team), :class => 'btn btn-default' %>
       <%= link_to 'Import matches', import_team_matches_path(current_team), :class => "btn btn-default" %>
     <% end %>
-    <%= link_to 'See who can play when', team_match_availabilities_path(current_team), :class => 'btn btn-default' %>
+    <%= link_to 'See who can play when', team_responses_path(current_team), :class => 'btn btn-default' %>
   </p>
   <%= render :partial => "matches", :object => @matches %>
 <% else %>

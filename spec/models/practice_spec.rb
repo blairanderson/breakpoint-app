@@ -19,9 +19,9 @@ describe Practice do
     user = create(:user)
     @team.team_members.create(:user => user)
     practice = create(:practice)
-    practice_session = create(:practice_session, :practice => practice, :user => user)
+    response = practice.responses.create(state: "yes", user: user)
 
-    practice.practice_session_for(user.id).should eq practice_session
+    practice.response_for(user.id).should eq response
   end
 end
 

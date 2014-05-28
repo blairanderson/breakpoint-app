@@ -1,9 +1,11 @@
-class MatchAvailability < ActiveRecord::Base
+class Response < ActiveRecord::Base
+  class ResponseTokenExpired < StandardError; end
+
   include DestroyedAt
   STATES = %w[no_response yes maybe no]
 
   belongs_to :user
-  belongs_to :match
+  belongs_to :respondable, polymorphic: true
 
   validates :team, presence: true
   validates :note, length: { maximum: 140 }
@@ -11,6 +13,17 @@ class MatchAvailability < ActiveRecord::Base
   acts_as_tenant :team
 
   delegate :yes?, :maybe?, :no?, :no_response?, :to => :current_state
+
+  def self.response_from_token(token)
+    respondable_id, respondable_type, user_id, timestamp = Rails.application.message_verifier("email-response").verify(token)
+
+    if timestamp < 7.days.ago
+      raise Response::ResponseTokenExpired
+    end
+
+    klass = [Practice, Match].detect { |c| respondable_type == c }
+    klass.find(respondable_id).response_for(user_id)
+  end
 
   def self.no_response
     where(state: 'no_response')
