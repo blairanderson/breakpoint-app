@@ -101,7 +101,8 @@ class TryItSeeds
 
         Practice.all.each do |practice|
           next if [1,2,3,4].sample == 3
-          practice.practice_sessions.create!(team: team, user: user, available: [true, false].sample)
+          state = ["yes", "maybe", "no", "no_response"].sample
+          practice.responses.create!(team: team, user: user, state: state)
         end
       end
     end

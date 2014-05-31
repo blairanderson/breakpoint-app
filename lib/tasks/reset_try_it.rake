@@ -1,12 +1,11 @@
 namespace :breakpointapp do  
   task :reset_try_it => :environment do
     if Rails.env.try_it?
-      ActiveRecord::Base.connection.execute('truncate match_availabilities')
+      ActiveRecord::Base.connection.execute('truncate responses')
       ActiveRecord::Base.connection.execute('truncate match_lineups')
       ActiveRecord::Base.connection.execute('truncate match_players')
       ActiveRecord::Base.connection.execute('truncate match_sets')
       ActiveRecord::Base.connection.execute('truncate matches')
-      ActiveRecord::Base.connection.execute('truncate practice_sessions')
       ActiveRecord::Base.connection.execute('truncate practices')
       ActiveRecord::Base.connection.execute('truncate schema_migrations')
       ActiveRecord::Base.connection.execute('truncate team_members')
