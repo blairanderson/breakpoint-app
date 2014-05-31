@@ -6,5 +6,10 @@ Raven.configure do |config|
   config.environments = %w[ production ]
   # override defaults in https://github.com/getsentry/raven-ruby/blob/master/lib/raven/configuration.rb#L79
   config.excluded_exceptions = []
+
+  # use sidekiq to send errors
+  config.async = lambda { |event|
+    Raven.delay.send(event)
+  }
 end
 
