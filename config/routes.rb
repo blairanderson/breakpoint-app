@@ -21,6 +21,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users, :only => [:index] do
+      collection do
+        get :test_raven
+      end
       member do
         get :become
       end

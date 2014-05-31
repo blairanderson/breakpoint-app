@@ -8,5 +8,9 @@ class Admin::UsersController < Admin::AdminController
     sign_in :user, User.find(params[:id]), bypass: true
     redirect_to teams_url
   end
+
+  def test_raven
+    raise StandardError
+  end
 end
 
